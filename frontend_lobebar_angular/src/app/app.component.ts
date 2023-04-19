@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
+import { RouterModule } from '@angular/router';
+import { NxWelcomeComponent } from './nx-welcome.component';
 
 @Component({
-  selector: 'app-root',
+  standalone: true,
+  imports: [NxWelcomeComponent, RouterModule],
+  selector: 'frontend-lobebar-angular-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.scss']
+  styleUrls: ['./app.component.scss'],
 })
 export class AppComponent {
-  title = 'frontend_lobebar_angular';
+  title = 'frontend-lobebar-angular';
 }
