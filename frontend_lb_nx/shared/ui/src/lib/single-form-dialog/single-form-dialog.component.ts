@@ -13,5 +13,7 @@ export interface DialogData {
   styleUrls: ['./single-form-dialog.component.scss'],
 })
 export class SingleFormDialogComponent {
+  //res variable for passing
+  res=""
   constructor(public dialogRef: DialogRef<string>, @Inject(DIALOG_DATA) public data: DialogData){}
 }

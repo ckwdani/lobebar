@@ -34,6 +34,7 @@ export class DetailsWithEditComponent {
       data: {previous: input, type: type, current: ""},
     });
 
+    //get the result from the dialog
     dialogRef.closed.subscribe(result => {
       console.log('The dialog was closed');
       this.res = result;

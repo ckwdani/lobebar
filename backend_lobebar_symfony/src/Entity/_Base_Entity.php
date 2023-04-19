@@ -5,6 +5,8 @@ namespace App\Entity;
 use Doctrine\ORM\Mapping as ORM;
 use Doctrine\ORM\Mapping\MappedSuperclass;
 use JMS\Serializer\Annotation\Accessor;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\PostDeserialize;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Component\Uid\Uuid;
 
@@ -15,11 +17,12 @@ class _Base_Entity
     #[ORM\Id]
     #[ORM\CustomIdGenerator(class: UuidGenerator::class)]
     #[ORM\Column(unique: true, type: "uuid")]
-    #[Accessor(['convertOwnUuid'])]
+//    #[Exclude(if: "deserialize")]
+    #[Accessor(getter: 'convertOwnUuid')]
     protected ?Uuid $id;
 
 
-
+    #[PostDeserialize]
     function __construct()
     {
         $this->id = Uuid::v4();

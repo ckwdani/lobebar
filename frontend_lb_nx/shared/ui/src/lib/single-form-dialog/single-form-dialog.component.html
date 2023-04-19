@@ -2,11 +2,11 @@
 <div>
     <label id="favorite-animal">Willst du dein {{data.type}} ändern? </label>
     <mat-form-field appearance="outline">
-        <input matInput for="favorite-animal" [(ngModel)]="dialo"  [placeholder]="'Gib deine neue ' + data.type +' ein:'">
+        <input matInput for="favorite-animal" [(ngModel)]="res"  [placeholder]="'Gib deine neue ' + data.type +' ein:'">
     </mat-form-field>
 </div>
 <div>
-    <button (click)="dialogRef.close(data.current)">OK</button>
+    <button (click)="dialogRef.close(res)">OK</button>
     <button (click)="dialogRef.close()">Cancel</button>
 </div>
 
