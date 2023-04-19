@@ -6,6 +6,7 @@ import {MatToolbarModule} from "@angular/material/toolbar";
 import {MatListModule} from "@angular/material/list";
 import {MatIconModule} from "@angular/material/icon";
 import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
+import {RouterLink} from "@angular/router";
 
 
 
@@ -17,11 +18,13 @@ import {BrowserAnimationsModule} from "@angular/platform-browser/animations";
       NavigationComponent
   ],
     imports: [
+        BrowserAnimationsModule,
         CommonModule,
         MatSidenavModule,
         MatToolbarModule,
         MatListModule,
-        MatIconModule
+        MatIconModule,
+        RouterLink,
     ]
 })
 export class CoreModule { }
