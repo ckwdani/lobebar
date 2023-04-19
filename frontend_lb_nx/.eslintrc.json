@@ -15,7 +15,7 @@
           "error",
           {
             "type": "attribute",
-            "prefix": "frontendLobebarAngular",
+            "prefix": "frontendLbNx",
             "style": "camelCase"
           }
         ],
@@ -23,7 +23,7 @@
           "error",
           {
             "type": "element",
-            "prefix": "frontend-lobebar-angular",
+            "prefix": "frontend-lb-nx",
             "style": "kebab-case"
           }
         ]

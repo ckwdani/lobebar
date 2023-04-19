@@ -1,10 +1,7 @@
 import { Component, ViewEncapsulation } from '@angular/core';
-import { CommonModule } from '@angular/common';
 
 @Component({
-  selector: 'frontend-lobebar-angular-nx-welcome',
-  standalone: true,
-  imports: [CommonModule],
+  selector: 'frontend-lb-nx-nx-welcome',
   template: `
     <!--
      * * * * * * * * * * * * * * * * * * * * * * * * * * * *
@@ -423,7 +420,7 @@ import { CommonModule } from '@angular/common';
         <div id="welcome">
           <h1>
             <span> Hello there, </span>
-            Welcome frontend-lobebar-angular 👋
+            Welcome frontend-lb-nx 👋
           </h1>
         </div>
         <!--  HERO  -->

@@ -1,6 +1,6 @@
 import { getGreeting } from '../support/app.po';
 
-describe('frontend-lobebar-angular', () => {
+describe('frontend-lb-nx', () => {
   beforeEach(() => cy.visit('/'));
 
   it('should display welcome message', () => {
@@ -8,6 +8,6 @@ describe('frontend-lobebar-angular', () => {
     cy.login('my-email@something.com', 'myPassword');
 
     // Function helper example, see `../support/app.po.ts` file
-    getGreeting().contains('Welcome frontend-lobebar-angular');
+    getGreeting().contains('Welcome frontend-lb-nx');
   });
 });

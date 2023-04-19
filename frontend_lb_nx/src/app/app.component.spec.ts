@@ -6,7 +6,8 @@ import { RouterTestingModule } from '@angular/router/testing';
 describe('AppComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [AppComponent, NxWelcomeComponent, RouterTestingModule],
+      imports: [RouterTestingModule],
+      declarations: [AppComponent, NxWelcomeComponent],
     }).compileComponents();
   });
 
@@ -15,13 +16,13 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome frontend-lobebar-angular'
+      'Welcome frontend-lb-nx'
     );
   });
 
-  it(`should have as title 'frontend-lobebar-angular'`, () => {
+  it(`should have as title 'frontend-lb-nx'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('frontend-lobebar-angular');
+    expect(app.title).toEqual('frontend-lb-nx');
   });
 });

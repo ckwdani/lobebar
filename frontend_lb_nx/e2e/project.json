@@ -8,15 +8,15 @@
       "executor": "@nrwl/cypress:cypress",
       "options": {
         "cypressConfig": "e2e/cypress.config.ts",
-        "devServerTarget": "frontend-lobebar-angular:serve:development",
+        "devServerTarget": "frontend-lb-nx:serve:development",
         "testingType": "e2e"
       },
       "configurations": {
         "production": {
-          "devServerTarget": "frontend-lobebar-angular:serve:production"
+          "devServerTarget": "frontend-lb-nx:serve:production"
         },
         "ci": {
-          "devServerTarget": "frontend-lobebar-angular:serve-static"
+          "devServerTarget": "frontend-lb-nx:serve-static"
         }
       }
     },
@@ -29,5 +29,5 @@
     }
   },
   "tags": [],
-  "implicitDependencies": ["frontend-lobebar-angular"]
+  "implicitDependencies": ["frontend-lb-nx"]
 }

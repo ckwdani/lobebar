@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'frontend-lobebar-angular',
+  displayName: 'frontend-lb-nx',
   preset: './jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: './coverage/frontend-lobebar-angular',
+  coverageDirectory: './coverage/frontend-lb-nx',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',
