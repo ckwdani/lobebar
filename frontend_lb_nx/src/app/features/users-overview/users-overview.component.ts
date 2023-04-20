@@ -1,23 +1,19 @@
 import { Component } from '@angular/core';
+import {User} from "@frontend-lb-nx/shared/entities";
 
-export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
-}
 
-const ELEMENT_DATA: PeriodicElement[] = [
-  {position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H'},
-  {position: 2, name: 'Helium', weight: 4.0026, symbol: 'He'},
-  {position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li'},
-  {position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be'},
-  {position: 5, name: 'Boron', weight: 10.811, symbol: 'B'},
-  {position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C'},
-  {position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N'},
-  {position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O'},
-  {position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F'},
-  {position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne'},
+const ELEMENT_DATA: User[] = [
+  {id: "asdasdas", name: 'Hydrogen', roles:  [], password: 'H', email:"xassda@assadl.de",
+  firstname: "Guenther", lastname: "Fischer", titel: "Master Of Splines", hygienepass: true, telephone: 213123313},
+  {id: "asdasdas", name: 'Hydrogen', roles:  [], password: 'H', email:"casdax@assadl.de",
+    firstname: "ASDASD", lastname: "asasdasd", titel: "Master Of Splines", hygienepass: true, telephone: 213343},
+  {id: "asdasdas", name: 'Hydrogen', roles:  [], password: 'H', email:"hdfgd@assadl.de",
+    firstname: "adssadsa", lastname: "asdasd", titel: "Master Of Splines", hygienepass: true, telephone: 133123313},
+  {id: "asdasdas", name: 'Hydrogen', roles:  [], password: 'H', email:"asadsx@assadl.de",
+    firstname: "ascasca", lastname: "xasdas", titel: "Master Of Splines", hygienepass: true, telephone: 41123313},
+  {id: "asdasdas", name: 'Hydrogen', roles:  [], password: 'H', email:"casda@assadl.de",
+    firstname: "Guenther", lastname: "Fischer", titel: "Master Of Splines", hygienepass: true, telephone: 623313},
+
 ];
 
 @Component({
@@ -26,6 +22,10 @@ const ELEMENT_DATA: PeriodicElement[] = [
   styleUrls: ['./users-overview.component.scss'],
 })
 export class UsersOverviewComponent {
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol', 'punkte', 'change'];
+  displayedColumns: string[] = ['position', 'name', 'email', 'telefonnr', 'fullname', 'punkte', 'change'];
   dataSource = ELEMENT_DATA;
+
+  checkNumPersons(numPersReq: number, numPers: number): boolean{
+    return numPers >= numPersReq;
+  }
 }
