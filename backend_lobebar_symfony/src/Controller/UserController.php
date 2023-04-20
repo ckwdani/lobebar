@@ -63,4 +63,13 @@ class UserController extends AbstractController
         $this->doctrine->getManager()->persist($user);
         $this->doctrine->getManager()->flush();
     }
+
+    #[Route("/users", methods: ["GET"])]
+    public function getAllUsers(){
+
+        $this->denyAccessUnlessGranted('ROLE_ADMIN', null, "User tried to access a page without having ROLE_ADMIN");
+
+        $users = $this->userRepo->findAll();
+        return JsonResponse::fromJsonString($this->serializer->serialize($users, 'json', SerializationContext::create()->setGroups(["Default"])));
+    }
 }

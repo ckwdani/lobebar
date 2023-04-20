@@ -30,6 +30,10 @@ class Shift extends _Base_Entity
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'shifts')]
     private Collection $users;
 
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?Shiftype $type = null;
+
     public function __construct()
     {
         parent::__construct();
@@ -130,6 +134,18 @@ class Shift extends _Base_Entity
     public function removeUser(User $user): self
     {
         $this->users->removeElement($user);
+
+        return $this;
+    }
+
+    public function getType(): ?Shiftype
+    {
+        return $this->type;
+    }
+
+    public function setType(?Shiftype $type): self
+    {
+        $this->type = $type;
 
         return $this;
     }
