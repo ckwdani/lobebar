@@ -35,37 +35,24 @@ const shiftType:  ShiftType={
   id: "asdassadsd", name:"Barschicht"
 }
 
+const shiftType2:  ShiftType={
+  id: "asdassadsdd", name:"Security"
+}
+
 const ELEMENT_DATA: Shift[] = [
   { description: 'Hydrogen', starttime: new Date(Date.now()), endtime: new Date(Date.now()),headcount: 2, orgEvent: orgEvent, users: [], shiftType: shiftType},
   { description: 'Helium',starttime: new Date(Date.now()), endtime: new Date(Date.now()),headcount: 2, orgEvent: orgEvent, users: [user1, user2], shiftType},
+  { description: 'ASDASD', starttime: new Date(Date.now()), endtime: new Date(Date.now()),headcount: 2, orgEvent: orgEvent, users: [], shiftType: shiftType2},
+  { description: 'SDASD',starttime: new Date(Date.now()), endtime: new Date(Date.now()),headcount: 2, orgEvent: orgEvent, users: [user1, user2], shiftType: shiftType2},
 ];
 
+orgEvent.shifts=ELEMENT_DATA
+
 @Component({
-  selector: 'frontend-lb-nx-shift-table',
-  templateUrl: './shift-table.component.html',
-  styleUrls: ['./shift-table.component.scss'],
+  selector: 'frontend-lb-nx-event-overview',
+  templateUrl: './event-overview.component.html',
+  styleUrls: ['./event-overview.component.scss'],
 })
-export class ShiftTableComponent {
-  displayedColumns: string[] = ['name', 'datetime', 'num_persons', 'persons', 'assign'];
-  dataSource = ELEMENT_DATA;
+export class EventOverviewComponent {
 
-  //change the row color
-  checkNumPersons(rowData: Shift): string {
-    const lengthUser = rowData.users?.length ?? 0
-    console.log(lengthUser)
-    if (lengthUser<rowData.headcount) {
-      return "red"
-    } else {
-      return "green"
-    }
-  }
-
-  showCheck(rowData: Shift): boolean {
-    const lengthUser = rowData.users?.length ?? 0
-    return lengthUser<rowData.headcount
-  }
-
-  mapToName(arr: User[]){
-    return arr.map( (u)=> " "+u.name)
-  }
 }

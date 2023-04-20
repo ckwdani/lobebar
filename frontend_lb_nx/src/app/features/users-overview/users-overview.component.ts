@@ -25,7 +25,5 @@ export class UsersOverviewComponent {
   displayedColumns: string[] = ['position', 'name', 'email', 'telefonnr', 'fullname', 'punkte', 'change'];
   dataSource = ELEMENT_DATA;
 
-  checkNumPersons(numPersReq: number, numPers: number): boolean{
-    return numPers >= numPersReq;
-  }
+
 }

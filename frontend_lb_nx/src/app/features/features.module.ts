@@ -8,7 +8,10 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { DialogModule } from '@angular/cdk/dialog';
 import { UsersOverviewComponent } from './users-overview/users-overview.component';
-import {MatTableModule} from "@angular/material/table";
+import { MatTableModule } from '@angular/material/table';
+import { EventOverviewComponent } from './event-overview/event-overview.component';
+import {MatTabsModule} from "@angular/material/tabs";
+import {SharedUiModule} from "@frontend-lb-nx/shared/ui";
 
 @NgModule({
   declarations: [
@@ -16,6 +19,7 @@ import {MatTableModule} from "@angular/material/table";
     OwnUserOverviewComponent,
     DetailsWithEditComponent,
     UsersOverviewComponent,
+    EventOverviewComponent,
   ],
   exports: [DashboardComponent, OwnUserOverviewComponent],
   imports: [
@@ -25,6 +29,8 @@ import {MatTableModule} from "@angular/material/table";
     DialogModule,
     CommonModule,
     MatTableModule,
+    MatTabsModule,
+    SharedUiModule,
   ],
 })
 export class FeaturesModule {}

@@ -5,9 +5,10 @@ import { MatInputModule } from '@angular/material/input';
 import { FormsModule } from '@angular/forms';
 import { ShiftTableComponent } from './shift-table/shift-table.component';
 import {MatTableModule} from "@angular/material/table";
+import {MatIconModule} from "@angular/material/icon";
 
 @NgModule({
-  imports: [CommonModule, MatInputModule, FormsModule, MatTableModule],
+    imports: [CommonModule, MatInputModule, FormsModule, MatTableModule, MatIconModule],
   declarations: [SingleFormDialogComponent, ShiftTableComponent],
   exports: [SingleFormDialogComponent, ShiftTableComponent],
 })

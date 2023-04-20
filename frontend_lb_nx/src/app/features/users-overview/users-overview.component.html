@@ -3,7 +3,7 @@
 
     <!--- Note that these columns can be defined in any order.
           The actual rendered columns are set as a property on the row definition" -->
-
+    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <!-- Position Column -->
     <ng-container matColumnDef="position">
         <th mat-header-cell *matHeaderCellDef> No. </th>
@@ -45,7 +45,6 @@
         </td>
     </ng-container>
 
-    <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="{gray: row.position === 1}"></tr>
 </table>
 
