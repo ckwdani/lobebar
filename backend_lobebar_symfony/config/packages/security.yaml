@@ -30,6 +30,9 @@ security:
             stateless: true
             jwt: ~
 
+    role_hierarchy:
+        ROLE_MOD: ROLE_USER
+        ROLE_ADMIN: [ ROLE_EDITOR ]
     access_control:
         - { path: ^/api/login, roles: PUBLIC_ACCESS }
         - { path: ^/api,       roles: IS_AUTHENTICATED_FULLY }

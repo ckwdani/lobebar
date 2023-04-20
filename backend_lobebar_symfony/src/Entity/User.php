@@ -6,6 +6,9 @@ use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
+use JMS\Serializer\Annotation as Serializer;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\ReadOnlyProperty;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Component\Uid\Uuid;
 use Doctrine\ORM\Mapping as ORM;
@@ -28,9 +31,10 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
      * @var string The hashed password
      */
     #[ORM\Column]
+    #[Serializer\Groups(groups: ["deser" => "deser"])]
     private ?string $password = null;
 
-    #[ORM\Column(type: Types::ASCII_STRING, nullable: true)]
+    #[ORM\Column(type: Types::ASCII_STRING, unique: true)]
     private $email = null;
 
     #[ORM\Column(length: 255)]
@@ -57,6 +61,10 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: SnackUsed::class, cascade: ["remove"], orphanRemoval: true)]
     private Collection $snacksUsed;
 
+    #[ORM\Column]
+    #[ReadOnlyProperty(readOnly: true)]
+    private ?bool $isApproved = false;
+
     public function __construct()
     {
         parent::__construct();
@@ -65,47 +73,26 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
         $this->snacksUsed = new ArrayCollection();
     }
 
+    public function getUsername(): ?string{return $this->username;}
 
-//    public function getUsername(): ?string
-//    {
-//        return $this->username;
-//    }
-//
-//    public function setUsername(string $username): self
-//    {
-//        $this->username = $username;
-//
-//        return $this;
-//    }
+    public function setUsername(string $username): self{$this->username = $username;return $this;}
 
     /**
      * A visual identifier that represents this user.
      *
      * @see UserInterface
      */
-    public function getUserIdentifier(): string
-    {
-        return (string) $this->username;
-    }
-
+    public function getUserIdentifier(): string{return (string) $this->username;}
     /**
      * @see UserInterface
      */
-    public function getRoles(): array
-    {
-        $roles = $this->roles;
+    public function getRoles(): array{$roles = $this->roles;
         // guarantee every user at least has ROLE_USER
         $roles[] = 'ROLE_USER';
-
         return array_unique($roles);
     }
 
-    public function setRoles(array $roles): self
-    {
-        $this->roles = $roles;
-
-        return $this;
-    }
+    public function setRoles(array $roles): self{$this->roles = $roles;return $this;}
 
     /**
      * @see PasswordAuthenticatedUserInterface
@@ -131,77 +118,42 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
         // $this->plainPassword = null;
     }
 
-//    public function getEmail()
-//    {
-//        return $this->email;
-//    }
-//
-//    public function setEmail($email): self
-//    {
-//        $this->email = $email;
-//
-//        return $this;
-//    }
-//
-//    public function getFirstname(): ?string
-//    {
-//        return $this->firstname;
-//    }
-//
-//    public function setFirstname(string $firstname): self
-//    {
-//        $this->firstname = $firstname;
-//
-//        return $this;
-//    }
-//
-//    public function getLastname(): ?string
-//    {
-//        return $this->lastname;
-//    }
-//
-//    public function setLastname(string $lastname): self
-//    {
-//        $this->lastname = $lastname;
-//
-//        return $this;
-//    }
-//
-//    public function getTitel(): ?string
-//    {
-//        return $this->titel;
-//    }
-//
-//    public function setTitel(string $titel): self
-//    {
-//        $this->titel = $titel;
-//
-//        return $this;
-//    }
-//
-//    public function isHygienepass(): ?bool
-//    {
-//        return $this->hygienepass;
-//    }
-//
-//    public function setHygienepass(bool $hygienepass): self
-//    {
-//        $this->hygienepass = $hygienepass;
-//
-//        return $this;
-//    }
-//
-//    public function getTelephone(): ?string
-//    {
-//        return $this->telephone;
-//    }
-//
-//    public function setTelephone(?string $telephone): self
-//    {
-//        $this->telephone = $telephone;
-//
-//        return $this;
-//    }
+    public function getEmail()
+    {
+        return $this->email;
+    }
+
+    public function setEmail($email): self
+    {
+        $this->email = $email;
+
+        return $this;
+    }
+
+    public function getFirstname(): ?string
+    {
+        return $this->firstname;
+    }
+
+    public function setFirstname(string $firstname): self{$this->firstname = $firstname;return $this;}
+
+    public function getLastname(): ?string{return $this->lastname;}
+    public function setLastname(string $lastname): self{$this->lastname = $lastname;return $this;}
+
+    public function getTitel(): ?string
+    {
+        return $this->titel;
+    }
+
+    public function setTitel(string $titel): self{$this->titel = $titel; return $this;}
+
+    public function isHygienepass(): ?bool{return $this->hygienepass;}
+
+    public function setHygienepass(bool $hygienepass): self{$this->hygienepass = $hygienepass;return $this;}
+
+    public function getTelephone(): ?string{return $this->telephone;}
+
+    public function setTelephone(?string $telephone): self{$this->telephone = $telephone;return $this;}
 
 /**
  * @return Collection<int, Shift>
@@ -287,6 +239,17 @@ public function removeSnacksUsed(SnackUsed $snacksUsed): self
         }
     }
 
+    return $this;
+}
+
+public function isIsApproved(): ?bool
+{
+    return $this->isApproved;
+}
+
+public function setIsApproved(): self
+{
+    $this->isApproved = true;
     return $this;
 }
 }
