@@ -8,6 +8,9 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { FeaturesModule } from './features/features.module';
+import {CalendarModule, DateAdapter} from "angular-calendar";
+//import {CalendarModule, DateAdapter} from "angular-calendar";
+import {adapterFactory} from "angular-calendar/date-adapters/date-fns";
 
 @NgModule({
   declarations: [AppComponent],
@@ -19,6 +22,10 @@ import { FeaturesModule } from './features/features.module';
     MatButtonModule,
     MatIconModule,
     FeaturesModule,
+    CalendarModule.forRoot({
+      provide: DateAdapter,
+      useFactory: adapterFactory,
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

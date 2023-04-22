@@ -10,8 +10,12 @@ import { DialogModule } from '@angular/cdk/dialog';
 import { UsersOverviewComponent } from './users-overview/users-overview.component';
 import { MatTableModule } from '@angular/material/table';
 import { EventOverviewComponent } from './event-overview/event-overview.component';
-import {MatTabsModule} from "@angular/material/tabs";
-import {SharedUiModule} from "@frontend-lb-nx/shared/ui";
+import { MatTabsModule } from '@angular/material/tabs';
+import { SharedUiModule } from '@frontend-lb-nx/shared/ui';
+import { CalendarComponent } from './calendar/calendar.component';
+import * as Globalize from 'globalize/dist/globalize';
+import {CalendarCommonModule, CalendarMonthModule} from 'angular-calendar';
+import {CalendarHeaderComponent} from "./calendar/calendar-header/calender-header.component";
 
 @NgModule({
   declarations: [
@@ -20,6 +24,8 @@ import {SharedUiModule} from "@frontend-lb-nx/shared/ui";
     DetailsWithEditComponent,
     UsersOverviewComponent,
     EventOverviewComponent,
+    CalendarComponent,
+    CalendarHeaderComponent,
   ],
   exports: [DashboardComponent, OwnUserOverviewComponent],
   imports: [
@@ -31,6 +37,8 @@ import {SharedUiModule} from "@frontend-lb-nx/shared/ui";
     MatTableModule,
     MatTabsModule,
     SharedUiModule,
+    CalendarMonthModule,
+    CalendarCommonModule,
   ],
 })
 export class FeaturesModule {}
