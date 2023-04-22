@@ -2,9 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\_Base_Entity;
 use App\Entity\SerializationListeners\EventSerializationListener;
 use App\Entity\SerializationListeners\ProfileSerializationListener;
 use App\Entity\User;
+use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\Persistence\ManagerRegistry;
 use JMS\Serializer\EventDispatcher\EventDispatcher;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
@@ -44,6 +46,17 @@ class _Base_Controller extends AbstractController
                     ->enableMaxDepthChecks();
             })
             ->build();
+    }
+
+
+    public function persistFlushConflict(_Base_Entity $entity){
+        $em = $this->doctrine->getManager();
+        $em->persist($entity);
+        try {
+            $em->flush();
+        }catch (UniqueConstraintViolationException $exception){
+            throw new \Exception("There was an unique constraint violation", code: 409);
+        }
     }
 
 }

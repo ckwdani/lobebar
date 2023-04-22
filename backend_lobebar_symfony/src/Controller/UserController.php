@@ -35,20 +35,20 @@ class UserController extends _Base_Controller
          */
         $user = $this->serializer->deserialize($request->getContent(), User::class, "json", DeserializationContext::create()->setGroups(["DeSer", "Default"]));
         $user->setPassword($encoder->hashPassword($user, $user->getPassword()));
-            $em = $this->doctrine->getManager();
-            $em->persist($user);
+        $em = $this->doctrine->getManager();
+        $em->persist($user);
 
-            try {
-                $em->flush();
-            }catch (UniqueConstraintViolationException $e){
+        try {
+            $em->flush();
+        }catch (UniqueConstraintViolationException $e){
 
 
-                // if an UniqueConstraintVialotion is thrown, this finds wheter its because email or user
-                $otherusersName = $this->userRepo->findBy(["username" => $user->getUsername()]);
-                $otherusersMail = $this->userRepo->findBy(['email' => $user->getEmail()]);
-                return $this->json(["email" => !empty($otherusersMail), "username" => !empty($otherusersName)], status: 409);
-
-            }
+            // if an UniqueConstraintVialotion is thrown, this finds wheter its because email or user
+            $otherusersName = $this->userRepo->findBy(["username" => $user->getUsername()]);
+            $otherusersMail = $this->userRepo->findBy(['email' => $user->getEmail()]);
+            return $this->json(["email" => !empty($otherusersMail), "username" => !empty($otherusersName)], status: 409);
+        }
+        $user->initCollsIfNull();
 
         return JsonResponse::fromJsonString($this->serializer->serialize($user, 'json'));
     }
@@ -58,6 +58,7 @@ class UserController extends _Base_Controller
     #[Route("/approve/{id}", methods: ["PUT"])]
     public function approveUser($id){
         $this->denyAccessUnlessGranted("ROLE_MOD");
+
 
         $user = $this->userRepo->find(Uuid::fromString($id));
         $user->setIsApproved();

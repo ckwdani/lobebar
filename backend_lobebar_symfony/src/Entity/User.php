@@ -78,8 +78,19 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     }
 
 
+
+
+
+    public function initCollsIfNull(){
+        $this->shifts = empty($this->shifts) ?  new ArrayCollection() : $this->shifts;
+        $this->doneExtrawork = empty($this->doneExtrawork) ?  new ArrayCollection() : $this->doneExtrawork;
+        $this->snacksUsed = empty($this->snacksUsed) ?  new ArrayCollection() : $this->snacksUsed;
+    }
+
+
+
     #[Serializer\VirtualProperty(name: "balance")]
-    #[Serializer\Groups(groups: ["list", "details"])]
+    //#[Serializer\Groups(groups: ["list", "details"])]
     public function getBalance(): int
     {
         $positive = $this->shifts->count()  + (int) $this->doneExtrawork->map(function (DoneExtraWork $extraWork) {
@@ -93,8 +104,9 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
         return $positive - $negative;
     }
 
+
     #[Serializer\VirtualProperty(name: "xp")]
-    #[Serializer\Groups(groups: ["list", "details"])]
+    //#[Serializer\Groups(groups: ["list", "details"])]
     public function getXPScore(): int
     {
         $positive = $this->shifts->count()  + (int) $this->doneExtrawork->map(function (DoneExtraWork $extraWork) {

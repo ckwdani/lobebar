@@ -6,12 +6,9 @@ use App\Repository\SnackUsedRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: SnackUsedRepository::class)]
-class SnackUsed
+class SnackUsed extends _Base_Entity
 {
-    #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
-    private ?int $id = null;
+
 
     #[ORM\ManyToOne(inversedBy: 'snacksUsed')]
     #[ORM\JoinColumn(nullable: false)]
@@ -21,10 +18,6 @@ class SnackUsed
     #[ORM\JoinColumn(nullable: false)]
     private ?SnackTypes $snackType = null;
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
 
     public function getUser(): ?User
     {

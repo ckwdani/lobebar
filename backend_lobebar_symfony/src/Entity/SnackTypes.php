@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Exclude;
 
 #[ORM\Entity(repositoryClass: SnackTypesRepository::class)]
 class SnackTypes extends _Base_Entity
@@ -18,7 +19,9 @@ class SnackTypes extends _Base_Entity
     #[ORM\Column(type: Types::SMALLINT)]
     private ?int $value = null;
 
+
     #[ORM\OneToMany(mappedBy: 'snackType', targetEntity: SnackUsed::class, cascade: ["remove"], orphanRemoval: true)]
+    #[Exclude]
     private Collection $snacksUsed;
 
     public function __construct()
