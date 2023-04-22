@@ -2,7 +2,13 @@ import { Component } from '@angular/core';
 import {OrgEvent, Shift, ShiftType, User} from "@frontend-lb-nx/shared/entities";
 
 const orgEvent: OrgEvent={
-  id: "asdsad", name: "trollEvent", start: new Date(Date.now()), end: new Date(Date.now()), shifts: [],
+  id: "asdsad", name: "Plattenbauromantik", start: new Date(Date.now()), end: new Date(Date.now()), shifts: [],
+}
+const orgEvent1: OrgEvent={
+  id: "asdsad", name: "Dartabend", start: new Date(Date.now()), end: new Date(Date.now()), shifts: [],
+}
+const orgEvent2: OrgEvent={
+  id: "asdsad", name: "Solitresen", start: new Date(Date.now()), end: new Date(Date.now()), shifts: [],
 }
 
 const user1: User={
@@ -47,6 +53,8 @@ const ELEMENT_DATA: Shift[] = [
 ];
 
 orgEvent.shifts=ELEMENT_DATA
+orgEvent1.shifts=ELEMENT_DATA
+orgEvent2.shifts=ELEMENT_DATA
 
 @Component({
   selector: 'frontend-lb-nx-event-overview',
@@ -54,5 +62,22 @@ orgEvent.shifts=ELEMENT_DATA
   styleUrls: ['./event-overview.component.scss'],
 })
 export class EventOverviewComponent {
+  dataSource=orgEvent.shifts
+  orgEvent=orgEvent
+  orgEvents = [orgEvent, orgEvent1, orgEvent2]
+
+  splitShiftsByType(shifts: Shift[]): Shift[][] {
+    const shiftsByType: {[key: string]: Shift[]} = {};
+
+    for (const shift of shifts) {
+      if (!shiftsByType[shift.shiftType.name]) {
+        shiftsByType[shift.shiftType.name] = [];
+      }
+      shiftsByType[shift.shiftType.name].push(shift);
+    }
+    console.log(Object.values(shiftsByType))
+    return Object.values(shiftsByType);
+  }
+
 
 }

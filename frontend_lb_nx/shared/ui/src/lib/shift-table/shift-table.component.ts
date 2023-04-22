@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {OrgEvent, Shift, ShiftType, User} from "@frontend-lb-nx/shared/entities";
 
 const orgEvent: OrgEvent={
@@ -46,6 +46,7 @@ const ELEMENT_DATA: Shift[] = [
   styleUrls: ['./shift-table.component.scss'],
 })
 export class ShiftTableComponent {
+  @Input() shifts: Shift[] = []
   displayedColumns: string[] = ['name', 'datetime', 'num_persons', 'persons', 'assign'];
   dataSource = ELEMENT_DATA;
 
