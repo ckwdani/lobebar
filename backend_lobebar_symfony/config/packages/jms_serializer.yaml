@@ -1,4 +1,7 @@
 jms_serializer:
+    object_constructors:
+        doctrine:
+            fallback_strategy: "fallback"
     visitors:
         xml_serialization:
             format_output: '%kernel.debug%'

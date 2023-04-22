@@ -17,14 +17,15 @@ use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
 
-class UserController extends AbstractController
+class UserController extends _Base_Controller
 {
 
     private UserRepository $userRepo;
 
-    public function __construct(private ManagerRegistry $doctrine, private SerializerInterface $serializer)
+    public function __construct(ManagerRegistry $doctrine)
     {
-        $this->userRepo = $this->doctrine->getRepository(User::class);
+        parent::__construct($doctrine);
+        $this->userRepo = $doctrine->getRepository(User::class);
     }
 
     #[Route("/register", methods: ["POST"])]
@@ -32,7 +33,7 @@ class UserController extends AbstractController
         /**
          * @var $user User
          */
-        $user = $this->serializer->deserialize($request->getContent(), User::class, "json", DeserializationContext::create()->setGroups(["deser", "Default"]));
+        $user = $this->serializer->deserialize($request->getContent(), User::class, "json", DeserializationContext::create()->setGroups(["DeSer", "Default"]));
         $user->setPassword($encoder->hashPassword($user, $user->getPassword()));
             $em = $this->doctrine->getManager();
             $em->persist($user);
@@ -70,6 +71,6 @@ class UserController extends AbstractController
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, "User tried to access a page without having ROLE_ADMIN");
 
         $users = $this->userRepo->findAll();
-        return JsonResponse::fromJsonString($this->serializer->serialize($users, 'json', SerializationContext::create()->setGroups(["Default"])));
+        return JsonResponse::fromJsonString($this->serializer->serialize($users, 'json'));
     }
 }

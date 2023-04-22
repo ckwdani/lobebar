@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 class SnackTypes extends _Base_Entity
 {
 
-    #[ORM\Column(length: 255)]
+    #[ORM\Column(length: 255, unique: true)]
     private ?string $name = null;
 
     #[ORM\Column(type: Types::SMALLINT)]

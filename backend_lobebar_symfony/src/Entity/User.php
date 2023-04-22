@@ -31,11 +31,11 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Serializer\Groups(groups: ["deser" => "deser"])]
+    #[Serializer\Groups(groups: ["DeSer" => "DeSer"])]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::ASCII_STRING, unique: true)]
-    private $email = null;
+    private ?string $email = null;
 
     #[ORM\Column(length: 255)]
     private ?string $firstname = null;
@@ -52,13 +52,17 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     #[ORM\Column(length: 20, nullable: true)]
     private ?string $telephone = null;
 
+
     #[ORM\ManyToMany(targetEntity: Shift::class, mappedBy: 'users')]
+    #[Serializer\Groups(groups: ["details"])]
     private Collection $shifts;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: DoneExtraWork::class, cascade: ["remove"], orphanRemoval: true)]
+    #[Serializer\Groups(groups: ["details"])]
     private Collection $doneExtrawork;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: SnackUsed::class, cascade: ["remove"], orphanRemoval: true)]
+    #[Serializer\Groups(groups: ["details"])]
     private Collection $snacksUsed;
 
     #[ORM\Column]
@@ -72,6 +76,35 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
         $this->doneExtrawork = new ArrayCollection();
         $this->snacksUsed = new ArrayCollection();
     }
+
+
+    #[Serializer\VirtualProperty(name: "balance")]
+    #[Serializer\Groups(groups: ["list", "details"])]
+    public function getBalance(): int
+    {
+        $positive = $this->shifts->count()  + (int) $this->doneExtrawork->map(function (DoneExtraWork $extraWork) {
+            return $extraWork->getExtraWorkType()->getValue();
+        })->reduce(function ($carry, $value) {
+                return $carry + $value;
+            }, 0);
+        $negative =  (int) $this->snacksUsed->map(function (SnackUsed $snackUsed) {return $snackUsed->getSnackType()->getValue();})->reduce(function ($carry, $value) {
+            return $carry + $value;
+        }, 0);
+        return $positive - $negative;
+    }
+
+    #[Serializer\VirtualProperty(name: "xp")]
+    #[Serializer\Groups(groups: ["list", "details"])]
+    public function getXPScore(): int
+    {
+        $positive = $this->shifts->count()  + (int) $this->doneExtrawork->map(function (DoneExtraWork $extraWork) {
+            return $extraWork->getExtraWorkType()->getValue();
+        })->reduce(function ($carry, $value) {
+                return $carry + $value;
+            }, 0);
+        return $positive * 14;
+    }
+
 
     public function getUsername(): ?string{return $this->username;}
 
