@@ -47,13 +47,19 @@ const ELEMENT_DATA: Shift[] = [
 })
 export class ShiftTableComponent {
   @Input() shifts: Shift[] = []
-  displayedColumns: string[] = ['name', 'datetime', 'num_persons', 'persons', 'assign'];
+  @Input() orgEvent: OrgEvent={
+    name: "",
+    start: new Date(),
+    end: new Date(),
+    shifts: this.shifts
+  }
+  @Input() showEditDelete=false
+  displayedColumns: string[] = ['datetime', 'description', 'num_persons', 'persons', 'assign'];
   dataSource = ELEMENT_DATA;
 
   //change the row color
   checkNumPersons(rowData: Shift): string {
     const lengthUser = rowData.users?.length ?? 0
-    console.log(lengthUser)
     if (lengthUser<rowData.headcount) {
       return "red"
     } else {
@@ -64,6 +70,17 @@ export class ShiftTableComponent {
   showCheck(rowData: Shift): boolean {
     const lengthUser = rowData.users?.length ?? 0
     return lengthUser<rowData.headcount
+  }
+
+  deleteShift(rowData: Shift){
+    const index=ELEMENT_DATA.indexOf(rowData)
+    ELEMENT_DATA.splice(index,1)
+    const index2= this.shifts.indexOf(rowData)
+    this.shifts.splice(index2, 1)
+    console.log(this.shifts)
+    const index3 = this.orgEvent.shifts.indexOf(rowData)
+    this.orgEvent.shifts.splice(index3, 1)
+
   }
 
   mapToName(arr: User[]){

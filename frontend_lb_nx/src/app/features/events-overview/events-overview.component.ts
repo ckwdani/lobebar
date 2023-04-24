@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 import {OrgEvent, Shift, ShiftType, User} from "@frontend-lb-nx/shared/entities";
 
 const orgEvent: OrgEvent={
@@ -57,27 +57,16 @@ orgEvent1.shifts=ELEMENT_DATA
 orgEvent2.shifts=ELEMENT_DATA
 
 @Component({
-  selector: 'frontend-lb-nx-event-overview',
-  templateUrl: './event-overview.component.html',
-  styleUrls: ['./event-overview.component.scss'],
+  selector: 'frontend-lb-nx-events-overview',
+  templateUrl: './events-overview.component.html',
+  styleUrls: ['./events-overview.component.scss'],
 })
-export class EventOverviewComponent {
+export class EventsOverviewComponent {
   dataSource=orgEvent.shifts
-  orgEvent=orgEvent
-  orgEvents = [orgEvent, orgEvent1, orgEvent2]
+  orgEventsAss = [orgEvent, orgEvent1, orgEvent2]
+  @Input() orgEvents: OrgEvent[]=this.orgEventsAss
 
-  splitShiftsByType(shifts: Shift[]): Shift[][] {
-    const shiftsByType: {[key: string]: Shift[]} = {};
 
-    for (const shift of shifts) {
-      if (!shiftsByType[shift.shiftType.name]) {
-        shiftsByType[shift.shiftType.name] = [];
-      }
-      shiftsByType[shift.shiftType.name].push(shift);
-    }
-    console.log(Object.values(shiftsByType))
-    return Object.values(shiftsByType);
-  }
 
 
 }

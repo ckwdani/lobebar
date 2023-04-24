@@ -9,6 +9,7 @@
   },
   "private": true,
   "dependencies": {
+    "@angular-material-components/datetime-picker": "^9.0.0",
     "@angular/animations": "~15.2.0",
     "@angular/cdk": "^15.2.7",
     "@angular/common": "~15.2.0",
@@ -19,6 +20,7 @@
     "@angular/platform-browser": "~15.2.0",
     "@angular/platform-browser-dynamic": "~15.2.0",
     "@angular/router": "~15.2.0",
+    "@mat-datetimepicker/core": "^11.0.3",
     "@nrwl/angular": "15.9.2",
     "angular-calendar": "^0.31.0",
     "date-fns": "^2.29.3",

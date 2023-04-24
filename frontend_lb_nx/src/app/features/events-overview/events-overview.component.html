@@ -1,0 +1,15 @@
+<mat-tab-group>
+    <mat-tab label="Bevorstehende Veranstaltungen">
+        <br>
+        <div class="flex justify-center">
+            <button routerLink="/event_add" mat-icon-button color="primary"><mat-icon>add</mat-icon></button>
+        </div>
+        <br>
+        <div *ngFor="let event of orgEvents">
+            <frontend-lb-nx-event-overview [orgEvent]="event"></frontend-lb-nx-event-overview>
+        </div>
+
+    </mat-tab>
+    <mat-tab label="Deine kommenden Schichten"></mat-tab>
+    <mat-tab label="Vergangene Schichten"></mat-tab>
+</mat-tab-group>
