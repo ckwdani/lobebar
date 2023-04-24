@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\SnackTypes;
+use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
@@ -37,6 +38,35 @@ class SnackTypesRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+
+    public function countSnacksUsedByDateRange(?int $start = null, ?int $end = null, ?User $user = null): array
+    {
+        $start += 7200;
+        $end += 7200;
+        $qb = $this->createQueryBuilder('s');
+        if(!empty($user)){
+            $qb->andWhere($qb->expr()->eq("e.user", ":userId"))
+                ->setParameter("userId", $user->getId()->toBinary());
+        }
+        $qb
+            ->select('s, COUNT(u.id) as usedCount')
+            ->leftJoin('s.snacksUsed', 'u');
+        if(!empty($start) && !empty($end)){
+            $qb->andWhere($qb->expr()->between('u.date', ':start', ':end'))
+                ->groupBy('s.id')
+                ->setParameter('start', (new \DateTime())->setTimestamp($start))
+                ->setParameter('end', (new \DateTime())->setTimestamp($end));
+        }
+        $result = $qb->getQuery()->getResult();
+        $result = array_map(function (array $used) {
+            /** @var SnackTypes $type */
+            $type = $used[0];
+            $type->usedCount = $used["usedCount"];
+            return $type;
+        }, $result);
+        return $result;
     }
 
 //    /**

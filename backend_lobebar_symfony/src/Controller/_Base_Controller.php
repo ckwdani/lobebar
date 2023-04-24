@@ -40,12 +40,16 @@ class _Base_Controller extends AbstractController
             ->addDefaultHandlers()
             // this funny thing adds context before creating any serializer
             ->setSerializationContextFactory(function () {
-                return SerializationContext::create()
-                    ->setSerializeNull(true)
-                    ->setGroups(["Default"])
-                    ->enableMaxDepthChecks();
+                return self::createSerializationContextWithGroups();
             })
             ->build();
+    }
+
+    static function createSerializationContextWithGroups(array $groups = ["Default"]){
+        return SerializationContext::create()
+            ->setSerializeNull(true)
+            ->setGroups($groups)
+            ->enableMaxDepthChecks();
     }
 
 

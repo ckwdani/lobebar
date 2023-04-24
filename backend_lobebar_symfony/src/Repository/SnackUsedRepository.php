@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\SnackUsed;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use JMS\Serializer\Expression\Expression;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @extends ServiceEntityRepository<SnackUsed>
@@ -39,20 +42,32 @@ class SnackUsedRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return SnackUsed[] Returns an array of SnackUsed objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('s')
-//            ->andWhere('s.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('s.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    /**
+     * @return SnackUsed[] Returns an array of SnackUsed objects
+     */
+    public function findInTimeOrFull(?int $start=null, ?int $end=null, ?Uuid $userId = null): array
+    {
+        $start += 7200;
+        $end += 7200;
+        $qb = $this->createQueryBuilder('e');
+        if(!empty($userId)){
+            $qb->andWhere($qb->expr()->eq("e.user", ":userId"))
+                ->setParameter("userId", $userId->toBinary());
+        }
+        if(!empty($start) && !empty($end)) {
+            $startDateTime = DateTime::createFromFormat('U', $start);
+            $endDateTime = DateTime::createFromFormat('U', $end);
+            $qb
+                ->andWhere('e.date >= :start')
+                ->andWhere('e.date <= :end')
+                ->setParameter('start', $startDateTime)
+                ->setParameter('end', $endDateTime);
+            return $qb->getQuery()->getResult();
+        }else{
+            return $qb->getQuery()->getResult();
+        }
+
+    }
 
 //    public function findOneBySomeField($value): ?SnackUsed
 //    {

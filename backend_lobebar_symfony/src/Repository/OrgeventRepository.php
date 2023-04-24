@@ -39,6 +39,19 @@ class OrgeventRepository extends ServiceEntityRepository
         }
     }
 
+
+    public function getEventsTimed(?int $start = null, ?int $end = null){
+        $start += 7200;
+        $end += 7200;
+        $qb = $this->createQueryBuilder('s');
+        if(!empty($start) && !empty($end)){
+            $qb->andWhere($qb->expr()->between('s.start', ':start', ':end'))
+                ->setParameter('start', (new \DateTime())->setTimestamp($start))
+                ->setParameter('end', (new \DateTime())->setTimestamp($end));
+        }
+        return $qb->getQuery()->getResult();
+    }
+
 //    /**
 //     * @return Orgevent[] Returns an array of Orgevent objects
 //     */

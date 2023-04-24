@@ -8,7 +8,10 @@ use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Groups;
 
+
+const WITH_USED_COUNT= "usedCount";
 #[ORM\Entity(repositoryClass: SnackTypesRepository::class)]
 class SnackTypes extends _Base_Entity
 {
@@ -23,6 +26,9 @@ class SnackTypes extends _Base_Entity
     #[ORM\OneToMany(mappedBy: 'snackType', targetEntity: SnackUsed::class, cascade: ["remove"], orphanRemoval: true)]
     #[Exclude]
     private Collection $snacksUsed;
+
+    #[Groups(groups: [WITH_USED_COUNT])]
+    public int $usedCount = 0;
 
     public function __construct()
     {

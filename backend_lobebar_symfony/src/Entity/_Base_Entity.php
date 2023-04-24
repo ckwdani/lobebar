@@ -13,6 +13,7 @@ use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Component\Uid\Uuid;
 
 #[MappedSuperclass]
+#[ORM\HasLifecycleCallbacks]
 class _Base_Entity
 {
 

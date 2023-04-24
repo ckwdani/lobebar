@@ -12,8 +12,9 @@ class SnackVoter extends Voter
 {
 
     const ADD_SNACK_USE = "add_snack_use";
+    const SEE_USED = "see_all_used";
 
-    const ATTR_ARR = [self::ADD_SNACK_USE];
+    const ATTR_ARR = [self::ADD_SNACK_USE, self::SEE_USED];
 
     public function __construct(private Security $security) {}
 
@@ -34,6 +35,7 @@ class SnackVoter extends Voter
         // Default to denying access
         switch ($attribute){
             case self::ADD_SNACK_USE: return $this->canAddUsedSnack($user, $subject);
+            case self::SEE_USED: return $this->canAddUsedSnack($user, $subject);
         }
         return false;
 

@@ -7,7 +7,10 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Groups;
+use JMS\Serializer\Annotation\MaxDepth;
 
+const WITH_DETAILED_SHIFTS = "detailed_shifts";
 #[ORM\Entity(repositoryClass: OrgeventRepository::class)]
 #[ORM\CheckConstraints()]
 class Orgevent extends _Base_Entity
@@ -24,6 +27,8 @@ class Orgevent extends _Base_Entity
     private ?\DateTimeInterface $end = null;
 
     #[ORM\OneToMany(mappedBy: 'orgevent', targetEntity: Shift::class, cascade: ["remove"], orphanRemoval: true)]
+    #[Groups(groups: [WITH_DETAILED_SHIFTS])]
+    #[MaxDepth(2)]
     private Collection $shifts;
 
     public function __construct()
