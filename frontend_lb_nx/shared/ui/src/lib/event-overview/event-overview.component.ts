@@ -18,17 +18,18 @@ export class EventOverviewComponent {
   shiftType: ShiftType={
   id: "",
   name: "",
+    value: 0
   }
 
   selectedShiftType= this.shiftType
 
   shiftTypes: ShiftType[]=[
       {  id: "",
-          name: "Bar",},
+          name: "Bar", value: 0},
       {  id: "",
-          name: "Security"},
+          name: "Security", value: 1},
       {  id: "",
-          name: "Awareness",}
+          name: "Awareness", value: 1}
   ]
 
   model : Shift={
