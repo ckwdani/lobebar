@@ -10,13 +10,14 @@ import {EffectsModule} from "@ngrx/effects";
 import {HttpClientModule} from "@angular/common/http";
 
 @NgModule({
-
   imports: [
       CommonModule,
     HttpClientModule,
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducer),
       EffectsModule.forFeature([AuthEffects])
   ],
-  providers: [BaseCommunicatorService, AuthService, AuthEffects],
+  providers: [BaseCommunicatorService, AuthService, AuthEffects,{ provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig}],
 })
 export class SharedServicesModule {}
+
+

@@ -1,29 +1,44 @@
-<mat-card>
+<mat-card [class.w-full]="isHandset$ | async" [class.registerForm]="(isHandset$ | async) === false">
     <mat-card-content>
         <div id="spinnerdiv" *ngIf="registerState.isLoading">
             <mat-spinner></mat-spinner>
         </div>
         <div *ngIf="!registerState.isLoading">
             <p>Registriere dich jetzt.</p>
-            <mat-form-field appearance="outline" class="full-width-input">
-                <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.name"  placeholder="username" required [disabled]="registerState.isLoggingIn">
+
+            <div class="flex flex-wrap flex-row w-full justify-between">
+                <mat-form-field  appearance="fill" class="min-w-[100px] flex-grow pr-2 pl-2">
+                    <mat-label>Username</mat-label>
+                    <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.username" required
+                           [disabled]="registerState.isLoggingIn">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="min-w-[100px] flex-grow pr-2 pl-2">
+                    <mat-label>Email</mat-label>
+                    <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.email" required
+                           [disabled]="registerState.isLoggingIn">
+                </mat-form-field>
+            </div>
+            <div class="flex flex-wrap flex-row w-full justify-between">
+                <mat-form-field appearance="fill" class="min-w-[100px] flex-grow pr-2 pl-2">
+                    <mat-label>Vorname</mat-label>
+                    <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.firstname" required
+                           [disabled]="registerState.isLoggingIn">
+                </mat-form-field>
+                <mat-form-field appearance="fill" class="min-w-[100px] flex-grow pr-2 pl-2">
+                    <mat-label>Nachname</mat-label>
+                    <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.lastname" required
+                           [disabled]="registerState.isLoggingIn">
+                </mat-form-field>
+            </div>
+            <mat-form-field appearance="fill" class="pl-2 pr-2 w-full">
+                <mat-label>Titel</mat-label>
+                <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.titel" required [disabled]="registerState.isLoggingIn">
             </mat-form-field>
-            <mat-form-field appearance="outline" class="full-width-input">
-                <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.email"  placeholder="email" required [disabled]="registerState.isLoggingIn">
+            <mat-form-field appearance="fill" class="pl-2 pr-2 w-full">
+                <mat-label>Telefonnummer</mat-label>
+                <input (keyup.enter)="register()"  matInput  [(ngModel)]="registerState.user.telephone"  required [disabled]="registerState.isLoggingIn">
             </mat-form-field>
-            <mat-form-field appearance="outline" class="full-width-input">
-                <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.firstname"  placeholder="Vorname" required [disabled]="registerState.isLoggingIn">
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="full-width-input">
-                <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.lastname"  placeholder="Nachname" required [disabled]="registerState.isLoggingIn">
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="full-width-input">
-                <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.titel"  placeholder="Titel" required [disabled]="registerState.isLoggingIn">
-            </mat-form-field>
-            <mat-form-field appearance="outline" class="full-width-input">
-                <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.telephone"  placeholder="Telefonnr" required [disabled]="registerState.isLoggingIn">
-            </mat-form-field>
-            <mat-checkbox><mat-label>
+            <mat-checkbox [(ngModel)]="registerState.user.hygienepass"><mat-label>
                 Hygienepass
             </mat-label></mat-checkbox>
             <mat-form-field appearance="outline" class="full-width-input">
@@ -33,9 +48,7 @@
                 </button>
             </mat-form-field>
             <p *ngIf="registerState.error && !registerState.isLoggingIn" style="color: red">{{registerState.error}}</p>
-            <div><mat-icon matTooltip="Authentication status">{{registerState.isLoggedIn? 'check_circle_outline' : 'all_out'}}</mat-icon>
-                <mat-icon matTooltip="Authorization status">{{registerState.roleAquired? 'fingerprint' : 'all_out'}}</mat-icon></div>
-            <button mat-button (click)="register()" [disabled]="registerState.isLoggingIn || registerState.user.password === '' || registerState.user.email === ''">Login</button>
+            <button mat-button (click)="register()" [disabled]="registerState.isLoggingIn || registerState.user.password === '' || registerState.user.email === '' || !valid">Registrieren</button>
         </div>
     </mat-card-content>
 </mat-card>

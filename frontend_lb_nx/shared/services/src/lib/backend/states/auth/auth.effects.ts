@@ -1,15 +1,17 @@
 import { Injectable } from '@angular/core';
-import { Actions, createEffect, ofType } from '@ngrx/effects';
+import { Actions, createEffect, ofType} from '@ngrx/effects';
 import {catchError, map, concatMap, switchMap} from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
 import * as AuthActions from './auth.actions';
 import {AuthService} from "../../entity-backend-services/auth.service";
 import {Router} from "@angular/router";
+import {createAction} from "@ngrx/store";
 
 const localStorageTokenString = 'lobebar-token';
 
 @Injectable()
 export class AuthEffects {
+
 
   loadAuths$ = createEffect(() => {
     return this.actions$.pipe( 

@@ -17,6 +17,9 @@ import {
 } from '@mat-datetimepicker/core';
 import {StoreModule} from "@ngrx/store";
 import {EffectsModule} from "@ngrx/effects";
+import {EntityDataModule} from "@ngrx/data";
+import {entityConfig} from "../../shared/entities/src/lib/entity-metadata";
+import {provideEntityDataConfig} from "@ngrx/data/src/provide-entity-data";
 
 @NgModule({
   declarations: [AppComponent],
@@ -35,7 +38,8 @@ import {EffectsModule} from "@ngrx/effects";
     }),
     StoreModule.forRoot({}),
     EffectsModule.forRoot([]),
-    FeaturesModule
+    FeaturesModule,
+    EntityDataModule.forRoot(entityConfig),
   ],
   providers: [],
   bootstrap: [AppComponent],

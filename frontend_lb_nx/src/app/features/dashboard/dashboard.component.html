@@ -1,9 +1,9 @@
 <div class="w-full h-full">
     <div class="text-center">
-        <p>Herzlich Willkommen, lieber Barmensch NAME.</p>
+        <p>Herzlich Willkommen, lieber Barmensch {{($userNameObs | async)?.username}}.</p>
         <p>Danke für dein Engagement!</p>
         <br>
-        <p>Punkte:</p>
+        <p>Punkte: </p>
     </div>
     <br>
     <div class="flex flex-row justify-between">
