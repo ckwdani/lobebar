@@ -1,0 +1,31 @@
+#loginForm{
+  max-width: 30vw;
+  margin: 2em auto;
+  text-align: center;
+  top: 30%;
+}
+mat-form-field {
+  display: block;
+}
+#spinnerdiv{
+  text-align: center;
+  display: flex;
+  justify-content: space-around;
+}
+
+
+.fade-in {
+  animation: fadeIn ease 2s infinite;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity:1;
+  }
+  50% {
+    opacity:0.3;
+  }
+  100% {
+    opacity: 1;
+  }
+}

@@ -13,10 +13,10 @@ import { CalendarModule, DateAdapter } from 'angular-calendar';
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
 import { MatNativeDateModule } from '@angular/material/core';
 import {
-  DatetimeAdapter,
-  MatDatetimepickerModule,
   MatNativeDatetimeModule,
 } from '@mat-datetimepicker/core';
+import {StoreModule} from "@ngrx/store";
+import {EffectsModule} from "@ngrx/effects";
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,12 +28,14 @@ import {
     MatButtonModule,
     MatIconModule,
     MatNativeDateModule,
-    FeaturesModule,
     MatNativeDatetimeModule,
     CalendarModule.forRoot({
       provide: DateAdapter,
       useFactory: adapterFactory,
     }),
+    StoreModule.forRoot({}),
+    EffectsModule.forRoot([]),
+    FeaturesModule
   ],
   providers: [],
   bootstrap: [AppComponent],

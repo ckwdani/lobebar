@@ -1,5 +1,6 @@
 import {Component, Input} from '@angular/core';
 import {OrgEvent, Shift, ShiftType, User} from "@frontend-lb-nx/shared/entities";
+import { EventsOverviewStore } from './events-overview.store';
 
 const orgEvent: OrgEvent={
   id: "asdsad", name: "Plattenbauromantik", start: new Date(Date.now()), end: new Date(Date.now()), shifts: [],
@@ -60,6 +61,7 @@ orgEvent2.shifts=ELEMENT_DATA
   selector: 'frontend-lb-nx-events-overview',
   templateUrl: './events-overview.component.html',
   styleUrls: ['./events-overview.component.scss'],
+  providers: [EventsOverviewStore],
 })
 export class EventsOverviewComponent {
   dataSource=orgEvent.shifts

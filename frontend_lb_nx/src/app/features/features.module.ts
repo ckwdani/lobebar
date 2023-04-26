@@ -24,6 +24,8 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatDatetimepickerModule} from "@mat-datetimepicker/core";
 import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {FormsModule} from "@angular/forms";
+import { EventsOverviewStore } from './events-overview/events-overview.store';
+import {SharedServicesModule} from "@frontend-lb-nx/shared/services";
 
 @NgModule({
   declarations: [
@@ -46,7 +48,6 @@ import {FormsModule} from "@angular/forms";
     CommonModule,
     MatTableModule,
     MatTabsModule,
-    SharedUiModule,
     CalendarMonthModule,
     CalendarCommonModule,
     RouterLink,
@@ -54,6 +55,8 @@ import {FormsModule} from "@angular/forms";
     MatDatepickerModule,
     MatDatetimepickerModule,
     FormsModule,
+    SharedServicesModule,
+    SharedUiModule
   ],
   providers:[
     {provide: MAT_DATE_LOCALE, useValue: 'de'}

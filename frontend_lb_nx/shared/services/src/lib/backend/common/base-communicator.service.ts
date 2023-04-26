@@ -1,17 +1,30 @@
 import { Injectable } from '@angular/core';
-import {Observable} from "rxjs";
+import {filter, Observable, of} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {HttpErrorHandlerService} from "./http-error-handler.service";
+import {Store} from "@ngrx/store";
+import {AuthState} from "../states/auth/auth.reducer";
+import {selectToken} from "../states/auth/auth.selectors";
+import {catchError} from "rxjs/operators";
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class BaseCommunicatorService<T> {
 
+
+
   private httpOptions = {
-    headers: new HttpHeaders({'Content-Type': 'application/json', Authorization: 'Bearer ' + localStorage.getItem(Constants.localStToken)}),
+    headers: new HttpHeaders({'Content-Type': 'application/json'}),
   };
-  constructor(protected http: HttpClient, private errorHandler: HttpErrorHandlerService) {}
+  constructor(protected http: HttpClient, private errorHandler: HttpErrorHandlerService, private store: Store) {}
+
+  $sel = this.store.select(selectToken).pipe(filter(token => token != null)).subscribe(next => {
+    this.httpOptions.headers = new HttpHeaders({'Content-Type': 'application/json', Authorization: 'Bearer ' + next});
+  });
+
 
 
   get<ALT>(path: string, route: boolean = true): Observable<T>{
@@ -51,16 +64,11 @@ export class BaseCommunicatorService<T> {
   /** generate Generic observable
    *
    */
-  protected genGenerObs(response: Observable<any>, route: boolean = true): Observable<T>{
-    return response;
-    // return new Observable<T>(subscriber => {
-    //   response.subscribe(
-    //       res => subscriber.next(res),
-    //       error => {
-    //         subscriber.error(this.errorHandler.handleHttpError(error, route));
-    //       }
-    //   );
-    // });
+  protected genGenerObs(response: Observable<T>, route: boolean = true): Observable<T>{
+    return response.pipe(catchError(error => {
+      this.errorHandler.handleHttpError(error, route);
+        return of(error);
+    }));
   }
 
 
@@ -74,7 +82,7 @@ export class BaseCommunicatorService<T> {
   private setHeaders(): void{
     this.httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem(Constants.localStToken)}),
+        Authorization: 'Bearer ' + localStorage.getItem("Constants.localStToken")}),
     };
   }
 }

@@ -1,0 +1,23 @@
+<mat-card id="loginForm" [class.fade-in]="loginstate.isLoggingIn">
+  <mat-card-content>
+    <div id="spinnerdiv" *ngIf="loginstate.isLoading">
+      <mat-spinner></mat-spinner>
+    </div>
+    <div *ngIf="!loginstate.isLoading">
+      <p>Please Log in to continue</p>
+      <mat-form-field appearance="outline" class="full-width-input">
+        <input (keyup.enter)="authenticate()" matInput [(ngModel)]="loginstate.user.email"  placeholder="username" required [disabled]="loginstate.isLoggingIn">
+      </mat-form-field>
+      <mat-form-field appearance="outline" class="full-width-input">
+        <input (keyup.enter)="authenticate()"  matInput [(ngModel)]="loginstate.user.password"  placeholder="password" [type]="loginstate.hidePassword ? 'password' : 'text'" required [disabled]="loginstate.isLoggingIn">
+        <button mat-icon-button matSuffix (click)="loginstate.hidePassword = !loginstate.hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="loginstate.hidePassword">
+            <mat-icon>{{loginstate.hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+        </button>
+      </mat-form-field>
+      <p *ngIf="loginstate.error && !loginstate.isLoggingIn" style="color: red">{{loginstate.error}}</p>
+      <div><mat-icon matTooltip="Authentication status">{{loginstate.isLoggedIn? 'check_circle_outline' : 'all_out'}}</mat-icon>
+        <mat-icon matTooltip="Authorization status">{{loginstate.roleAquired? 'fingerprint' : 'all_out'}}</mat-icon></div>
+      <button mat-button (click)="authenticate()" [disabled]="loginstate.isLoggingIn || loginstate.user.password === '' || loginstate.user.email === ''">Login</button>
+    </div>
+  </mat-card-content>
+</mat-card>

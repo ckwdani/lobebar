@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { catchError, map, concatMap } from 'rxjs/operators';
+import {catchError, map, concatMap, switchMap} from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
 import * as AuthActions from './auth.actions';
+import {AuthService} from "../../entity-backend-services/auth.service";
+import {Router} from "@angular/router";
 
+const localStorageTokenString = 'lobebar-token';
 
 @Injectable()
 export class AuthEffects {
@@ -11,16 +14,45 @@ export class AuthEffects {
   loadAuths$ = createEffect(() => {
     return this.actions$.pipe( 
 
-      ofType(AuthActions.loadAuths),
-      concatMap(() =>
+      ofType(AuthActions.login),
+      switchMap((action) =>
         /** An EMPTY observable only emits completion. Replace with your own observable API request */
-        EMPTY.pipe(
-          map(data => AuthActions.loadAuthsSuccess({ data })),
-          catchError(error => of(AuthActions.loadAuthsFailure({ error }))))
-      )
-    );
+        this.authService.login(action.username, action.password).pipe(
+            map((token) => {
+              localStorage.setItem(localStorageTokenString, token);
+              return AuthActions.loginSuccessfull({token: token});
+            }),
+            catchError((error) => of(AuthActions.loadAuthsFailure({ error })))
+        )));
   });
 
+  // load the token from local storage
+    loadToken$ = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(AuthActions.loadTokenFromLocal),
+        map(() => {
+          const token = localStorage.getItem(localStorageTokenString);
+          if (token) {
+            return AuthActions.loginSuccessfull({token: token});
+          } else {
+            return AuthActions.logout();
+          }
+        })
+      );
+    });
 
-  constructor(private actions$: Actions) {}
+
+  // if login is required, redirect to login page
+    loginRequired$ = createEffect(() => {
+      return this.actions$.pipe(
+        ofType(AuthActions.logout),
+        map(() => {
+            localStorage.removeItem(localStorageTokenString);
+            this.router.navigate(['/login']);
+            return AuthActions.loginRequired();
+        }));
+    });
+
+
+  constructor(private actions$: Actions, private authService: AuthService, private router: Router) {}
 }

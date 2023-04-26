@@ -1,8 +1,11 @@
 import { createAction, props } from '@ngrx/store';
 
-export const loadAuths = createAction(
-  '[Auth] Load Auths'
+export const login = createAction(
+  '[Auth] Login',
+    props<{ username: string, password: string }>()
 );
+
+
 
 export const loginSuccessfull = createAction(
     '[Auth] Login Success',
@@ -12,4 +15,16 @@ export const loginSuccessfull = createAction(
 export const loadAuthsFailure = createAction(
   '[Auth] Login Failure',
   props<{ error: number }>()
+);
+
+export const loadTokenFromLocal = createAction(
+    '[Auth] Load Token From Local',
+);
+
+export const logout = createAction(
+    '[Auth] Logout',
+);
+
+export const loginRequired = createAction(
+    '[Auth] Login Required',
 );

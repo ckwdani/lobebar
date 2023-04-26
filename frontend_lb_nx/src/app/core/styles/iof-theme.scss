@@ -1,0 +1,87 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+$iof-palette:  (
+  50 : #f0fafb,
+  100 : #daf2f5,
+  200 : #c2eaef,
+  300 : #aae1e9,
+  400 : #97dae4,
+  500 : #85d4df,
+  600 : #7dcfdb,
+  700 : #72c9d7,
+  800 : #68c3d2,
+  900 : #55b9ca,
+  A100 : #ffffff,
+  A200 : #fafeff,
+  A400 : #c7f7ff,
+  A700 : #adf3ff,
+  contrast: (
+    50 : #FFFFFF,
+    100 : #FFFFFF,
+    200 : #FFFFFF,
+    300 : #FFFFFF,
+    400 : #FFFFFF,
+    500 : #FFFFFF,
+    600 : #FFFFFF,
+    700 : #FFFFFF,
+    800 : #FFFFFF,
+    900 : #FFFFFF,
+    A100 : #FFFFFF,
+    A200 : #FFFFFF,
+    A400 : #FFFFFF,
+    A700 : #FFFFFF,
+  )
+);
+
+
+
+$iof-palette-accent: (
+  50 : #fff1e8,
+  100 : #ffddc6,
+  200 : #ffc6a0,
+  300 : #ffaf79,
+  400 : #ff9d5d,
+  500 : #ff8c40,
+  600 : #ff843a,
+  700 : #ff7932,
+  800 : #ff6f2a,
+  900 : #ff5c1c,
+  A100 : #ffffff,
+  A200 : #ffffff,
+  A400 : #ffd9cd,
+  A700 : #ffc6b3,
+  contrast: (
+    50 : #FFFFFF,
+    100 : #FFFFFF,
+    200 : #FFFFFF,
+    300 : #FFFFFF,
+    400 : #FFFFFF,
+    500 : #FFFFFF,
+    600 : #FFFFFF,
+    700 : #FFFFFF,
+    800 : #FFFFFF,
+    900 : #FFFFFF,
+    A100 : #FFFFFF,
+    A200 : #FFFFFF,
+    A400 : #FFFFFF,
+    A700 : #FFFFFF,
+  )
+);
+
+
+$my-primary: mat.define-palette($iof-palette, 500);
+$my-accent: mat.define-palette($iof-palette-accent);
+
+$iof-theme: mat.define-light-theme((
+  color: (
+    primary: $my-primary,
+    accent: $my-accent,
+  ),
+  typography: mat.define-typography-config(
+    $font-family: FrutigerLTCom
+  ),
+  density: 0,
+));
+
+@include mat.all-component-themes($iof-theme);
