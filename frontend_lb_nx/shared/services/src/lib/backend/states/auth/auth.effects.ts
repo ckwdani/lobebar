@@ -43,6 +43,18 @@ export class AuthEffects {
       );
     });
 
+    loadUser$ = createEffect(() => {
+        return this.actions$.pipe(
+            ofType(AuthActions.loadUser, AuthActions.loginSuccessfull),
+            switchMap((action ) =>
+
+                this.authService.getUser(localStorage.getItem(localStorageTokenString)??"").pipe(
+                    map((token) => {
+                        return AuthActions.allLoaded({user: token});
+                    }),
+                    catchError((error) => of(AuthActions.loadUserError({ error })))
+                )));
+    });
 
   // if login is required, redirect to login page
     loginRequired$ = createEffect(() => {

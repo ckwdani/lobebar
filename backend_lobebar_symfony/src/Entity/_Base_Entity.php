@@ -8,6 +8,7 @@ use JMS\Serializer\Annotation\Accessor;
 use JMS\Serializer\Annotation\AccessType;
 use JMS\Serializer\Annotation\Exclude;
 use JMS\Serializer\Annotation\PostDeserialize;
+use JMS\Serializer\Annotation\ReadOnlyProperty;
 use JMS\Serializer\Annotation\Type;
 use Symfony\Bridge\Doctrine\IdGenerator\UuidGenerator;
 use Symfony\Component\Uid\Uuid;
@@ -22,6 +23,7 @@ class _Base_Entity
     #[ORM\Column(unique: true, type: "uuid")]
 //    #[Exclude(if: "deserialize")]
     #[Accessor(getter: 'convertOwnUuid')]
+    #[ReadOnlyProperty(readOnly: true)]
     #[Type('string')]
     protected ?Uuid $id;
 

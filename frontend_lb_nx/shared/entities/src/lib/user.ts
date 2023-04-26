@@ -1,6 +1,6 @@
 export interface User{
     id?: string,
-    name: string,
+    username: string,
     roles: [],
     password: string,
     email: string,
@@ -8,6 +8,6 @@ export interface User{
     lastname: string,
     titel: string,
     hygienepass: boolean,
-    telephone: number,
+    telephone: number, // TODO: change to string
 }
 

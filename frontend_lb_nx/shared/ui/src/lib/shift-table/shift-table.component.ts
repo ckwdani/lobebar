@@ -7,7 +7,7 @@ const orgEvent: OrgEvent={
 
 const user1: User={
   id: "2312",
-  name: "emil",
+  username: "emil",
   roles: [],
   password: "xxxxx",
   email: "hallo@asadsa.de",
@@ -20,7 +20,7 @@ const user1: User={
 
 const user2: User={
   id: "2312",
-  name: "goenndalf",
+  username: "goenndalf",
   roles: [],
   password: "xxxxx",
   email: "hallo@asadsa.de",
@@ -84,6 +84,6 @@ export class ShiftTableComponent {
   }
 
   mapToName(arr: User[]){
-    return arr.map( (u)=> " "+u.name)
+    return arr.map( (u)=> " "+u.username)
   }
 }

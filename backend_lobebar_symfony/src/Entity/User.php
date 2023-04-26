@@ -25,6 +25,7 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     private ?string $username = null;
 
     #[ORM\Column]
+    #[ReadOnlyProperty(readOnly: true)]
     private array $roles = [];
 
     /**

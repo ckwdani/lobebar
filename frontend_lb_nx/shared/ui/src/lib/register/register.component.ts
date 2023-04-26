@@ -16,11 +16,17 @@ import {map, shareReplay} from "rxjs/operators";
   styleUrls: ['./register.component.scss'],
 })
 export class RegisterComponent {
+
+  isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
+      .pipe(
+          map(result => result.matches),
+          shareReplay()
+      );
   registerState: RegisterComponentState;
 
   $success = this.store.select(selectSuccess);
 
-  constructor(private router: Router, private store: Store) {
+  constructor(private router: Router, private store: Store, private breakpointObserver: BreakpointObserver) {
     this.registerState = new RegisterComponentState();
   }
 
@@ -34,6 +40,14 @@ export class RegisterComponent {
         }
     )
   }
+
+  get valid(){
+    return this.registerState.user.username !== '' && this.registerState.user.email !== '' && this.registerState.user.password !== '' && this.registerState.user.firstname !== '' && this.registerState.user.lastname !== '' && this.registerState.user.telephone !== 0 && this.passwordMatch;
+  }
+
+  get passwordMatch(){
+    return this.registerState.user.password === this.registerState.secondPassword;
+  }
 }
 
 class RegisterComponentState {
@@ -42,7 +56,7 @@ class RegisterComponentState {
   public isLoading = false;
   isLoggingIn = false;
   user: User = {
-    name: '',
+    username: '',
     email: '',
     password: '',
     firstname: '',
@@ -52,6 +66,8 @@ class RegisterComponentState {
     telephone: +49,
     roles: []
   };
+  secondPassword = '';
+  hideSecondPassword = true;
   isLoggedIn = false;
   roleAquired = false;
 }

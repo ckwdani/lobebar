@@ -3,15 +3,15 @@ import {User} from "@frontend-lb-nx/shared/entities";
 
 
 const ELEMENT_DATA: User[] = [
-  {id: "asdasdas", name: 'Hydrogen', roles:  [], password: 'H', email:"xassda@assadl.de",
+  {id: "asdasdas", username: 'Hydrogen', roles:  [], password: 'H', email:"xassda@assadl.de",
   firstname: "Guenther", lastname: "Fischer", titel: "Master Of Splines", hygienepass: true, telephone: 213123313},
-  {id: "asdasdas", name: 'Hydrogen', roles:  [], password: 'H', email:"casdax@assadl.de",
+  {id: "asdasdas", username: 'Hydrogen', roles:  [], password: 'H', email:"casdax@assadl.de",
     firstname: "ASDASD", lastname: "asasdasd", titel: "Master Of Splines", hygienepass: true, telephone: 213343},
-  {id: "asdasdas", name: 'Hydrogen', roles:  [], password: 'H', email:"hdfgd@assadl.de",
+  {id: "asdasdas", username: 'Hydrogen', roles:  [], password: 'H', email:"hdfgd@assadl.de",
     firstname: "adssadsa", lastname: "asdasd", titel: "Master Of Splines", hygienepass: true, telephone: 133123313},
-  {id: "asdasdas", name: 'Hydrogen', roles:  [], password: 'H', email:"asadsx@assadl.de",
+  {id: "asdasdas", username: 'Hydrogen', roles:  [], password: 'H', email:"asadsx@assadl.de",
     firstname: "ascasca", lastname: "xasdas", titel: "Master Of Splines", hygienepass: true, telephone: 41123313},
-  {id: "asdasdas", name: 'Hydrogen', roles:  [], password: 'H', email:"casda@assadl.de",
+  {id: "asdasdas", username: 'Hydrogen', roles:  [], password: 'H', email:"casda@assadl.de",
     firstname: "Guenther", lastname: "Fischer", titel: "Master Of Splines", hygienepass: true, telephone: 623313},
 
 ];

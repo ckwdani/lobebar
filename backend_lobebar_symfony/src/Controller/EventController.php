@@ -16,7 +16,8 @@ use const App\Entity\WITH_DETAILED_SHIFTS;
 
 class EventController extends _Base_Controller
 {
-    #[Route("/mod_api/event/add", methods: ["POST"])]
+//    #[Route("/mod_api/event/add", methods: ["POST"])]
+    #[Route("/orgevent/", methods: ["POST"])]
     public function addEvent(Request $request){
         $event = $this->serializer->deserialize($request->getContent(), Orgevent::class, "json");
         if(empty($event)){

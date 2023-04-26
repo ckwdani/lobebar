@@ -1,4 +1,6 @@
 import { createAction, props } from '@ngrx/store';
+import {User} from "@frontend-lb-nx/shared/entities";
+
 
 export const login = createAction(
   '[Auth] Login',
@@ -11,6 +13,21 @@ export const loginSuccessfull = createAction(
     '[Auth] Login Success',
     props<{ token: string }>()
 );
+
+export const loadUser = createAction(
+    '[Auth] Load User',
+);
+export const allLoaded = createAction(
+    '[Auth] User Loaded',
+    props<{ user: User }>()
+);
+
+export const loadUserError = createAction(
+    '[Auth] User Load ',
+    props<{ error: number }>()
+);
+
+
 
 export const loadAuthsFailure = createAction(
   '[Auth] Login Failure',

@@ -12,3 +12,9 @@ export * from './lib/backend/states/auth/auth.effects';
 export * from './lib/backend/states/auth/auth.reducer';
 
 export * from './lib/backend/states/auth/auth.selectors';
+
+// import everything from the register state files
+export * from './lib/backend/states/register/register.actions';
+export * from './lib/backend/states/register/register.effects';
+export * from './lib/backend/states/register/register.reducer';
+export * from './lib/backend/states/register/register.selectors';

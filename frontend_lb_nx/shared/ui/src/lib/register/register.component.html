@@ -41,12 +41,23 @@
             <mat-checkbox [(ngModel)]="registerState.user.hygienepass"><mat-label>
                 Hygienepass
             </mat-label></mat-checkbox>
-            <mat-form-field appearance="outline" class="full-width-input">
-                <input (keyup.enter)="register()"  matInput [(ngModel)]="registerState.user.password"  placeholder="password" [type]="registerState.hidePassword ? 'password' : 'text'" required [disabled]="registerState.isLoggingIn">
-                <button mat-icon-button matSuffix (click)="registerState.hidePassword = !registerState.hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="registerState.hidePassword">
-                    <mat-icon>{{registerState.hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
-                </button>
-            </mat-form-field>
+            <div class="flex flex-wrap flex-row w-full justify-between">
+                <mat-form-field  appearance="fill" class="min-w-[100px] flex-grow pr-2 pl-2">
+                    <mat-label>Password</mat-label>
+                    <input (keyup.enter)="register()"  matInput [(ngModel)]="registerState.user.password"   [type]="registerState.hidePassword ? 'password' : 'text'" required [disabled]="registerState.isLoggingIn">
+                    <button mat-icon-button matSuffix (click)="registerState.hidePassword = !registerState.hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="registerState.hidePassword">
+                        <mat-icon>{{registerState.hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <mat-error *ngIf="!passwordMatch"></mat-error>
+                </mat-form-field>
+                <mat-form-field  appearance="fill" class="min-w-[100px] flex-grow pr-2 pl-2">
+                    <mat-label>Password</mat-label>
+                    <input (keyup.enter)="register()"  matInput [(ngModel)]="registerState.secondPassword"   [type]="registerState.hideSecondPassword ? 'password' : 'text'" required [disabled]="registerState.isLoggingIn">
+                    <button mat-icon-button matSuffix (click)="registerState.hideSecondPassword = !registerState.hideSecondPassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="registerState.hideSecondPassword">
+                        <mat-icon>{{registerState.hideSecondPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                </mat-form-field>
+            </div>
             <p *ngIf="registerState.error && !registerState.isLoggingIn" style="color: red">{{registerState.error}}</p>
             <button mat-button (click)="register()" [disabled]="registerState.isLoggingIn || registerState.user.password === '' || registerState.user.email === '' || !valid">Registrieren</button>
         </div>

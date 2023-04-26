@@ -1,6 +1,6 @@
-import { Component } from '@angular/core';
+import {AfterViewInit, Component} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import { Observable } from 'rxjs';
+import {asapScheduler, combineLatest, first, Observable, observeOn} from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {Store} from "@ngrx/store";
 import {loadTokenFromLocal, selectLoggedIn, selectSuccess, selectUserLoaded} from "@frontend-lb-nx/shared/services";
@@ -10,7 +10,7 @@ import {loadTokenFromLocal, selectLoggedIn, selectSuccess, selectUserLoaded} fro
   templateUrl: './navigation.component.html',
   styleUrls: ['./navigation.component.css']
 })
-export class NavigationComponent {
+export class NavigationComponent implements AfterViewInit{
 
   isHandset$: Observable<boolean> = this.breakpointObserver.observe(Breakpoints.Handset)
     .pipe(

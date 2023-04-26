@@ -13,7 +13,7 @@ export class AppComponent {
   constructor(protected router: Router, private route: ActivatedRoute){
     router.events.subscribe(
         event => {
-          if (router.url === '/login'){
+          if (router.url === '/login' || router.url === '/register') {
             this.isLogin = true;
           }
           else {
