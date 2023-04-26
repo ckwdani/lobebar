@@ -1,12 +1,12 @@
+@import "src/app/core/constants/COLORS";
 /*
 class-red{
   background: #000;
   background-color: #248f24;
   color: #cc0000;
 }
-
  */
 
-.green { background-color: #248f24 !important;}
-.blue { background-color: #23f5dc !important;}
-.red { background-color: #cc0000 !important;}
+.green { background-color: $darky-green !important;}
+.blue { background-color: $lighthy-blue !important;}
+.red { background-color: $darky-red !important;}

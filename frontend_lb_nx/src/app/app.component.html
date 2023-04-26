@@ -1,4 +1,8 @@
-<frontend-lobebar-angular-navigation>
+<frontend-lb-nx-navigation *ngIf="!isLogin">
     <router-outlet></router-outlet>
-</frontend-lobebar-angular-navigation>
+</frontend-lb-nx-navigation>
+
+
+<router-outlet  *ngIf="isLogin"></router-outlet>
+
 

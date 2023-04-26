@@ -1,0 +1,41 @@
+<mat-card>
+    <mat-card-content>
+        <div id="spinnerdiv" *ngIf="registerState.isLoading">
+            <mat-spinner></mat-spinner>
+        </div>
+        <div *ngIf="!registerState.isLoading">
+            <p>Registriere dich jetzt.</p>
+            <mat-form-field appearance="outline" class="full-width-input">
+                <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.name"  placeholder="username" required [disabled]="registerState.isLoggingIn">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width-input">
+                <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.email"  placeholder="email" required [disabled]="registerState.isLoggingIn">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width-input">
+                <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.firstname"  placeholder="Vorname" required [disabled]="registerState.isLoggingIn">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width-input">
+                <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.lastname"  placeholder="Nachname" required [disabled]="registerState.isLoggingIn">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width-input">
+                <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.titel"  placeholder="Titel" required [disabled]="registerState.isLoggingIn">
+            </mat-form-field>
+            <mat-form-field appearance="outline" class="full-width-input">
+                <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.telephone"  placeholder="Telefonnr" required [disabled]="registerState.isLoggingIn">
+            </mat-form-field>
+            <mat-checkbox><mat-label>
+                Hygienepass
+            </mat-label></mat-checkbox>
+            <mat-form-field appearance="outline" class="full-width-input">
+                <input (keyup.enter)="register()"  matInput [(ngModel)]="registerState.user.password"  placeholder="password" [type]="registerState.hidePassword ? 'password' : 'text'" required [disabled]="registerState.isLoggingIn">
+                <button mat-icon-button matSuffix (click)="registerState.hidePassword = !registerState.hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="registerState.hidePassword">
+                    <mat-icon>{{registerState.hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                </button>
+            </mat-form-field>
+            <p *ngIf="registerState.error && !registerState.isLoggingIn" style="color: red">{{registerState.error}}</p>
+            <div><mat-icon matTooltip="Authentication status">{{registerState.isLoggedIn? 'check_circle_outline' : 'all_out'}}</mat-icon>
+                <mat-icon matTooltip="Authorization status">{{registerState.roleAquired? 'fingerprint' : 'all_out'}}</mat-icon></div>
+            <button mat-button (click)="register()" [disabled]="registerState.isLoggingIn || registerState.user.password === '' || registerState.user.email === ''">Login</button>
+        </div>
+    </mat-card-content>
+</mat-card>

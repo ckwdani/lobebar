@@ -66,7 +66,14 @@ orgEvent2.shifts=ELEMENT_DATA
 export class EventsOverviewComponent {
   dataSource=orgEvent.shifts
   orgEventsAss = [orgEvent, orgEvent1, orgEvent2]
+  comingOrgEvents$ = this.eventsOverviewStore.comingOrgEvents$
+  yourShifts$ = this.eventsOverviewStore.yourShifts$
+  previousShifts$ = this.eventsOverviewStore.previousShifts$
+  
   @Input() orgEvents: OrgEvent[]=this.orgEventsAss
+
+  constructor(private readonly eventsOverviewStore: EventsOverviewStore) {
+  }
 
 
 

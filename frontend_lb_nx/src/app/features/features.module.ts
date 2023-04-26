@@ -13,7 +13,6 @@ import { EventsOverviewComponent } from './events-overview/events-overview.compo
 import { MatTabsModule } from '@angular/material/tabs';
 import { SharedUiModule } from '@frontend-lb-nx/shared/ui';
 import { CalendarComponent } from './calendar/calendar.component';
-import * as Globalize from 'globalize/dist/globalize';
 import { CalendarCommonModule, CalendarMonthModule } from 'angular-calendar';
 import { CalendarHeaderComponent } from './calendar/calendar-header/calender-header.component';
 import { PointsComponent } from './points/points.component';
@@ -59,6 +58,7 @@ import {SharedServicesModule} from "@frontend-lb-nx/shared/services";
     SharedUiModule
   ],
   providers:[
+    EventsOverviewStore,
     {provide: MAT_DATE_LOCALE, useValue: 'de'}
   ]
 })

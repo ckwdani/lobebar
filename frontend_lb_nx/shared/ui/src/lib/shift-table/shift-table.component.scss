@@ -1,9 +1,10 @@
-.green { background-color: #248f24 !important;}
+@import "/src/app/core/constants/COLORS";
+.green { background-color: $darky-green !important;}
 .green:hover{
-  background-color: #248f24 !important;
+  background-color: $darky-green !important;
 }
 
-.red { background-color: #cc0000 !important;}
+.red { background-color: $darky-red !important;}
 .red:hover{
-  background-color: #cc0000 !important;
+  background-color: $darky-red !important;
 }
