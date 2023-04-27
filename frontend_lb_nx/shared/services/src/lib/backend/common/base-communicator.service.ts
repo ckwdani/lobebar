@@ -29,7 +29,7 @@ export class BaseCommunicatorService<T> {
 
   get<ALT>(path: string): Observable<T>{
     // has to be done if the localstroage has changed
-    this.setHeaders();
+   // this.setHeaders();
     const response = this.http.get<T>(path, this.httpOptions);
     return this.genGenerObs(response);
   }
@@ -37,25 +37,25 @@ export class BaseCommunicatorService<T> {
 
   getList<ALT>(path: string): Observable<T[]>{
     // has to be done if the localstroage has changed
-    this.setHeaders();
+   // this.setHeaders();
     const response = this.http.get<T[]>(path, this.httpOptions);
     return this.genGenerObs<T[]>(response) as Observable<T[]>;
   }
   post<ALT>(path: string, body: T | ALT): Observable<T>{
     // has to be done if the localstroage has changed
-    this.setHeaders();
+   // this.setHeaders();
     const response = this.http.post<T>(path, body, this.httpOptions);
     return this.genGenerObs(response);
   }
   put(path: string, body: T): Observable<T>{
     // has to be done if the localstroage has changed
-    this.setHeaders();
+    //this.setHeaders();
     const response = this.http.put<T>(path, body, this.httpOptions);
     return this.genGenerObs(response);
   }
   delete(path: string): Observable<T>{
     // has to be done if the localstroage has changed
-    this.setHeaders();
+    //this.setHeaders();
     const response = this.http.delete<T>(path, this.httpOptions);
     return this.genGenerObs(response);
   }
@@ -87,10 +87,11 @@ export class BaseCommunicatorService<T> {
    * the localstore changes, but it could be that the object is already constructed, so the header has to be resetted
    * @private
    */
-  private setHeaders(): void{
+/*  private setHeaders(): void{
+    console.log(localStorage.getItem("Constants.localStToken"))
     this.httpOptions = {
       headers: new HttpHeaders({'Content-Type': 'application/json',
-        Authorization: 'Bearer ' + localStorage.getItem("Constants.localStToken")}),
+        Authorization: 'Bearer ' + localStorage.getItem(Constants.localStToken)}),
     };
-  }
+  }*/
 }

@@ -21,6 +21,7 @@ export class AuthEffects {
         /** An EMPTY observable only emits completion. Replace with your own observable API request */
         this.authService.login(action.username, action.password).pipe(
             map((token) => {
+
               localStorage.setItem(localStorageTokenString, token);
               return AuthActions.loginSuccessfull({token: token});
             }),

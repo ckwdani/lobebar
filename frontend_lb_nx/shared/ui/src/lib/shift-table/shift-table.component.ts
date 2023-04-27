@@ -78,9 +78,10 @@ export class ShiftTableComponent {
     const index2= this.shifts.indexOf(rowData)
     this.shifts.splice(index2, 1)
     console.log(this.shifts)
-    const index3 = this.orgEvent.shifts.indexOf(rowData)
-    this.orgEvent.shifts.splice(index3, 1)
-
+    if(this.orgEvent.shifts!=undefined){
+      const index3 = this.orgEvent.shifts.indexOf(rowData)
+      this.orgEvent.shifts.splice(index3, 1)
+    }
   }
 
   mapToName(arr: User[]){

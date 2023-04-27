@@ -17,15 +17,17 @@ import { CalendarCommonModule, CalendarMonthModule } from 'angular-calendar';
 import { CalendarHeaderComponent } from './calendar/calendar-header/calender-header.component';
 import { PointsComponent } from './points/points.component';
 import { EventAddComponent } from './event-add/event-add.component';
-import {RouterLink} from "@angular/router";
-import {MatInputModule} from "@angular/material/input";
-import {MatDatepickerModule} from "@angular/material/datepicker";
-import {MatDatetimepickerModule} from "@mat-datetimepicker/core";
-import {MAT_DATE_LOCALE} from "@angular/material/core";
-import {FormsModule} from "@angular/forms";
+import { RouterLink } from '@angular/router';
+import { MatInputModule } from '@angular/material/input';
+import { MatDatepickerModule } from '@angular/material/datepicker';
+import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
+import { MAT_DATE_LOCALE } from '@angular/material/core';
+import { FormsModule } from '@angular/forms';
 import { EventsOverviewStore } from './events-overview/events-overview.store';
-import {SharedServicesModule} from "@frontend-lb-nx/shared/services";
+import { SharedServicesModule } from '@frontend-lb-nx/shared/services';
 import { EventAddStoreStore } from './event-add/event-add-store.store';
+import { ShiftTypeAddComponent } from './shift-type-add/shift-type-add.component';
+import { ShiftTypeAddStore} from './shift-type-add/shift-type-add.store';
 
 @NgModule({
   declarations: [
@@ -38,6 +40,7 @@ import { EventAddStoreStore } from './event-add/event-add-store.store';
     CalendarHeaderComponent,
     PointsComponent,
     EventAddComponent,
+    ShiftTypeAddComponent,
   ],
   exports: [DashboardComponent, OwnUserOverviewComponent],
   imports: [
@@ -56,11 +59,8 @@ import { EventAddStoreStore } from './event-add/event-add-store.store';
     MatDatetimepickerModule,
     FormsModule,
     SharedServicesModule,
-    SharedUiModule
+    SharedUiModule,
   ],
-  providers:[
-    EventsOverviewStore,
-    {provide: MAT_DATE_LOCALE, useValue: 'de', providers: [EventAddStoreStore]}
-  ]
+  providers: [EventsOverviewStore, ShiftTypeAddStore],
 })
 export class FeaturesModule {}

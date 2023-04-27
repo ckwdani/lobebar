@@ -8,44 +8,47 @@ import {OrgEvent, Shift, ShiftType} from "@frontend-lb-nx/shared/entities";
 })
 export class EventOverviewComponent {
   @Input() orgEvent: OrgEvent={
-    id:"",
-    name:"",
+    id:"asdasd",
+    name:"test",
     start: new Date(),
     end: new Date(),
-    shifts: [],
+    shifts: undefined,
   }
 
   shiftType: ShiftType={
-  id: "",
-  name: "",
+  id: "assad",
+  name: "test",
     value: 0
   }
 
   selectedShiftType= this.shiftType
 
   shiftTypes: ShiftType[]=[
-      {  id: "",
+      {  id: "asad",
           name: "Bar", value: 0},
-      {  id: "",
+      {  id: "asdsad",
           name: "Security", value: 1},
-      {  id: "",
+      {  id: "asdsda",
           name: "Awareness", value: 1}
   ]
 
   model : Shift={
-    id:"",
-    description:"",
+    id:"dasasd",
+    description:"asdsad",
     headcount: 0,
     starttime: new Date(),
     endtime: new Date(),
     orgEvent: this.orgEvent,
-    users: [],
+    users: undefined,
     shiftType: this.shiftType
   }
 
   @Input() showAddShift=false
 
-  splitShiftsByType(shifts: Shift[]): Shift[][] {
+  splitShiftsByType(shifts?: Shift[]): Shift[][] {
+    if(shifts==undefined){
+      return []
+    }
     const shiftsByType: {[key: string]: Shift[]} = {};
 
     for (const shift of shifts) {
@@ -68,6 +71,10 @@ export class EventOverviewComponent {
       users: this.model.users,
       shiftType: this.selectedShiftType
     }
-    this.orgEvent.shifts.push(newShift)
+    if(this.orgEvent.shifts!=undefined){
+      this.orgEvent.shifts.push(newShift)
+    }else{
+      this.orgEvent.shifts=[newShift]
+    }
   }
 }

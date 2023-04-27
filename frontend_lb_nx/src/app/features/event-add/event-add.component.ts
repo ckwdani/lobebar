@@ -17,19 +17,9 @@ import { EventAddStoreStore } from './event-add-store.store';
 export class EventAddComponent {
   //$success = this.store.select(selectToken).subscribe(next=>next) ;
   //headers =  new HttpHeaders().set('Authorization', this.$success.toString() )
-
-
-  private httpOptions = {
-    headers: {'Content-Type': 'application/json'},
-  };
-
-  private headers = {'Content-Type': 'application/json', "Authorization": 'Bearer '};
-  $sel = this.store.select(selectToken).pipe(filter(token => token != null)).subscribe(next => {
-    this.headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + next};
-  });
-
   constructor(private orgEventService: OrgEventBackendService, private store: Store) {
   }
+
   submitted=false
   model : OrgEventClass = new OrgEventClass();//{
   //   id: '',
@@ -47,6 +37,6 @@ export class EventAddComponent {
   }
 
   add(orgEvent: OrgEvent){
-    this.orgEventService.add(orgEvent)
+    this.orgEventService.add(orgEvent).subscribe(next => next.id)
   }
 }

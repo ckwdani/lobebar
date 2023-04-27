@@ -97,29 +97,31 @@ export class CalendarComponent {
 
 
   checkEventStatus(orgEvent: OrgEvent|undefined): string {
-    if(orgEvent == undefined){
+    if(orgEvent == undefined||orgEvent?.shifts==undefined){
       return ""
     }
-    //check if own user has a shift
-    const shiftUsers = orgEvent.shifts.map((s) => s.users)
-    const ownId="asd"
-    let shiftsFull = true
-    let ownHasShift= false
-    for (const shift of orgEvent.shifts) {
-      if ((shift.users?.length ?? 0) < shift.headcount) {
-        shiftsFull = false;
+    else {
+      //check if own user has a shift
+      const shiftUsers = orgEvent.shifts.map((s) => s.users)
+      const ownId = "asd"
+      let shiftsFull = true
+      let ownHasShift = false
+      for (const shift of orgEvent.shifts) {
+        if ((shift.users?.length ?? 0) < shift.headcount) {
+          shiftsFull = false;
+        }
+        if (shift.users?.map((s) => s.id).includes(ownId)) {
+          ownHasShift = true
+        }
       }
-      if(shift.users?.map((s)=>s.id).includes(ownId)){
-        ownHasShift=true
+      if (ownHasShift) {
+        return "blue"
       }
+      if (shiftsFull) {
+        return "green"
+      }
+      return "red"
     }
-    if(ownHasShift){
-      return "blue"
-    }
-    if(shiftsFull){
-      return "green"
-    }
-    return "red"
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {

@@ -12,7 +12,7 @@ export class BACKENDPATHS{
     static readonly getOrgEventTimed= this.baseApiUrl + '/mod_api/event/getTimed'; // /start/end
 
 
-
+    // CRUD SHIFFTTYPE
     static readonly app_shift_type_addshifttype =          this.baseApiUrl +    "/mod_api/shift/addtype"
     static readonly app_shift_type_deleteshifttype =      this.baseApiUrl +    "/mod_api/shift/deletetype/"
     static readonly app_shift_type_getshifttypes =          this.baseApiUrl +    "/api/getShiftTypes"

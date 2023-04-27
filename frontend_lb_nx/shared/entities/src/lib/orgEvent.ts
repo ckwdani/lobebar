@@ -6,14 +6,14 @@ export interface OrgEvent{
     name: string,
     start: Date,
     end: Date,
-    shifts: Shift[],
+    shifts?: Shift[],
 }
 
 export class OrgEventClass implements OrgEvent{
-    id?: string="";
-    name = "";
+    id?: string="124124";
+    name = "test";
     start: Date= new Date();
     end: Date= new Date();
-    shifts: Shift[]=[];
+    shifts?: Shift[]= undefined;
 
 }
