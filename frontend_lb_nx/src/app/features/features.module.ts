@@ -28,6 +28,7 @@ import { SharedServicesModule } from '@frontend-lb-nx/shared/services';
 import { EventAddStoreStore } from './event-add/event-add-store.store';
 import { ShiftTypeAddComponent } from './shift-type-add/shift-type-add.component';
 import { ShiftTypeAddStore} from './shift-type-add/shift-type-add.store';
+import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
 
 @NgModule({
   declarations: [
@@ -43,24 +44,25 @@ import { ShiftTypeAddStore} from './shift-type-add/shift-type-add.store';
     ShiftTypeAddComponent,
   ],
   exports: [DashboardComponent, OwnUserOverviewComponent],
-  imports: [
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatIconModule,
-    DialogModule,
-    CommonModule,
-    MatTableModule,
-    MatTabsModule,
-    CalendarMonthModule,
-    CalendarCommonModule,
-    RouterLink,
-    MatInputModule,
-    MatDatepickerModule,
-    MatDatetimepickerModule,
-    FormsModule,
-    SharedServicesModule,
-    SharedUiModule,
-  ],
+    imports: [
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatIconModule,
+        DialogModule,
+        CommonModule,
+        MatTableModule,
+        MatTabsModule,
+        CalendarMonthModule,
+        CalendarCommonModule,
+        RouterLink,
+        MatInputModule,
+        MatDatepickerModule,
+        MatDatetimepickerModule,
+        FormsModule,
+        SharedServicesModule,
+        SharedUiModule,
+        MatProgressSpinnerModule,
+    ],
   providers: [EventsOverviewStore, ShiftTypeAddStore],
 })
 export class FeaturesModule {}

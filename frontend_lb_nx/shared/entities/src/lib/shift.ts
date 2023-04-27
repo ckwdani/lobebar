@@ -8,7 +8,7 @@ export interface Shift{
     headcount: number,
     starttime: Date,
     endtime: Date,
-    orgEvent: OrgEvent,
+    orgEvent?: OrgEvent,
     users?: User[],
     shiftType: ShiftType
 }

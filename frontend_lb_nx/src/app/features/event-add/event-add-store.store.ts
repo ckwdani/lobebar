@@ -3,6 +3,11 @@ import { ComponentStore } from '@ngrx/component-store';
 import {OrgEvent, Shift, ShiftType} from "@frontend-lb-nx/shared/entities";
 import {Observable} from "rxjs";
 import {switchMap} from "rxjs/operators";
+import {Store} from "@ngrx/store";
+import {
+    selectShiftTypes,
+    selectShiftTypesLoading
+} from "../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
 
 export interface EventAddStoreState {
   eventDefined?: boolean;
@@ -15,9 +20,12 @@ const initialState: EventAddStoreState = {eventDefined: false, shifts: [], shift
 
 @Injectable()
 export class EventAddStoreStore extends ComponentStore<EventAddStoreState> {
-  constructor() {
+  constructor(private store: Store) {
     super(initialState);
   }
+
+   $shiftTypes = this.store.select(selectShiftTypes);
+   $shiftTypesLoading = this.store.select(selectShiftTypesLoading);
 
     readonly eventDefined$ = this.select(state => state.eventDefined);
     readonly event$ = this.select(state => state.event);

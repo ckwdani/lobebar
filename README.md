@@ -5,26 +5,26 @@ This is a system designed to enable small volunteering cultural places to distri
 The order of the todos is not the order they should be executed in!
 
 ### Backend
-- [ ] Define database structure
-- [ ] add controllers
-    - [ ] add user controller
-    - [ ] add gamification controller
-    - [ ] add suply controller
-    - [ ] add events controller
-    - [ ] add shifts controller
+- [X] Define database structure
+- [X] add controllers
+    - [X] add user controller
+    - [X] add gamification controller
+    - [X] add suply controller
+    - [X] add events controller
+    - [X] add shifts controller
 - [ ] add email functions
     - [ ] reset password function
 - [ ] rework controllers so recurring patterns are in base controllers
 
 ### Frontend
-- [ ] add login
+- [X] add login
 - [ ] mobile friendly
     - [ ] pwa compatabilities
-- [ ] add navigation
+- [X] add navigation
     - [ ] role based rendering
 - [ ] add forms
     - [ ] add event form
-    - [ ] add user login form
+    - [X] add user login form
     - [ ] add user edit form (same for self and admin edit)
     - [ ] add supply form
 - [ ] add overviews
@@ -44,8 +44,8 @@ The order of the todos is not the order they should be executed in!
 - [ ] add actions
     - [ ] add sign up for shift action
     - [ ] add use suply action (maybee balance overview)
-- [ ] add ngrx state management
-    - [ ] add state for logged in user
+- [X] add ngrx state management
+    - [X] add state for logged in user
 - [ ] add services for backend
 - [ ] add error handling with snackbars
 

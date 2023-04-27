@@ -1,5 +1,5 @@
 <div>
-    <h1 class="underline">{{orgEvent.name}}{{" "}}{{orgEvent.start | date: 'dd.MM.yyyy, HH:mm'}}{{" - "}}{{orgEvent.end | date: 'HH:mm'}}</h1>
+    <h1 class="underline">{{(orgEvent | async)?.name}}{{" "}}{{(orgEvent | async)?.start | date: 'dd.MM.yyyy, HH:mm'}}{{" - "}}{{(orgEvent | async)?.end | date: 'HH:mm'}}</h1>
     <div *ngIf="showAddShift">
     <form>
         <mat-form-field appearance="fill">
@@ -8,8 +8,8 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Schichttyp</mat-label>
-            <mat-select [(value)]="selectedShiftType">
-                <mat-option *ngFor="let shiftType of shiftTypes" [value]="shiftType">
+            <mat-select [(value)]="model.shiftType">
+                <mat-option *ngFor="let shiftType of (shiftTypes | async)" [value]="shiftType">
                     {{shiftType.name}}
                 </mat-option>
             </mat-select>
@@ -32,12 +32,12 @@
             <mat-datetimepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datetimepicker-toggle>
             <mat-datetimepicker #pickerEnd type="datetime"></mat-datetimepicker>
         </mat-form-field>
-        <button mat-icon-button color="primary" (click)="addShift(this.model)"><mat-icon>add</mat-icon></button>
+        <button mat-icon-button color="primary" (click)="addShift()"><mat-icon>add</mat-icon></button>
     </form>
     </div>
-    <div *ngFor="let elem of splitShiftsByType(orgEvent.shifts!)">
+    <div *ngFor="let elem of splittedShifts">
         <p class="text-xl">{{elem[0].shiftType!.name}}</p>
-        <frontend-lb-nx-shift-table [orgEvent]="orgEvent" [shifts]="elem" [showEditDelete]="showAddShift"></frontend-lb-nx-shift-table>
+        <frontend-lb-nx-shift-table *ngIf="(orgEvent | async)??0 !== 0" [orgEvent]="(orgEvent | async)!" [shifts]="elem" [showEditDelete]="showAddShift"></frontend-lb-nx-shift-table>
         <br>
         <br>
     </div>

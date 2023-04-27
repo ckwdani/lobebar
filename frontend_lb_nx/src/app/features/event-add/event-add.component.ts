@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {OrgEvent, OrgEventClass} from "@frontend-lb-nx/shared/entities";
 import {Store} from "@ngrx/store";
 import {OrgEventBackendService, selectSuccess, selectToken} from "@frontend-lb-nx/shared/services";
-import {filter} from "rxjs";
+import {filter, Observable} from "rxjs";
 import {HttpHeaders} from "@ngrx/data/src/dataservices/interfaces";
 import { EventAddStoreStore } from './event-add-store.store';
 
@@ -17,11 +17,18 @@ import { EventAddStoreStore } from './event-add-store.store';
 export class EventAddComponent {
   //$success = this.store.select(selectToken).subscribe(next=>next) ;
   //headers =  new HttpHeaders().set('Authorization', this.$success.toString() )
-  constructor(private orgEventService: OrgEventBackendService, private store: Store) {
+  constructor(private orgEventService: OrgEventBackendService, private store: Store, public readonly componentStore: EventAddStoreStore) {
   }
 
-  submitted=false
-  model : OrgEventClass = new OrgEventClass();//{
+
+  $shiftTypesLoading = this.componentStore.$shiftTypesLoading;
+  eventDefined$ = this.componentStore.eventDefined$;
+
+  model : OrgEventClass = new OrgEventClass();
+  $passedEvent: Observable<OrgEvent> = this.componentStore.event$.pipe(filter(event => event !== undefined)) as Observable<OrgEvent>;
+
+
+  //{
   //   id: '',
   //   name:"",
   //   start: new Date(),
@@ -29,14 +36,15 @@ export class EventAddComponent {
   //   shifts: [],
   // }
   checkAndBuildEvent(){
-    this.submitted=true
-    console.log(this.model)
+    this.componentStore.setEvent(this.model);
   }
   sendOrgEvent(orgEvent: OrgEvent){
     this.add(orgEvent)
   }
 
   add(orgEvent: OrgEvent){
-    this.orgEventService.add(orgEvent).subscribe(next => next.id)
+
   }
+
+  protected readonly filter = filter;
 }

@@ -1,6 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {OrgEvent, Shift, ShiftType, User} from "@frontend-lb-nx/shared/entities";
 import { EventsOverviewStore } from './events-overview.store';
+import {Observable, of} from "rxjs";
 
 const orgEvent: OrgEvent={
   id: "asdsad", name: "Plattenbauromantik", start: new Date(Date.now()), end: new Date(Date.now()), shifts: [],
@@ -64,18 +65,18 @@ orgEvent2.shifts=ELEMENT_DATA
   providers: [EventsOverviewStore],
 })
 export class EventsOverviewComponent {
+
   dataSource=orgEvent.shifts
-  orgEventsAss = [orgEvent, orgEvent1, orgEvent2]
+  orgEventsAss = of([orgEvent, orgEvent1, orgEvent2])
   comingOrgEvents$ = this.eventsOverviewStore.comingOrgEvents$
   yourShifts$ = this.eventsOverviewStore.yourShifts$
   previousShifts$ = this.eventsOverviewStore.previousShifts$
   
-  @Input() orgEvents: OrgEvent[]=this.orgEventsAss
+  @Input() orgEvents: Observable<OrgEvent[]>=this.orgEventsAss
 
   constructor(private readonly eventsOverviewStore: EventsOverviewStore) {
   }
 
 
-
-
+  protected readonly of = of;
 }

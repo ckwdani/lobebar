@@ -1,5 +1,6 @@
 <p>Erstelle ein Event.</p>
 <form>
+    <p *ngIf="$shiftTypesLoading | async"> loading</p>
 <mat-form-field appearance="fill">
     <mat-label>Name</mat-label>
     <input matInput [(ngModel)]="model.name" [ngModelOptions]="{standalone: true}">
@@ -18,9 +19,9 @@
         <mat-datetimepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datetimepicker-toggle>
         <mat-datetimepicker #pickerEnd type="datetime"></mat-datetimepicker>
     </mat-form-field>
-    <button mat-icon-button color="primary" (click)="checkAndBuildEvent()"><mat-icon>save</mat-icon></button>
+    <button mat-icon-button color="primary" (click)="checkAndBuildEvent()" [disabled]="$shiftTypesLoading | async"><mat-icon>save</mat-icon></button>
 </form>
-<div *ngIf="submitted">
-    <frontend-lb-nx-event-overview [orgEvent]="this.model" [showAddShift]="true"></frontend-lb-nx-event-overview>
+<div *ngIf="eventDefined$ | async">
+    <frontend-lb-nx-event-overview (addShiftEvent)="componentStore.addShift($event)" [shiftTypes]="componentStore.$shiftTypes" [shifts]="componentStore.shifts$" [orgEvent]="$passedEvent" [showAddShift]="true"></frontend-lb-nx-event-overview>
     <button mat-icon-button color="primary" (click)="sendOrgEvent(this.model)"><mat-icon>send</mat-icon></button>
 </div>

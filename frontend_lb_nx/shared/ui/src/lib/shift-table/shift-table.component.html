@@ -23,7 +23,7 @@
     <!-- Symbol Column -->
     <ng-container matColumnDef="persons">
         <th mat-header-cell *matHeaderCellDef>Personen </th>
-        <td mat-cell *matCellDef="let element"> {{mapToName(element.users)}} </td>
+        <td mat-cell *matCellDef="let element"> {{element.users !== undefined ? mapToName(element.users): "empty atm"}} </td>
     </ng-container>
 
     <ng-container matColumnDef="assign">
