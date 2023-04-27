@@ -7,26 +7,48 @@ import {
 } from "@ngrx/data";
 import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
+import {BaseCommunicatorService} from "../common/base-communicator.service";
+import {BACKENDPATHS} from "../BACKENDPATHS";
 
 @Injectable({
   providedIn: 'root'
 })
-export class OrgEventBackendService extends DefaultDataService<OrgEvent>{
-  constructor(http: HttpClient, httpUrlGenerator: HttpUrlGenerator) {
-    super('OrgEvent', http, httpUrlGenerator)
+export class OrgEventBackendService extends BaseCommunicatorService<OrgEvent>{
+
+
+  public getAll(): Observable<OrgEvent[]>{
+    return super.getList('').pipe(map(orgEvents => orgEvents.map(orgEvent=>this.mapOrgEvent(orgEvent))))
+
   }
 
-  override getAll(): Observable<OrgEvent[]>{
-    return super.getAll().pipe(map(orgEvents=> orgEvents.map(orgEvent=>this.mapOrgEvent(orgEvent))))
+  public getTimed(date: Date): Observable<OrgEvent[]>{
+    return super.getList(BACKENDPATHS.getOrgEventTimed+'/'+date).pipe(map(orgEvents => orgEvents.map(orgEvent=>this.mapOrgEvent(orgEvent))))
+
   }
 
-  override getById(id: string): Observable<OrgEvent> {
-    return super.getById(id).pipe(map(orgEvent=>this.mapOrgEvent(orgEvent)));
+  public getById(id: string): Observable<OrgEvent> {
+    return super.get(BACKENDPATHS.getSingleOrgEvent+'/'+id).pipe(map(orgEvent=>this.mapOrgEvent(orgEvent)))
+    //return super.getById(id).pipe(map(orgEvent=>this.mapOrgEvent(orgEvent)));
   }
 
-  override getWithQuery(params: string | QueryParams): Observable<OrgEvent[]> {
+  public add(orgEvent: OrgEvent):Observable<OrgEvent>{
+    return super.post(BACKENDPATHS.addOrgEvent, orgEvent).pipe(map(orgEvent=> this.mapOrgEvent(orgEvent)))
+  }
+
+  override delete(id: string): Observable<OrgEvent>{
+    return super.delete(BACKENDPATHS.deleteOrgEvent+'/'+id).pipe(map(orgEvent=> this.mapOrgEvent(orgEvent)))
+  }
+
+  update(orgEvent: OrgEvent): Observable<OrgEvent>{
+    return super.put(BACKENDPATHS.updateOrgEvent+'/'+orgEvent.id, orgEvent).pipe(map(orgEvent=> this.mapOrgEvent(orgEvent)))
+  }
+
+  /*
+  public getWithQuery(params: string | QueryParams): Observable<OrgEvent[]> {
     return super.getWithQuery(params).pipe(map(orgEvents => orgEvents.map(orgEvent => this.mapOrgEvent(orgEvent))));
   }
+
+   */
 
   private mapOrgEvent(orgEvent: OrgEvent): OrgEvent {
     return { ...orgEvent};

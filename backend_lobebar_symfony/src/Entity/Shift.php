@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Type;
 
 #[ORM\Entity(repositoryClass: ShiftRepository::class)]
 class Shift extends _Base_Entity
@@ -18,12 +19,14 @@ class Shift extends _Base_Entity
     private ?int $headcount = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Type("DateTime<'Y-m-d\TH:i:s.u\Z'>")]
     private ?\DateTimeInterface $starttime = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Type("DateTime<'Y-m-d\TH:i:s.u\Z'>")]
     private ?\DateTimeInterface $endtime = null;
 
-    #[ORM\ManyToOne(inversedBy: 'shifts')]
+    #[ORM\ManyToOne(inversedBy: 'shifts', cascade: ["persist"])]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
     private ?Orgevent $orgevent = null;
 

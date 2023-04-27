@@ -16,7 +16,7 @@ import { CalendarComponent } from './calendar/calendar.component';
 import { CalendarCommonModule, CalendarMonthModule } from 'angular-calendar';
 import { CalendarHeaderComponent } from './calendar/calendar-header/calender-header.component';
 import { PointsComponent } from './points/points.component';
-import { EventAddComponent } from './events-overview/event-add/event-add.component';
+import { EventAddComponent } from './event-add/event-add.component';
 import {RouterLink} from "@angular/router";
 import {MatInputModule} from "@angular/material/input";
 import {MatDatepickerModule} from "@angular/material/datepicker";
@@ -25,6 +25,7 @@ import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {FormsModule} from "@angular/forms";
 import { EventsOverviewStore } from './events-overview/events-overview.store';
 import {SharedServicesModule} from "@frontend-lb-nx/shared/services";
+import { EventAddStoreStore } from './event-add/event-add-store.store';
 
 @NgModule({
   declarations: [
@@ -59,7 +60,7 @@ import {SharedServicesModule} from "@frontend-lb-nx/shared/services";
   ],
   providers:[
     EventsOverviewStore,
-    {provide: MAT_DATE_LOCALE, useValue: 'de'}
+    {provide: MAT_DATE_LOCALE, useValue: 'de', providers: [EventAddStoreStore]}
   ]
 })
 export class FeaturesModule {}

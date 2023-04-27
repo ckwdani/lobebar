@@ -70,12 +70,16 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     #[ReadOnlyProperty(readOnly: true)]
     private ?bool $isApproved = false;
 
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: ResetCode::class, orphanRemoval: true)]
+    private Collection $resetCodes;
+
     public function __construct()
     {
         parent::__construct();
         $this->shifts = new ArrayCollection();
         $this->doneExtrawork = new ArrayCollection();
         $this->snacksUsed = new ArrayCollection();
+        $this->resetCodes = new ArrayCollection();
     }
 
 
@@ -296,6 +300,36 @@ public function isIsApproved(): ?bool
 public function setIsApproved(): self
 {
     $this->isApproved = true;
+    return $this;
+}
+
+/**
+ * @return Collection<int, ResetCode>
+ */
+public function getResetCodes(): Collection
+{
+    return $this->resetCodes;
+}
+
+public function addResetCode(ResetCode $resetCode): self
+{
+    if (!$this->resetCodes->contains($resetCode)) {
+        $this->resetCodes->add($resetCode);
+        $resetCode->setUser($this);
+    }
+
+    return $this;
+}
+
+public function removeResetCode(ResetCode $resetCode): self
+{
+    if ($this->resetCodes->removeElement($resetCode)) {
+        // set the owning side to null (unless already changed)
+        if ($resetCode->getUser() === $this) {
+            $resetCode->setUser(null);
+        }
+    }
+
     return $this;
 }
 }

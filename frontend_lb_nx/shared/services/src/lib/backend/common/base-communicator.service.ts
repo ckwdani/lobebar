@@ -27,11 +27,19 @@ export class BaseCommunicatorService<T> {
 
 
 
-  get<ALT>(path: string, route: boolean = true): Observable<T>{
+  get<ALT>(path: string): Observable<T>{
     // has to be done if the localstroage has changed
     this.setHeaders();
     const response = this.http.get<T>(path, this.httpOptions);
-    return this.genGenerObs(response, route);
+    return this.genGenerObs(response);
+  }
+
+
+  getList<ALT>(path: string): Observable<T[]>{
+    // has to be done if the localstroage has changed
+    this.setHeaders();
+    const response = this.http.get<T[]>(path, this.httpOptions);
+    return this.genGenerObs<T[]>(response) as Observable<T[]>;
   }
   post<ALT>(path: string, body: T | ALT): Observable<T>{
     // has to be done if the localstroage has changed
@@ -64,9 +72,9 @@ export class BaseCommunicatorService<T> {
   /** generate Generic observable
    *
    */
-  protected genGenerObs(response: Observable<T>, route: boolean = true): Observable<T>{
+  protected genGenerObs<ALT>(response: Observable<T | ALT>): Observable<T | ALT>{
     return response.pipe(catchError(error => {
-      this.errorHandler.handleHttpError(error, route);
+      this.errorHandler.handleHttpError(error);
         return of(error);
     }));
   }

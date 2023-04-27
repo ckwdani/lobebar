@@ -16,9 +16,4 @@ export class OrgEventClass implements OrgEvent{
     end: Date= new Date();
     shifts: Shift[]=[];
 
-
-    public toJson(){
-        const data = {...this, start: "sad", end: "asdads"};
-        return data;
-    }
 }

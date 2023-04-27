@@ -6,7 +6,7 @@ import {RegisterComponent, ShiftTableComponent} from "@frontend-lb-nx/shared/ui"
 import {EventsOverviewComponent} from "./features/events-overview/events-overview.component";
 import {CalendarComponent} from "./features/calendar/calendar.component";
 import {PointsComponent} from "./features/points/points.component";
-import {EventAddComponent} from "./features/events-overview/event-add/event-add.component";
+import {EventAddComponent} from "./features/event-add/event-add.component";
 import {LoginComponent} from "../../shared/ui/src/lib/login/login.component";
 
 export const appRoutes: Route[] = [

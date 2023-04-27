@@ -9,6 +9,8 @@ use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\MaxDepth;
+use JMS\Serializer\Annotation\PostDeserialize;
+use JMS\Serializer\Annotation\Type;
 
 const WITH_DETAILED_SHIFTS = "detailed_shifts";
 #[ORM\Entity(repositoryClass: OrgeventRepository::class)]
@@ -21,13 +23,16 @@ class Orgevent extends _Base_Entity
     private ?string $name = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Type("DateTime<'Y-m-d\TH:i:s.u\Z'>")]
     private ?\DateTimeInterface $start = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
+    #[Type("DateTime<'Y-m-d\TH:i:s.u\Z'>")]
     private ?\DateTimeInterface $end = null;
 
-    #[ORM\OneToMany(mappedBy: 'orgevent', targetEntity: Shift::class, cascade: ["remove"], orphanRemoval: true)]
+    #[ORM\OneToMany(mappedBy: 'orgevent', targetEntity: Shift::class, cascade: ["remove", "persist"], orphanRemoval: true)]
     #[Groups(groups: [WITH_DETAILED_SHIFTS])]
+    #[Type("ArrayCollection<App\Entity\Shift>")]
     #[MaxDepth(2)]
     private Collection $shifts;
 
@@ -38,6 +43,15 @@ class Orgevent extends _Base_Entity
     }
 
 
+    #[PostDeserialize]
+    public function giveIdToShiftsWithoutEvent(){
+        // go through all shifts and give them an event if they don't have one
+        foreach ($this->shifts as $shift) {
+            if ($shift->getOrgevent() === null) {
+                $shift->setOrgevent($this);
+            }
+        }
+    }
 
     public function getName(): ?string
     {

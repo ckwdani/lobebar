@@ -1,20 +1,20 @@
 import { Component } from '@angular/core';
-import {OrgEvent} from "@frontend-lb-nx/shared/entities";
-import {EntityActionOptions, EntityCollectionService, EntityServices} from "@ngrx/data";
+import {OrgEvent, OrgEventClass} from "@frontend-lb-nx/shared/entities";
 import {Store} from "@ngrx/store";
-import {selectSuccess, selectToken} from "@frontend-lb-nx/shared/services";
+import {OrgEventBackendService, selectSuccess, selectToken} from "@frontend-lb-nx/shared/services";
 import {filter} from "rxjs";
 import {HttpHeaders} from "@ngrx/data/src/dataservices/interfaces";
+import { EventAddStoreStore } from './event-add-store.store';
 
 
 @Component({
   selector: 'frontend-lb-nx-event-add',
   templateUrl: './event-add.component.html',
   styleUrls: ['./event-add.component.scss'],
+  providers: [EventAddStoreStore],
 })
 
 export class EventAddComponent {
-  orgEventsService: EntityCollectionService<OrgEvent>;
   //$success = this.store.select(selectToken).subscribe(next=>next) ;
   //headers =  new HttpHeaders().set('Authorization', this.$success.toString() )
 
@@ -28,17 +28,16 @@ export class EventAddComponent {
     this.headers = {'Content-Type': 'application/json', 'Authorization': 'Bearer ' + next};
   });
 
-  constructor(entityServices: EntityServices, private store: Store) {
-    this.orgEventsService = entityServices.getEntityCollectionService('OrgEvent')
+  constructor(private orgEventService: OrgEventBackendService, private store: Store) {
   }
   submitted=false
-  model : OrgEvent={
-    id: '',
-    name:"",
-    start: new Date(),
-    end: new Date(),
-    shifts: [],
-  }
+  model : OrgEventClass = new OrgEventClass();//{
+  //   id: '',
+  //   name:"",
+  //   start: new Date(),
+  //   end: new Date(),
+  //   shifts: [],
+  // }
   checkAndBuildEvent(){
     this.submitted=true
     console.log(this.model)
@@ -48,6 +47,6 @@ export class EventAddComponent {
   }
 
   add(orgEvent: OrgEvent){
-    this.orgEventsService.add(orgEvent, {httpOptions: {httpHeaders: this.headers}});
+    this.orgEventService.add(orgEvent)
   }
 }

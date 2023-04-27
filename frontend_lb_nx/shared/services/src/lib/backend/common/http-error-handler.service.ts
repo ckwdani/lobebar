@@ -12,7 +12,7 @@ import {of} from "rxjs";
 })
 export class HttpErrorHandlerService {
 
-  constructor(private snackBar: MatSnackBar, private router: Router, private store: Store) { }
+  constructor( private router: Router, private store: Store) { }
 
   handleHttpError(error: HttpErrorResponse, routeToLogin: boolean = true): HttpErrorResponse{
     return error;

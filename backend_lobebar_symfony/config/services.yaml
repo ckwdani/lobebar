@@ -6,6 +6,9 @@
 parameters:
 
 services:
+    app.custom_authenticator:
+        class: App\Security\customJWT_Authenticator
+        parent: lexik_jwt_authentication.security.jwt_authenticator
     # default configuration for services in *this* file
     _defaults:
         autowire: true      # Automatically injects dependencies in your services.

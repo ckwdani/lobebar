@@ -90,6 +90,9 @@ class UserController extends _Base_Controller
     }
 
 
+
+
+    #[Route("/user/reset/{email}", methods: ["PUT"])]
     public function resetPassword(string $email, UserPasswordEncoderInterface $encoder, MailerInterface $mailer){
         $em = $this->getDoctrine()->getManager();
         /** @var User $userFromDB */
