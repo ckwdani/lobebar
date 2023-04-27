@@ -1,9 +1,10 @@
 import {AfterViewInit, Component} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import {asapScheduler, combineLatest, first, Observable, observeOn} from 'rxjs';
+import {asapScheduler, combineLatest, filter, first, Observable, observeOn} from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {Store} from "@ngrx/store";
 import {loadTokenFromLocal, selectLoggedIn, selectSuccess, selectUserLoaded} from "@frontend-lb-nx/shared/services";
+import {loadShiftTypes} from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
 
 @Component({
   selector: 'frontend-lb-nx-navigation',
@@ -19,16 +20,23 @@ export class NavigationComponent implements AfterViewInit{
     );
 
   $isLoggedIn = this.store.select(selectLoggedIn).pipe(first());
+  $isLoggedInAll = this.store.select(selectLoggedIn);
   $userLoaded = this.store.select(selectUserLoaded).pipe(first());
+  $shiftTypesLoaded = this.store.select(selectSuccess).pipe(first());
 
   constructor(private breakpointObserver: BreakpointObserver, private store:Store) {
 
   }
 
   ngAfterViewInit(): void {
-    combineLatest([this.$isLoggedIn, this.$userLoaded]).subscribe(([isLoggedIn, userLoaded]) => {
+
+    combineLatest([this.$isLoggedIn, this.$userLoaded, this.$shiftTypesLoaded, this.$isLoggedInAll]).subscribe(([isLoggedIn, userLoaded, shiftTypesLoaded, isLoggedInAll]) => {
+      console.log(isLoggedInAll, shiftTypesLoaded)
       if(!isLoggedIn){
         this.store.dispatch(loadTokenFromLocal());
+      }
+      if(isLoggedInAll && !shiftTypesLoaded){
+        this.store.dispatch(loadShiftTypes());
       }
     });
   }

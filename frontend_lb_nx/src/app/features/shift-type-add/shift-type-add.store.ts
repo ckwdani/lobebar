@@ -30,15 +30,15 @@ export class ShiftTypeAddStore extends ComponentStore<ShiftTypeAddStoreState> {
       })
 
 
-   readonly addShiftType = this.effect((shiftType$: Observable<ShiftType>)=> {
-       return this.shiftTypeService.add().pipe(
-           tap({
-               next: (shiftType) => this.addShiftTypeState(shiftType),
-               error: (e) => console.log(e),
-           }),
-           catchError(()=> EMPTY),
-       )}
-   )
+   // readonly addShiftType = this.effect((shiftType$: Observable<ShiftType>)=> {
+   //     return this.shiftTypeService.add().pipe(
+   //         tap({
+   //             next: (shiftType) => this.addShiftTypeState(shiftType),
+   //             error: (e) => console.log(e),
+   //         }),
+   //         catchError(()=> EMPTY),
+   //     )}
+   // )
   readonly addShiftTypeState = this.updater((state, shiftType: ShiftType) =>({
     shiftTypes: [...state.shiftTypes, shiftType],
   }))

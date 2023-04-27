@@ -23,7 +23,7 @@ export class ShiftTypeAddComponent {
   }
 
   sendShiftType(){
-    this.store.addShiftType(this.model)
+    // this.store.addShiftType(this.model)
     //this.shiftTypeService.add(this.model).subscribe(next => next)
   }
 }

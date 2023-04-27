@@ -12,22 +12,21 @@ import * as fromRegister from './backend/states/register/register.reducer';
 import { RegisterEffects } from './backend/states/register/register.effects';
 import {DefaultDataServiceConfig} from "@ngrx/data";
 import {BACKENDPATHS} from "./backend/BACKENDPATHS";
+import * as fromShiftType from './backend/states/shift-types/shift-type.reducer';
+import { ShiftTypeEffects } from './backend/states/shift-types/shift-type.effects';
 
-const defaultDataServiceConfig: DefaultDataServiceConfig = {
-  root: BACKENDPATHS.baseApiUrl,
-  timeout: 3000, // request timeout
 
-}
 
 @NgModule({
   imports: [
       CommonModule,
     HttpClientModule,
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducer),
-      EffectsModule.forFeature([AuthEffects, RegisterEffects]),
-      StoreModule.forFeature(fromRegister.registerFeatureKey, fromRegister.registerReducer)
+      EffectsModule.forFeature([AuthEffects, RegisterEffects, ShiftTypeEffects]),
+      StoreModule.forFeature(fromRegister.registerFeatureKey, fromRegister.registerReducer),
+      StoreModule.forFeature(fromShiftType.shiftTypeFeatureKey, fromShiftType.reducer)
   ],
-  providers: [BaseCommunicatorService, AuthService, AuthEffects,{ provide: DefaultDataServiceConfig, useValue: defaultDataServiceConfig}],
+  providers: [BaseCommunicatorService, AuthService, AuthEffects],
 })
 export class SharedServicesModule {}
 

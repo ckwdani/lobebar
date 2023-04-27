@@ -26,5 +26,7 @@ export class RegisterEffects {
   })
 
 
+
+
   constructor(private actions$: Actions, private authService: AuthService) {}
 }
