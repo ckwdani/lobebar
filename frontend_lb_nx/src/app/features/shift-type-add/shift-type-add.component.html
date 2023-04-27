@@ -1,0 +1,8 @@
+<p>Erstelle Schichtarten.</p>
+<form>
+    <mat-form-field appearance="fill">
+        <mat-label>Schichttypname</mat-label>
+        <input matInput [(ngModel)]="model.name" [ngModelOptions]="{standalone: true}">
+    </mat-form-field>
+    <button mat-icon-button color="primary" (click)="sendShiftType()"><mat-icon>send</mat-icon></button>
+</form>
