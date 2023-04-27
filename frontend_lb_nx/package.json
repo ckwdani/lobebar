@@ -72,7 +72,7 @@
     "jest-environment-jsdom": "^29.4.1",
     "jest-preset-angular": "~13.0.0",
     "ng-packagr": "~15.2.2",
-    "nx": "15.9.2",
+    "nx": "^15.9.2",
     "postcss": "^8.4.23",
     "postcss-import": "~14.1.0",
     "postcss-preset-env": "~7.5.0",

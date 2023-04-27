@@ -8,3 +8,17 @@ export interface OrgEvent{
     end: Date,
     shifts: Shift[],
 }
+
+export class OrgEventClass implements OrgEvent{
+    id?: string="";
+    name = "";
+    start: Date= new Date();
+    end: Date= new Date();
+    shifts: Shift[]=[];
+
+
+    public toJson(){
+        const data = {...this, start: "sad", end: "asdads"};
+        return data;
+    }
+}
