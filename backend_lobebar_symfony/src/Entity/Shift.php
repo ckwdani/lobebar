@@ -69,41 +69,41 @@ class Shift extends _Base_Entity
         return $this;
     }
 
-//    public function getHeadcount(): ?int
-//    {
-//        return $this->headcount;
-//    }
-//
-//    public function setHeadcount(int $headcount): self
-//    {
-//        $this->headcount = $headcount;
-//
-//        return $this;
-//    }
-//
-//    public function getStarttime(): ?\DateTimeInterface
-//    {
-//        return $this->starttime;
-//    }
-//
-//    public function setStarttime(\DateTimeInterface $starttime): self
-//    {
-//        $this->starttime = $starttime;
-//
-//        return $this;
-//    }
-//
-//    public function getEndtime(): ?\DateTimeInterface
-//    {
-//        return $this->endtime;
-//    }
-//
-//    public function setEndtime(\DateTimeInterface $endtime): self
-//    {
-//        $this->endtime = $endtime;
-//
-//        return $this;
-//    }
+    public function getHeadcount(): ?int
+    {
+        return $this->headcount;
+    }
+
+    public function setHeadcount(int $headcount): self
+    {
+        $this->headcount = $headcount;
+
+        return $this;
+    }
+
+    public function getStarttime(): ?\DateTimeInterface
+    {
+        return $this->starttime;
+    }
+
+    public function setStarttime(\DateTimeInterface $starttime): self
+    {
+        $this->starttime = $starttime;
+
+        return $this;
+    }
+
+    public function getEndtime(): ?\DateTimeInterface
+    {
+        return $this->endtime;
+    }
+
+    public function setEndtime(\DateTimeInterface $endtime): self
+    {
+        $this->endtime = $endtime;
+
+        return $this;
+    }
 
     public function getOrgevent(): ?Orgevent
     {

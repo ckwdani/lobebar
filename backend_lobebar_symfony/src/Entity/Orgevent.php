@@ -7,10 +7,12 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\Persistence\ObjectManager;
 use JMS\Serializer\Annotation\Groups;
 use JMS\Serializer\Annotation\MaxDepth;
 use JMS\Serializer\Annotation\PostDeserialize;
 use JMS\Serializer\Annotation\Type;
+use Symfony\Component\Uid\Uuid;
 
 const WITH_DETAILED_SHIFTS = "detailed_shifts";
 #[ORM\Entity(repositoryClass: OrgeventRepository::class)]
@@ -43,15 +45,26 @@ class Orgevent extends _Base_Entity
     }
 
 
-    #[PostDeserialize]
-    public function giveIdToShiftsWithoutEvent(){
-        // go through all shifts and give them an event if they don't have one
-        foreach ($this->shifts as $shift) {
-            if ($shift->getOrgevent() === null) {
-                $shift->setOrgevent($this);
-            }
-        }
-    }
+//    #[PostDeserialize]
+//    public function giveIdToShiftsWithoutEvent(){
+//        // go through all shifts and give them an event if they don't have one
+//        foreach ($this->shifts as $shift) {
+//            if ($shift->getOrgevent() === null) {
+//                $shift->setOrgevent($this);
+//            }
+//        }
+//    }
+
+//    public function fixUpShifts(ObjectManager $manager){
+//        foreach ($this->shifts as $shift) {
+//            if ($shift->getOrgevent() === null) {
+//                $shift->setOrgevent($this);
+//            }
+//            // get shiftype from database
+//            //$shift->setType($manager->getRepository(Shiftype::class)->find($shift->getType()->getId()->toBinary()));
+////            $shift->setType($manager->getReference(Shiftype::class, Uuid::fromString($shift->getType()->getId())));
+//        }
+//    }
 
     public function getName(): ?string
     {
