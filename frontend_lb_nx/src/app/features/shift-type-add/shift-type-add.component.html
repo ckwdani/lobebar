@@ -1,6 +1,12 @@
 <p>Erstelle Schichtarten.</p>
+<div *ngIf="shiftTypes!==undefined">
+    <div *ngFor="let elem of shiftTypes">
+        <span>{{elem.name}}</span>
+    </div>
+</div>
 <form>
     <mat-form-field appearance="fill">
+        <mat-error >Hallo</mat-error>
         <mat-label>Schichttypname</mat-label>
         <input matInput [(ngModel)]="model.name" [ngModelOptions]="{standalone: true}">
     </mat-form-field>

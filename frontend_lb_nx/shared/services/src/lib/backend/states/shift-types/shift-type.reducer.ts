@@ -22,4 +22,7 @@ export const reducer = createReducer(
   on(ShiftTypeActions.loadShiftTypesSuccess, (state, {shiftTypes}) => { return {...state, shiftTypes, isLoading: false}}),
   on(ShiftTypeActions.loadShiftTypesFailure, (state, {error}) => ({...state, error, success: false})),
 
+  on(ShiftTypeActions.addShiftType, (state) => {return{...state, isLoading: true}}),
+  on(ShiftTypeActions.addShiftTypeSuccess, (state,{shiftType})=>{return{...state, shiftTypes: state.shiftTypes.concat(shiftType) , isLoading: false}}),
+    on(ShiftTypeActions.addShiftTypeFailure, (state, {error}) => ({...state, error, success: false})),
 );

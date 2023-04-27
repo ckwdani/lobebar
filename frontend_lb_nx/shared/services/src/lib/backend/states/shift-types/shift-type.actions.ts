@@ -14,3 +14,18 @@ export const loadShiftTypesFailure = createAction(
   '[ShiftType] Load ShiftTypes Failure',
   props<{ error: number }>()
 );
+
+export const addShiftType = createAction(
+    '[ShiftType] Adding ShiftType',
+    props<{shiftType: ShiftType}>()
+);
+
+export const addShiftTypeSuccess = createAction(
+    '[ShiftType] Adding ShiftType Success',
+    props<{shiftType: ShiftType}>()
+)
+
+export const addShiftTypeFailure = createAction(
+    '[ShiftType] Adding ShiftType Failure',
+    props<{error: number}>()
+)
