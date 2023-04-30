@@ -22,7 +22,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
 import { MAT_DATE_LOCALE } from '@angular/material/core';
-import { FormsModule } from '@angular/forms';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EventsOverviewStore } from './events-overview/events-overview.store';
 import { SharedServicesModule } from '@frontend-lb-nx/shared/services';
 import { EventAddStoreStore } from './event-add/event-add-store.store';
@@ -62,6 +62,7 @@ import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";
         SharedServicesModule,
         SharedUiModule,
         MatProgressSpinnerModule,
+        ReactiveFormsModule,
     ],
   providers: [EventsOverviewStore, ShiftTypeAddStore],
 })

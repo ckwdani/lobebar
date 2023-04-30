@@ -18,3 +18,9 @@ export * from './lib/backend/states/register/register.actions';
 export * from './lib/backend/states/register/register.effects';
 export * from './lib/backend/states/register/register.reducer';
 export * from './lib/backend/states/register/register.selectors';
+
+
+// import everything from the orgevent state files
+export * from './lib/backend/states/orgEvent/orgEvent.actions';
+export * from './lib/backend/states/orgEvent/orgEvent.effects';
+export * from './lib/backend/states/orgEvent/orgEvent.selectors';

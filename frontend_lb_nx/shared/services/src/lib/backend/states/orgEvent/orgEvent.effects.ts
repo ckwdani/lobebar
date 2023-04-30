@@ -2,14 +2,17 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {catchError, map, concatMap, switchMap} from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
-import * as ShiftTypeActions from './shift-type.actions';
+import * as OrgEventActions from './orgEvent.actions';
 import {ShiftTypeBackendService} from "../../entity-backend-services/shifts-type-backend.service";
 import {ShiftType} from "@frontend-lb-nx/shared/entities";
+import {addOrgEvent} from "./orgEvent.actions";
+import {OrgEventBackendService} from "@frontend-lb-nx/shared/services";
 
 
 @Injectable()
-export class ShiftTypeEffects {
+export class OrgEventEffects {
 
+    /*
   loadShiftTypes$ = createEffect(() => {
     return this.actions$.pipe(
         ofType(ShiftTypeActions.loadShiftTypes),
@@ -22,20 +25,22 @@ export class ShiftTypeEffects {
             )));
   });
 
-  addShiftType$ = createEffect(()=>{
+     */
+
+  addOrgEvent$ = createEffect(()=>{
       return this.actions$.pipe(
-          ofType(ShiftTypeActions.addShiftType),
+          ofType(OrgEventActions.addOrgEvent),
           switchMap((action)=>
-          this.shiftTypeService.add(action.shiftType).pipe(
+          this.orgEventService.add(action.orgEvent).pipe(
               map(()=>{
-                  return ShiftTypeActions.addShiftTypeSuccess({shiftType: action.shiftType});
+                  return OrgEventActions.addOrgEventSuccess({orgEvent: action.orgEvent});
               }),
-              catchError((error)=> of(ShiftTypeActions.addShiftTypeFailure({error})))
+              catchError((error)=> of(OrgEventActions.addOrgEventFailure({error})))
           ))
       )
       }
   )
-
+    /*
     deleteShiftType$ = createEffect(()=>{
             return this.actions$.pipe(
                 ofType(ShiftTypeActions.deleteShiftType),
@@ -50,8 +55,10 @@ export class ShiftTypeEffects {
         }
     )
 
+     */
 
 
 
-  constructor(private actions$: Actions, private shiftTypeService: ShiftTypeBackendService) {}
+
+  constructor(private actions$: Actions, private orgEventService: OrgEventBackendService) {}
 }

@@ -29,3 +29,19 @@ export const addShiftTypeFailure = createAction(
     '[ShiftType] Adding ShiftType Failure',
     props<{error: number}>()
 )
+
+export const deleteShiftType = createAction(
+    '[ShiftType] Deleting ShiftType',
+    props<{shiftType: ShiftType}>()
+);
+
+export const deleteShiftTypeSuccess = createAction(
+    '[ShiftType] Deleting ShiftType Success',
+    props<{shiftType: ShiftType}>()
+)
+
+export const deleteShiftTypeFailure = createAction(
+    '[ShiftType] Deleting ShiftType Failure',
+    props<{error: number}>()
+)
+

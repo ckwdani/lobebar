@@ -5,6 +5,7 @@ import {OrgEventBackendService, selectSuccess, selectToken} from "@frontend-lb-n
 import {filter, Observable} from "rxjs";
 import {HttpHeaders} from "@ngrx/data/src/dataservices/interfaces";
 import { EventAddStoreStore } from './event-add-store.store';
+import {addOrgEvent} from "../../../../shared/services/src/lib/backend/states/orgEvent/orgEvent.actions";
 
 
 @Component({
@@ -27,24 +28,11 @@ export class EventAddComponent {
   model : OrgEventClass = new OrgEventClass();
   $passedEvent: Observable<OrgEvent> = this.componentStore.event$.pipe(filter(event => event !== undefined)) as Observable<OrgEvent>;
 
-
-  //{
-  //   id: '',
-  //   name:"",
-  //   start: new Date(),
-  //   end: new Date(),
-  //   shifts: [],
-  // }
   checkAndBuildEvent(){
     this.componentStore.setEvent(this.model);
   }
-  sendOrgEvent(orgEvent: OrgEvent){
-    this.add(orgEvent)
+  sendOrgEvent(){
+    const copyModel= Object.assign({}, this.model)
+    this.store.dispatch(addOrgEvent({orgEvent: copyModel}))
   }
-
-  add(orgEvent: OrgEvent){
-
-  }
-
-  protected readonly filter = filter;
 }
