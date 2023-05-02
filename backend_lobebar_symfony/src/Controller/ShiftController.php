@@ -74,7 +74,28 @@ class ShiftController extends _Base_Controller
     }
 
 
-
+//
+//    // function for adding an array of shifts to an event
+//    #[Route("/mod_api/shift/addarray/{eventId}", methods: ["POST"])]
+//    public function addShiftArray(Request $request, string $eventId){
+//        $encoders = [new XmlEncoder(), new JsonEncoder()];
+//        $normalizers = [new ObjectNormalizer()];
+//
+//        $serializer = new Serializer($normalizers, $encoders);
+//
+//        /** @var Shift[] $event */
+//        $shifts = $serializer->deserialize($request->getContent(), Shift::class."[]", "json", ["DEEP_OBJECT_TO_POPULATE" => "type"]);
+//
+////        $shifts = $this->serializer->deserialize($request->getContent(), Shift::class.'[]', "json");
+//        /** @var Orgevent $event */
+//        $event = $this->doctrine->getManager()->getRepository(Orgevent::class)->find(Uuid::fromString($eventId));
+//        foreach($shifts as $shift){
+//            $event->addShift($shift);
+//            $this->doctrine->getManager()->persist($shift);
+//        }
+//        $this->doctrine->getManager()->flush();
+//        return JsonResponse::fromJsonString($this->serializer->serialize($shifts, 'json'));
+//    }
 
 
     // function for adding a shift to an event

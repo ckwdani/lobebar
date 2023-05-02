@@ -6,9 +6,12 @@ use App\Entity\_Base_Entity;
 use App\Entity\SerializationListeners\EventSerializationListener;
 use App\Entity\SerializationListeners\ProfileSerializationListener;
 use App\Entity\User;
+use App\utils\Handlers\EntityHandler;
+use App\utils\Handlers\ShiftDeserilizerHandler;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\Persistence\ManagerRegistry;
 use JMS\Serializer\EventDispatcher\EventDispatcher;
+use JMS\Serializer\Handler\HandlerRegistry;
 use JMS\Serializer\Naming\IdenticalPropertyNamingStrategy;
 use JMS\Serializer\Naming\SerializedNameAnnotationStrategy;
 use JMS\Serializer\SerializationContext;
@@ -24,6 +27,9 @@ class _Base_Controller extends AbstractController
     public function __construct(protected ManagerRegistry $doctrine )
     {
         $this->serializer = SerializerBuilder::create()
+            ->configureHandlers(function(HandlerRegistry $registry) {
+                $registry->registerSubscribingHandler(new ShiftDeserilizerHandler($this->doctrine));
+            })
             // here we configure our listeners (especially our event (entity) serialization listener
 //            ->configureListeners(function(EventDispatcher $dispatcher) use ($profileUtils, $likeUtils) {
 //                $dispatcher->addSubscriber(new EventSerializationListener($profileUtils, $likeUtils));

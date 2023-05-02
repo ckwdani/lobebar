@@ -45,15 +45,15 @@ class Orgevent extends _Base_Entity
     }
 
 
-//    #[PostDeserialize]
-//    public function giveIdToShiftsWithoutEvent(){
-//        // go through all shifts and give them an event if they don't have one
-//        foreach ($this->shifts as $shift) {
-//            if ($shift->getOrgevent() === null) {
-//                $shift->setOrgevent($this);
-//            }
-//        }
-//    }
+    #[PostDeserialize]
+    public function giveIdToShiftsWithoutEvent(){
+        // go through all shifts and give them an event if they don't have one
+        foreach ($this->shifts as $shift) {
+            if ($shift->getOrgevent() === null) {
+                $shift->setOrgevent($this);
+            }
+        }
+    }
 
 //    public function fixUpShifts(ObjectManager $manager){
 //        foreach ($this->shifts as $shift) {
