@@ -21,8 +21,8 @@ export class OrgEventBackendService extends BaseCommunicatorService<OrgEvent>{
 
   }
 
-  public getTimed(date: Date): Observable<OrgEvent[]>{
-    return super.getList(BACKENDPATHS.getOrgEventTimed+'/'+date).pipe(map(orgEvents => orgEvents.map(orgEvent=>this.mapOrgEvent(orgEvent))))
+  public getTimed(unixstart?: number, unixend?: number): Observable<OrgEvent[]>{
+    return super.getList(BACKENDPATHS.getOrgEventTimed+'/'+unixstart+'/'+unixend).pipe(map(orgEvents => orgEvents.map(orgEvent=>this.mapOrgEvent(orgEvent))))
 
   }
 
