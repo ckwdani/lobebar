@@ -35,10 +35,10 @@
         <button mat-icon-button color="primary" (click)="addShift()"><mat-icon>add</mat-icon></button>
     </form>
     </div>
-    <div *ngFor="let elem of splittedShifts">
-        <p class="text-xl">{{elem[0].type!.name}}</p>
-        <frontend-lb-nx-shift-table *ngIf="(orgEvent | async)??0 !== 0" [orgEvent]="(orgEvent | async)!" [shifts]="elem" [showEditDelete]="showAddShift"></frontend-lb-nx-shift-table>
-        <br>
-        <br>
-    </div>
+        <div *ngFor="let elem of splittedShifts">
+            <p class="text-xl">{{elem[0].type!.name}}</p>
+            <frontend-lb-nx-shift-table *ngIf="(orgEvent | async)??0 !== 0" [orgEvent]="(orgEvent | async)!" [shifts]="elem" [showEditDelete]="showAddShift"></frontend-lb-nx-shift-table>
+            <br>
+            <br>
+        </div>
 </div>

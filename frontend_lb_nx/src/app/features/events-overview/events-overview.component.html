@@ -5,9 +5,12 @@
             <button routerLink="/event_add" mat-icon-button color="primary"><mat-icon>add</mat-icon></button>
         </div>
         <br>
-        <div *ngFor="let event of (orgEvents | async)">
-            <frontend-lb-nx-event-overview [orgEvent]="of(event)"></frontend-lb-nx-event-overview>
+        <div *ngIf="orgEvents!==undefined">
+            <div *ngFor="let elem of orgEvents">
+                <frontend-lb-nx-event-overview [orgEvent]="of(elem)" ></frontend-lb-nx-event-overview>
+            </div>
         </div>
+
 
     </mat-tab>
     <mat-tab label="Deine kommenden Schichten"></mat-tab>

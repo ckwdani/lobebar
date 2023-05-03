@@ -12,20 +12,18 @@ import {OrgEventBackendService} from "@frontend-lb-nx/shared/services";
 @Injectable()
 export class OrgEventEffects {
 
-    /*
-  loadShiftTypes$ = createEffect(() => {
+  loadOrgEvents$ = createEffect(() => {
     return this.actions$.pipe(
-        ofType(ShiftTypeActions.loadShiftTypes),
+        ofType(OrgEventActions.loadOrgEvents),
         switchMap(( ) =>
-            this.shiftTypeService.getAll().pipe(
-                map((types) => {
-                  return ShiftTypeActions.loadShiftTypesSuccess({shiftTypes: types})
+            this.orgEventService.getTimed(1683116736, 1704067200).pipe(
+                map((orgEvents) => {
+                  return OrgEventActions.loadOrgEventsSuccess({orgEvents: orgEvents})
                 }),
-                catchError((error) => of(ShiftTypeActions.loadShiftTypesFailure({ error })))
+                catchError((error) => of(OrgEventActions.loadOrgEventsFailure({ error })))
             )));
   });
 
-     */
 
   addOrgEvent$ = createEffect(()=>{
       return this.actions$.pipe(
@@ -40,22 +38,20 @@ export class OrgEventEffects {
       )
       }
   )
-    /*
-    deleteShiftType$ = createEffect(()=>{
+    deleteOrgEvent$ = createEffect(()=>{
             return this.actions$.pipe(
-                ofType(ShiftTypeActions.deleteShiftType),
+                ofType(OrgEventActions.deleteOrgEvent),
                 switchMap((action)=>
-                    this.shiftTypeService.delete(action.shiftType.id?.toString()??"").pipe(
+                    this.orgEventService.delete(action.orgEvent.id?.toString()??"").pipe(
                         map(()=>{
-                            return ShiftTypeActions.deleteShiftTypeSuccess({shiftType: action.shiftType});
+                            return OrgEventActions.deleteOrgEventSuccess({orgEvent: action.orgEvent});
                         }),
-                        catchError((error)=> of(ShiftTypeActions.deleteShiftTypeFailure({error})))
+                        catchError((error)=> of(OrgEventActions.deleteOrgEventFailure({error})))
                     ))
             )
         }
     )
 
-     */
 
 
 

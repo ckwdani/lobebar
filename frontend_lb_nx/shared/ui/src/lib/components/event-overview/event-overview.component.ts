@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {OrgEvent, Shift, ShiftType} from "@frontend-lb-nx/shared/entities";
-import {filter, Observable} from "rxjs";
+import {filter, Observable, of} from "rxjs";
 
 @Component({
   selector: 'frontend-lb-nx-event-overview',
@@ -29,6 +29,7 @@ export class EventOverviewComponent implements OnInit{
       this.model.type = next[0];
     })
   }
+
   splitShiftsByType(shifts: Shift[]): void {
     const shiftsByType: {[key: string]: Shift[]} = {};
 
@@ -57,6 +58,5 @@ export class EventOverviewComponent implements OnInit{
       type: this.model?.type ?? {id: '', name: '', value: 0},
     };
   }
-
 
 }

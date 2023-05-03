@@ -3,7 +3,14 @@ import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
 import {asapScheduler, combineLatest, filter, first, Observable, observeOn} from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {Store} from "@ngrx/store";
-import {loadTokenFromLocal, selectLoggedIn, selectSuccess, selectUserLoaded} from "@frontend-lb-nx/shared/services";
+import {
+  loadOrgEvents,
+  loadTokenFromLocal,
+  selectLoggedIn,
+  selectOrgEvents,
+  selectSuccess,
+  selectUserLoaded
+} from "@frontend-lb-nx/shared/services";
 import {loadShiftTypes} from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
 
 @Component({
@@ -30,12 +37,13 @@ export class NavigationComponent implements AfterViewInit{
 
   ngAfterViewInit(): void {
 
-    combineLatest([this.$isLoggedIn, this.$userLoaded, this.$shiftTypesLoaded, this.$isLoggedInAll]).subscribe(([isLoggedIn, userLoaded, shiftTypesLoaded, isLoggedInAll]) => {
+    combineLatest([this.$isLoggedIn, this.$userLoaded, this.$shiftTypesLoaded, this.$isLoggedInAll]).subscribe(([isLoggedIn, userLoaded, shiftTypesLoaded,isLoggedInAll]) => {
       console.log(isLoggedInAll, shiftTypesLoaded)
       if(!isLoggedIn){
         this.store.dispatch(loadTokenFromLocal());
       }
       if(isLoggedInAll && !shiftTypesLoaded){
+        this.store.dispatch(loadOrgEvents());
         this.store.dispatch(loadShiftTypes());
       }
     });
