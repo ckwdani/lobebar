@@ -4,7 +4,7 @@ import {asapScheduler, combineLatest, filter, first, Observable, observeOn} from
 import { map, shareReplay } from 'rxjs/operators';
 import {Store} from "@ngrx/store";
 import {
-  loadOrgEvents,
+  loadOrgEvents, loadOutstandingShifts, loadOwnShifts,
   loadTokenFromLocal,
   selectLoggedIn,
   selectOrgEvents,
@@ -43,8 +43,11 @@ export class NavigationComponent implements AfterViewInit{
         this.store.dispatch(loadTokenFromLocal());
       }
       if(isLoggedInAll && !shiftTypesLoaded){
-        this.store.dispatch(loadOrgEvents());
+        // where do we want to load this all
         this.store.dispatch(loadShiftTypes());
+        this.store.dispatch(loadOutstandingShifts());
+        this.store.dispatch(loadOwnShifts());
+        this.store.dispatch(loadOrgEvents());
       }
     });
   }

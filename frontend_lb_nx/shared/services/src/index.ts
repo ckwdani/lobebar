@@ -24,3 +24,9 @@ export * from './lib/backend/states/register/register.selectors';
 export * from './lib/backend/states/orgEvent/orgEvent.actions';
 export * from './lib/backend/states/orgEvent/orgEvent.effects';
 export * from './lib/backend/states/orgEvent/orgEvent.selectors';
+
+// import everything from the shift state files
+export * from './lib/backend/states/shift/shift.actions';
+export * from './lib/backend/states/shift/shift.effects';
+export * from './lib/backend/states/shift/shift.selectors';
+

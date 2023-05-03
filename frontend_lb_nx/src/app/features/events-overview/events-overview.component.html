@@ -7,11 +7,9 @@
         <br>
         <div *ngIf="orgEvents!==undefined">
             <div *ngFor="let elem of orgEvents">
-                <frontend-lb-nx-event-overview [orgEvent]="of(elem)" ></frontend-lb-nx-event-overview>
+                <frontend-lb-nx-event-overview [orgEvent]="of(elem)" [shifts]="of(elem.shifts!)" ></frontend-lb-nx-event-overview>
             </div>
         </div>
-
-
     </mat-tab>
     <mat-tab label="Deine kommenden Schichten"></mat-tab>
     <mat-tab label="Vergangene Schichten"></mat-tab>

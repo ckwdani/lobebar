@@ -14,9 +14,11 @@ import * as fromOrgEvent from './backend/states/orgEvent/orgEvent.reducer';
 
 import {DefaultDataServiceConfig} from "@ngrx/data";
 import {BACKENDPATHS} from "./backend/BACKENDPATHS";
+import * as fromShift from './backend/states/shift/shift.reducer';
 import * as fromShiftType from './backend/states/shift-types/shift-type.reducer';
 import { ShiftTypeEffects } from './backend/states/shift-types/shift-type.effects';
 import {OrgEventEffects} from "./backend/states/orgEvent/orgEvent.effects";
+import {ShiftEffects} from "./backend/states/shift/shift.effects";
 
 
 
@@ -25,10 +27,11 @@ import {OrgEventEffects} from "./backend/states/orgEvent/orgEvent.effects";
       CommonModule,
     HttpClientModule,
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducer),
-      EffectsModule.forFeature([AuthEffects, RegisterEffects, ShiftTypeEffects, OrgEventEffects]),
+      EffectsModule.forFeature([AuthEffects, RegisterEffects, ShiftTypeEffects, OrgEventEffects, ShiftEffects]),
       StoreModule.forFeature(fromRegister.registerFeatureKey, fromRegister.registerReducer),
       StoreModule.forFeature(fromShiftType.shiftTypeFeatureKey, fromShiftType.reducer),
-    StoreModule.forFeature(fromOrgEvent.orgEventFeatureKey, fromOrgEvent.reducer)
+    StoreModule.forFeature(fromOrgEvent.orgEventFeatureKey, fromOrgEvent.reducer),
+      StoreModule.forFeature(fromShift.shiftFeatureKey, fromShift.reducer),
   ],
   providers: [BaseCommunicatorService, AuthService, AuthEffects],
 })
