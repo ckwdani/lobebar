@@ -1,0 +1,9 @@
+
+
+<app-simple-table (add)="openDialog()"
+                  (delete)="deleteSt($event)"
+                  *ngIf="($shiftTypesLoading |async) == false"  [data]="($shiftTypes | async)??[]" [convert]="nameFromShiftType" caption="Schichtart" #table></app-simple-table>
+
+<app-simple-table (add)="openDialog(false)"
+                  (delete)="deleteEwt($event)"
+                  *ngIf="($shiftTypesLoading |async) == false"  [data]="($ew_types | async)??[]" [convert]="nameFromShiftType" caption="Extra Arbeiten" #table2></app-simple-table>

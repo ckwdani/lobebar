@@ -22,4 +22,13 @@ export class BACKENDPATHS{
     static readonly shift_outstanding_shifts = this.baseApiUrl + "/api/getOutstandingShifts" // /{start}/{end}/{user_id}
     //ASSIGN
     static readonly shift_assign = this.baseApiUrl + "/api/shiftAssign" //shift id
+    // CRUD EW_Types
+    static readonly app_doneEwtrawork_addshifttype =          this.baseApiUrl +   "/mod_api/ew_types/addtype"
+    static readonly app_doneEwtrawork_deleteshifttype =      this.baseApiUrl +    "/mod_api/ew_types/deletetype/"
+    static readonly app_doneEwtrawork_getshifttypes =          this.baseApiUrl +"/api/getewtypes"
+
+
+
+
+
 }

@@ -46,14 +46,15 @@ class ShiftRepository extends ServiceEntityRepository
         $end += 7200;
         $qb = $this->createQueryBuilder('s');
         // join with event to get event start date
-        $qb->join('s.event', 'e');
+        $qb->join('s.orgevent', 'e');
         if(!empty($start) && !empty($end)){
             $qb->andWhere($qb->expr()->between('e.start', ':start', ':end'))
                 ->setParameter('start', (new \DateTime())->setTimestamp($start))
                 ->setParameter('end', (new \DateTime())->setTimestamp($end));
         }
         if(!empty($user_id)){
-            $qb->andWhere('s.user = :user_id')
+            // join on the users table and get shifts where the user id is the logged in user
+            $qb->andWhere($qb->expr()->in('s.id', ':user_id'))
                 ->setParameter('user_id', $user_id->toBinary());
         }
         return $qb->getQuery()->getResult();
@@ -66,9 +67,9 @@ class ShiftRepository extends ServiceEntityRepository
         $end += 7200;
         $qb = $this->createQueryBuilder('s');
         // join with event to get event start date
-        $qb->join('s.event', 'e');
+        $qb->join('s.orgevent', 'e');
         // join with shift_user to get the number of users signed up for the shift
-        $qb->join('s.shiftUsers', 'su');
+        $qb->join('s.users', 'su');
         // get the number of users signed up for the shift
         $qb->select('s, e, COUNT(su) as HIDDEN user_count');
         // group by shift id

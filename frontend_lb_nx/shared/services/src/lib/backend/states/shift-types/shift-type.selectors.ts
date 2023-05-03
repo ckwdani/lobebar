@@ -10,9 +10,19 @@ export const selectShiftTypes = createSelector(
     (state: fromShiftType.ShiftTypesState)=>state.shiftTypes
 )
 
+export const selectEWTypes = createSelector(
+    selectShiftTypeState,
+    (state: fromShiftType.ShiftTypesState)=>state.ew_types
+)
+
 export const selectShiftTypesLoading = createSelector(
     selectShiftTypeState,
     (state: fromShiftType.ShiftTypesState)=>state.isLoading
+)
+
+export const selectShiftTypesAdding = createSelector(
+    selectShiftTypeState,
+    (state: fromShiftType.ShiftTypesState)=>state.isAddingShiftType
 )
 
 export const selectShiftTypesError = createSelector(

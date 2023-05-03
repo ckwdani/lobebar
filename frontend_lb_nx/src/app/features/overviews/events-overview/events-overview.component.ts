@@ -42,11 +42,11 @@ const user2: User={
 }
 
 const shiftType:  ShiftType={
-  id: "asdassadsd", name:"Barschicht", value: 1
+  id: "asdassadsd", name:"Barschicht"
 }
 
 const shiftType2:  ShiftType={
-  id: "asdassadsdd", name:"Security", value: 2
+  id: "asdassadsdd", name:"Security"
 }
 
 const ELEMENT_DATA: Shift[] = [

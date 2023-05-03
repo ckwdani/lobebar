@@ -136,9 +136,11 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     /**
      * @see UserInterface
      */
-    public function getRoles(): array{$roles = $this->roles;
+    public function getRoles(): array{
+        $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = 'ROLE_USER';
+        $roles[] = $this->isApproved ? 'ROLE_USER' : 'ROLE_PENDING';
+
         return array_unique($roles);
     }
 

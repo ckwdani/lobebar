@@ -2,6 +2,8 @@
 
 namespace App\Controller;
 
+use App\Entity\DoneExtraWork;
+use App\Entity\ExtraWorkTypes;
 use App\Entity\Orgevent;
 use App\Entity\Shift;
 use App\Entity\Shiftype;
@@ -15,6 +17,35 @@ use Symfony\Component\Uid\Uuid;
 
 class ShiftController extends _Base_Controller
 {
+    #[Route("/mod_api/ew_types/addtype", methods: ["POST"])]
+    public function addDoneEWTypes(Request $request){
+        $shiftType = $this->serializer->deserialize($request->getContent(), ExtraWorkTypes::class, "json");
+        $this->persistFlushConflict($shiftType);
+        return JsonResponse::fromJsonString($this->serializer->serialize($shiftType, 'json'));
+    }
+
+    #[Route("/mod_api/ew_types/deletetype/{ew_type_id}", methods: ["DELETE"])]
+    public function deleteDoneEWTypes(string $ew_type_id){
+        $shiftType = $this->doctrine->getManager()->getRepository(ExtraWorkTypes::class)->find(Uuid::fromString($ew_type_id));
+        if(empty($shiftType)){
+            throw new NotFoundHttpException();
+        }
+        $this->doctrine->getManager()->remove($shiftType);
+        $this->doctrine->getManager()->flush();
+        return JsonResponse::fromJsonString($this->serializer->serialize($shiftType, 'json'));
+    }
+
+    // get shift types
+    #[Route("/api/getewtypes", methods: ["GET"])]
+    public function getDoneEWTypes(){
+        $shiftTypes = $this->doctrine->getManager()->getRepository(ExtraWorkTypes::class)->findAll();
+//        if(empty($shiftTypes)){
+//            throw new NotFoundHttpException();
+//        }
+        return JsonResponse::fromJsonString($this->serializer->serialize($shiftTypes, 'json'));
+    }
+
+
     #[Route("/mod_api/shift/addtype", methods: ["POST"])]
     public function addShiftType(Request $request){
         $shiftType = $this->serializer->deserialize($request->getContent(), Shiftype::class, "json");
@@ -58,8 +89,8 @@ class ShiftController extends _Base_Controller
 
 
     // get shifts from user ordered by event start date with pagination based on start and end unix timestamps
-    #[Route("/api/getUserShifts/{userId}/{start}/{end}", methods: ["GET"])]
-    public function getUserShifts(string $userId, int $start, int $end){
+    #[Route("/api/getUserShifts/{start}/{end}/{userId}", methods: ["GET"])]
+    public function getUserShifts( int $start, int $end, ?string $userId){
 
         $shifts = $this->doctrine->getManager()->getRepository(Shift::class)->getUserShiftsTimed($start, $end, Uuid::fromString($userId));
         return JsonResponse::fromJsonString($this->serializer->serialize($shifts, 'json'));
@@ -67,8 +98,8 @@ class ShiftController extends _Base_Controller
     }
 
     // get outstanding shifts where the headcount is not met by the number of users related to the shift via the shift_user table
-    #[Route("/api/getOutstandingShifts/{start}/{end}/{user_id}", methods: ["GET"])]
-    public function getOutstandingShifts(int $start, int $end, string $user_id){
+    #[Route("/api/getOutstandingShifts/{start}/{end}/{user_id?}", methods: ["GET"])]
+    public function getOutstandingShifts(int $start, int $end, ?string $user_id){
         $shifts = $this->doctrine->getManager()->getRepository(Shift::class)->getOutstandingShifts($start, $end, Uuid::fromString($user_id));
         return JsonResponse::fromJsonString($this->serializer->serialize($shifts, 'json'));
     }

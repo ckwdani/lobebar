@@ -18,9 +18,12 @@ import { SharedServicesModule } from '@frontend-lb-nx/shared/services';
 import { StoreModule } from '@ngrx/store';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RegisterComponent } from './components/register/register.component';
-import {MatCheckboxModule} from "@angular/material/checkbox";
-import {SimpleTableComponent} from "./components/simpleTable/simple-table.component";
-import {MatPaginatorModule} from "@angular/material/paginator";
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { SimpleTableComponent } from './components/simpleTable/simple-table.component';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import {
+  SmallLoadingAnimationComponent
+} from "./animations/components/small-loading-animation/small-loading-animation.component";
 
 @NgModule({
   imports: [
@@ -47,6 +50,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     LoginComponent,
     EventOverviewComponent,
     RegisterComponent,
+    SmallLoadingAnimationComponent,
   ],
   exports: [
     SingleFormDialogComponent,
@@ -54,6 +58,7 @@ import {MatPaginatorModule} from "@angular/material/paginator";
     LoginComponent,
     SimpleTableComponent,
     EventOverviewComponent,
+      SmallLoadingAnimationComponent,
     RegisterComponent,
   ],
 })

@@ -28,7 +28,7 @@ class ShiftDeserilizerHandler implements SubscribingHandlerInterface
             [
                 'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
                 'format' => 'json',
-                'type' => Shiftype::class,
+                'type' => Shift::class,
                 'method' => 'deserializeDateTimeToJson',
             ],
         ];
@@ -37,7 +37,7 @@ class ShiftDeserilizerHandler implements SubscribingHandlerInterface
 
     public function deserializeDateTimeToJson(JsonDeserializationVisitor $visitor, $shiftIdArray, array $type, Context $context)
     {
-        $tets = $this->doctrine->getManager()->getReference(Shiftype::class, Uuid::fromString($shiftIdArray["id"]));
+        $tets = $this->doctrine->getManager()->getReference(Shiftype::class, Uuid::fromString($shiftIdArray["type"]["id"]));
         return $tets;
     }
 }
