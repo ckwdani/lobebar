@@ -7,8 +7,9 @@ import {EventsOverviewComponent} from "./features/events-overview/events-overvie
 import {CalendarComponent} from "./features/calendar/calendar.component";
 import {PointsComponent} from "./features/points/points.component";
 import {EventAddComponent} from "./features/event-add/event-add.component";
-import {LoginComponent} from "../../shared/ui/src/lib/login/login.component";
-import {ShiftTypeAddComponent} from "./features/shift-type-add/shift-type-add.component";
+import {LoginComponent} from "../../shared/ui/src/lib/components/login/login.component";
+import {ShiftTypeAddComponent} from "./features/shift-types-overview/shift-type-add/shift-type-add.component";
+import {ShiftTypesOverviewComponent} from "./features/shift-types-overview/shift-types-overview.component";
 
 export const appRoutes: Route[] = [
     {path: 'login', component: LoginComponent},
@@ -20,5 +21,6 @@ export const appRoutes: Route[] = [
     {path: 'calendar', component: CalendarComponent},
     {path: 'points', component: PointsComponent},
     {path: 'event_add', component: EventAddComponent},
-    {path: 'shift_add', component: ShiftTypeAddComponent}
+    {path: 'shift_add', component: ShiftTypeAddComponent},
+    {path: 'shift_types', component: ShiftTypesOverviewComponent}
 ];

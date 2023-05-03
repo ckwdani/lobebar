@@ -1,0 +1,3 @@
+
+
+<app-simple-table (add)="openDialog()"  *ngIf="($shiftTypesLoading |async) == false"  [data]="($shiftTypes | async)??[]" [convert]="nameFromShiftType" caption="Schichtart" #table></app-simple-table>

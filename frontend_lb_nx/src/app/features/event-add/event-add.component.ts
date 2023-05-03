@@ -32,6 +32,7 @@ export class EventAddComponent {
     this.componentStore.setEvent(this.model);
   }
   sendOrgEvent(){
+    // this.componentStore.setLoading(true);
     const copyModel= Object.assign({}, this.model)
     this.componentStore.sendEvent(copyModel);
     // this.store.dispatch(addOrgEvent({orgEvent: copyModel}))

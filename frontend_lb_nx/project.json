@@ -17,7 +17,8 @@
         "tsConfig": "./tsconfig.app.json",
         "assets": ["./src/favicon.ico", "./src/assets"],
         "styles": [
-          "@angular/material/prebuilt-themes/purple-green.css",
+//          "@angular/material/prebuilt-themes/purple-green.css",
+          "./src/app/core/styles/lobebar-theme.scss",
           "./src/styles.scss"
         ],
         "scripts": []

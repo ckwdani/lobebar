@@ -1,0 +1,81 @@
+@use 'sass:color';
+@import '/src/app/core/styles/lobebar-theme.scss';
+@import "@angular/material/theming";
+
+//@mixin color($config-or-theme) {
+//
+//  .test {
+//    background-color: $drawer-container-background-color;
+//    color: theming.get-color-from-palette($foreground, text);
+//    padding: 8000px;
+//  }
+//}
+
+//$config: theming.get-color-config($config-or-theme);
+//$primary: map.get($config, primary);
+//$accent: map.get($config, accent);
+//$warn: map.get($config, warn);
+//$background: map.get($config, background);
+//$foreground: map.get($config, foreground);
+//
+//$drawer-background-color: theming.get-color-from-palette($background, dialog);
+//$drawer-container-background-color:  theming.get-color-from-palette($background, background);
+//$drawer-push-background-color: theming.get-color-from-palette($background, dialog);
+//$drawer-side-border: solid 1px theming.get-color-from-palette($foreground, divider);
+//
+//.mat-drawer-container {
+//  background-color: $drawer-container-background-color;
+//  color: theming.get-color-from-palette($foreground, text);
+//}
+
+$dark-foreground-palette: map-get($lobebar-theme, background);
+$lighnedup: color.adjust(mat-color($dark-foreground-palette, background), $lightness: 20%);
+$lighnedupMore: color.adjust($lighnedup, $lightness: 5%);
+  $width: 100%;
+#elementNameContainer{
+  width: 80%;
+}
+
+#elementActions{
+  display: flex;
+  justify-content: space-around;
+}
+
+body{
+  width: 100vw;
+  height: 100vw;
+}
+
+.demo-table {
+  width: $width;
+}
+
+.mat-column-actions{
+  text-align: center;
+}
+
+#tableContainer{
+  max-width: 100%;
+  min-width: 40vw;
+
+}
+
+
+.tableFlexContainer{
+  display: flex;
+  padding-left: 10px;
+  margin-top: 30px;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.tableFlexElement{
+
+  min-width: 200px;
+  background-color: $lighnedup;
+  border-radius: 30px;
+  box-shadow: $lighnedupMore;
+  padding: 20px;
+  margin-bottom: 30px;
+
+}
+
