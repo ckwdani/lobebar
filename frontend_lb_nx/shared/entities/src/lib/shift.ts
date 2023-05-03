@@ -10,7 +10,7 @@ export interface Shift{
     endtime: Date,
     orgEvent?: OrgEvent,
     users?: User[],
-    shiftType: ShiftType
+    type: ShiftType
 }
 
 /*export class Shift{

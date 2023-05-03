@@ -26,17 +26,17 @@ export class EventOverviewComponent implements OnInit{
   ngOnInit(): void {
     this.shifts?.subscribe(next=>this.splitShiftsByType(next))
     this.shiftTypes?.pipe(filter(shifts => shifts.length > 0)).subscribe(next=> {
-      this.model.shiftType = next[0];
+      this.model.type = next[0];
     })
   }
   splitShiftsByType(shifts: Shift[]): void {
     const shiftsByType: {[key: string]: Shift[]} = {};
 
     for (const shift of shifts) {
-      if (!shiftsByType[shift.shiftType.name]) {
-        shiftsByType[shift.shiftType.name] = [];
+      if (!shiftsByType[shift.type.name]) {
+        shiftsByType[shift.type.name] = [];
       }
-      shiftsByType[shift.shiftType.name].push(shift);
+      shiftsByType[shift.type.name].push(shift);
     }
     this.splittedShifts = Object.values(shiftsByType);
   }
@@ -54,7 +54,7 @@ export class EventOverviewComponent implements OnInit{
       headcount: 0,
       starttime: new Date(),
       endtime: new Date(),
-      shiftType: this.model?.shiftType ?? {id: '', name: '', value: 0},
+      type: this.model?.type ?? {id: '', name: '', value: 0},
     };
   }
 

@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import {OrgEvent, Shift, ShiftType} from "@frontend-lb-nx/shared/entities";
-import {Observable} from "rxjs";
-import {switchMap} from "rxjs/operators";
+import {EMPTY, Observable, tap} from "rxjs";
+import {catchError, switchMap} from "rxjs/operators";
 import {Store} from "@ngrx/store";
 import {
     selectShiftTypes,
     selectShiftTypesLoading
 } from "../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
+import {OrgEventBackendService} from "@frontend-lb-nx/shared/services";
 
 export interface EventAddStoreState {
   eventDefined?: boolean;
@@ -19,8 +20,8 @@ export interface EventAddStoreState {
 const initialState: EventAddStoreState = {eventDefined: false, shifts: [], shiftTypes: []};
 
 @Injectable()
-export class EventAddStoreStore extends ComponentStore<EventAddStoreState> {
-  constructor(private store: Store) {
+export class EventAddStore extends ComponentStore<EventAddStoreState> {
+  constructor(private store: Store, private orgEventService: OrgEventBackendService) {
     super(initialState);
   }
 
@@ -37,21 +38,17 @@ export class EventAddStoreStore extends ComponentStore<EventAddStoreState> {
         shifts: this.shifts$,
     });
 
-  // // Each new call of getMovie(id) pushed that id into movieId$ stream.
-  // readonly getMovie = this.effect((movieId$: Observable<string>) => {
-  //   return movieId$.pipe(
-  //       // 👇 Handle race condition with the proper choice of the flattening operator.
-  //       switchMap((id) => this.moviesService.fetchMovie(id).pipe(
-  //           //👇 Act on the result within inner pipe.
-  //           tap({
-  //             next: (movie) => this.addMovie(movie),
-  //             error: (e) => this.logError(e),
-  //           }),
-  //           // 👇 Handle potential error within inner pipe.
-  //           catchError(() => EMPTY),
-  //       )),
-  //   );
-  // });
+    // add the shifts to the event and send it to the backend
+    readonly sendEvent = this.effect((event$: Observable<OrgEvent>) => {
+        return event$.pipe(
+            switchMap((event) => {
+                event.shifts = this.get().shifts;
+                return this.orgEventService.add(event).pipe(
+                    catchError(() => EMPTY),
+                )
+            }),
+        );
+    });
 
 
   readonly setEvent = this.updater((state, event: OrgEvent) => {

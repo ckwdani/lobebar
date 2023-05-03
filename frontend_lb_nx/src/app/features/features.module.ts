@@ -25,7 +25,7 @@ import { MAT_DATE_LOCALE } from '@angular/material/core';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import { EventsOverviewStore } from './events-overview/events-overview.store';
 import { SharedServicesModule } from '@frontend-lb-nx/shared/services';
-import { EventAddStoreStore } from './event-add/event-add-store.store';
+import { EventAddStore } from './event-add/event-add-store.store';
 import { ShiftTypeAddComponent } from './shift-type-add/shift-type-add.component';
 import { ShiftTypeAddStore} from './shift-type-add/shift-type-add.store';
 import {MatProgressSpinnerModule} from "@angular/material/progress-spinner";

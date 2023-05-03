@@ -8,7 +8,7 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Schichttyp</mat-label>
-            <mat-select [(value)]="model.shiftType">
+            <mat-select [(value)]="model.type">
                 <mat-option *ngFor="let shiftType of (shiftTypes | async)" [value]="shiftType">
                     {{shiftType.name}}
                 </mat-option>
@@ -36,7 +36,7 @@
     </form>
     </div>
     <div *ngFor="let elem of splittedShifts">
-        <p class="text-xl">{{elem[0].shiftType!.name}}</p>
+        <p class="text-xl">{{elem[0].type!.name}}</p>
         <frontend-lb-nx-shift-table *ngIf="(orgEvent | async)??0 !== 0" [orgEvent]="(orgEvent | async)!" [shifts]="elem" [showEditDelete]="showAddShift"></frontend-lb-nx-shift-table>
         <br>
         <br>
