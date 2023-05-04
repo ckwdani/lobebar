@@ -4,6 +4,8 @@ export class BACKENDPATHS{
     static readonly register = this.baseApiUrl + '/register';
     static readonly getUser = this.baseApiUrl + '/user';
 
+    static readonly getAllUser = this.baseApiUrl + '/users';
+
     // CRUD ORGEVENT
     static readonly addOrgEvent= this.baseApiUrl + '/mod_api/event/add';
     static readonly deleteOrgEvent= this.baseApiUrl + '/mod_api/event/deleteEvent'; // /eventId

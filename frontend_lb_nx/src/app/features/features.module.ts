@@ -29,6 +29,7 @@ import { EventAddStore } from './event-add/event-add-store.store';
 import { ShiftType_DoneEW_AddComponentDialog } from '../core/components/dialogs/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {ShiftTypesOverviewComponent} from "./overviews/shift-types-overview/shift-types-overview.component";
+import {UsersOverviewStore} from "./overviews/users-overview/users-overview.store";
 
 @NgModule({
   declarations: [
@@ -65,7 +66,7 @@ import {ShiftTypesOverviewComponent} from "./overviews/shift-types-overview/shif
     MatProgressSpinnerModule,
     ReactiveFormsModule,
   ],
-  providers: [EventsOverviewStore,
+  providers: [EventsOverviewStore, UsersOverviewStore
     // ShiftTypeAddStore
   ],
 })
