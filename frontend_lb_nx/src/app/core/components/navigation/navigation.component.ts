@@ -55,6 +55,7 @@ export class NavigationComponent implements AfterViewInit{
   }
 
   logout() {
+    console.log("login logout")
     this.store.dispatch(AuthActions.logout());
   }
 }

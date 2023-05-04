@@ -63,8 +63,8 @@ export class ShiftTypesOverviewComponent {
     });
   }
 
-  editName(type: ShiftType | DoneExtraWorkTypes, isShiftType: boolean = true, isError = false) {
-    const dialogRef = this.dialog.open(EditNameDialogComponent, {data: {name: type.name, isError: isError}});
+  editName(type: ShiftType | DoneExtraWorkTypes, isShiftType: boolean = true, error?: number) {
+    const dialogRef = this.dialog.open(EditNameDialogComponent, {data: {name: type.name, errorcode: error}});
 
     dialogRef.afterClosed().subscribe(result => {
         if (result) {
@@ -78,7 +78,7 @@ export class ShiftTypesOverviewComponent {
               this.$addingError.pipe(map((loading,) => loading.adding)).subscribe({next: (value) => this.loadingEWT = value})
             }
           this.$addingError.pipe(take(2), filter(x => x.error !== undefined))
-              .subscribe(() => this.editName(interType, isShiftType, true));
+              .subscribe((x) => this.editName(interType, isShiftType, x.error));
         }
     });
   }

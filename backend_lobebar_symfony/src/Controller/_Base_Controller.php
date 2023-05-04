@@ -19,6 +19,7 @@ use JMS\Serializer\Serializer;
 use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
 
 class _Base_Controller extends AbstractController
 {
@@ -65,7 +66,7 @@ class _Base_Controller extends AbstractController
         try {
             $em->flush();
         }catch (UniqueConstraintViolationException $exception){
-            throw new \Exception("There was an unique constraint violation", code: 409);
+            throw new ConflictHttpException("There was an unique constraint violation", $exception);
         }
     }
 

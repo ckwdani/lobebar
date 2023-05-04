@@ -27,7 +27,7 @@
         <mat-error *ngIf="!fcname.valid">Der Name muss mindestens 3 Zeichen lang sein.</mat-error>
     </mat-form-field>
 </div>
-<div *ngIf="data.isError" class="text-red-600 w-full flex justify-center"><p>Fehler! Probiere es erneut!</p></div>
+<div *ngIf="data.errorcode !== undefined" class="text-red-600 w-full flex justify-center"><p>{{getErrorMessage(data.errorcode!)}}</p></div>
 <div mat-dialog-actions >
     <button mat-button (click)="onNoClick()">Abbrechen</button>
     <button mat-button [disabled]="!fcname.valid" [mat-dialog-close]="data.name">Ok <mat-icon>send</mat-icon></button>

@@ -29,8 +29,15 @@ export class EditNameDialogComponent {
 
   fcname = new FormControl(this.data.name, [Validators.required, Validators.minLength(3)])
 
-  constructor(private  shiftTypeService: ShiftTypeBackendService, private store: Store, @Inject(MAT_DIALOG_DATA) public data: {name: string, isError?: boolean},  public dialogRef: MatDialogRef<EditNameDialogComponent>,) {
+  constructor(private  shiftTypeService: ShiftTypeBackendService, private store: Store, @Inject(MAT_DIALOG_DATA) public data: {name: string, errorcode?: number},  public dialogRef: MatDialogRef<EditNameDialogComponent>,) {
     console.log(data)
+  }
+
+  getErrorMessage(code: number) {
+    switch (code) {
+        case 409: return 'Name existiert bereits!';
+        default: return 'Fehler! Probiere es erneut!';
+    }
   }
 
   onSubmit() {

@@ -7,6 +7,7 @@ import {ShiftTypeBackendService} from "../../entity-backend-services/shifts-type
 import {ShiftType} from "@frontend-lb-nx/shared/entities";
 import {EW_Types_BackendService} from "../../entity-backend-services/doneExtraWorkTypesService";
 import {deleteEWT, EditNameFailure} from "./shift-type.actions";
+import {HttpErrorResponse} from "@angular/common/http";
 
 
 @Injectable()
@@ -20,7 +21,7 @@ export class ShiftTypeEffects {
                 map((types) => {
                   return ShiftTypeActions.loadShiftTypesSuccess({shiftTypes: types[0], ew_types: types[1]});
                 }),
-                catchError((error) => of(ShiftTypeActions.loadShiftTypesFailure({ error })))
+                catchError((error) => of(ShiftTypeActions.loadShiftTypesFailure({ error: error.status })))
             )));
   });
 
@@ -32,7 +33,7 @@ export class ShiftTypeEffects {
               map(()=>{
                   return ShiftTypeActions.addShiftTypeSuccess({shiftType: action.shiftType});
               }),
-              catchError((error)=> of(ShiftTypeActions.addShiftTypeFailure({error})))
+              catchError((error)=> of(ShiftTypeActions.addShiftTypeFailure({error: error.status})))
           ))
       )
       }
@@ -46,7 +47,7 @@ export class ShiftTypeEffects {
               map(()=>{
                   return ShiftTypeActions.addExtraWorkTypeSuccess({ew_type: action.ew_type});
               }),
-              catchError((error)=> of(ShiftTypeActions.addExtraWorkTypeFailure({error})))
+              catchError((error)=> of(ShiftTypeActions.addExtraWorkTypeFailure({error: error.status})))
           ))
       )
       }
@@ -60,7 +61,7 @@ export class ShiftTypeEffects {
                         map(()=>{
                             return ShiftTypeActions.deleteShiftTypeSuccess({shiftType: action.shiftType});
                         }),
-                        catchError((error)=> of(ShiftTypeActions.deleteShiftTypeFailure({error})))
+                        catchError((error)=> of(ShiftTypeActions.deleteShiftTypeFailure({error: error.status})))
                     ))
             )
         }
@@ -76,7 +77,7 @@ export class ShiftTypeEffects {
                         map(()=>{
                             return ShiftTypeActions.deleteEWTSuccess({ew_type: action.ew_type});
                         }),
-                        catchError((error)=> of(ShiftTypeActions.deleteEWTFailure({error})))
+                        catchError((error)=> of(ShiftTypeActions.deleteEWTFailure({error: error.status})))
                     ))
             )
         }
@@ -92,7 +93,7 @@ export class ShiftTypeEffects {
                                 map(() => {
                                     return ShiftTypeActions.EditNameSuccess({ew_type: action.ew_type});
                                 }),
-                                catchError((error) => of(ShiftTypeActions.EditNameFailure({error})))
+                                catchError((error: HttpErrorResponse) => of(ShiftTypeActions.EditNameFailure({error: error.status})))
                             )
                         }
                         if (action.shiftType){
@@ -100,7 +101,7 @@ export class ShiftTypeEffects {
                                 map(() => {
                                     return ShiftTypeActions.EditNameSuccess({shiftType: action.shiftType});
                                 }),
-                                catchError((error) => of(ShiftTypeActions.EditNameFailure({error})))
+                                catchError((error) => of(ShiftTypeActions.EditNameFailure({error: error.status})))
                             )
                         }
                         return of(EditNameFailure({error: -20}))
