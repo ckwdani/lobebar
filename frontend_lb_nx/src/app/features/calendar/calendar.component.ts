@@ -19,7 +19,7 @@ export class CalendarComponent {
 
   activeDayIsOpen = false;
 
-  orgEvents: OrgEvent[]|undefined
+  $orgEvents = this.store.select(selectOrgEvents)
 
   viewDate: Date = new Date()
 
@@ -37,7 +37,7 @@ export class CalendarComponent {
     for(const orgEv of orgEvents){
       const calEv: CalendarEvent={
         title: orgEv.name,
-        start: orgEv.start,
+        start: new Date(orgEv.start),
         actions: [],
         meta: orgEv,
         color: {
@@ -49,6 +49,10 @@ export class CalendarComponent {
     }
     this.events=arr
     return this.events
+  }
+
+  checker($event :any){
+    console.log($event)
   }
 
 
@@ -94,9 +98,9 @@ export class CalendarComponent {
     }
   }
   constructor(private store: Store) {
-    this.store.select(selectOrgEvents).subscribe(next=>{
-      this.orgEvents=next
-      this.genCalenderEvents(this.orgEvents)
-    })
+    // this.store.select(selectOrgEvents).subscribe(next=>{
+    //   this.orgEvents=next
+    //   this.genCalenderEvents(this.orgEvents)
+    // })
   }
 }

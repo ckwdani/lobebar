@@ -39,7 +39,8 @@ export class LoginComponent  {
       if((user?.roles.length?? -1) > 0) {
         this.router.navigate(['/']);
       }else{
-          this.loginstate.error = "Noch unbestätitgter Account!";
+        console.log("logout in login component");
+        this.loginstate.error = "Noch unbestätitgter Account!";
           this.store.dispatch(logout());
       }
     });
