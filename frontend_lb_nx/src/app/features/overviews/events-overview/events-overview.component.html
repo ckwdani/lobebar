@@ -11,6 +11,14 @@
             </div>
         </div>
     </mat-tab>
-    <mat-tab label="Deine kommenden Schichten"></mat-tab>
+    <mat-tab label="Deine kommenden Schichten">
+        <br>
+        <div *ngIf="ownShifts!==undefined" class="flex justify-center">
+            <h2 *ngIf="ownShifts!.length<0">Keine Schichten vorhanden!</h2>
+            <div *ngIf="ownShifts!.length>0">
+            <frontend-lb-nx-shift-table [shifts]="ownShifts!"></frontend-lb-nx-shift-table>
+            </div>
+        </div>
+    </mat-tab>
     <mat-tab label="Vergangene Schichten"></mat-tab>
 </mat-tab-group>

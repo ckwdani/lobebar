@@ -1,5 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {OrgEvent, Shift, ShiftType, User} from "@frontend-lb-nx/shared/entities";
+import {Store} from "@ngrx/store";
+import {assignShift, selectUser} from "@frontend-lb-nx/shared/services";
 
 const orgEvent: OrgEvent={
   id: "asdsad", name: "trollEvent", start: new Date(Date.now()), end: new Date(Date.now()), shifts: [],
@@ -56,6 +58,12 @@ export class ShiftTableComponent {
   @Input() showEditDelete=false
   displayedColumns: string[] = ['datetime', 'description', 'num_persons', 'persons', 'assign'];
   dataSource = ELEMENT_DATA;
+  user: User|undefined = undefined
+
+
+  constructor(private store: Store) {
+    this.store.select(selectUser).subscribe(next => this.user=next)
+  }
 
   //change the row color
   checkNumPersons(rowData: Shift): string {
@@ -70,6 +78,20 @@ export class ShiftTableComponent {
   showCheck(rowData: Shift): boolean {
     const lengthUser = rowData.users?.length ?? 0
     return lengthUser<rowData.headcount
+  }
+
+  assignShift(shift: Shift){
+    const shiftCopy = Object.assign({}, shift)
+    if(this.user!=undefined){
+      if(shift.users!=undefined){
+        const userIds=shift.users.map(u=>u.id)
+        if(userIds.indexOf(this.user["id"])==-1){
+          this.store.dispatch(assignShift({shift}))
+          shiftCopy.users=shift.users?.concat(this.user)
+        }
+      }
+    }
+    this.shifts = this.shifts.map(function(s) { return s.id == shift.id ? shiftCopy : s; });
   }
 
   deleteShift(rowData: Shift){

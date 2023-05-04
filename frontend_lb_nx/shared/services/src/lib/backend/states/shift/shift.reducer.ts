@@ -20,7 +20,7 @@ export const initialState: ShiftState = {
 export const reducer = createReducer(
   initialState,
 
-  on(ShiftActions.loadOwnShifts, state => state),
+    on(ShiftActions.loadOwnShifts, state => state),
     on(ShiftActions.loadOwnShiftsSuccess, (state, {ownShifts})=>{return {...state, ownShifts, isLoading: false}}),
     on(ShiftActions.loadOwnShiftsFailure, (state, {error}) =>({...state, error, success: false})),
 

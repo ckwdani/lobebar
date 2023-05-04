@@ -1,14 +1,26 @@
-<div>
+<div *ngIf="user!==undefined">
     <div class="flex flex-row items-center">
-        <span>Name: NAME</span>
+        <span>Name: {{user!.username}}</span>
         <button (click)="openDialog(name, detailType.nameType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
     </div>
     <div class="flex flex-row items-center">
-        <span>Email: XYZ@asdmasdads.de</span>
+        <span>Vorname: {{user!.firstname}}</span>
+        <button (click)="openDialog(name, detailType.firstnameType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+    </div>
+    <div class="flex flex-row items-center">
+        <span>Nachname: {{user!.lastname}}</span>
+        <button (click)="openDialog(name, detailType.lastnameType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+    </div>
+    <div class="flex flex-row items-center">
+        <span>Titel: {{user!.titel}}</span>
+        <button (click)="openDialog(name, detailType.titelType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+    </div>
+    <div class="flex flex-row items-center">
+        <span>Email: {{user!.email}}</span>
         <button (click)="openDialog(name, detailType.emailType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
     </div>
     <div class="flex flex-row items-center">
-        <span>Handynummer: 0143435235</span>
+        <span>Handynummer: {{user!.telephone}}</span>
         <button (click)="openDialog(name, detailType.handyNrType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
     </div>
     <div class="flex flex-row items-center">

@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {OrgEvent, Shift, ShiftType} from "@frontend-lb-nx/shared/entities";
 import {filter, Observable, of} from "rxjs";
+import {Store} from "@ngrx/store";
+import {selectOwnShifts} from "@frontend-lb-nx/shared/services";
 
 @Component({
   selector: 'frontend-lb-nx-event-overview',
@@ -13,11 +15,7 @@ export class EventOverviewComponent implements OnInit{
   @Input() shiftTypes?: Observable<ShiftType[]>;
   @Output() addShiftEvent = new EventEmitter<Shift>();
 
-
-
-
   @Input() showAddShift=false
-
 
   model: Shift = this.startModel()
 
@@ -59,4 +57,6 @@ export class EventOverviewComponent implements OnInit{
     };
   }
 
+  constructor(private store: Store) {
+  }
 }

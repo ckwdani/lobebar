@@ -1,13 +1,19 @@
 import { Component } from '@angular/core';
 import {Dialog} from "@angular/cdk/dialog";
 import {SingleFormDialogComponent} from "@frontend-lb-nx/shared/ui";
+import {User} from "@frontend-lb-nx/shared/entities";
+import {Store} from "@ngrx/store";
+import {selectUser} from "@frontend-lb-nx/shared/services";
 
 //pass the types for the dialog
 enum DetailType{
-  nameType="Name",
-  emailType="Email",
-  handyNrType="Handynummer",
-  passwordType="Password",
+  nameType="Willst du deinen Namen ändern?",
+  firstnameType="Willst du deinen Vornamen ändern?",
+  lastnameType="Willst du deinen Nachnamen ändern?",
+  titelType="Willst du deinen Titel ändern?",
+  emailType="Willst du deine Email ändern?",
+  handyNrType="Willst du deine Handynummer ändern?",
+  passwordType="Willst du dein Passwort ändern?",
 }
 
 @Component({
@@ -22,11 +28,14 @@ export class DetailsWithEditComponent {
   detailType=DetailType
 
   name="asdasdsad"
-  email="asd@osadassa.de"
-  handynr="01231312123"
-  password="********"
+  user: User|undefined
 
-  constructor(public dialog: Dialog){}
+  constructor(public dialog: Dialog, private store: Store){
+    this.store.select(selectUser).subscribe(next=>{
+      this.user=next
+      this.name=this.user?.username ?? "Mensch"
+    })
+  }
   //open dialog and pass data and width
   openDialog(input: string, type: string): void {
     const dialogRef = this.dialog.open<string>(SingleFormDialogComponent, {

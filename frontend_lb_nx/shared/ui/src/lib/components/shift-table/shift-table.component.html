@@ -29,7 +29,7 @@
     <ng-container matColumnDef="assign">
         <th mat-header-cell *matHeaderCellDef> Übernehmen </th>
         <td mat-cell *matCellDef="let element">
-            <button *ngIf="showCheck(element)&&!showEditDelete" mat-icon-button color="primary"><mat-icon>check</mat-icon></button>
+            <button *ngIf="showCheck(element)&&!showEditDelete" (click)="assignShift(element)" mat-icon-button color="primary"><mat-icon>check</mat-icon></button>
             <div *ngIf="showEditDelete">
                 <button  mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
                 <button mat-icon-button color="primary" (click)="deleteShift(element)"><mat-icon>delete</mat-icon></button>

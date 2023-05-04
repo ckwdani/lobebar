@@ -1,8 +1,8 @@
-<h1>Hi {{data.previous}}</h1>
+<h1>Hi {{data.previous}}.</h1>
 <div>
-    <label id="favorite-animal">Willst du dein {{data.type}} ändern? </label>
-    <mat-form-field appearance="outline">
-        <input matInput for="favorite-animal" [(ngModel)]="res"  [placeholder]="'Gib deine neue ' + data.type +' ein:'">
+    <label id="favorite-animal">{{data.type}} </label>
+    <mat-form-field appearance="outline" color="primary">
+        <input matInput for="favorite-animal" [(ngModel)]="res"  [placeholder]="'Gib deine neue ' + data.type +' ein:'" class="text-blue-500">
     </mat-form-field>
 </div>
 <div>

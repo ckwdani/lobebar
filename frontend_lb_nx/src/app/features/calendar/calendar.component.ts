@@ -6,6 +6,8 @@ import {
   isSameDay,
   isSameMonth,
 } from 'date-fns';
+import {Store} from "@ngrx/store";
+import {selectOrgEvents} from "@frontend-lb-nx/shared/services";
 
 const orgEvent: OrgEvent={
   id: "asdsad", name: "Plattenbauromantik", start: new Date(Date.now()), end: new Date(Date.now()), shifts: [],
@@ -61,9 +63,9 @@ orgEvent.shifts=ELEMENT_DATA
 export class CalendarComponent {
   view: CalendarView = CalendarView.Month;
 
-  activeDayIsOpen = true;
+  activeDayIsOpen = false;
 
-  orgEvents=[orgEvent]
+  orgEvents: OrgEvent[]|undefined=[orgEvent]
 
   viewDate: Date = new Date()
 
@@ -136,5 +138,11 @@ export class CalendarComponent {
       }
       this.viewDate = date;
     }
+  }
+  constructor(private store: Store) {
+    this.store.select(selectOrgEvents).subscribe(next=>{
+      this.orgEvents=next
+      this.genCalenderEvents(this.orgEvents)
+    })
   }
 }
