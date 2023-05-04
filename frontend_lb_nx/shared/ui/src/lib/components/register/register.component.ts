@@ -64,6 +64,7 @@ class RegisterComponentState {
   public isLoading = false;
   isLoggingIn = false;
   user: User = {
+    approved: false,
     username: '',
     email: '',
     password: '',

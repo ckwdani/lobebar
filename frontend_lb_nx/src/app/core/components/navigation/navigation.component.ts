@@ -8,10 +8,11 @@ import {
   loadTokenFromLocal,
   selectLoggedIn,
   selectOrgEvents,
-  selectSuccess,
+  selectSuccess, selectUser,
   selectUserLoaded
 } from "@frontend-lb-nx/shared/services";
 import {loadShiftTypes} from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
+import * as AuthActions from "../../../../../shared/services/src/lib/backend/states/auth/auth.actions";
 
 @Component({
   selector: 'frontend-lb-nx-navigation',
@@ -30,6 +31,7 @@ export class NavigationComponent implements AfterViewInit{
   $isLoggedInAll = this.store.select(selectLoggedIn);
   $userLoaded = this.store.select(selectUserLoaded).pipe(first());
   $shiftTypesLoaded = this.store.select(selectSuccess).pipe(first());
+  $loggedInUser = this.store.select(selectUser);
 
   constructor(private breakpointObserver: BreakpointObserver, private store:Store) {
 
@@ -52,4 +54,7 @@ export class NavigationComponent implements AfterViewInit{
     });
   }
 
+  logout() {
+    this.store.dispatch(AuthActions.logout());
+  }
 }

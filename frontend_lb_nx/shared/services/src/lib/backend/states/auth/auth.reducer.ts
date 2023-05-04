@@ -2,12 +2,13 @@ import { Action, createReducer, on } from '@ngrx/store';
 import * as AuthActions from './auth.actions';
 import {User} from "@frontend-lb-nx/shared/entities";
 import {allLoaded} from "./auth.actions";
+import {HttpErrorResponse} from "@angular/common/http";
 
     export const authFeatureKey = 'auth';
 
 export interface AuthState {
     token?: string;
-    error?: number;
+    error?: HttpErrorResponse;
 
     user?: User;
 
@@ -38,6 +39,7 @@ export const reducer = createReducer(
   on(AuthActions.allLoaded, (state, {user}) => ({...state, user, isLoading: false, userLoaded: true, loggedIn: true})),
   on(AuthActions.loadUser, (state) => ({...state, isLoading: true, userLoaded: false})),
   on(AuthActions.loadUserError, (state, {error}) => ({...state, error, isLoading: false})),
+  on(AuthActions.logout, () => (initialState)),
     
 
 

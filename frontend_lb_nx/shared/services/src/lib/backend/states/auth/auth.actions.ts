@@ -1,5 +1,6 @@
 import { createAction, props } from '@ngrx/store';
 import {User} from "@frontend-lb-nx/shared/entities";
+import {HttpErrorResponse} from "@angular/common/http";
 
 
 export const login = createAction(
@@ -24,14 +25,14 @@ export const allLoaded = createAction(
 
 export const loadUserError = createAction(
     '[Auth] User Load ',
-    props<{ error: number }>()
+    props<{ error: HttpErrorResponse }>()
 );
 
 
 
 export const loadAuthsFailure = createAction(
   '[Auth] Login Failure',
-  props<{ error: number }>()
+  props<{ error: HttpErrorResponse }>()
 );
 
 export const loadTokenFromLocal = createAction(

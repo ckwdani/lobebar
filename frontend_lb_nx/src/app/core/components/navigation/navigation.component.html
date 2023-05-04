@@ -4,6 +4,7 @@
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu</mat-toolbar>
+    <mat-toolbar *ngIf="$userLoaded | async">Wilkommen {{($loggedInUser | async)?.firstname}}</mat-toolbar>
     <mat-nav-list>
       <mat-divider></mat-divider>
       <a *ngIf="!$isLoggedIn" mat-list-item routerLink="/login">Login</a>
@@ -18,7 +19,7 @@
       <a mat-list-item routerLink="/shift_types">ShiftTypes</a>
       <mat-divider></mat-divider>
       <a mat-list-item routerLink="/points">Punkte</a>
-      <a mat-list-item href="#">Logout</a>
+      <a mat-list-item (click)="logout()">Logout</a>
       <mat-divider></mat-divider>
     </mat-nav-list>
   </mat-sidenav>

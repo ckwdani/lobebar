@@ -5,6 +5,7 @@ export interface User{
     password: string,
     email: string,
     firstname: string,
+    approved: boolean,
     lastname: string,
     titel: string,
     hygienepass: boolean,
