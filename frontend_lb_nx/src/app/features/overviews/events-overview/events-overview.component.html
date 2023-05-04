@@ -5,18 +5,16 @@
             <button routerLink="/event_add" mat-icon-button color="primary"><mat-icon>add</mat-icon></button>
         </div>
         <br>
-        <div *ngIf="orgEvents!==undefined">
-            <div *ngFor="let elem of orgEvents">
+            <div *ngFor="let elem of ($orgEventsObs | async)">
                 <frontend-lb-nx-event-overview [shifts]="of(elem.shifts??[])" [orgEvent]="of(elem)" ></frontend-lb-nx-event-overview>
             </div>
-        </div>
     </mat-tab>
     <mat-tab label="Deine kommenden Schichten">
         <br>
-        <div *ngIf="ownShifts!==undefined" class="flex justify-center">
-            <h2 *ngIf="ownShifts!.length<0">Keine Schichten vorhanden!</h2>
-            <div *ngIf="ownShifts!.length>0">
-            <frontend-lb-nx-shift-table [shifts]="ownShifts!"></frontend-lb-nx-shift-table>
+        <div class="flex justify-center">
+            <h2 *ngIf="($ownShiftsObs | async)!.length<0">Keine Schichten vorhanden!</h2>
+            <div *ngIf="($ownShiftsObs | async)!.length>0">
+            <frontend-lb-nx-shift-table [shifts]="($ownShiftsObs | async)!"></frontend-lb-nx-shift-table>
             </div>
         </div>
     </mat-tab>

@@ -10,24 +10,28 @@
                 <mat-form-field  appearance="fill" class="min-w-[100px] flex-grow pr-2 pl-2">
                     <mat-label>Username</mat-label>
                     <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.username" required
-                           [disabled]="registerState.isLoggingIn">
+                           [disabled]="registerState.isLoggingIn" [formControl]="fcusername">
+                    <mat-error>Mindestens 3 Buchstaben.</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="min-w-[100px] flex-grow pr-2 pl-2">
                     <mat-label>Email</mat-label>
                     <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.email" required
-                           [disabled]="registerState.isLoggingIn">
+                           [disabled]="registerState.isLoggingIn" [formControl]="fcemail">
+                    <mat-error>Dies ist keine gültige Email.</mat-error>
                 </mat-form-field>
             </div>
             <div class="flex flex-wrap flex-row w-full justify-between">
                 <mat-form-field appearance="fill" class="min-w-[100px] flex-grow pr-2 pl-2">
                     <mat-label>Vorname</mat-label>
                     <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.firstname" required
-                           [disabled]="registerState.isLoggingIn">
+                           [disabled]="registerState.isLoggingIn" [formControl]="fcfirstname">
+                    <mat-error>Mindestens 2 Buchstaben.</mat-error>
                 </mat-form-field>
                 <mat-form-field appearance="fill" class="min-w-[100px] flex-grow pr-2 pl-2">
                     <mat-label>Nachname</mat-label>
                     <input (keyup.enter)="register()" matInput [(ngModel)]="registerState.user.lastname" required
-                           [disabled]="registerState.isLoggingIn">
+                           [disabled]="registerState.isLoggingIn" [formControl]="fclastname">
+                    <mat-error>Mindestens 2 Buchstaben.</mat-error>
                 </mat-form-field>
             </div>
             <mat-form-field appearance="fill" class="pl-2 pr-2 w-full">
@@ -36,7 +40,9 @@
             </mat-form-field>
             <mat-form-field appearance="fill" class="pl-2 pr-2 w-full">
                 <mat-label>Telefonnummer</mat-label>
-                <input (keyup.enter)="register()"  matInput  [(ngModel)]="registerState.user.telephone"  required [disabled]="registerState.isLoggingIn">
+                <input (keyup.enter)="register()"  matInput  [(ngModel)]="registerState.user.telephone"  required [disabled]="registerState.isLoggingIn"
+                       [formControl]="fctelephone">
+                <mat-error>Dies ist keine gültige Telefonnummer.</mat-error>
             </mat-form-field>
             <mat-checkbox [(ngModel)]="registerState.user.hygienepass"><mat-label>
                 Hygienepass
@@ -48,7 +54,8 @@
                     <button mat-icon-button matSuffix (click)="registerState.hidePassword = !registerState.hidePassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="registerState.hidePassword">
                         <mat-icon>{{registerState.hidePassword ? 'visibility_off' : 'visibility'}}</mat-icon>
                     </button>
-                    <mat-error *ngIf="!passwordMatch"></mat-error>
+                    <mat-error>Mindestens 6 Zeichen.</mat-error>
+                    <mat-error *ngIf="!passwordMatch"> Passwörter müssen übereinstimmen.</mat-error>
                 </mat-form-field>
                 <mat-form-field  appearance="fill" class="min-w-[100px] flex-grow pr-2 pl-2">
                     <mat-label>Password</mat-label>

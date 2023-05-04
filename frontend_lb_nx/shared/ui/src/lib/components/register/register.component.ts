@@ -9,6 +9,7 @@ import {combineLatest} from "rxjs/internal/operators/combineLatest";
 import {Observable} from "rxjs";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {map, shareReplay} from "rxjs/operators";
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
 
 @Component({
   selector: 'frontend-lb-nx-register',
@@ -22,12 +23,18 @@ export class RegisterComponent {
           map(result => result.matches),
           shareReplay()
       );
-  registerState: RegisterComponentState;
-
+  registerState= new RegisterComponentState();
   $success = this.store.select(selectSuccess);
 
-  constructor(private router: Router, private store: Store, private breakpointObserver: BreakpointObserver) {
-    this.registerState = new RegisterComponentState();
+  //VALIDATORS
+  fcusername = new FormControl(this.registerState.user.username, [Validators.required, Validators.minLength(3)])
+  fcemail = new FormControl(this.registerState.user.email, [Validators.required, Validators.email])
+  fcfirstname = new FormControl(this.registerState.user.firstname, [Validators.required, Validators.minLength(2)])
+  fclastname = new FormControl(this.registerState.user.lastname, [Validators.required, Validators.minLength(2)])
+  fctelephone = new FormControl(this.registerState.user.telephone, [Validators.required, Validators.pattern('[- +()0-9]+')])
+
+
+  constructor(private router: Router, private store: Store, private breakpointObserver: BreakpointObserver, private fb: FormBuilder) {
   }
 
   register(){
@@ -42,7 +49,8 @@ export class RegisterComponent {
   }
 
   get valid(){
-    return this.registerState.user.username !== '' && this.registerState.user.email !== '' && this.registerState.user.password !== '' && this.registerState.user.firstname !== '' && this.registerState.user.lastname !== '' && this.registerState.user.telephone !== 0 && this.passwordMatch;
+    return this.fcusername.valid && this.fcemail.valid && this.fcfirstname.valid && this.fclastname.valid && this.fctelephone.valid && this.passwordMatch
+    //return this.registerState.user.username !== '' && this.registerState.user.email !== '' && this.registerState.user.password !== '' && this.registerState.user.firstname !== '' && this.registerState.user.lastname !== '' && this.registerState.user.telephone !== "" && this.passwordMatch;
   }
 
   get passwordMatch(){
@@ -63,8 +71,10 @@ class RegisterComponentState {
     lastname: '',
     titel: '',
     hygienepass: false,
-    telephone: +49,
-    roles: []
+    telephone: "+49",
+    roles: [],
+    xPScore: 0,
+    balance: 0,
   };
   secondPassword = '';
   hideSecondPassword = true;

@@ -8,6 +8,9 @@ export interface User{
     lastname: string,
     titel: string,
     hygienepass: boolean,
-    telephone: number, // TODO: change to string
+    telephone: string,
+
+    xPScore?: number,
+    balance?: number,
 }
 

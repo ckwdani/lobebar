@@ -9,52 +9,6 @@ import {
 import {Store} from "@ngrx/store";
 import {selectOrgEvents} from "@frontend-lb-nx/shared/services";
 
-const orgEvent: OrgEvent={
-  id: "asdsad", name: "Plattenbauromantik", start: new Date(Date.now()), end: new Date(Date.now()), shifts: [],
-}
-
-const shiftType:  ShiftType={
-  id: "asdassadsd", name:"Barschicht"
-}
-
-const shiftType2:  ShiftType={
-  id: "asdassadsdd", name:"Security"
-}
-
-const user1: User={
-  id: "asd",
-  username: "emil",
-  roles: [],
-  password: "xxxxx",
-  email: "hallo@asadsa.de",
-  firstname: "gunni",
-  lastname: "jochen",
-  titel: "Master of A",
-  hygienepass: true,
-  telephone: 231412124,
-}
-
-const user2: User={
-  id: "2312",
-  username: "goenndalf",
-  roles: [],
-  password: "xxxxx",
-  email: "hallo@asadsa.de",
-  firstname: "gunni",
-  lastname: "jochen",
-  titel: "Master of A",
-  hygienepass: true,
-  telephone: 231412124,
-}
-
-const ELEMENT_DATA: Shift[] = [
-  { description: 'Hydrogen', starttime: new Date(Date.now()), endtime: new Date(Date.now()),headcount: 2, orgEvent: orgEvent, users: [user1,user2], type: shiftType},
-  { description: 'Helium',starttime: new Date(Date.now()), endtime: new Date(Date.now()),headcount: 2, orgEvent: orgEvent, users: [user1, user2], type: shiftType},
-  { description: 'ASDASD', starttime: new Date(Date.now()), endtime: new Date(Date.now()),headcount: 2, orgEvent: orgEvent, users: [user1, user2], type: shiftType2},
-  { description: 'SDASD',starttime: new Date(Date.now()), endtime: new Date(Date.now()),headcount: 2, orgEvent: orgEvent, users: [user1, user2], type: shiftType2},
-];
-orgEvent.shifts=ELEMENT_DATA
-
 @Component({
   selector: 'frontend-lb-nx-calendar',
   templateUrl: './calendar.component.html',
@@ -65,7 +19,7 @@ export class CalendarComponent {
 
   activeDayIsOpen = false;
 
-  orgEvents: OrgEvent[]|undefined=[orgEvent]
+  orgEvents: OrgEvent[]|undefined
 
   viewDate: Date = new Date()
 

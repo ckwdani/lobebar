@@ -28,13 +28,9 @@ export class DetailsWithEditComponent {
   detailType=DetailType
 
   name="asdasdsad"
-  user: User|undefined
+  $userObs= this.store.select(selectUser)
 
   constructor(public dialog: Dialog, private store: Store){
-    this.store.select(selectUser).subscribe(next=>{
-      this.user=next
-      this.name=this.user?.username ?? "Mensch"
-    })
   }
   //open dialog and pass data and width
   openDialog(input: string, type: string): void {

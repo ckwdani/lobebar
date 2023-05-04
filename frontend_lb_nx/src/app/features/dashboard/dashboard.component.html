@@ -3,7 +3,9 @@
         <p>Herzlich Willkommen, lieber Barmensch {{($userNameObs | async)?.username}}.</p>
         <p>Danke für dein Engagement!</p>
         <br>
-        <p>Punkte: </p>
+        <p>Punkte: {{($userNameObs | async)?.xPScore}}</p>
+        <br>
+        <p>Gönnpunkte: {{($userNameObs | async)?.balance}}</p>
     </div>
     <br>
     <div class="flex flex-row justify-between">

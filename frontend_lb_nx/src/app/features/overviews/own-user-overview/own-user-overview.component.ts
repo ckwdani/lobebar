@@ -5,4 +5,5 @@ import { Component } from '@angular/core';
   templateUrl: './own-user-overview.component.html',
   styleUrls: ['./own-user-overview.component.scss'],
 })
-export class OwnUserOverviewComponent {}
+export class OwnUserOverviewComponent {
+}

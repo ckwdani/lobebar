@@ -60,8 +60,8 @@ class LoginComponenState {
     lastname: '',
     titel: '',
     hygienepass: false,
-    telephone: 0,
-    roles: []
+    telephone: "",
+    roles: [],
   };
 
 
