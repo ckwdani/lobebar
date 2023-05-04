@@ -15,6 +15,23 @@ export const loadShiftTypesFailure = createAction(
   props<{ error: number }>()
 );
 
+
+export const EditName = createAction(
+    '[ShiftType | EW_Type] Edit Name',
+    props<{shiftType?: ShiftType, ew_type?: DoneExtraWorkTypes}>()
+);
+
+export const EditNameSuccess = createAction(
+    '[ShiftType | EW_Type] Edit Name Success',
+    props<{shiftType?: ShiftType, ew_type?: DoneExtraWorkTypes}>()
+);
+
+export const EditNameFailure = createAction(
+    '[ShiftType | EW_Type] Edit Name Failure',
+    props<{error: number}>()
+)
+
+
 export const addShiftType = createAction(
     '[ShiftType] Adding ShiftType',
     props<{shiftType: ShiftType}>()

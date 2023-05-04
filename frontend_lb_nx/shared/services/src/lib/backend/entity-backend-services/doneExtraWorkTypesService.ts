@@ -18,6 +18,10 @@ export class EW_Types_BackendService extends BaseCommunicatorService<DoneExtraWo
         return super.post(BACKENDPATHS.app_doneEwtrawork_addshifttype, ew_types);
     }
 
+    public update(ew_types: DoneExtraWorkTypes): Observable<DoneExtraWorkTypes>{
+        return super.put(BACKENDPATHS.app_doneEwtrawork_updateNam + ew_types.id, ew_types);
+    }
+
     override delete(id: string): Observable<DoneExtraWorkTypes>{
         return super.delete(BACKENDPATHS.app_doneEwtrawork_deleteshifttype + id);
     }

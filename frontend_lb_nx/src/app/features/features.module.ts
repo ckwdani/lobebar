@@ -26,7 +26,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventsOverviewStore } from './overviews/events-overview/events-overview.store';
 import { SharedServicesModule } from '@frontend-lb-nx/shared/services';
 import { EventAddStore } from './event-add/event-add-store.store';
-import { ShiftType_DoneEW_AddComponentDialog } from '../core/components/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component';
+import { ShiftType_DoneEW_AddComponentDialog } from '../core/components/dialogs/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {ShiftTypesOverviewComponent} from "./overviews/shift-types-overview/shift-types-overview.component";
 

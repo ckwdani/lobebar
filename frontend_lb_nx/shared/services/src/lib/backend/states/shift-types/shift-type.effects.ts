@@ -6,7 +6,7 @@ import * as ShiftTypeActions from './shift-type.actions';
 import {ShiftTypeBackendService} from "../../entity-backend-services/shifts-type-backend.service";
 import {ShiftType} from "@frontend-lb-nx/shared/entities";
 import {EW_Types_BackendService} from "../../entity-backend-services/doneExtraWorkTypesService";
-import {deleteEWT} from "./shift-type.actions";
+import {deleteEWT, EditNameFailure} from "./shift-type.actions";
 
 
 @Injectable()
@@ -81,6 +81,33 @@ export class ShiftTypeEffects {
             )
         }
     )
+
+    // eddit name of shift type or ew_type (extra work type) on the action EditName
+    editName$ = createEffect(()=>{
+            return this.actions$.pipe(
+                ofType(ShiftTypeActions.EditName),
+                switchMap((action)=> {
+                        if (action.ew_type) {
+                            return this.ew_types_service.update(action.ew_type).pipe(
+                                map(() => {
+                                    return ShiftTypeActions.EditNameSuccess({ew_type: action.ew_type});
+                                }),
+                                catchError((error) => of(ShiftTypeActions.EditNameFailure({error})))
+                            )
+                        }
+                        if (action.shiftType){
+                            return this.shiftTypeService.update(action.shiftType).pipe(
+                                map(() => {
+                                    return ShiftTypeActions.EditNameSuccess({shiftType: action.shiftType});
+                                }),
+                                catchError((error) => of(ShiftTypeActions.EditNameFailure({error})))
+                            )
+                        }
+                        return of(EditNameFailure({error: -20}))
+                    }
+                )
+            )
+        });
 
 
 

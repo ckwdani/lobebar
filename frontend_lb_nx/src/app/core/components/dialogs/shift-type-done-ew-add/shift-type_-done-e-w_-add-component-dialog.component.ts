@@ -2,24 +2,24 @@ import {Component, Inject, Input, OnInit} from '@angular/core';
 import {ShiftType} from "@frontend-lb-nx/shared/entities";
 import {
   ShiftTypeBackendService
-} from "../../../../../shared/services/src/lib/backend/entity-backend-services/shifts-type-backend.service";
+} from "../../../../../../shared/services/src/lib/backend/entity-backend-services/shifts-type-backend.service";
 import {Store} from "@ngrx/store";
 import {
   selectShiftTypes, selectShiftTypesAdding, selectShiftTypesError,
   selectShiftTypesLoading, selectShiftTypeState
-} from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
+} from "../../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
 import {combineLatest, combineLatestAll, distinctUntilChanged, filter, find, pairwise, tap} from "rxjs";
 import {
   addExtraWorkType,
   addShiftType,
   deleteShiftType
-} from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
+} from "../../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
 import {FormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DialogData} from "@frontend-lb-nx/shared/ui";
 import {map} from "rxjs/operators";
 import {fi} from "date-fns/locale";
-import {DoneExtraWorkTypes} from "../../../../../shared/entities/src/lib/doneExtraWorkTypes";
+import {DoneExtraWorkTypes} from "../../../../../../shared/entities/src/lib/doneExtraWorkTypes";
 
 export interface DialogDataST {
   isShiftType: boolean;
@@ -44,6 +44,7 @@ export class ShiftType_DoneEW_AddComponentDialog {
   }
 
   isShiftType = true;
+  isEdit = false;
   fcname = new FormControl(this.model.name, [Validators.required, Validators.minLength(3)])
   value = new FormControl((this.model as DoneExtraWorkTypes).value, [Validators.required, Validators.min(1)])
 
@@ -78,12 +79,13 @@ export class ShiftType_DoneEW_AddComponentDialog {
 
   sendShiftType(){
 
-    const copyModel= Object.assign({},this.model)
+    // const copyModel= Object.assign({},this.model)
+
     if(this.isShiftType){
-      this.store.dispatch(addShiftType({shiftType: copyModel}))
+      this.store.dispatch(addShiftType({shiftType: this.model}))
     }
     else{
-      this.store.dispatch(addExtraWorkType({ew_type: copyModel}))
+      this.store.dispatch(addExtraWorkType({ew_type: this.model}))
     }
     // this.model.name=""
   }

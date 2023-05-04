@@ -2,18 +2,21 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {
   selectEWTypes,
-  selectShiftTypes,
+  selectShiftTypes, selectShiftTypesAdding, selectShiftTypesAddingError, selectShiftTypesError,
   selectShiftTypesLoading
 } from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
-import {SimpleTableComponent} from "../../../../../shared/ui/src/lib/components/simpleTable/simple-table.component";
 import {DoneExtraWorkTypes, ShiftType} from "@frontend-lb-nx/shared/entities";
 import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
 import {MatDialog} from "@angular/material/dialog";
-import {ShiftType_DoneEW_AddComponentDialog} from "../../../core/components/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component";
+import {ShiftType_DoneEW_AddComponentDialog} from "../../../core/components/dialogs/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component";
 import {
   deleteEWT,
-  deleteShiftType
+  deleteShiftType, EditName
 } from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
+import {SimpleTableComponent} from "../../../../../shared/ui/src/lib/components/simpleTable/simple-table.component";
+import {EditNameDialogComponent} from "../../../core/components/dialogs/edit-name-dialog/edit-name-dialog.component";
+import {combineLatest, filter, take, tap} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'frontend-lb-nx-shift-types-overview',
@@ -30,6 +33,10 @@ export class ShiftTypesOverviewComponent {
   $shiftTypes = this.store.select(selectShiftTypes);
   $ew_types= this.store.select(selectEWTypes);
   $shiftTypesLoading = this.store.select(selectShiftTypesLoading);
+  $addingError = this.store.select(selectShiftTypesAddingError);
+
+  loadingShifts = false;
+  loadingEWT = false;
 
   // constructore with store
   constructor(private store: Store, public dialog: MatDialog) {}
@@ -38,13 +45,36 @@ export class ShiftTypesOverviewComponent {
     return shiftType.name;
   }
 
+  value(doneEw: DoneExtraWorkTypes): string {
+    return doneEw.value.toString();
+  }
+
 
   openDialog(isShiftType: boolean = true): void {
     const dialogRef = this.dialog.open(ShiftType_DoneEW_AddComponentDialog, {data: {isShiftType: isShiftType}});
 
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
-      // this.animal = result;
+    });
+  }
+
+  editName(type: ShiftType | DoneExtraWorkTypes, isShiftType: boolean = true, isError = false) {
+    const dialogRef = this.dialog.open(EditNameDialogComponent, {data: {name: type.name, isError: isError}});
+
+    dialogRef.afterClosed().subscribe(result => {
+        if (result) {
+          const interType = {...type, name: result};
+            // type.name = result;
+            if (isShiftType) {
+              this.store.dispatch(EditName({shiftType: interType}));
+              this.$addingError.pipe(map((loading,) => loading.adding)).subscribe({next: (value) => this.loadingShifts = value})
+            } else {
+              this.store.dispatch(EditName({ew_type: interType as DoneExtraWorkTypes}));
+              this.$addingError.pipe(map((loading,) => loading.adding)).subscribe({next: (value) => this.loadingEWT = value})
+            }
+          this.$addingError.pipe(take(2), filter(x => x.error !== undefined))
+              .subscribe(() => this.editName(interType, isShiftType, true));
+        }
     });
   }
 

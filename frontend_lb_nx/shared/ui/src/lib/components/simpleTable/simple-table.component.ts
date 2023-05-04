@@ -20,9 +20,13 @@ export class SimpleTableComponent<E> implements OnInit, OnChanges, AfterViewInit
    */
   @Input() data: E[] = [];
 
+  // input the additional columns for the table with the displayed string an the getter from the object
+    @Input() additionalColumns: {displayedString: string, getter: (element: E) => string}[] = [];
 
 
   @Input() convert?: (element: E) => string;
+  @Input() loading = false;
+
   /**
    * caption over the table
    */
@@ -60,6 +64,13 @@ export class SimpleTableComponent<E> implements OnInit, OnChanges, AfterViewInit
 
   ngOnInit(): void {
     this.setTableData(this.data);
+    //add the additional columns to the displayed columns
+    this.additionalColumns.forEach((column) => {
+        this.displayedColumns.splice(1, 0, column.displayedString);
+    });
+    // this.displayedColumns = this.displayedColumns.concat(this.additionalColumnsDisplayed);
+
+
   }
 
 

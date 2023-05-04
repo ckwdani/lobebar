@@ -1,0 +1,100 @@
+.contentBodyWithoutWidth{
+  margin-left: 10vw;
+}
+
+/*.deleteOverlay{
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  position: fixed;
+  z-index: 0;
+}*/
+
+.topPadding{
+  margin-top: 64px;
+}
+
+.radius{
+  border-radius: 8px;
+}
+
+
+.overlayBack{
+
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  position: fixed;
+  background-color: rgba(0,0,0,0.5);
+}
+
+.contentBodyWithoutWidth{
+  margin-left: 0;
+}
+
+
+.containerOverlay {
+
+  text-align: center;
+  z-index: 3;
+  display: inline-flex;
+  justify-content: center;
+  color: white;
+  background-color: rgba(80, 80, 80, 0.8);
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  top: 0;
+}
+
+@mixin logoWithoutPosition{
+  max-width: 30%;
+
+  display: block;
+  top: 40%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%)
+}
+
+.logo{
+  position: fixed;
+  @include logoWithoutPosition;
+
+}
+
+.logoInContainer{
+  @include logoWithoutPosition;
+  position: absolute;
+}
+
+
+#buttons{
+  display: flex;
+  justify-content: space-around;
+}
+
+
+
+.fade-in {
+  animation: fadeIn ease 3s infinite;
+}
+
+@keyframes fadeIn {
+   0% {
+     opacity:0;
+   }
+   50% {
+     opacity:1;
+   }
+  100% {
+    opacity: 0;
+  }
+ }
+
+#logo {
+  width: 100%;
+}

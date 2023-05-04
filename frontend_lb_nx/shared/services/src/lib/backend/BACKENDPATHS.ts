@@ -16,6 +16,7 @@ export class BACKENDPATHS{
     static readonly app_shift_type_addshifttype =          this.baseApiUrl +    "/mod_api/shift/addtype"
     static readonly app_shift_type_deleteshifttype =      this.baseApiUrl +    "/mod_api/shift/deletetype/"
     static readonly app_shift_type_getshifttypes =          this.baseApiUrl +    "/api/getShiftTypes"
+    static readonly app_shift_type_updateshifttype =          this.baseApiUrl +     "/mod_api/shift/updatetype/"
 
     //SHIFT
     static readonly shift_user_shifts = this.baseApiUrl + "/api/getUserShifts" ///{userId}/{start}/{end}
@@ -26,6 +27,8 @@ export class BACKENDPATHS{
     static readonly app_doneEwtrawork_addshifttype =          this.baseApiUrl +   "/mod_api/ew_types/addtype"
     static readonly app_doneEwtrawork_deleteshifttype =      this.baseApiUrl +    "/mod_api/ew_types/deletetype/"
     static readonly app_doneEwtrawork_getshifttypes =          this.baseApiUrl +"/api/getewtypes"
+    static readonly app_doneEwtrawork_updateNam =          this.baseApiUrl + "/mod_api/ew_types/updatetype/"
+
 
 
 
