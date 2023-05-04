@@ -1,6 +1,7 @@
 import {Component, ElementRef, ViewChild} from '@angular/core';
 import {Store} from "@ngrx/store";
 import {
+  selectDeletingError,
   selectEWTypes,
   selectShiftTypes, selectShiftTypesAdding, selectShiftTypesAddingError, selectShiftTypesError,
   selectShiftTypesLoading
@@ -17,6 +18,9 @@ import {SimpleTableComponent} from "../../../../../shared/ui/src/lib/components/
 import {EditNameDialogComponent} from "../../../core/components/dialogs/edit-name-dialog/edit-name-dialog.component";
 import {combineLatest, filter, take, tap} from "rxjs";
 import {map} from "rxjs/operators";
+import {
+  ImportantDeleteDialogComponent
+} from "../../../core/components/dialogs/important-delete-dialog/important-delete-dialog.component";
 
 @Component({
   selector: 'frontend-lb-nx-shift-types-overview',
@@ -34,6 +38,7 @@ export class ShiftTypesOverviewComponent {
   $ew_types= this.store.select(selectEWTypes);
   $shiftTypesLoading = this.store.select(selectShiftTypesLoading);
   $addingError = this.store.select(selectShiftTypesAddingError);
+  $deletingError = this.store.select(selectDeletingError);
 
   loadingShifts = false;
   loadingEWT = false;
@@ -78,12 +83,30 @@ export class ShiftTypesOverviewComponent {
     });
   }
 
-  deleteSt(type: ShiftType) {
-    this.store.dispatch(deleteShiftType({shiftType: type}));
+  deleteSt(type: ShiftType, isError = false) {
+    const dialogRef = this.dialog.open(ImportantDeleteDialogComponent, {data: {name: type.name, isError: isError}});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // type.name = result;
+        this.store.dispatch(deleteShiftType({shiftType: type}));
+        this.$deletingError.pipe(map((loading,) => loading.adding)).subscribe({next: (value) => this.loadingShifts = value})
+      }
+    });
+
+
   }
-  deleteEwt(type: DoneExtraWorkTypes | ShiftType) {
-    console.log(type)
-    this.store.dispatch(deleteEWT({ew_type: type as DoneExtraWorkTypes}));
+  deleteEwt(type: DoneExtraWorkTypes | ShiftType, isError = false) {
+
+    const dialogRef = this.dialog.open(ImportantDeleteDialogComponent, {data: {name: type.name, isError: isError}});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // type.name = result;
+        this.store.dispatch(deleteEWT({ew_type: type as DoneExtraWorkTypes}));
+        this.$deletingError.pipe(map((loading,) => loading.adding)).subscribe({next: (value) => this.loadingEWT = value})
+      }
+    });
+
+
   }
 
 }
