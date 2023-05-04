@@ -24,28 +24,30 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import {
   SmallLoadingAnimationComponent
 } from "./animations/components/small-loading-animation/small-loading-animation.component";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {LoadingOverlayComponent} from "./animations/components/loading-overlay/loading-overlay.component";
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MatInputModule,
-        FormsModule,
-        MatTableModule,
-        MatIconModule,
-        MatDatetimepickerModule,
-        MatButtonModule,
-        MatSelectModule,
-        MatCardModule,
-        MatProgressSpinnerModule,
-        StoreModule.forRoot({}),
-        SharedServicesModule,
-        MatTooltipModule,
-        MatCheckboxModule,
-        MatPaginatorModule,
-        ReactiveFormsModule,
-    ],
+  imports: [
+    CommonModule,
+    MatInputModule,
+    FormsModule,
+    MatTableModule,
+    MatIconModule,
+    MatDatetimepickerModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    StoreModule.forRoot({}),
+    SharedServicesModule,
+    MatTooltipModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
+  ],
   declarations: [
     SingleFormDialogComponent,
+    LoadingOverlayComponent,
     SimpleTableComponent,
     ShiftTableComponent,
     LoginComponent,
@@ -55,6 +57,7 @@ import {
   ],
   exports: [
     SingleFormDialogComponent,
+    LoadingOverlayComponent,
     ShiftTableComponent,
     LoginComponent,
     SimpleTableComponent,

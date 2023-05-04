@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import {filter, Observable, of} from "rxjs";
+import {filter, Observable, of, tap} from "rxjs";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {HttpErrorHandlerService} from "./http-error-handler.service";
 import {Store} from "@ngrx/store";
@@ -73,9 +73,12 @@ export class BaseCommunicatorService<T> {
    *
    */
   protected genGenerObs<ALT>(response: Observable<T | ALT>): Observable<T | ALT>{
-    return response.pipe(catchError(error => {
-      this.errorHandler.handleHttpError(error);
+    return response.pipe(tap({
+      // next: (a) => {},
+      error: (error) => {
+        this.errorHandler.handleHttpError(error);
         return of(error);
+      }
     }));
   }
 

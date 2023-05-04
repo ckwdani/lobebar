@@ -8,7 +8,7 @@ import {CalendarComponent} from "./features/calendar/calendar.component";
 import {PointsComponent} from "./features/points/points.component";
 import {EventAddComponent} from "./features/event-add/event-add.component";
 import {LoginComponent} from "../../shared/ui/src/lib/components/login/login.component";
-import {ShiftType_DoneEW_AddComponentDialog} from "./core/components/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component";
+import {ShiftType_DoneEW_AddComponentDialog} from "./core/components/dialogs/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component";
 import {ShiftTypesOverviewComponent} from "./features/overviews/shift-types-overview/shift-types-overview.component";
 
 export const appRoutes: Route[] = [

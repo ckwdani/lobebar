@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\Exclude;
 
 #[ORM\Entity(repositoryClass: ExtraWorkTypesRepository::class)]
 class ExtraWorkTypes extends _Base_Entity
@@ -20,6 +21,7 @@ class ExtraWorkTypes extends _Base_Entity
     private ?int $value = null;
 
     #[ORM\OneToMany(mappedBy: 'extraWorkType', targetEntity: DoneExtraWork::class, orphanRemoval: true)]
+    #[Exclude]
     private Collection $usersDoneWork;
 
     public function __construct()

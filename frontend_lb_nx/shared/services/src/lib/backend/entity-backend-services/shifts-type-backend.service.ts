@@ -18,6 +18,10 @@ export class ShiftTypeBackendService extends BaseCommunicatorService<ShiftType>{
         return super.post(BACKENDPATHS.app_shift_type_addshifttype, shiftType);
     }
 
+    public update(shiftType: ShiftType): Observable<ShiftType>{
+        return super.put(BACKENDPATHS.app_shift_type_updateshifttype+shiftType.id, shiftType);
+    }
+
     override delete(id: string): Observable<ShiftType>{
         return super.delete(BACKENDPATHS.app_shift_type_deleteshifttype + id);
     }

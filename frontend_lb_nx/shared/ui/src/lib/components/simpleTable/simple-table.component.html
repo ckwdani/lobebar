@@ -4,6 +4,7 @@
       <button mat-flat-button color="primary" (click)="add.emit()" class="matButton">{{caption}} hinzufügen</button>
     </div>
     <div id="tableContainer">
+      <mat-progress-bar *ngIf="loading" class="w-full" mode="buffer"></mat-progress-bar>
       <table mat-table [dataSource]="state.elementsDatasource" class="mat-elevation-z8 demo-table">
 
         <!--- Note that these columns can be defined in any order.
@@ -13,6 +14,12 @@
         <ng-container matColumnDef="{{elementString}}" >
           <th mat-header-cell *matHeaderCellDef> {{caption}}</th>
           <td mat-cell *matCellDef="let element" id="elementNameContainer"> {{convert ? convert(element) : ''}} </td>
+        </ng-container>
+
+      <!--        all the aditional columns displayed -->
+        <ng-container *ngFor="let column of additionalColumns; let i = index" matColumnDef="{{column.displayedString}}">
+          <th mat-header-cell *matHeaderCellDef> {{column.displayedString}}</th>
+          <td mat-cell *matCellDef="let element" > {{column.getter ? column.getter(element) : ''}} </td>
         </ng-container>
 
 

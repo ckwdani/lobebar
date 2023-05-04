@@ -35,6 +35,26 @@ class ShiftController extends _Base_Controller
         return JsonResponse::fromJsonString($this->serializer->serialize($shiftType, 'json'));
     }
 
+
+
+    // update ew type name
+    #[Route("/mod_api/ew_types/updatetype/{ew_type_id}", methods: ["PUT"])]
+    public function updateDoneEWTypes(Request $request, string $ew_type_id){
+        $shiftTypeChanges = $this->serializer->deserialize($request->getContent(), ExtraWorkTypes::class, "json");
+        /** @var ExtraWorkTypes $shiftType */
+        $shiftType = $this->doctrine->getManager()->getRepository(ExtraWorkTypes::class)->find(Uuid::fromString($ew_type_id));
+        if(empty($shiftType)){
+            throw new NotFoundHttpException();
+        }
+
+        if ($shiftTypeChanges->getName()) {
+            $shiftType->setName($shiftTypeChanges->getName());
+        }
+        $this->persistFlushConflict($shiftType);
+        return JsonResponse::fromJsonString($this->serializer->serialize($shiftType, 'json'));
+    }
+
+
     // get shift types
     #[Route("/api/getewtypes", methods: ["GET"])]
     public function getDoneEWTypes(){
@@ -43,6 +63,35 @@ class ShiftController extends _Base_Controller
 //            throw new NotFoundHttpException();
 //        }
         return JsonResponse::fromJsonString($this->serializer->serialize($shiftTypes, 'json'));
+    }
+
+    // update shifttypes name
+    #[Route("/mod_api/shift/updatetype/{shiftTypeId}", methods: ["PUT"])]
+    public function updateShiftType(Request $request, string $shiftTypeId){
+        $shiftTypeChanges = $this->serializer->deserialize($request->getContent(), Shiftype::class, "json");
+        /** @var Shiftype $shiftType */
+        $shiftType = $this->doctrine->getManager()->getRepository(Shiftype::class)->find(Uuid::fromString($shiftTypeId));
+        if(empty($shiftType)){
+            throw new NotFoundHttpException();
+        }
+
+        if ($shiftTypeChanges->getName()) {
+            $shiftType->setName($shiftTypeChanges->getName());
+        }
+        $this->persistFlushConflict($shiftType);
+        return JsonResponse::fromJsonString($this->serializer->serialize($shiftType, 'json'));
+    }
+    // assign logged in user to shift given by the shiftid
+    #[Route("/api/assignShift/{shiftId}", methods: ["POST"])]
+    public function assignShift(string $shiftId){
+        /** @var Shift $shift */
+        $shift = $this->doctrine->getManager()->getRepository(Shift::class)->find(Uuid::fromString($shiftId));
+        if(empty($shift)){
+            throw new NotFoundHttpException();
+        }
+        $shift->addUser($this->getUser());
+        $this->persistFlushConflict($shift);
+        return JsonResponse::fromJsonString($this->serializer->serialize($shift, 'json'));
     }
 
 

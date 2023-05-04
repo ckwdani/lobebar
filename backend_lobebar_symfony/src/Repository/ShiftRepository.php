@@ -53,8 +53,9 @@ class ShiftRepository extends ServiceEntityRepository
                 ->setParameter('end', (new \DateTime())->setTimestamp($end));
         }
         if(!empty($user_id)){
-            // join on the users table and get shifts where the user id is the logged in user
-            $qb->andWhere($qb->expr()->in('s.id', ':user_id'))
+            // join the users table (the shift_user table is a join table between shifts and users) and get shifts where the user id is the logged in user
+            $qb->join('s.users', 'su');
+            $qb->andWhere($qb->expr()->in('su', ':user_id'))
                 ->setParameter('user_id', $user_id->toBinary());
         }
         return $qb->getQuery()->getResult();
@@ -83,8 +84,10 @@ class ShiftRepository extends ServiceEntityRepository
         }
         if(!empty($user_id)){
             // where the logged in user is not signed up for the shift
-            $qb->andWhere($qb->expr()->notIn('s.id', ':user_id'))
+            $qb->andWhere($qb->expr()->notIn('su', ':user_id'))
                 ->setParameter('user_id', $user_id->toBinary());
+//            $qb->andWhere($qb->expr()->notIn('s.id', ':user_id'))
+//                ->setParameter('user_id', $user_id->toBinary());
         }
         // order by event start date
         $qb->orderBy('e.start', 'ASC');
