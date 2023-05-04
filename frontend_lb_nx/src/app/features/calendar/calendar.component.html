@@ -11,30 +11,28 @@
             {{ day.date | calendarDate:'monthViewDayNumber':locale }}
         </span>
         </div>
-
-
         <small style="margin: 5px" [ngClass]="checkEventStatus(day.events![0]??0 !== 0 ? day.events![0].meta : undefined)">
             {{ day.events![0]??0 !== 0 ? day.events![0].title : "" }}</small>
 </ng-template>
 
 <ng-template #nrtw let-day="events" let-locale="locale">
-<!--    <div class="cal-open-day-events">-->
-<!--        <div *ngFor="let event of day.events">-->
-<!--            <b>{{ event.name }}</b>-->
-<!--            <i>{{ event.start }}</i>-->
-<!--        </div>-->
-<!--    </div> -->
-    {{checker(day)}}
-<!--    <div class="cal-cell-top">-->
-<!--        <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>-->
-<!--        <span class="cal-day-number">-->
-<!--            {{ day.date | calendarDate:'monthViewDayNumber':locale }}-->
-<!--        </span>-->
-<!--    </div>-->
+<!--    <div class="cal-open-month-events">
+        <div *ngFor="let event of day.events">
+            <b>{{ event.name }}</b>
+            <i>{{ event.start }}</i>
+        </div>
+    </div>
+    {{checker(day)}}-->
+<!--    <div class="cal-cell-top">
+        <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
+        <span class="cal-day-number">
+            {{ day.date | calendarDate:'monthViewDayNumber':locale }}
+        </span>
+    </div>-->
 
-
-<!--    <small style="margin: 5px" [ngClass]="checkEventStatus(day.events![0]??0 !== 0 ? day.events![0].meta : undefined)">-->
-<!--        {{ day.events![0]??0 !== 0 ? day.events![0].title : "" }}</small>-->
+<!--
+    <small style="margin: 5px" [ngClass]="checkEventStatus(day.events![0]??0 !== 0 ? day.events![0].meta : undefined)">
+        {{ day.events![0]??0 !== 0 ? day.events![0].title : "" }}</small>-->
 </ng-template>
 <!-- https://github.com/mattlewis92/angular-calendar#how-do-i-use-a-custom-template -->
 <!-- https://mattlewis92.github.io/angular-calendar/#/custom-templates -->

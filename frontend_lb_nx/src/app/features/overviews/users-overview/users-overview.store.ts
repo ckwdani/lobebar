@@ -13,7 +13,7 @@ export interface UsersOverviewState {
     loading: boolean
 }
 
-const initialState: UsersOverviewState = {users: [], loading: false}
+const initialState: UsersOverviewState = {users: [], loading: true}
 
 @Injectable()
 export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
@@ -23,7 +23,7 @@ export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
 
 
     readonly selectUsers$: Observable<User[]> = this.select((state)=>state.users)
-    readonly loading$ = this.select(state=> state.loading)
+    readonly selectLoading$ = this.select(state=> state.loading)
 
     readonly setLoading = this.updater((state, loading: boolean)=> {return {...state, loading: loading}})
 
@@ -31,7 +31,7 @@ export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
         trigger$.pipe(
             tap(() => {
                 this.userService.getAll().subscribe((users) => {
-                    this.patchState({ users });
+                    this.patchState({ users , loading: false});
                 });
             })
         )

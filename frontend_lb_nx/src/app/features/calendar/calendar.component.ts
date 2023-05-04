@@ -17,7 +17,7 @@ import {selectOrgEvents} from "@frontend-lb-nx/shared/services";
 export class CalendarComponent {
   view: CalendarView = CalendarView.Month;
 
-  activeDayIsOpen = false;
+  activeDayIsOpen = true;
 
   $orgEvents = this.store.select(selectOrgEvents)
 
@@ -85,6 +85,7 @@ export class CalendarComponent {
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    console.log(events)
     if (isSameMonth(date, this.viewDate)) {
       if (
           (isSameDay(this.viewDate, date) && this.activeDayIsOpen) ||
@@ -98,9 +99,5 @@ export class CalendarComponent {
     }
   }
   constructor(private store: Store) {
-    // this.store.select(selectOrgEvents).subscribe(next=>{
-    //   this.orgEvents=next
-    //   this.genCalenderEvents(this.orgEvents)
-    // })
   }
 }
