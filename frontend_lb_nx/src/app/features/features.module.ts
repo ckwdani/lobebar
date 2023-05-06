@@ -30,6 +30,7 @@ import { ShiftType_DoneEW_AddComponentDialog } from '../core/components/dialogs/
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {ShiftTypesOverviewComponent} from "./overviews/shift-types-overview/shift-types-overview.component";
 import {UsersOverviewStore} from "./overviews/users-overview/users-overview.store";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
   declarations: [
@@ -57,6 +58,7 @@ import {UsersOverviewStore} from "./overviews/users-overview/users-overview.stor
     CalendarMonthModule,
     CalendarCommonModule,
     RouterLink,
+      MatDialogModule,
     MatInputModule,
     MatDatepickerModule,
     MatDatetimepickerModule,
