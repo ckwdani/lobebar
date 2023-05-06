@@ -1,29 +1,29 @@
  <div class="flex flex-row items-center">
-        <span>Name: {{($userObs | async)?.username}}</span>
-        <button (click)="openDialog(name, detailType.nameType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+        <span>Name: {{user?.username}}</span>
+        <button (click)="openDialog('username', detailType.nameType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
     </div>
     <div class="flex flex-row items-center">
-        <span>Vorname: {{($userObs | async)?.firstname}}</span>
-        <button (click)="openDialog(name, detailType.firstnameType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+        <span>Vorname: {{user?.firstname}}</span>
+        <button (click)="openDialog('username', detailType.firstnameType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
     </div>
     <div class="flex flex-row items-center">
-        <span>Nachname: {{($userObs | async)?.lastname}}</span>
-        <button (click)="openDialog(name, detailType.lastnameType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+        <span>Nachname: {{user?.lastname}}</span>
+        <button (click)="openDialog('username', detailType.lastnameType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
     </div>
     <div class="flex flex-row items-center">
-        <span>Titel: {{($userObs | async)?.titel}}</span>
-        <button (click)="openDialog(name, detailType.titelType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+        <span>Titel: {{user?.titel}}</span>
+        <button (click)="openDialog('username', detailType.titelType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
     </div>
     <div class="flex flex-row items-center">
-        <span>Email: {{($userObs | async)?.email}}</span>
-        <button (click)="openDialog(name, detailType.emailType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+        <span>Email: {{user?.email}}</span>
+        <button (click)="openDialog('username', detailType.emailType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
     </div>
     <div class="flex flex-row items-center">
-        <span>Handynummer: {{($userObs | async)?.telephone}}</span>
-        <button (click)="openDialog(name, detailType.handyNrType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+        <span>Handynummer: {{user?.telephone}}</span>
+        <button (click)="openDialog('username', detailType.handyNrType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
     </div>
     <div class="flex flex-row items-center">
         <span>Passwort: ********</span>
-        <button (click)="openDialog(name, detailType.passwordType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+        <button (click)="openDialog('username', detailType.passwordType)" mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
     </div>
 

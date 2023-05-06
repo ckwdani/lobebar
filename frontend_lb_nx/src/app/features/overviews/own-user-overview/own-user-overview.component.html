@@ -2,7 +2,7 @@
     <p class="text-center">Hallo NAME! Hier kannst du deine Daten für deinen Account ändern.</p>
     <br>
     <div class="flex flex-row justify-center">
-        <frontend-lb-nx-details-with-edit></frontend-lb-nx-details-with-edit>
+        <frontend-lb-nx-details-with-edit *ngIf="$userObs | async" [user]="($userObs | async)!"></frontend-lb-nx-details-with-edit>
         <div>
             <p>Errungenschaften:</p>
         </div>
