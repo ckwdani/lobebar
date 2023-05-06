@@ -7,7 +7,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { RouterLink } from '@angular/router';
-import { EditNameDialogComponent } from './components/dialogs/edit-name-dialog/edit-name-dialog.component';
+import { EditStringDialogComponent } from './components/dialogs/edit-string-dialog/edit-string-dialog.component';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatDialogModule } from '@angular/material/dialog';
@@ -20,10 +20,10 @@ import {
 @NgModule({
   declarations: [
     NavigationComponent,
-    EditNameDialogComponent,
+    EditStringDialogComponent,
     ImportantDeleteDialogComponent,
   ],
-  exports: [NavigationComponent, EditNameDialogComponent, ImportantDeleteDialogComponent],
+  exports: [NavigationComponent, EditStringDialogComponent, ImportantDeleteDialogComponent],
   imports: [
     BrowserAnimationsModule,
     MatInputModule,

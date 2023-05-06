@@ -14,7 +14,7 @@ export class AuthEffects {
 
 
   loadAuths$ = createEffect(() => {
-    return this.actions$.pipe( 
+    return this.actions$.pipe(
 
       ofType(AuthActions.login),
       switchMap((action) =>
@@ -50,8 +50,8 @@ export class AuthEffects {
             switchMap((action ) =>
 
                 this.authService.getUser(localStorage.getItem(localStorageTokenString)??"").pipe(
-                    map((token) => {
-                        return AuthActions.allLoaded({user: token});
+                    map((user) => {
+                        return AuthActions.allLoaded({user: user});
                     }),
                     catchError((error) => of(AuthActions.loadUserError({ error })))
                 )));

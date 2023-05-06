@@ -15,7 +15,8 @@
             {{ day.events![0]??0 !== 0 ? day.events![0].title : "" }}</small>
 </ng-template>
 
-<ng-template #nrtw let-day="events" let-locale="locale">
+<ng-template #nrtw let-day="events"  let-open="isOpen" let-locale="locale">
+    <div *ngIf="open">adaasd</div>
 <!--    <div class="cal-open-month-events">
         <div *ngFor="let event of day.events">
             <b>{{ event.name }}</b>

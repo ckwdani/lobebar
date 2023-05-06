@@ -39,6 +39,7 @@ security:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: PUBLIC_ACCESS }
         - { path: ^/mod_api, roles: ROLE_ORGANIZER }
+        - { path: ^/admin_api, roles: ROLE_ADMIN }
         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#the-firewall

@@ -90,6 +90,22 @@ class UserController extends _Base_Controller
     }
 
 
+    // delete user by id, if no id is given delete the logged in user
+    // only the admin is allowed to do so
+    #[Route("/admin_api/user/{id?}", methods: ["DELETE"])]
+    public function deleteUser(?string $id): JsonResponse{
+        $this->denyAccessUnlessGranted('ROLE_ADMIN');
+        $user = $this->getUser();
+        if(!empty($id)){
+            $user = $this->userRepo->find(Uuid::fromString($id));
+        }
+        $em = $this->doctrine->getManager();
+        $em->remove($user);
+        $em->flush();
+        return JsonResponse::fromJsonString($this->serializer->serialize($user, 'json'));
+    }
+
+
 
 
     #[Route("/user/reset/{email}", methods: ["PUT"])]

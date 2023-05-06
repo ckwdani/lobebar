@@ -15,7 +15,7 @@ import {
   deleteShiftType, EditName
 } from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
 import {SimpleTableComponent} from "../../../../../shared/ui/src/lib/components/simpleTable/simple-table.component";
-import {EditNameDialogComponent} from "../../../core/components/dialogs/edit-name-dialog/edit-name-dialog.component";
+import {EditStringDialogComponent} from "../../../core/components/dialogs/edit-string-dialog/edit-string-dialog.component";
 import {combineLatest, filter, take, tap} from "rxjs";
 import {map} from "rxjs/operators";
 import {
@@ -64,7 +64,7 @@ export class ShiftTypesOverviewComponent {
   }
 
   editName(type: ShiftType | DoneExtraWorkTypes, isShiftType: boolean = true, error?: number) {
-    const dialogRef = this.dialog.open(EditNameDialogComponent, {data: {name: type.name, errorcode: error}});
+    const dialogRef = this.dialog.open(EditStringDialogComponent, {data: {name: type.name, errorcode: error}});
 
     dialogRef.afterClosed().subscribe(result => {
         if (result) {

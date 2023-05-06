@@ -26,6 +26,7 @@ import {
 } from "./animations/components/small-loading-animation/small-loading-animation.component";
 import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {LoadingOverlayComponent} from "./animations/components/loading-overlay/loading-overlay.component";
+import {MatDialogModule} from "@angular/material/dialog";
 
 @NgModule({
     imports: [
@@ -46,6 +47,7 @@ import {LoadingOverlayComponent} from "./animations/components/loading-overlay/l
         MatPaginatorModule,
         ReactiveFormsModule,
         MatProgressBarModule,
+        MatDialogModule,
     ],
   declarations: [
     SingleFormDialogComponent,

@@ -1,0 +1,37 @@
+<h1 mat-dialog-title>{{displayString}} ändern</h1>
+<div mat-dialog-content class="!flex !justify-around !flex-col">
+    <p class="max-w-[300px] w-48 mb-3 border-2 rounded-md p-2">Aktueller Wert: {{startValue}}</p>
+    <p class="max-w-[300px] w-48 mb-3">Änderungen kannst du in dem Feld vornehmen</p>
+    <mat-form-field appearance="outline" class="max-w-[300px] w-48 mb-3">
+        <mat-label>{{displayString}}</mat-label>
+        <input matInput [(ngModel)]="data.name" [formControl]="fcname" (keydown.enter)="onSubmit()">
+        <mat-error *ngIf="!fcname.valid">{{displayString}} muss mindestens 3 Zeichen lang sein.</mat-error>
+    </mat-form-field>
+</div>
+<div *ngIf="data.errorcode !== undefined" class="text-red-600 w-full flex justify-center"><p>{{getErrorMessage(data.errorcode!)}}</p></div>
+<div mat-dialog-actions class="mat-dialog-flexed" >
+    <button mat-button (click)="onNoClick()">Abbrechen</button>
+    <button mat-button [disabled]="!fcname.valid" [mat-dialog-close]="data.name">Ok <mat-icon>send</mat-icon></button>
+</div>
+
+
+
+<!--<frontend-lb-nx-small-loading-animation *ngIf="$loading | async"></frontend-lb-nx-small-loading-animation>-->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

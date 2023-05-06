@@ -1,5 +1,5 @@
-<h1>Hi {{data.previous}}.</h1>
-<div>
+<h1 mat-dialog-title>Hi {{data.previous}}.</h1>
+<div mat-dialog-content>
     <label id="favorite-animal">{{data.type}} </label>
     <mat-form-field appearance="outline" color="primary">
         <input matInput for="favorite-animal" [(ngModel)]="res"  [placeholder]="'Gib deine neue ' + data.type +' ein:'" class="text-blue-500">
