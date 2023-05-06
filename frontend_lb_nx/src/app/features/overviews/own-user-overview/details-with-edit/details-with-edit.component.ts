@@ -8,6 +8,7 @@ import {
   EditStringDialogComponent
 } from "../../../../core/components/dialogs/edit-string-dialog/edit-string-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
+import {Validators} from "@angular/forms";
 
 //pass the types for the dialog
 enum DetailType{
@@ -37,7 +38,7 @@ export class DetailsWithEditComponent {
   //open dialog and pass data and width
   openDialog(input: keyof User, type: string): void {
     // const dialogRef = this.dialog.open(EditStringDialogComponent, {data: {name: "(this.user as any)[input]"}})
-    const dialogRef = this.dialog.open(EditStringDialogComponent, {data: {name: (this.user as any)[input], displayString: type}});
+    const dialogRef = this.dialog.open(EditStringDialogComponent, {data: {name: (this.user as any)[input], displayString: type, validators: [Validators.required, Validators.minLength(2)]}});
     //get the result from the dialog
     dialogRef.afterClosed().subscribe(result => {
       console.log('The dialog was closed');
