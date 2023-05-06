@@ -33,6 +33,7 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
      */
     #[ORM\Column]
     #[Serializer\Groups(groups: ["DeSer" => "DeSer"])]
+    #[Exclude]
     private ?string $password = null;
 
     #[ORM\Column(type: Types::ASCII_STRING, unique: true)]
@@ -71,6 +72,7 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     private ?bool $isApproved = false;
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: ResetCode::class, orphanRemoval: true)]
+    #[Exclude]
     private Collection $resetCodes;
 
     public function __construct()

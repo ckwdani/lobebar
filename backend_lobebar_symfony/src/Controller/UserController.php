@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Entity\User;
 use App\Repository\UserRepository;
+use App\Security\Voters\AdminOrOwnerVoter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\Persistence\ManagerRegistry;
@@ -68,6 +69,7 @@ class UserController extends _Base_Controller
         $user->setIsApproved();
         $this->doctrine->getManager()->persist($user);
         $this->doctrine->getManager()->flush();
+        return JsonResponse::fromJsonString($this->serializer->serialize($user, 'json'));
     }
 
     #[Route("/users", methods: ["GET"])]
@@ -87,6 +89,35 @@ class UserController extends _Base_Controller
             $user = $this->userRepo->find(Uuid::fromString($id));
         }
         return JsonResponse::fromJsonString($this->serializer->serialize($user, 'json'));
+    }
+
+    // update own user
+    #[Route("/user/update", methods: ["PUT"])]
+    public function updateUser(Request $request): JsonResponse{
+        $id = Uuid::fromString(json_decode($request->getContent(), true)["id"]);
+        $userFromDB = $this->userRepo->find($id);
+
+        $this->denyAccessUnlessGranted(AdminOrOwnerVoter::CAN_EDIT_ADMIN_OR_VOTER, $userFromDB);
+        //get request body from user
+        /** @var User $user */
+        $user = $this->serializer->deserialize($request->getContent(), User::class, "json", DeserializationContext::create()->setGroups(["DeSer", "Default"]));
+
+
+
+        // update user
+        $userFromDB->setUsername($user->getUsername());
+        $userFromDB->setEmail($user->getEmail());
+        $userFromDB->setFirstName($user->getFirstName());
+        $userFromDB->setLastName($user->getLastName());
+        $userFromDB->setTitel($user->getTitel());
+        $userFromDB->setTelephone($user->getTelephone());
+        $userFromDB->setHygienepass($user->isHygienepass());
+
+        // save user to db and return it as json
+        $em = $this->doctrine->getManager();
+        $em->persist($userFromDB);
+        $em->flush();
+        return JsonResponse::fromJsonString($this->serializer->serialize($userFromDB, 'json'));
     }
 
 

@@ -31,6 +31,7 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {ShiftTypesOverviewComponent} from "./overviews/shift-types-overview/shift-types-overview.component";
 import {UsersOverviewStore} from "./overviews/users-overview/users-overview.store";
 import {MatDialogModule} from "@angular/material/dialog";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
@@ -58,7 +59,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     CalendarMonthModule,
     CalendarCommonModule,
     RouterLink,
-      MatDialogModule,
+    MatDialogModule,
     MatInputModule,
     MatDatepickerModule,
     MatDatetimepickerModule,
@@ -67,6 +68,7 @@ import {MatDialogModule} from "@angular/material/dialog";
     SharedUiModule,
     MatProgressSpinnerModule,
     ReactiveFormsModule,
+    MatExpansionModule,
   ],
   providers: [EventsOverviewStore, UsersOverviewStore
     // ShiftTypeAddStore
