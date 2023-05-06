@@ -28,7 +28,10 @@ export const loadUserError = createAction(
     props<{ error: HttpErrorResponse }>()
 );
 
-
+export const updateUser = createAction(
+    '[User] Update User',
+    props<{ user: User }>()
+);
 
 export const loadAuthsFailure = createAction(
   '[Auth] Login Failure',

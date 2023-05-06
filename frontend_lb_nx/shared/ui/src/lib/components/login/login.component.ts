@@ -64,7 +64,7 @@ class LoginComponenState {
   public isLoading = false;
 
   user: User = {
-    approved: false,
+    isApproved: false,
     username: '',
     email: '',
     password: '',

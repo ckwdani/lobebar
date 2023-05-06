@@ -6,7 +6,8 @@ import {
     UserBackendService
 } from "../../../../../shared/services/src/lib/backend/entity-backend-services/user-backend.service";
 import {catchError} from "rxjs/operators";
-import {createAction, props} from '@ngrx/store';
+import {createAction, props, select, Store} from '@ngrx/store';
+import {selectUser, updateUser} from "@frontend-lb-nx/shared/services";
 
 export interface UsersOverviewState {
     users: User[];
@@ -17,7 +18,7 @@ const initialState: UsersOverviewState = {users: [], loading: true}
 
 @Injectable()
 export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
-    constructor(private userService: UserBackendService) {
+    constructor(private userService: UserBackendService, private store: Store) {
         super(initialState);
     }
 
@@ -36,4 +37,42 @@ export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
             })
         )
     );
+
+    readonly deleteUser = this.effect<User>((user$: Observable<User>) =>
+        user$.pipe(
+            tap((user) => {
+                this.userService.deleteUser(user.id??"").subscribe(() => {
+                    this.patchState((state) => ({
+                        users: state.users.filter((u) => u.id !== user.id),
+                    }));
+                });
+            })
+        )
+    );
+
+    readonly updateUser = this.effect<User>((user$: Observable<User>)=>
+        user$.pipe(
+            tap((user)=>{
+                this.userService.updateUser(user).subscribe(()=>{
+                    this.store.dispatch(updateUser({user}))
+                })
+            })
+        )
+    )
+
+/*    this.patchState((state) => ({
+    users: state.users.filter((u) => u.id !== user.id),
+}));*/
+    readonly approveUser = this.effect<User>((user$: Observable<User>)=>
+        user$.pipe(
+            tap((user) => {
+                this.userService.approveUser(user).subscribe(() => {
+                    this.patchState((state) => ({
+                        // state.shiftTypes.map(item=>item.id===shiftType.id?shiftType:item)
+                        users: state.users.map(u=>u.id===user.id?user:u)
+                    }));
+                });
+            })
+        )
+    )
 }

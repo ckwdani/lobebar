@@ -2,7 +2,7 @@
 <p>Folgende NutzerInnen sind registriert:</p>
 <table mat-table [dataSource]="(users$ | async)!" class="mat-elevation-z8">
 
-    <!--- Note that these columns can be defined in any order.
+    <!--- Note that these columns can be defined in any order
           The actual rendered columns are set as a property on the row definition" -->
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <!-- Position Column -->
@@ -39,10 +39,27 @@
         <td mat-cell *matCellDef="let element"> {{element.xPScore}}</td>
     </ng-container>
 
-    <ng-container matColumnDef="change">
-        <th mat-header-cell *matHeaderCellDef> Ändern </th>
+    <ng-container matColumnDef="balance">
+        <th mat-header-cell *matHeaderCellDef> Balance </th>
+        <td mat-cell *matCellDef="let element"> {{element.balance}}</td>
+    </ng-container>
+
+    <ng-container matColumnDef="approved">
+        <th mat-header-cell *matHeaderCellDef> Bestätigt? </th>
         <td mat-cell *matCellDef="let element">
-            <button mat-icon-button color="primary"><mat-icon>edit</mat-icon></button>
+            <div *ngIf="element.isApproved">Bestätigt</div>
+            <div class="flex flex-row items-center">
+                 <span *ngIf="!element.isApproved">Unbestätigt
+                <button mat-icon-button color="primary" (click)="approveUser(element)" ><mat-icon>add</mat-icon></button>
+            </span>
+            </div>
+        </td>
+    </ng-container>
+
+    <ng-container matColumnDef="delete">
+        <th mat-header-cell *matHeaderCellDef> Löschen </th>
+        <td mat-cell *matCellDef="let element">
+            <button mat-icon-button color="primary" (click)="deleteUser(element)" ><mat-icon>delete</mat-icon></button>
         </td>
     </ng-container>
 

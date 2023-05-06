@@ -12,4 +12,15 @@ export class UserBackendService extends BaseCommunicatorService<User>{
     return super.getList(BACKENDPATHS.getAllUser);
   }
 
+    deleteUser(userId: string): Observable<User> {
+    return super.delete(BACKENDPATHS.deleteUser+'/'+userId)
+    }
+
+    updateUser(user: User): Observable<User> {
+    return super.put(BACKENDPATHS.updateUser, user)
+    }
+
+    approveUser(user: User): Observable<User> {
+    return super.put(BACKENDPATHS.approveUser+'/'+user.id, user)
+    }
 }

@@ -3,11 +3,11 @@
 <app-simple-table [loading]="loadingShifts" (add)="openDialog()"
                   (delete)="deleteSt($event)"
                   (edit)="editName($event, true)"
-                  *ngIf="($shiftTypesLoading |async) == false"  [data]="($shiftTypes | async)??[]" [convert]="nameFromShiftType" caption="Schichtart" #table></app-simple-table>
+                  *ngIf="($shiftTypesLoading |async) === false"  [data]="($shiftTypes | async)??[]" [convert]="nameFromShiftType" caption="Schichtart" #table></app-simple-table>
 
 
 <app-simple-table [loading]="loadingEWT" (add)="openDialog(false)"
                   (delete)="deleteEwt($event)" [additionalColumns]="[{displayedString: 'value', getter: value}]"
                   (edit)="editName($event, false)"
-                  *ngIf="($shiftTypesLoading |async) == false"  [data]="($ew_types | async)??[]" [convert]="nameFromShiftType" caption="Extra Arbeiten" #table2></app-simple-table>
+                  *ngIf="($shiftTypesLoading |async) === false"  [data]="($ew_types | async)??[]" [convert]="nameFromShiftType" caption="Extra Arbeiten" #table2></app-simple-table>
 <app-loading-overlay *ngIf="($shiftTypesLoading |async)"></app-loading-overlay>

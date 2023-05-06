@@ -30,7 +30,7 @@ export const selectLoggedIn = createSelector(
 
 export const selectIsAccepted = createSelector(
     selectAuthState,
-    (state: fromAuth.AuthState) => state.user?.approved
+    (state: fromAuth.AuthState) => state.user?.isApproved
 );
 
 export const selectAuthError = createSelector(
