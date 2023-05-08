@@ -66,10 +66,10 @@ export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
     readonly approveUser = this.effect<User>((user$: Observable<User>)=>
         user$.pipe(
             tap((user) => {
-                this.userService.approveUser(user).subscribe(() => {
+                this.userService.approveUser(user).subscribe((userApproved) => {
                     this.patchState((state) => ({
                         // state.shiftTypes.map(item=>item.id===shiftType.id?shiftType:item)
-                        users: state.users.map(u=>u.id===user.id?user:u)
+                        users: state.users.map(u=>u.id===userApproved.id?userApproved:u)
                     }));
                 });
             })
