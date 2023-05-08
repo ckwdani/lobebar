@@ -25,11 +25,11 @@ class _Base_Controller extends AbstractController
 {
     protected SerializerInterface $BaseSerializer;
 
-    public function __construct(protected ManagerRegistry $doctrine )
+    public function __construct(protected ManagerRegistry $doctrine, protected SerializerInterface $serializer)
     {
         $this->serializer = SerializerBuilder::create()
             ->configureHandlers(function(HandlerRegistry $registry) {
-                $registry->registerSubscribingHandler(new ShiftDeserilizerHandler($this->doctrine));
+                $registry->registerSubscribingHandler(new ShiftDeserilizerHandler($this->doctrine, $this->serializer));
             })
             // here we configure our listeners (especially our event (entity) serialization listener
 //            ->configureListeners(function(EventDispatcher $dispatcher) use ($profileUtils, $likeUtils) {

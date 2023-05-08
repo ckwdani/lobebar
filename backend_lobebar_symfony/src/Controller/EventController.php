@@ -20,8 +20,6 @@ class EventController extends _Base_Controller
 //    #[Route("/orgevent/", methods: ["POST"])]
     public function addEvent(Request $request){
 
-
-
         /** @var Orgevent $event */
         $event = $this->serializer->deserialize($request->getContent(), Orgevent::class, "json");
         // get event json array

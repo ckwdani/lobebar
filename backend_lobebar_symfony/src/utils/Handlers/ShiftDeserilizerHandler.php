@@ -11,13 +11,15 @@ use JMS\Serializer\Context;
 use JMS\Serializer\GraphNavigator;
 use JMS\Serializer\Handler\SubscribingHandlerInterface;
 use JMS\Serializer\JsonDeserializationVisitor;
+use JMS\Serializer\SerializationContext;
+use JMS\Serializer\SerializerInterface;
 use Symfony\Component\Uid\Uuid;
 
 class ShiftDeserilizerHandler implements SubscribingHandlerInterface
 {
 
 
-    public function __construct(protected ManagerRegistry $doctrine)
+    public function __construct(protected ManagerRegistry $doctrine, protected SerializerInterface $serializer)
     {
 
     }
@@ -28,7 +30,7 @@ class ShiftDeserilizerHandler implements SubscribingHandlerInterface
             [
                 'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
                 'format' => 'json',
-                'type' => Shift::class,
+                'type' => Shiftype::class."deser",
                 'method' => 'deserializeDateTimeToJson',
             ],
         ];
@@ -37,6 +39,13 @@ class ShiftDeserilizerHandler implements SubscribingHandlerInterface
 
     public function deserializeDateTimeToJson(JsonDeserializationVisitor $visitor, $shiftIdArray, array $type, Context $context)
     {
-        return $this->doctrine->getManager()->getReference(Shiftype::class, Uuid::fromString($shiftIdArray["type"]["id"]));
+
+
+
+        // get the shifttype from the database and set it in the array
+        // deserialize the Shift from the array
+        // return the Shift
+        return $this->doctrine->getManager()->getReference(Shiftype::class, Uuid::fromString($shiftIdArray["id"]));
+
     }
 }
