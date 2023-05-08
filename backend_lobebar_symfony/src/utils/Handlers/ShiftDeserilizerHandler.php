@@ -19,7 +19,7 @@ class ShiftDeserilizerHandler implements SubscribingHandlerInterface
 {
 
 
-    public function __construct(protected ManagerRegistry $doctrine, protected SerializerInterface $serializer)
+    public function __construct(protected ManagerRegistry $doctrine)
     {
 
     }
@@ -30,7 +30,7 @@ class ShiftDeserilizerHandler implements SubscribingHandlerInterface
             [
                 'direction' => GraphNavigator::DIRECTION_DESERIALIZATION,
                 'format' => 'json',
-                'type' => Shiftype::class."deser",
+                'type' => Shiftype::class,
                 'method' => 'deserializeDateTimeToJson',
             ],
         ];

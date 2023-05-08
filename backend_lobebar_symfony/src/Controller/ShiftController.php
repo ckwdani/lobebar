@@ -9,6 +9,8 @@ use App\Entity\Shift;
 use App\Entity\Shiftype;
 use App\Entity\SnackTypes;
 use JMS\Serializer\EventDispatcher\Event;
+use JMS\Serializer\SerializerBuilder;
+use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -68,7 +70,8 @@ class ShiftController extends _Base_Controller
     // update shifttypes name
     #[Route("/mod_api/shift/updatetype/{shiftTypeId}", methods: ["PUT"])]
     public function updateShiftType(Request $request, string $shiftTypeId){
-        $shiftTypeChanges = $this->serializer->deserialize($request->getContent(), Shiftype::class, "json");
+        $serializerBase = SerializerBuilder::create()->build();
+        $shiftTypeChanges = $serializerBase->deserialize($request->getContent(), Shiftype::class, "json");
         /** @var Shiftype $shiftType */
         $shiftType = $this->doctrine->getManager()->getRepository(Shiftype::class)->find(Uuid::fromString($shiftTypeId));
         if(empty($shiftType)){
@@ -97,7 +100,8 @@ class ShiftController extends _Base_Controller
 
     #[Route("/mod_api/shift/addtype", methods: ["POST"])]
     public function addShiftType(Request $request){
-        $shiftType = $this->serializer->deserialize($request->getContent(), Shiftype::class, "json");
+        $serializerBase = SerializerBuilder::create()->build();
+        $shiftType = $serializerBase->deserialize($request->getContent(), Shiftype::class, "json");
         $this->persistFlushConflict($shiftType);
         return JsonResponse::fromJsonString($this->serializer->serialize($shiftType, 'json'));
     }

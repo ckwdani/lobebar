@@ -35,7 +35,7 @@ class Shift extends _Base_Entity
 
     #[ORM\ManyToOne]
     #[ORM\JoinColumn(nullable: false)]
-    #[Type(Shiftype::class."deser")]
+    #[Type(Shiftype::class)]
     private ?Shiftype $type = null;
 
     public function __construct()
