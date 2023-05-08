@@ -39,7 +39,8 @@ class UserController extends _Base_Controller
          * @var $user User
          */
         $user = $this->serializer->deserialize($request->getContent(), User::class, "json", DeserializationContext::create()->setGroups(["DeSer", "Default"]));
-        $user->setPassword($encoder->hashPassword($user, $user->getPassword()));
+        $jsonData = json_decode($request->getContent(), true);
+        $user->setPassword($encoder->hashPassword($user, $jsonData["password"]));
         $em = $this->doctrine->getManager();
         $em->persist($user);
 
