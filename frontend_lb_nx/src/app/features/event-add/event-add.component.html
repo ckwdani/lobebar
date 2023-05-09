@@ -1,5 +1,5 @@
 <p>Erstelle ein Event.</p>
-<form>
+<form  [formGroup]="myForm">
     <p *ngIf="$shiftTypesLoading | async"> loading</p>
 <mat-form-field appearance="fill">
     <mat-label>Name</mat-label>
@@ -7,7 +7,7 @@
 </mat-form-field>
 <mat-form-field>
     <mat-label>Start</mat-label>
-    <input formControlName="date" matInput [matDatetimepicker]="pickerStart" [(ngModel)]="model.start" >
+    <input formControlName="date"  matInput [matDatetimepicker]="pickerStart" [(ngModel)]="model.start" >
     <mat-hint>MM/DD/YYYY</mat-hint>
     <mat-datetimepicker-toggle matIconSuffix [for]="pickerStart"></mat-datetimepicker-toggle>
     <mat-datetimepicker #pickerStart type="datetime"></mat-datetimepicker>
@@ -20,7 +20,7 @@
         <mat-datetimepicker #pickerEnd type="datetime"></mat-datetimepicker>
     </mat-form-field>
     <button mat-icon-button color="primary" (click)="checkAndBuildEvent()" [disabled]="($shiftTypesLoading | async) || !myForm.valid"><mat-icon>save</mat-icon></button>
-    <mat-error *ngIf="myForm.hasError('dateAfter')">asdasdad</mat-error>
+<!--    <mat-error *ngIf="myForm.hasError('dateAfter')">asdasdad</mat-error>-->
     <mat-error *ngIf="!myForm.valid">asdasdad</mat-error>
 </form>
 <div *ngIf="eventDefined$ | async">

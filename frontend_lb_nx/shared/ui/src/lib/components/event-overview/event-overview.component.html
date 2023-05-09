@@ -1,7 +1,7 @@
 <div class="mb-10 mt-10">
     <div *ngIf="showName" class="w-full flex justify-center">
         <div class="flex flex-col ">
-            <a *ngIf="withHeadingLink && showName" href="singleevent/{{(orgEvent | async)?.id}}"><h1 *ngIf="showName" class="underline text-4xl text-center">{{(orgEvent | async)?.name}}{{" "}}</h1></a>
+            <a *ngIf="withHeadingLink && showName" routerLink="/singleevent/{{(orgEvent | async)?.id}}"><h1 *ngIf="showName" class="underline text-4xl text-center">{{(orgEvent | async)?.name}}{{" "}}</h1></a>
             <h1 *ngIf="showName && !withHeadingLink" class="underline text-4xl text-center">{{(orgEvent | async)?.name}}{{" "}}</h1>
             <h2 class="text-2xl text-center">
                 Veranstaltungszeit:

@@ -1,19 +1,37 @@
-import { Component } from '@angular/core';
+import {Component, Inject, LOCALE_ID} from '@angular/core';
 import {OrgEvent, OrgEventClass} from "@frontend-lb-nx/shared/entities";
 import {Store} from "@ngrx/store";
 import {OrgEventBackendService, selectSuccess, selectToken} from "@frontend-lb-nx/shared/services";
 import {filter, Observable, of} from "rxjs";
-import {HttpHeaders} from "@ngrx/data/src/dataservices/interfaces";
 import { EventAddStore } from './event-add-store.store';
-import {addOrgEvent} from "../../../../shared/services/src/lib/backend/states/orgEvent/orgEvent.actions";
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";
+import {
+  MomentDateAdapter,
+  MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+  MAT_MOMENT_DATE_FORMATS
+} from '@angular/material-moment-adapter';
+import * as moment from "moment/moment";
+import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/core";
+
 
 
 @Component({
   selector: 'frontend-lb-nx-event-add',
   templateUrl: './event-add.component.html',
   styleUrls: ['./event-add.component.scss'],
-  providers: [EventAddStore],
+  providers: [EventAddStore,
+    // {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
+    //
+    // // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
+    // // `MatMomentDateModule` in your applications root module. We provide it at the component level
+    // // here, due to limitations of our example generation script.
+    // {
+    //   provide: DateAdapter,
+    //   useClass: MomentDateAdapter,
+    //   deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+    // },
+    // {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+],
 })
 
 export class EventAddComponent {
@@ -54,11 +72,13 @@ export class EventAddComponent {
 
 export class DateValidator {
   static dateAfter(dateControlName: string, afterDateControlName: string) {
+
     return (control: AbstractControl) => {
       const date = control.get(dateControlName)?.value;
       const afterDate = control.get(afterDateControlName)?.value;
 
       if (date && afterDate && new Date(date) >= new Date(afterDate)) {
+
         return { dateAfter: true };
       }
 

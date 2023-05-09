@@ -11,7 +11,7 @@ import { FeaturesModule } from './features/features.module';
 import { CalendarModule, DateAdapter } from 'angular-calendar';
 //import {CalendarModule, DateAdapter} from "angular-calendar";
 import { adapterFactory } from 'angular-calendar/date-adapters/date-fns';
-import { MatNativeDateModule } from '@angular/material/core';
+import {MAT_DATE_LOCALE, MatNativeDateModule} from '@angular/material/core';
 import {
   MatNativeDatetimeModule,
 } from '@mat-datetimepicker/core';
@@ -20,6 +20,7 @@ import {EffectsModule} from "@ngrx/effects";
 import {EntityDataModule} from "@ngrx/data";
 import {entityConfig} from "../../shared/entities/src/lib/entity-metadata";
 import {provideEntityDataConfig} from "@ngrx/data/src/provide-entity-data";
+import {GermanDateProvider} from "./core/utils/GermanDateAdapter";
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,7 +42,10 @@ import {provideEntityDataConfig} from "@ngrx/data/src/provide-entity-data";
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig),
   ],
-  providers: [],
+  providers: [
+
+
+  ],
   bootstrap: [AppComponent],
 })
 export class AppModule {}

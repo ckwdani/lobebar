@@ -27,33 +27,35 @@ import { LoadingOverlayComponent } from './animations/components/loading-overlay
 import { MatDialogModule } from '@angular/material/dialog';
 import { FancyCircleLoaderComponent } from './animations/components/fancy-circle-loader/fancy-circle-loader.component';
 import { AddShiftComponent } from './components/event-overview/add-shift/add-shift.component';
+import { MatExpansionModule } from '@angular/material/expansion';
 import { CountdownComponent } from './components/countdown/countdown.component';
+import {RouterLink} from "@angular/router";
 import { MatExpansionModule } from '@angular/material/expansion';
 import { AchievementsOverviewComponent } from './components/achievements-overview/achievements-overview.component';
 import { SingleAchievementComponent } from './components/achievements-overview/single-achievement/single-achievement.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MatInputModule,
-        FormsModule,
-        MatTableModule,
-        MatIconModule,
-        MatDatetimepickerModule,
-        MatButtonModule,
-        MatSelectModule,
-        MatCardModule,
-        MatProgressSpinnerModule,
-        StoreModule.forRoot({}),
-        SharedServicesModule,
-        MatTooltipModule,
-        MatCheckboxModule,
-        MatPaginatorModule,
-        ReactiveFormsModule,
-        MatProgressBarModule,
-        MatDialogModule,
-        MatExpansionModule,
-    ],
+  imports: [
+    CommonModule,
+    MatInputModule,
+    FormsModule,
+    MatTableModule,
+    MatIconModule,
+    MatDatetimepickerModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    StoreModule.forRoot({}),
+    SharedServicesModule,
+    MatTooltipModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
+    ReactiveFormsModule,
+    MatProgressBarModule,
+    MatDialogModule,
+    MatExpansionModule,        RouterLink,
+  ],
   declarations: [
     SingleFormDialogComponent,
     LoadingOverlayComponent,

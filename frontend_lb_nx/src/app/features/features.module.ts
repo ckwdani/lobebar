@@ -1,5 +1,5 @@
-import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {LOCALE_ID, NgModule} from '@angular/core';
+import {CommonModule, registerLocaleData} from '@angular/common';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { OwnUserOverviewComponent } from './overviews/own-user-overview/own-user-overview.component';
 import { DetailsWithEditComponent } from './overviews/own-user-overview/details-with-edit/details-with-edit.component';
@@ -13,7 +13,7 @@ import { EventsOverviewComponent } from './overviews/events-overview/events-over
 import { MatTabsModule } from '@angular/material/tabs';
 import { SharedUiModule } from '@frontend-lb-nx/shared/ui';
 import { CalendarComponent } from './calendar/calendar.component';
-import { CalendarCommonModule, CalendarMonthModule } from 'angular-calendar';
+import {CalendarCommonModule, CalendarMonthModule, DateAdapter} from 'angular-calendar';
 import { CalendarHeaderComponent } from './calendar/calendar-header/calender-header.component';
 import { PointsComponent } from './points/points.component';
 import { EventAddComponent } from './event-add/event-add.component';
@@ -21,7 +21,7 @@ import { RouterLink } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDatetimepickerModule } from '@mat-datetimepicker/core';
-import { MAT_DATE_LOCALE } from '@angular/material/core';
+import {MAT_DATE_FORMATS, MAT_DATE_LOCALE} from '@angular/material/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { EventsOverviewStore } from './overviews/events-overview/events-overview.store';
 import { SharedServicesModule } from '@frontend-lb-nx/shared/services';
@@ -35,6 +35,16 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { SingleEventComponent } from './single-event/single-event.component';
 import { SingleEventStore } from './single-event/single-event.store';
 import {MatDividerModule} from "@angular/material/divider";
+
+import {GermanDateProvider} from "../core/utils/GermanDateAdapter";
+import { de } from 'date-fns/locale';
+import {
+    MAT_MOMENT_DATE_ADAPTER_OPTIONS,
+    MAT_MOMENT_DATE_FORMATS,
+    MomentDateAdapter
+} from "@angular/material-moment-adapter";
+
+// Register the German locale data
 
 @NgModule({
   declarations: [
@@ -79,7 +89,23 @@ import {MatDividerModule} from "@angular/material/divider";
     EventsOverviewStore,
     UsersOverviewStore,
     SingleEventStore,
-    // ShiftTypeAddStore
+      // {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
+      //
+      // // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
+      // // `MatMomentDateModule` in your applications root module. We provide it at the component level
+      // // here, due to limitations of our example generation script.
+      // {
+      //     provide: DateAdapter,
+      //     useClass: MomentDateAdapter,
+      //     deps: [MAT_DATE_LOCALE, MAT_MOMENT_DATE_ADAPTER_OPTIONS],
+      // },
+      // {provide: MAT_DATE_FORMATS, useValue: MAT_MOMENT_DATE_FORMATS},
+      // {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
+      // {provide: MAT_DATE_FORMATS, useValue: 'de-DE'},
+      // { provide: DateAdapter, useClass: GermanDateProvider, deps: [MAT_DATE_LOCALE] },
+
+      //   { provide: LOCALE_ID, useValue: 'de' }
+    // // ShiftTypeAddStore
   ],
 })
 export class FeaturesModule {}
