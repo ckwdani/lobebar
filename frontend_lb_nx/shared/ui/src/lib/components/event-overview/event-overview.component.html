@@ -1,9 +1,18 @@
-<div>
-    <h2 *ngIf="showName" class="underline text-2xl">{{(orgEvent | async)?.name}}{{" "}}{{(orgEvent | async)?.start | date: 'dd.MM.yyyy, HH:mm'}}{{" - "}}{{(orgEvent | async)?.end | date: 'HH:mm'}}</h2>
-    <frontend-lb-nx-add-shift *ngIf="showAddShift" [shiftTypes]="shiftTypes" (addShiftEvent)="addShiftEvent.emit($event)"></frontend-lb-nx-add-shift>
+<div class="mb-10 mt-10">
+    <div *ngIf="showName" class="w-full flex justify-center">
+        <div class="flex flex-col ">
+            <a *ngIf="withHeadingLink && showName" href="singleevent/{{(orgEvent | async)?.id}}"><h1 *ngIf="showName" class="underline text-4xl text-center">{{(orgEvent | async)?.name}}{{" "}}</h1></a>
+            <h1 *ngIf="showName && !withHeadingLink" class="underline text-4xl text-center">{{(orgEvent | async)?.name}}{{" "}}</h1>
+            <h2 class="text-2xl text-center">
+                Veranstaltungszeit:
+                <span class="text-orange-500">{{(orgEvent | async)?.start | date: 'dd.MM.yyyy, HH:mm'}}{{" - "}}{{(orgEvent | async)?.end | date: 'HH:mm'}}</span></h2>
+        </div>
+    </div>
+
+        <frontend-lb-nx-add-shift  [shiftTypes]="shiftTypes" [expanded]="showAddShift" (addShiftEvent)="addShiftEvent.emit($event)"></frontend-lb-nx-add-shift>
         <div *ngFor="let elem of splittedShifts">
             <p class="text-xl">{{elem[0].type!.name}}</p>
-            <frontend-lb-nx-shift-table *ngIf="(orgEvent | async)??0 !== 0" [orgEvent]="(orgEvent | async)!" [shifts]="elem" [showEditDelete]="showAddShift"></frontend-lb-nx-shift-table>
+            <frontend-lb-nx-shift-table *ngIf="(orgEvent | async)??0 !== 0" [orgEvent]="(orgEvent | async)!" [shifts]="elem" [showEditDelete]="(showAddShift | async)??false"></frontend-lb-nx-shift-table>
             <br>
             <br>
         </div>

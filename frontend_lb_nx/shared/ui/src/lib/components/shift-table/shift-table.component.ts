@@ -17,6 +17,7 @@ export class ShiftTableComponent {
     shifts: this.shifts
   }
   @Input() showEditDelete=false
+
   displayedColumns: string[] = ['datetime', 'description', 'num_persons', 'persons', 'assign'];
   user: User|undefined = undefined
 

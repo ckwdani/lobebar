@@ -24,6 +24,6 @@
     <mat-error *ngIf="!myForm.valid">asdasdad</mat-error>
 </form>
 <div *ngIf="eventDefined$ | async">
-    <frontend-lb-nx-event-overview (addShiftEvent)="componentStore.addShift($event)" [shiftTypes]="componentStore.$shiftTypes" [shifts]="componentStore.shifts$" [orgEvent]="$passedEvent" [showAddShift]="true"></frontend-lb-nx-event-overview>
+    <frontend-lb-nx-event-overview (addShiftEvent)="componentStore.addShift($event)" [shiftTypes]="componentStore.$shiftTypes" [shifts]="componentStore.shifts$" [orgEvent]="$passedEvent" [showAddShift]="of(true)"></frontend-lb-nx-event-overview>
     <button mat-icon-button color="primary" (click)="sendOrgEvent()"><mat-icon>send</mat-icon></button>
 </div>

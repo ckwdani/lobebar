@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {OrgEvent, OrgEventClass} from "@frontend-lb-nx/shared/entities";
 import {Store} from "@ngrx/store";
 import {OrgEventBackendService, selectSuccess, selectToken} from "@frontend-lb-nx/shared/services";
-import {filter, Observable} from "rxjs";
+import {filter, Observable, of} from "rxjs";
 import {HttpHeaders} from "@ngrx/data/src/dataservices/interfaces";
 import { EventAddStore } from './event-add-store.store';
 import {addOrgEvent} from "../../../../shared/services/src/lib/backend/states/orgEvent/orgEvent.actions";
@@ -49,7 +49,7 @@ export class EventAddComponent {
   }
 
 
-
+  protected readonly of = of;
 }
 
 export class DateValidator {

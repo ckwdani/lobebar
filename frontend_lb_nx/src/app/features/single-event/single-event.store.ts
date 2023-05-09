@@ -9,9 +9,10 @@ export interface SingleEventState {
   event?: OrgEvent,
   isLoading: boolean,
   error?: string,
+  showAddShift: boolean,
 };
 
-const initialState: SingleEventState = {isLoading: true};
+const initialState: SingleEventState = {isLoading: true, showAddShift: false};
 
 @Injectable()
 export class SingleEventStore extends ComponentStore<SingleEventState> {
@@ -20,10 +21,11 @@ export class SingleEventStore extends ComponentStore<SingleEventState> {
   }
 
   // viewModel
-    readonly vm$ = this.select(({ event, isLoading, error }) => ({
+    readonly vm$ = this.select(({ event, isLoading, error , showAddShift}) => ({
         event,
         isLoading,
         error,
+        showAddShift,
     }));
 
   // updater to set event
@@ -32,6 +34,13 @@ export class SingleEventStore extends ComponentStore<SingleEventState> {
         event,
         isLoading: false,
     }));
+
+    // toggle showAddShift
+    readonly toggleShowAddShift = this.updater((state) => ({
+        ...state,
+        showAddShift: !state.showAddShift,
+    }));
+
 
 
   // updater to set error

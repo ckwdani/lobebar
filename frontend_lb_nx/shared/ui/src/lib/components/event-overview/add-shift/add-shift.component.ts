@@ -1,6 +1,6 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {Shift, ShiftType} from "@frontend-lb-nx/shared/entities";
-import {filter, Observable} from "rxjs";
+import {filter, Observable, of} from "rxjs";
 
 @Component({
   selector: 'frontend-lb-nx-add-shift',
@@ -13,6 +13,9 @@ export class AddShiftComponent implements OnInit{
   @Output() addShiftEvent = new EventEmitter<Shift>();
   @Input() shiftTypes?: Observable<ShiftType[]>;
   model: Shift = this.startModel()
+
+  @Input() expanded: Observable<boolean> = of(true);
+
 
     ngOnInit(): void {
       this.shiftTypes?.pipe(filter(shifts => shifts.length > 0)).subscribe(next=> {

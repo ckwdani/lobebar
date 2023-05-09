@@ -34,6 +34,7 @@ import { MatDialogModule } from '@angular/material/dialog';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { SingleEventComponent } from './single-event/single-event.component';
 import { SingleEventStore } from './single-event/single-event.store';
+import {MatDividerModule} from "@angular/material/divider";
 
 @NgModule({
   declarations: [
@@ -51,28 +52,29 @@ import { SingleEventStore } from './single-event/single-event.store';
     SingleEventComponent,
   ],
   exports: [DashboardComponent, OwnUserOverviewComponent],
-  imports: [
-    BrowserAnimationsModule,
-    MatButtonModule,
-    MatIconModule,
-    DialogModule,
-    CommonModule,
-    MatTableModule,
-    MatTabsModule,
-    CalendarMonthModule,
-    CalendarCommonModule,
-    RouterLink,
-    MatDialogModule,
-    MatInputModule,
-    MatDatepickerModule,
-    MatDatetimepickerModule,
-    FormsModule,
-    SharedServicesModule,
-    SharedUiModule,
-    MatProgressSpinnerModule,
-    ReactiveFormsModule,
-    MatExpansionModule,
-  ],
+    imports: [
+        BrowserAnimationsModule,
+        MatButtonModule,
+        MatIconModule,
+        DialogModule,
+        CommonModule,
+        MatTableModule,
+        MatTabsModule,
+        CalendarMonthModule,
+        CalendarCommonModule,
+        RouterLink,
+        MatDialogModule,
+        MatInputModule,
+        MatDatepickerModule,
+        MatDatetimepickerModule,
+        FormsModule,
+        SharedServicesModule,
+        SharedUiModule,
+        MatProgressSpinnerModule,
+        ReactiveFormsModule,
+        MatExpansionModule,
+        MatDividerModule,
+    ],
   providers: [
     EventsOverviewStore,
     UsersOverviewStore,

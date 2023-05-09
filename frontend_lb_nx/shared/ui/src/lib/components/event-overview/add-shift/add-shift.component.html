@@ -1,35 +1,51 @@
-<div>
-    <form>
-        <mat-form-field appearance="fill">
-            <mat-label>Beschreibung</mat-label>
-            <input matInput [(ngModel)]="model.description" [ngModelOptions]="{standalone: true}">
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Schichttyp</mat-label>
-            <mat-select [(value)]="model.type">
-                <mat-option *ngFor="let shiftType of (shiftTypes | async)" [value]="shiftType">
-                    {{shiftType.name}}
-                </mat-option>
-            </mat-select>
-        </mat-form-field>
-        <mat-form-field appearance="fill">
-            <mat-label>Personenanzahl</mat-label>
-            <input matInput [(ngModel)]="model.headcount" [ngModelOptions]="{standalone: true}">
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Start</mat-label>
-            <input matInput [matDatetimepicker]="pickerStart" [(ngModel)]="model.starttime" [ngModelOptions]="{standalone: true}">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datetimepicker-toggle matIconSuffix [for]="pickerStart"></mat-datetimepicker-toggle>
-            <mat-datetimepicker #pickerStart type="datetime"></mat-datetimepicker>
-        </mat-form-field>
-        <mat-form-field>
-            <mat-label>Ende</mat-label>
-            <input matInput [matDatetimepicker]="pickerEnd" [(ngModel)]="model.endtime" [ngModelOptions]="{standalone: true}">
-            <mat-hint>MM/DD/YYYY</mat-hint>
-            <mat-datetimepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datetimepicker-toggle>
-            <mat-datetimepicker #pickerEnd type="datetime"></mat-datetimepicker>
-        </mat-form-field>
-        <button mat-icon-button color="primary" (click)="addShift()"><mat-icon>add</mat-icon></button>
-    </form>
+<div class="flex justify-center">
+    <mat-expansion-panel class="outer" [expanded]="(expanded | async)">
+        <form class="outer">
+            <div class="single">
+                <mat-form-field appearance="outline">
+                    <mat-label>Beschreibung</mat-label>
+                    <input matInput [(ngModel)]="model.description" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+            </div>
+
+            <div class="flex justify-between">
+                <mat-form-field appearance="outline">
+                    <mat-label>Schichttyp</mat-label>
+                    <mat-select [(value)]="model.type">
+                        <mat-option *ngFor="let shiftType of (shiftTypes | async)" [value]="shiftType">
+                            {{shiftType.name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <mat-form-field appearance="outline">
+                    <mat-label>Personenanzahl</mat-label>
+                    <input matInput [(ngModel)]="model.headcount" [ngModelOptions]="{standalone: true}">
+                </mat-form-field>
+            </div>
+
+            <div class="duos">
+                <mat-form-field appearance="outline" class="mr-2">
+                    <mat-label>Start</mat-label>
+                    <input matInput [matDatetimepicker]="pickerStart" [(ngModel)]="model.starttime"
+                           [ngModelOptions]="{standalone: true}">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datetimepicker-toggle matIconSuffix [for]="pickerStart"></mat-datetimepicker-toggle>
+                    <mat-datetimepicker #pickerStart type="datetime"></mat-datetimepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="ml-2">
+                    <mat-label>Ende</mat-label>
+                    <input matInput [matDatetimepicker]="pickerEnd" [(ngModel)]="model.endtime"
+                           [ngModelOptions]="{standalone: true}">
+                    <mat-hint>MM/DD/YYYY</mat-hint>
+                    <mat-datetimepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datetimepicker-toggle>
+                    <mat-datetimepicker #pickerEnd type="datetime"></mat-datetimepicker>
+                </mat-form-field>
+            </div>
+            <div class="single">
+                <button mat-fab color="primary" (click)="addShift()">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </div>
+        </form>
+    </mat-expansion-panel>
 </div>

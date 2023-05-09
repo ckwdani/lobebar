@@ -27,28 +27,30 @@ import { LoadingOverlayComponent } from './animations/components/loading-overlay
 import { MatDialogModule } from '@angular/material/dialog';
 import { FancyCircleLoaderComponent } from './animations/components/fancy-circle-loader/fancy-circle-loader.component';
 import { AddShiftComponent } from './components/event-overview/add-shift/add-shift.component';
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
-  imports: [
-    CommonModule,
-    MatInputModule,
-    FormsModule,
-    MatTableModule,
-    MatIconModule,
-    MatDatetimepickerModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatCardModule,
-    MatProgressSpinnerModule,
-    StoreModule.forRoot({}),
-    SharedServicesModule,
-    MatTooltipModule,
-    MatCheckboxModule,
-    MatPaginatorModule,
-    ReactiveFormsModule,
-    MatProgressBarModule,
-    MatDialogModule,
-  ],
+    imports: [
+        CommonModule,
+        MatInputModule,
+        FormsModule,
+        MatTableModule,
+        MatIconModule,
+        MatDatetimepickerModule,
+        MatButtonModule,
+        MatSelectModule,
+        MatCardModule,
+        MatProgressSpinnerModule,
+        StoreModule.forRoot({}),
+        SharedServicesModule,
+        MatTooltipModule,
+        MatCheckboxModule,
+        MatPaginatorModule,
+        ReactiveFormsModule,
+        MatProgressBarModule,
+        MatDialogModule,
+        MatExpansionModule,
+    ],
   declarations: [
     SingleFormDialogComponent,
     LoadingOverlayComponent,

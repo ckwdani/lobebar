@@ -11,11 +11,12 @@ import {selectOwnShifts} from "@frontend-lb-nx/shared/services";
 })
 export class EventOverviewComponent implements OnInit{
   @Input() orgEvent?: Observable<OrgEvent>;
+  @Input() withHeadingLink = true;
   @Input() shifts?: Observable<Shift[]>;
   @Input() shiftTypes?: Observable<ShiftType[]>;
+  @Input() showAddShift: Observable<boolean> = of(false);
   @Output() addShiftEvent = new EventEmitter<Shift>();
 
-  @Input() showAddShift=false
   @Input() showName = true;
 
 

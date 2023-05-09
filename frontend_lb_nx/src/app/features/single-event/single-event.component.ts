@@ -22,7 +22,7 @@ export class SingleEventComponent implements OnInit{
         });
     }
 
-    testdate = Date.now();
+
     ngOnInit() {
         registerLocaleData(localeDe);
     }
