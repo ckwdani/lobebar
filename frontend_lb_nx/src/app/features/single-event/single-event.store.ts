@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { ComponentStore } from '@ngrx/component-store';
+import {Injectable} from '@angular/core';
+import {ComponentStore} from '@ngrx/component-store';
 import {OrgEvent} from "@frontend-lb-nx/shared/entities";
 import {Observable, of, tap} from "rxjs";
 import {OrgEventBackendService} from "@frontend-lb-nx/shared/services";
@@ -41,7 +41,17 @@ export class SingleEventStore extends ComponentStore<SingleEventState> {
         showAddShift: !state.showAddShift,
     }));
 
-    // select missing persons to fill up shifts
+    // select missing persons to fill up shifts from event.shifts using shift person count and persons assigned to shift
+    readonly selectMissingPersons$ = this.select((state: SingleEventState) => {
+        if ((state.event??0) !== 0) {
+            return state.event?.shifts?.map((shift) => {
+                const persons = shift.users?.length ?? 0;
+                return  shift.headcount - persons;
+            }).reduce((acc, missing) => acc + missing, 0) ?? 0;
+        } else {
+            return 0;
+        }
+    });
 
 
 

@@ -10,8 +10,10 @@
         </div>
     </div>
 
-    <div class="flex justify-around flex-col mt-8">
+    <frontend-lb-nx-countdown [targetDate]="(store.vm$ | async)?.event?.start!"></frontend-lb-nx-countdown>
 
+    <div class="flex justify-around flex-col mt-8 text-center">
+        Es fehlen noch insgesammt <span [class.text-red-500]="missbiggerZero$ | async" [class.text-green-500]="(missbiggerZero$ | async) === false">{{store.selectMissingPersons$ | async}}</span> Personen für diese Veranstaltung.
     </div>
 
     <div class="flex justify-around flex-col mt-8">

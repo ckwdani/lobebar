@@ -27,30 +27,31 @@ import { LoadingOverlayComponent } from './animations/components/loading-overlay
 import { MatDialogModule } from '@angular/material/dialog';
 import { FancyCircleLoaderComponent } from './animations/components/fancy-circle-loader/fancy-circle-loader.component';
 import { AddShiftComponent } from './components/event-overview/add-shift/add-shift.component';
-import {MatExpansionModule} from "@angular/material/expansion";
+import { MatExpansionModule } from '@angular/material/expansion';
+import { CountdownComponent } from './components/countdown/countdown.component';
 
 @NgModule({
-    imports: [
-        CommonModule,
-        MatInputModule,
-        FormsModule,
-        MatTableModule,
-        MatIconModule,
-        MatDatetimepickerModule,
-        MatButtonModule,
-        MatSelectModule,
-        MatCardModule,
-        MatProgressSpinnerModule,
-        StoreModule.forRoot({}),
-        SharedServicesModule,
-        MatTooltipModule,
-        MatCheckboxModule,
-        MatPaginatorModule,
-        ReactiveFormsModule,
-        MatProgressBarModule,
-        MatDialogModule,
-        MatExpansionModule,
-    ],
+  imports: [
+    CommonModule,
+    MatInputModule,
+    FormsModule,
+    MatTableModule,
+    MatIconModule,
+    MatDatetimepickerModule,
+    MatButtonModule,
+    MatSelectModule,
+    MatCardModule,
+    MatProgressSpinnerModule,
+    StoreModule.forRoot({}),
+    SharedServicesModule,
+    MatTooltipModule,
+    MatCheckboxModule,
+    MatPaginatorModule,
+    ReactiveFormsModule,
+    MatProgressBarModule,
+    MatDialogModule,
+    MatExpansionModule,
+  ],
   declarations: [
     SingleFormDialogComponent,
     LoadingOverlayComponent,
@@ -62,6 +63,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     SmallLoadingAnimationComponent,
     FancyCircleLoaderComponent,
     AddShiftComponent,
+    CountdownComponent,
   ],
   exports: [
     SingleFormDialogComponent,
@@ -72,7 +74,8 @@ import {MatExpansionModule} from "@angular/material/expansion";
     EventOverviewComponent,
     SmallLoadingAnimationComponent,
     RegisterComponent,
-      FancyCircleLoaderComponent
+    FancyCircleLoaderComponent,
+    CountdownComponent,
   ],
 })
 export class SharedUiModule {}

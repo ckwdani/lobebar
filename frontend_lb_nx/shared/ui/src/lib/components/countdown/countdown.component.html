@@ -1,0 +1,6 @@
+<div *ngIf="countdown$ | async as countdown" class="text-center flex justify-center p-4">
+    <h2 class="text-center w-max text-2xl border-2 border-orange-500 p-4" [class.fade-in]="countDownSmallerThanOneDay$ | async">
+        <span class="text-orange-500">{{ countdown.days }}</span> Tage : <span class="text-orange-500">{{ countdown.hours }}</span> Stunden :
+        <span class="text-orange-500">{{ countdown.minutes }}</span> Minuten : <span class="text-orange-500">{{ countdown.seconds }}</span> Sekunden
+    </h2>
+</div>

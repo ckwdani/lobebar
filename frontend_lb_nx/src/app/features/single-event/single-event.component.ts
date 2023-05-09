@@ -5,6 +5,7 @@ import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
 import {registerLocaleData} from "@angular/common";
 import localeDe from '@angular/common/locales/de';
 import {of} from "rxjs";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'frontend-lb-nx-single-event',
@@ -24,6 +25,9 @@ export class SingleEventComponent implements OnInit{
 
 
 
+    missbiggerZero$ = this.store.selectMissingPersons$.pipe(map(next => next > 0));
+
+
 
     ngOnInit() {
         registerLocaleData(localeDe);
@@ -31,4 +35,5 @@ export class SingleEventComponent implements OnInit{
 
 
     protected readonly of = of;
+    protected readonly Date = Date;
 }
