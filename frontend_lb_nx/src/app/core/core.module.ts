@@ -6,7 +6,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { RouterLink } from '@angular/router';
+import {Router, RouterLink} from '@angular/router';
 import { EditStringDialogComponent } from './components/dialogs/edit-string-dialog/edit-string-dialog.component';
 import { MatInputModule } from '@angular/material/input';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
@@ -15,6 +15,7 @@ import { MatButtonModule } from '@angular/material/button';
 import {
   ImportantDeleteDialogComponent
 } from "./components/dialogs/important-delete-dialog/important-delete-dialog.component";
+import {Store} from "@ngrx/store";
 
 
 @NgModule({
@@ -38,5 +39,6 @@ import {
     MatButtonModule,
     ReactiveFormsModule,
   ],
+  providers: [Router, Store]
 })
 export class CoreModule {}

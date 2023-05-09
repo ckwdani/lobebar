@@ -9,7 +9,7 @@ import {
   selectLoggedIn,
   selectOrgEvents,
   selectSuccess, selectUser,
-  selectUserLoaded
+  selectUserLoaded, selectUserRole
 } from "@frontend-lb-nx/shared/services";
 import {loadShiftTypes} from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
 import * as AuthActions from "../../../../../shared/services/src/lib/backend/states/auth/auth.actions";
@@ -27,14 +27,18 @@ export class NavigationComponent implements AfterViewInit{
       shareReplay()
     );
 
+
   $isLoggedIn = this.store.select(selectLoggedIn).pipe(first());
   $isLoggedInAll = this.store.select(selectLoggedIn);
   $userLoaded = this.store.select(selectUserLoaded).pipe(first());
   $shiftTypesLoaded = this.store.select(selectSuccess).pipe(first());
   $loggedInUser = this.store.select(selectUser);
+  $roleUser = this.store.select(selectUserRole);
 
   constructor(private breakpointObserver: BreakpointObserver, private store:Store) {
-
+    this.$roleUser.subscribe(next=>{
+      console.log(next)
+    })
   }
 
   ngAfterViewInit(): void {

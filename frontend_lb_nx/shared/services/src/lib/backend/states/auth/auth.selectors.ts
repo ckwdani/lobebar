@@ -23,6 +23,11 @@ export const selectUser = createSelector(
     (state: fromAuth.AuthState) => state.user
 );
 
+export const selectUserRole = createSelector(
+    selectAuthState,
+    (state: fromAuth.AuthState) => state.user?.roles
+)
+
 export const selectLoggedIn = createSelector(
     selectAuthState,
     (state: fromAuth.AuthState) => state.loggedIn

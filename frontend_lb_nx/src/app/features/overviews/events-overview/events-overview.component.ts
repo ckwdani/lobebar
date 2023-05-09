@@ -8,7 +8,7 @@ import {
   selectOrgEvents,
   selectOrgEventsState,
   selectOutstandingShifts,
-  selectOwnShifts
+  selectOwnShifts, selectUserRole
 } from "@frontend-lb-nx/shared/services";
 
 @Component({
@@ -22,6 +22,8 @@ export class EventsOverviewComponent {
   comingOrgEvents$ = this.eventsOverviewStore.comingOrgEvents$
   yourShifts$ = this.eventsOverviewStore.yourShifts$
   previousShifts$ = this.eventsOverviewStore.previousShifts$
+
+  $roleUser = this.store.select(selectUserRole)
 
   $ownShiftsObs= this.store.select(selectOwnShifts)
   //$outStandingShiftsObs = this.store.select(selectOutstandingShifts)
