@@ -16,16 +16,13 @@ export class EventOverviewComponent implements OnInit{
   @Output() addShiftEvent = new EventEmitter<Shift>();
 
   @Input() showAddShift=false
+  @Input() showName = true;
 
-  model: Shift = this.startModel()
 
   splittedShifts: Shift[][] = [];
 
   ngOnInit(): void {
     this.shifts?.subscribe(next=>this.splitShiftsByType(next))
-    this.shiftTypes?.pipe(filter(shifts => shifts.length > 0)).subscribe(next=> {
-      this.model.type = next[0];
-    })
   }
 
   splitShiftsByType(shifts: Shift[]): void {
@@ -40,22 +37,7 @@ export class EventOverviewComponent implements OnInit{
     this.splittedShifts = Object.values(shiftsByType);
   }
 
-  addShift(){
-    this.addShiftEvent.emit(Object.assign({}, this.model));
-    this.model = this.startModel();
-  }
 
-
-  startModel(): Shift{
-    return {
-      id: '',
-      description: '',
-      headcount: 0,
-      starttime: new Date(),
-      endtime: new Date(),
-      type: this.model?.type ?? {id: '', name: '', value: 0},
-    };
-  }
 
   constructor(private store: Store) {
   }

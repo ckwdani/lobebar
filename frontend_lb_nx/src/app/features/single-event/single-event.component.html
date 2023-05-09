@@ -1,7 +1,19 @@
-<!--overview of the most importand data -->
-<div *ngIf="!(store.vm$ | async)?.isLoading">
-    <h1>{{(store.vm$ | async)?.event?.name}}</h1>
-    <h2>Das Datum der Veranstaltung ist: {{(store.vm$ | async)?.event?.start | date: ""}}</h2>
+
+<div *ngIf="!(store.vm$ | async)?.isLoading" class="w-full flex justify-around flex-col">
+
+    <div class="flex justify-center">
+        <div class=" content-center">
+            <h1 class="text-center text-6xl mb-6">{{(store.vm$ | async)?.event?.name}}</h1>
+            <h2 class="text-center text-3xl text-orange-500 font-extrabold">
+                {{(store.vm$ | async)?.event?.start | date: 'dd. MMMM yyyy \'um\' HH:mm':'de-DE'}}
+            </h2>
+        </div>
+    </div>
+
+    <div>
+        <frontend-lb-nx-event-overview [showAddShift]="true" [showName]="false" [shifts]="of((store.vm$ | async)?.event?.shifts??[])" [orgEvent]="of((store.vm$ | async)!.event!)" ></frontend-lb-nx-event-overview>
+    </div>
+
 
 </div>
 <app-loading-overlay [externInput]="true" [pulsing]="false" *ngIf="(store.vm$ | async)?.isLoading" @inOutAnimation>

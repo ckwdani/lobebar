@@ -26,6 +26,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 import { LoadingOverlayComponent } from './animations/components/loading-overlay/loading-overlay.component';
 import { MatDialogModule } from '@angular/material/dialog';
 import { FancyCircleLoaderComponent } from './animations/components/fancy-circle-loader/fancy-circle-loader.component';
+import { AddShiftComponent } from './components/event-overview/add-shift/add-shift.component';
 
 @NgModule({
   imports: [
@@ -58,6 +59,7 @@ import { FancyCircleLoaderComponent } from './animations/components/fancy-circle
     RegisterComponent,
     SmallLoadingAnimationComponent,
     FancyCircleLoaderComponent,
+    AddShiftComponent,
   ],
   exports: [
     SingleFormDialogComponent,
