@@ -41,6 +41,9 @@ export class SingleEventStore extends ComponentStore<SingleEventState> {
         showAddShift: !state.showAddShift,
     }));
 
+    // select missing persons to fill up shifts
+
+
 
 
   // updater to set error

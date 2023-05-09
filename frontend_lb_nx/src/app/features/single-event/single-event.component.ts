@@ -23,6 +23,8 @@ export class SingleEventComponent implements OnInit{
     }
 
 
+
+
     ngOnInit() {
         registerLocaleData(localeDe);
     }
