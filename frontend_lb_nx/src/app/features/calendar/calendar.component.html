@@ -8,20 +8,35 @@
         <div class="cal-cell-top">
             <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
             <span class="cal-day-number">
-            {{ day.date | calendarDate:'monthViewDayNumber':locale }}
+                {{ day.date | calendarDate:'monthViewDayNumber':locale }}
         </span>
         </div>
-        <small style="margin: 5px" [ngClass]="checkEventStatus(day.events![0]??0 !== 0 ? day.events![0].meta : undefined)">
-            {{ day.events![0]??0 !== 0 ? day.events![0].title : "" }}</small>
+    <a  class="mt-2 text-center text-blue-50" *ngFor="let event of day.events" routerLink="/singleevent/{{event.meta.id}}"><small class="w-full block" [ngClass]="checkEventStatus(event.meta)">{{ event.title }}</small></a>
+    <div class="flex w-full justify-center">
+                    <span class=""><a class="inline" routerLink="/event_add/">
+                <button mat-icon-button  class="inline text-blue-500" style="opacity: 0.5">
+                    <mat-icon>add</mat-icon>
+                </button>
+            </a></span>
+    </div>
 </ng-template>
 
 <ng-template #nrtw let-day="events"  let-open="isOpen">
-    <mat-expansion-panel [expanded]="open">
-        <div *ngFor="let ev of day">
-                    {{ev.title}}
-                    {{ev.start | date:'shortTime'}}
+    <mat-expansion-panel [expanded]="open" >
 
-            <p>{{ev.meta.shifts.length}}</p>
+        <div class="flex flex-row">
+            <div *ngFor="let ev of day" class="m-4 p-4 border border-orange-500 w-max">
+                Veranstaltung <span class="text-orange-500">{{ev.title}}</span> findet am: <span class="text-orange-500">{{ev.start | date:'dd. MMMM yyyy \'um\' HH:mm':'de-DE'}}</span> statt. <br>
+                Es fehlen noch <span
+                    [ngClass]="OrgEventClass.getMissingPersons(ev.meta) > 1? 'text-red-600' : 'text-green-600'">{{OrgEventClass.getMissingPersons(ev.meta)}}</span>
+                Personen für Schichten. <br>
+                Du übernimmst {{OrgEventClass.userShiftsCount(ev.meta, ($user | async)?.id ?? "")}} Schicht(en). <br>
+                <a routerLink="/singleevent/{{ev.meta.id}}">
+                    <button mat-flat-button color="accent">Veranstaltungsübersicht
+                        <mat-icon>open_in_new</mat-icon>
+                    </button>
+                </a>
+            </div>
         </div>
     </mat-expansion-panel>
 

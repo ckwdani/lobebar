@@ -1,18 +1,19 @@
-import { Component } from '@angular/core';
+import {Component, LOCALE_ID} from '@angular/core';
 // eslint-disable-next-line @nrwl/nx/enforce-module-boundaries
 import {CalendarEvent, CalendarView} from "angular-calendar";
-import {OrgEvent, Shift, ShiftType, User} from "@frontend-lb-nx/shared/entities";
+import {OrgEvent, OrgEventClass, Shift, ShiftType, User} from "@frontend-lb-nx/shared/entities";
 import {
   isSameDay,
   isSameMonth,
 } from 'date-fns';
 import {Store} from "@ngrx/store";
-import {selectOrgEvents} from "@frontend-lb-nx/shared/services";
+import {selectOrgEvents, selectUser} from "@frontend-lb-nx/shared/services";
 
 @Component({
   selector: 'frontend-lb-nx-calendar',
   templateUrl: './calendar.component.html',
   styleUrls: ['./calendar.component.scss'],
+  providers: []
 })
 export class CalendarComponent {
   view: CalendarView = CalendarView.Month;
@@ -20,6 +21,7 @@ export class CalendarComponent {
   activeDayIsOpen = true;
 
   $orgEvents = this.store.select(selectOrgEvents)
+  $user = this.store.select(selectUser)
 
   viewDate: Date = new Date()
 
@@ -39,7 +41,7 @@ export class CalendarComponent {
         title: orgEv.name,
         start: new Date(orgEv.start),
         actions: [],
-        meta: orgEv,
+        meta: orgEv as OrgEventClass,
         color: {
         primary: '#FAE3E3',
             secondary: '#FAE3E3',
@@ -100,4 +102,6 @@ export class CalendarComponent {
   }
   constructor(private store: Store) {
   }
+
+  protected readonly OrgEventClass = OrgEventClass;
 }
