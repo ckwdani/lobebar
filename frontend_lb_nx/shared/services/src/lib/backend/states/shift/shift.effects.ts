@@ -4,6 +4,7 @@ import {catchError, concatMap, map, switchMap} from 'rxjs/operators';
 import {Observable, EMPTY, of} from 'rxjs';
 import * as ShiftActions from './shift.actions';
 import {ShiftsBackendService} from "@frontend-lb-nx/shared/services";
+import {addMonthsToDate, dateToUnix} from "../../../../../../../src/app/core/utils/date-functions";
 
 @Injectable()
 export class ShiftEffects {
@@ -13,7 +14,7 @@ export class ShiftEffects {
     return this.actions$.pipe(
         ofType(ShiftActions.loadOwnShifts),
         switchMap(( ) =>
-            this.shiftsService.getShiftsUser(1683116736, 1704067200, "3d66860a-76d5-4019-a258-967e64856aab").pipe(
+            this.shiftsService.getShiftsUser(dateToUnix(new Date()), dateToUnix(addMonthsToDate(new Date(), 3)), "3d66860a-76d5-4019-a258-967e64856aab").pipe(
                 map((shifts) => {
                   return ShiftActions.loadOwnShiftsSuccess({ownShifts: shifts})
                 }),
@@ -25,7 +26,7 @@ export class ShiftEffects {
         return this.actions$.pipe(
             ofType(ShiftActions.loadOutstandingShifts),
             switchMap(( ) =>
-                this.shiftsService.getOutstandingShifts("3d66860a-76d5-4019-a258-967e64856aab",1683116736, 1704067200).pipe(
+                this.shiftsService.getOutstandingShifts("3d66860a-76d5-4019-a258-967e64856aab", dateToUnix(new Date()), dateToUnix(addMonthsToDate(new Date(), 3))).pipe(
                     map((shifts) => {
                         return ShiftActions.loadOutstandingShiftsSuccess({outstandingShifts: shifts})
                     }),

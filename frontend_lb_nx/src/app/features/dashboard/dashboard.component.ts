@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import {selectLoggedIn, selectUser, selectUserLoaded} from "@frontend-lb-nx/shared/services";
+import {selectLoggedIn, selectOutstandingShifts, selectUser, selectUserLoaded} from "@frontend-lb-nx/shared/services";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {Store} from "@ngrx/store";
 import {tap} from "rxjs";
@@ -11,6 +11,7 @@ import {tap} from "rxjs";
 })
 export class DashboardComponent {
   $userNameObs= this.store.select(selectUser)
+  $outStandingShiftsObs = this.store.select(selectOutstandingShifts)
       //.pipe(tap(user => console.log(user)));
 
   constructor(private store:Store) {

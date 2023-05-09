@@ -3,7 +3,13 @@ import {OrgEvent, Shift, ShiftType, User} from "@frontend-lb-nx/shared/entities"
 import { EventsOverviewStore } from './events-overview.store';
 import {Observable, of} from "rxjs";
 import {Store} from "@ngrx/store";
-import {loadOrgEvents, selectOrgEvents, selectOrgEventsState, selectOwnShifts} from "@frontend-lb-nx/shared/services";
+import {
+  loadOrgEvents,
+  selectOrgEvents,
+  selectOrgEventsState,
+  selectOutstandingShifts,
+  selectOwnShifts
+} from "@frontend-lb-nx/shared/services";
 
 @Component({
   selector: 'frontend-lb-nx-events-overview',
@@ -18,6 +24,7 @@ export class EventsOverviewComponent {
   previousShifts$ = this.eventsOverviewStore.previousShifts$
 
   $ownShiftsObs= this.store.select(selectOwnShifts)
+  //$outStandingShiftsObs = this.store.select(selectOutstandingShifts)
 
 
   $orgEventsObs= this.store.select(selectOrgEvents)

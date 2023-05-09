@@ -1,3 +1,7 @@
+<div *ngIf="shifts.length<=0">
+    <p class="text-center">Keine Schichten vorhanden.</p>
+</div>
+<div *ngIf="shifts.length>0">
 <table mat-table [dataSource]="shifts" class="mat-elevation-z8 ">
 
     <!--- Note that these columns can be defined in any order.
@@ -41,3 +45,4 @@
     <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
     <tr mat-row *matRowDef="let row; columns: displayedColumns;" [ngClass]="checkNumPersons(row)"></tr>
 </table>
+</div>

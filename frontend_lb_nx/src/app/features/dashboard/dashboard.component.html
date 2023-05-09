@@ -16,6 +16,8 @@
     <br>
     <div class="text-center">
         <p class="accent-red-500">Achtung! Es werden noch Personen für folgende Schicht(en) benötigt:</p>
+        <br>
+        <frontend-lb-nx-shift-table [shifts]="($outStandingShiftsObs|async)!"></frontend-lb-nx-shift-table>
     </div>
 </div>
 
