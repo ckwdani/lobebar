@@ -1,5 +1,5 @@
 <div>
-    <h1 class="underline">{{(orgEvent | async)?.name}}{{" "}}{{(orgEvent | async)?.start | date: 'dd.MM.yyyy, HH:mm'}}{{" - "}}{{(orgEvent | async)?.end | date: 'HH:mm'}}</h1>
+    <h2 class="underline text-2xl">{{(orgEvent | async)?.name}}{{" "}}{{(orgEvent | async)?.start | date: 'dd.MM.yyyy, HH:mm'}}{{" - "}}{{(orgEvent | async)?.end | date: 'HH:mm'}}</h2>
     <div *ngIf="showAddShift">
     <form>
         <mat-form-field appearance="fill">

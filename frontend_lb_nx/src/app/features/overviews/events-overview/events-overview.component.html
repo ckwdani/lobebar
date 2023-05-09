@@ -6,6 +6,7 @@
         </div>
         <br>
             <div *ngFor="let elem of ($orgEventsObs | async)">
+                <a href="singleevent/{{elem.id}}">{{elem.name}}</a>
                 <frontend-lb-nx-event-overview [shifts]="of(elem.shifts??[])" [orgEvent]="of(elem)" ></frontend-lb-nx-event-overview>
             </div>
     </mat-tab>

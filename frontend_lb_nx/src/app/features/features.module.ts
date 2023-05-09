@@ -28,10 +28,12 @@ import { SharedServicesModule } from '@frontend-lb-nx/shared/services';
 import { EventAddStore } from './event-add/event-add-store.store';
 import { ShiftType_DoneEW_AddComponentDialog } from '../core/components/dialogs/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
-import {ShiftTypesOverviewComponent} from "./overviews/shift-types-overview/shift-types-overview.component";
-import {UsersOverviewStore} from "./overviews/users-overview/users-overview.store";
-import {MatDialogModule} from "@angular/material/dialog";
-import {MatExpansionModule} from "@angular/material/expansion";
+import { ShiftTypesOverviewComponent } from './overviews/shift-types-overview/shift-types-overview.component';
+import { UsersOverviewStore } from './overviews/users-overview/users-overview.store';
+import { MatDialogModule } from '@angular/material/dialog';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { SingleEventComponent } from './single-event/single-event.component';
+import { SingleEventStore } from './single-event/single-event.store';
 
 @NgModule({
   declarations: [
@@ -46,6 +48,7 @@ import {MatExpansionModule} from "@angular/material/expansion";
     EventAddComponent,
     ShiftType_DoneEW_AddComponentDialog,
     ShiftTypesOverviewComponent,
+    SingleEventComponent,
   ],
   exports: [DashboardComponent, OwnUserOverviewComponent],
   imports: [
@@ -70,7 +73,10 @@ import {MatExpansionModule} from "@angular/material/expansion";
     ReactiveFormsModule,
     MatExpansionModule,
   ],
-  providers: [EventsOverviewStore, UsersOverviewStore
+  providers: [
+    EventsOverviewStore,
+    UsersOverviewStore,
+    SingleEventStore,
     // ShiftTypeAddStore
   ],
 })

@@ -10,6 +10,10 @@ export class LoadingOverlayComponent implements OnInit {
   @Input() isContainer = false;
   @Input() withRadius = false;
   @Input() withNavigation = true;
+
+  @Input() externInput = false;
+  @Input() pulsing = true;
+
   constructor() { }
 
   ngOnInit(): void {

@@ -10,6 +10,7 @@ import {EventAddComponent} from "./features/event-add/event-add.component";
 import {LoginComponent} from "../../shared/ui/src/lib/components/login/login.component";
 import {ShiftType_DoneEW_AddComponentDialog} from "./core/components/dialogs/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component";
 import {ShiftTypesOverviewComponent} from "./features/overviews/shift-types-overview/shift-types-overview.component";
+import {SingleEventComponent} from "./features/single-event/single-event.component";
 
 export const appRoutes: Route[] = [
     {path: 'login', component: LoginComponent},
@@ -22,5 +23,7 @@ export const appRoutes: Route[] = [
     {path: 'points', component: PointsComponent},
     {path: 'event_add', component: EventAddComponent},
     {path: 'shift_add', component: ShiftType_DoneEW_AddComponentDialog},
-    {path: 'shift_types', component: ShiftTypesOverviewComponent}
+    {path: 'shift_types', component: ShiftTypesOverviewComponent},
+    // reoute to singleEventComponent with id
+    {path: 'singleevent/:id', component: SingleEventComponent},
 ];
