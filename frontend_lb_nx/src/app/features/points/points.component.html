@@ -10,7 +10,11 @@
             <p>Deine Punkte: {{($userObs | async)?.xPScore}}</p>
         </div>
 
-        <p>Errungenschaften:</p>
+        <div class="flex-col">
+            <p>Errungenschaften:</p>
+            <br>
+            <frontend-lb-nx-achievements-overview></frontend-lb-nx-achievements-overview>
+        </div>
         <p>Nächste Errungenschaften:</p>
     </div>
     <br>

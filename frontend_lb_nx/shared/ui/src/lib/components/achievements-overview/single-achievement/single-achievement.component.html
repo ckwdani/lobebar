@@ -1,0 +1,7 @@
+<div *ngIf="achievement!==undefined">
+    <div [style.opacity]="achievement!.achieved ? '1' : '0.2'">
+        <p class="italic">{{achievement?.title}}</p>
+        <img class="h-12 w-12" [src]="achievement!.imageUrl" [matTooltip]="achievement!.description">
+    </div>
+</div>
+
