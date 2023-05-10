@@ -13,6 +13,7 @@ import {
 } from "@frontend-lb-nx/shared/services";
 import {loadShiftTypes} from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
 import * as AuthActions from "../../../../../shared/services/src/lib/backend/states/auth/auth.actions";
+import {UserFunctions, UserRoles} from "@frontend-lb-nx/shared/entities";
 
 @Component({
   selector: 'frontend-lb-nx-navigation',
@@ -33,7 +34,7 @@ export class NavigationComponent implements AfterViewInit{
   $userLoaded = this.store.select(selectUserLoaded).pipe(first());
   $shiftTypesLoaded = this.store.select(selectSuccess).pipe(first());
   $loggedInUser = this.store.select(selectUser);
-  $roleUser = this.store.select(selectUserRole);
+  $roleUser = this.store.select(selectUser).pipe(map(next=> (next??0 !== 0) ? UserFunctions.getRole(next!) : next));
 
   constructor(private breakpointObserver: BreakpointObserver, private store:Store) {
     this.$roleUser.subscribe(next=>{
@@ -62,4 +63,6 @@ export class NavigationComponent implements AfterViewInit{
     console.log("login logout")
     this.store.dispatch(AuthActions.logout());
   }
+
+  protected readonly UserRoles = UserRoles;
 }

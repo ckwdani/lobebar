@@ -12,6 +12,7 @@ h3 {
 
 @tailwind components;
 @tailwind utilities;
+@import "src/app/core/styles/table_responsive_styles";
 
 .mdc-notched-outline__notch
 {
@@ -29,3 +30,9 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   align-items: center;
   height: 100%;
 }
+
+
+
+
+
+

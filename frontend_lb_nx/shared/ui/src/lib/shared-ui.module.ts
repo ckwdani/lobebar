@@ -30,9 +30,10 @@ import { AddShiftComponent } from './components/event-overview/add-shift/add-shi
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CountdownComponent } from './components/countdown/countdown.component';
 import {RouterLink} from "@angular/router";
-import { MatExpansionModule } from '@angular/material/expansion';
 import { AchievementsOverviewComponent } from './components/achievements-overview/achievements-overview.component';
 import { SingleAchievementComponent } from './components/achievements-overview/single-achievement/single-achievement.component';
+import {SharedDirectivesModule} from "@frontend-lb-nx/shared/directives";
+import {MatSortModule} from "@angular/material/sort";
 
 @NgModule({
   imports: [
@@ -54,7 +55,8 @@ import { SingleAchievementComponent } from './components/achievements-overview/s
     ReactiveFormsModule,
     MatProgressBarModule,
     MatDialogModule,
-    MatExpansionModule,        RouterLink,
+    MatExpansionModule, RouterLink,
+    SharedDirectivesModule, MatSortModule
   ],
   declarations: [
     SingleFormDialogComponent,

@@ -2,6 +2,7 @@ import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
 import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
+import {MatSort} from "@angular/material/sort";
 
 @Component({
   selector: 'app-simple-table',
@@ -26,6 +27,8 @@ export class SimpleTableComponent<E> implements OnInit, OnChanges, AfterViewInit
 
   @Input() convert?: (element: E) => string;
   @Input() loading = false;
+
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   /**
    * caption over the table
@@ -57,6 +60,7 @@ export class SimpleTableComponent<E> implements OnInit, OnChanges, AfterViewInit
   displayedColumns: string[] = [this.elementString, this.actionsString];
 
   constructor() {
+    this.sort = this.state.elementsDatasource.sort!;
 
   }
 
@@ -75,6 +79,7 @@ export class SimpleTableComponent<E> implements OnInit, OnChanges, AfterViewInit
 
 
   ngAfterViewInit(): void {
+
     if (this.paginator !== undefined) {
       this.state.elementsDatasource.paginator = this.paginator;
     }

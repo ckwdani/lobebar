@@ -11,12 +11,12 @@
           <a mat-list-item routerLink="/dashboard">Dashboard</a>
           <mat-divider></mat-divider>
           <a mat-list-item routerLink="/user_overview">Nutzer</a>
-          <a *ngSwitchCase="'ROLE_ADMIN'" mat-list-item routerLink="/users_overview">Alle Nutzer</a>
+          <a *ngSwitchCase="UserRoles.ADMIN" mat-list-item routerLink="/users_overview">Alle Nutzer</a>
           <mat-divider></mat-divider>
-          <a *ngSwitchCase="'ROLE_ADMIN'||'ROLE_MOD'" mat-list-item routerLink="/shift_add">Schichten erstellen</a>
+          <a *ngSwitchCase="UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/shift_add">Schichten erstellen</a>
           <a mat-list-item routerLink="/event_overview">Veranstaltungen</a>
           <a mat-list-item routerLink="/calendar">Kalender</a>
-          <a *ngSwitchCase="'ROLE_ADMIN'||'ROLE_MOD'" mat-list-item routerLink="/shift_types">ShiftTypes</a>
+          <a *ngSwitchCase="UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/shift_types">ShiftTypes</a>
           <mat-divider></mat-divider>
           <a mat-list-item routerLink="/points">Punkte</a>
           <a mat-list-item (click)="logout()">Logout</a>

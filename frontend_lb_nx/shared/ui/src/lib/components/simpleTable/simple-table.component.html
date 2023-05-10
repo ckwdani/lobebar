@@ -5,7 +5,7 @@
     </div>
     <div id="tableContainer">
       <mat-progress-bar *ngIf="loading" class="w-full" mode="buffer"></mat-progress-bar>
-      <table mat-table [dataSource]="state.elementsDatasource" class="mat-elevation-z8 demo-table">
+      <table mat-table  matSort frontendLbNxMatTableResponsiveDirective [dataSource]="state.elementsDatasource" class="mat-elevation-z8 demo-table">
 
         <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->

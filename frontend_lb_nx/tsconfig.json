@@ -6,7 +6,10 @@
     "noImplicitOverride": true,
     "noPropertyAccessFromIndexSignature": true,
     "noImplicitReturns": true,
-    "noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "lib": [     "es2022",
+      "dom",
+      "DOM.Iterable"]
   },
   "files": [],
   "include": [],

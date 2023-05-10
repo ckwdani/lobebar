@@ -15,6 +15,7 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
+      "@frontend-lb-nx/shared/directives": ["shared/directives/src/index.ts"],
       "@frontend-lb-nx/shared/entities": ["shared/entities/src/index.ts"],
       "@frontend-lb-nx/shared/pipes": ["shared/pipes/src/index.ts"],
       "@frontend-lb-nx/shared/services": ["shared/services/src/index.ts"],
