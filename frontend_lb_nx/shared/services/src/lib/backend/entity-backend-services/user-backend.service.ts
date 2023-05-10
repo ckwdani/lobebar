@@ -23,4 +23,8 @@ export class UserBackendService extends BaseCommunicatorService<User>{
     approveUser(user: User): Observable<User> {
     return super.put(BACKENDPATHS.approveUser+'/'+user.id, user)
     }
+
+    updateAchievement(user: User): Observable<User>{
+    return super.post(BACKENDPATHS.postAchievement+'/'+user.id, user)
+    }
 }

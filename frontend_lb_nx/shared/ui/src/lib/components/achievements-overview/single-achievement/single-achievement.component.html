@@ -2,7 +2,7 @@
     <div [style.opacity]="achievement!.achieved ? '1' : '0.2'">
         <p class="italic text-xs">{{achievement!.title}}</p>
         <div class="container">
-            <img class="h-12 w-12" [src]="achievement!.imageUrl" [matTooltip]="achievement!.description">
+            <img [style.border]="achievement!.selected ? 'dashed red' : ''" class="h-12 w-12" [src]="achievement!.imageUrl" [matTooltip]="achievement!.description">
             <div *ngIf="achievement?.extraString" class="text-overlay" [matTooltip]="achievement!.description">
                 {{achievement!.extraString}}
             </div>

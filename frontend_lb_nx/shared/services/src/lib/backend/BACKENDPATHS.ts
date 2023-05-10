@@ -35,6 +35,9 @@ export class BACKENDPATHS{
     static readonly app_doneEwtrawork_updateNam =          this.baseApiUrl + "/mod_api/ew_types/updatetype/"
 
 
+    // Achievement
+    static readonly postAchievement = this.baseApiUrl+ "/achievement"
+
 
 
 

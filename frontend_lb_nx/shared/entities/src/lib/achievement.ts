@@ -4,6 +4,7 @@ export interface Achievement {
     imageUrl: string,
     achieved: boolean,
     extraString?: string,
+    selected: boolean
 }
 
 export interface AchievementBackend{
@@ -18,8 +19,9 @@ export class AchievementStreak implements Achievement{
     extraString?: string;
     imageUrl= "assets/trophy-48.png";
     title= "Streak";
+    selected = false
 
-    constructor(b: boolean, s?: string) {
+    constructor(selected: boolean,b: boolean, s?: string) {
         this.achieved = b
         if(s!=undefined){
             this.description= "Du hast in "+ s +" hintereinander folgenden Monaten, Schichten übernommen."
@@ -27,6 +29,7 @@ export class AchievementStreak implements Achievement{
             this.description= "Absolviere eine Schicht pro Monat um eine Streak aufzubauen."
         }
         this.extraString=s
+        this.selected=selected
     }
 }
 
@@ -36,7 +39,8 @@ export class AchievementSchichtenAnzahl implements Achievement{
     extraString?: string;
     imageUrl= "assets/stern-64.png";
     title= "Schichten";
-    constructor(b: boolean, s?: string) {
+    selected = false
+    constructor(selected:boolean ,b: boolean, s?: string) {
         this.achieved = b
         if(s!=undefined){
             this.description= "Du hast "+ s +" Schichten übernommen."
@@ -44,5 +48,6 @@ export class AchievementSchichtenAnzahl implements Achievement{
             this.description= "Absolviere deine erste Schicht um dieses Achievement zu erhalten."
         }
         this.extraString=s
+        this.selected=selected
     }
 }
