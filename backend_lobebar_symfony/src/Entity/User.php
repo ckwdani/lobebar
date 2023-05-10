@@ -105,10 +105,33 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
         })->reduce(function ($carry, $value) {
                 return $carry + $value;
             }, 0);
-        $negative =  (int) $this->snacksUsed->map(function (SnackUsed $snackUsed) {return $snackUsed->getSnackType()->getValue();})->reduce(function ($carry, $value) {
+        $negative =  $this->getNegativeBalance();
+        return $positive - $negative;
+    }
+
+    public function getNegativeBalance(): int{
+        return $negative =  (int) $this->snacksUsed->map(function (SnackUsed $snackUsed) {return $snackUsed->getSnackType()->getValue();})->reduce(function ($carry, $value) {
             return $carry + $value;
         }, 0);
-        return $positive - $negative;
+    }
+
+    #[Serializer\VirtualProperty(name: "achievements")]
+    //#[Serializer\Groups(groups: ["list", "details"])]
+    public function getAchievements(): array
+    {
+        $achievementsData= [];
+        $shiftsScore = $this->shifts->count();
+        $negativeBalance =$this->getNegativeBalance();
+        //shifts count für zeitraum fetchen oder immer 1 pro monat shiftstreak
+        $shiftStreak = $this->getShiftStreak();
+
+        $data = [
+            'shiftsScore' => $shiftsScore,
+            'negativeBalance' => $negativeBalance,
+            'shiftStreak' => $shiftStreak,
+        ];
+
+        return $achievementsData;
     }
 
 
@@ -336,4 +359,54 @@ public function removeResetCode(ResetCode $resetCode): self
 
     return $this;
 }
+
+//---------------------------------------------------shift streak------------------------------------------------------------------
+    private function hasShiftsInMonth(string $month, array $shifts): bool
+    {
+        $hasShifts = false;
+
+        foreach ($shifts as $shift) {
+            if ($shift->getStarttime()->format('Y-m') === $month) {
+                $hasShifts = true;
+                break;
+            }
+        }
+
+        return $hasShifts;
+    }
+    public function getShiftStreak(): int
+    {
+        $shifts = $this->shifts->toArray();
+
+        // Sort shifts by date in ascending order
+        usort($shifts, function ($a, $b) {
+            return $a->getStarttime() <=> $b->getStarttime();
+        });
+
+        $currentMonth = null;
+        $previousMonth = null;
+        $streakCount = 0;
+
+        foreach ($shifts as $shift) {
+            $currentMonth = $shift->getStarttime()->format('Y-m');
+
+            // Check if the current shift belongs to a new month
+            if ($currentMonth !== $previousMonth) {
+                // Check if there was at least one shift in the previous month
+                if ($previousMonth !== null && !$this->hasShiftsInMonth($previousMonth, $shifts)) {
+                    break;
+                }
+                $streakCount++;
+            }
+
+            $previousMonth = $currentMonth;
+        }
+
+        // Check if there was at least one shift in the last month
+        if ($previousMonth !== null && !$this->hasShiftsInMonth($previousMonth, $shifts)) {
+            $streakCount--;
+        }
+
+        return ($streakCount > 0) ? $streakCount : 0;
+    }
 }
