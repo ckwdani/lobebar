@@ -6,9 +6,25 @@ export const loadOrgEvents = createAction(
     '[OrgEvents] Load OrgEvents'
 );
 
+export const loadMoreFromPast = createAction(
+    '[OrgEvents] Load Mo Past OrgEvents',
+    props<{months: number}>()
+);
+
+export const loadMoreFromFuture = createAction(
+    '[OrgEvents] Load More Future OrgEvents',
+    props<{months: number}>()
+);
+
+export const loadMoreSuccess= createAction(
+    '[OrgEvents] Load More Success',
+    props<{orgEvents: OrgEvent[], months: number}>()
+);
+
+
 export const loadOrgEventsSuccess = createAction(
     '[OrgEvents] Load OrgEvents Success',
-    props<{ orgEvents: OrgEvent[] }>()
+    props<{ orgEventsPast: OrgEvent[], orgEventsFuture: OrgEvent[]  }>()
 );
 
 export const loadOrgEventsFailure = createAction(

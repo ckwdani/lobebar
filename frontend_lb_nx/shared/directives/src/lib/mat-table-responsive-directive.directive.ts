@@ -1,6 +1,7 @@
 import {AfterViewInit, Directive, ElementRef, OnDestroy, OnInit, Renderer2} from '@angular/core';
 import {BehaviorSubject, combineLatest, map, mapTo, Subject, takeUntil, tap} from "rxjs";
 
+
 @Directive({
   selector: '[frontendLbNxMatTableResponsiveDirective]'
 })
@@ -44,6 +45,7 @@ export class MatTableResponsiveDirective implements OnInit, AfterViewInit, OnDes
       this.tbodyObserver.observe(this.tbody!, { childList: true });
 
 
+
       /**
      * Set the "data-column-name" attribute for every body row cell, either on
      * thead row changes (e.g. language changes) or tbody rows changes (add, delete).
@@ -52,10 +54,12 @@ export class MatTableResponsiveDirective implements OnInit, AfterViewInit, OnDes
         .pipe(
             mapTo({ headRow: this.thead!.rows.item(0)!, bodyRows: this.tbody!.rows }),
             map(({ headRow, bodyRows }) => ({
+                // @ts-ignore
               columnNames: [...headRow.children].map(
                   // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                   headerCell => headerCell.textContent!
               ),
+                // @ts-ignore
               rows: [...bodyRows].map(row => [...row.children])
             })),
             takeUntil(this.onDestroy$)

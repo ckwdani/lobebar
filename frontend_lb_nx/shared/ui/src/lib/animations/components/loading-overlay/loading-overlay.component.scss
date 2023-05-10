@@ -35,6 +35,21 @@
   margin-left: 0;
 }
 
+.deleteOverlay{
+  top: 0;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  position: absolute;
+  z-index: 4;
+}
+
+
+//.contentOverlay{
+//  padding-left: 5vw;
+//  padding-right: 5vw;
+//}
+
 
 .containerOverlay {
 

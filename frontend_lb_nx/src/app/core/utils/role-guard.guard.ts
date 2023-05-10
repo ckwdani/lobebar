@@ -18,7 +18,7 @@ export class AuthGuard implements CanActivate{
         return true;
       }
       console.log(route.routeConfig?.path)
-      if(environment.production){
+      if(!environment.production){
         return new Observable();
       }
       switch (route.routeConfig?.path) {

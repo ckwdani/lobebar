@@ -7,8 +7,14 @@ export const selectOrgEventsState = createFeatureSelector<fromOrgEvents.OrgEvent
 
 export const selectOrgEvents = createSelector(
     selectOrgEventsState,
+    (state: fromOrgEvents.OrgEventsState)=>[...state.pastEvents, ...state.comingEvents]
+)
+
+export const selectCommingOrgEvents = createSelector(
+    selectOrgEventsState,
     (state: fromOrgEvents.OrgEventsState)=>state.comingEvents
 )
+
 
 export const selectOrgEventsLoading = createSelector(
     selectOrgEventsState,

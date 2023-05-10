@@ -7,7 +7,15 @@ import {
   isSameMonth,
 } from 'date-fns';
 import {Store} from "@ngrx/store";
-import {selectOrgEvents, selectUser} from "@frontend-lb-nx/shared/services";
+import {
+  loadMoreFromFuture,
+  loadMoreFromPast,
+  selectOrgEvents,
+  selectOrgEventsState,
+  selectUser
+} from "@frontend-lb-nx/shared/services";
+import {map} from "rxjs/operators";
+import {take} from "rxjs";
 
 @Component({
   selector: 'frontend-lb-nx-calendar',
@@ -21,6 +29,7 @@ export class CalendarComponent {
   activeDayIsOpen = true;
 
   $orgEvents = this.store.select(selectOrgEvents)
+  $eventState = this.store.select(selectOrgEventsState)
   $user = this.store.select(selectUser)
 
   viewDate: Date = new Date()
@@ -55,6 +64,26 @@ export class CalendarComponent {
 
   checker($event :any){
     console.log($event)
+  }
+
+  dateChanged($event: Date){
+    // reset date to the first of the month
+    const testDate = new Date($event.getFullYear(), $event.getMonth()-1, 1)
+    // get timestamp from date
+    const timestamp = Math.floor(testDate.getTime() / 1000)
+    this.$eventState.pipe(map((state) => [state.lowerTimestamp, state.higherTimestamp]), take(1)).subscribe((timestamps) => {
+      // check if timestamp is smaller than the lower timestamp minus two months
+        if(timestamp < timestamps[0] + 60*60*24*30*2){
+          // dispatch action to load past events
+            this.store.dispatch(loadMoreFromPast({months: 6}))
+        }
+        // check if timestamp is bigger than the higher timestamp plus three months
+        if(timestamp > timestamps[1] - 60*60*24*30*3){
+          // dispatch action to load past events
+          this.store.dispatch(loadMoreFromFuture({months: 9}))
+        }
+    })
+
   }
 
 

@@ -1,4 +1,4 @@
-<frontend-lb-nx-calendar-header [(viewDate)]="viewDate" ></frontend-lb-nx-calendar-header>
+<frontend-lb-nx-calendar-header [(viewDate)]="viewDate" (viewDateChange)="dateChanged($event)"></frontend-lb-nx-calendar-header>
 <mwl-calendar-month-view class="text-black"
             [viewDate]="viewDate"
             [events]="genCalenderEvents((this.$orgEvents | async)??[])" [cellTemplate]="customCellTemplate" [activeDayIsOpen]="activeDayIsOpen"   [openDayEventsTemplate]="nrtw" (dayClicked)="dayClicked($event.day)">
@@ -24,7 +24,7 @@
 <ng-template #nrtw let-day="events"  let-open="isOpen">
     <mat-expansion-panel [expanded]="open" >
 
-        <div class="flex flex-row">
+        <div class="flex flex-row flex-wrap">
             <div *ngFor="let ev of day" class="m-4 p-4 border border-orange-500 w-max">
                 Veranstaltung <span class="text-orange-500">{{ev.title}}</span> findet am: <span class="text-orange-500">{{ev.start | date:'dd. MMMM yyyy \'um\' HH:mm':'de-DE'}}</span> statt. <br>
                 Es fehlen noch <span
