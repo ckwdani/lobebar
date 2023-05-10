@@ -73,6 +73,7 @@ class RegisterComponentState {
     titel: '',
     hygienepass: false,
     telephone: "+49",
+    achievements:undefined,
     roles: [],
     xPScore: 0,
     balance: 0,

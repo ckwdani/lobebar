@@ -1,3 +1,5 @@
+import {AchievementBackend} from "./achievement";
+
 export interface User{
     id?: string,
     username: string,
@@ -10,6 +12,7 @@ export interface User{
     titel: string,
     hygienepass: boolean,
     telephone: string,
+    achievements?: AchievementBackend,
 
     xPScore?: number,
     balance?: number,

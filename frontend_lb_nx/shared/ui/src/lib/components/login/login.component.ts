@@ -72,6 +72,7 @@ class LoginComponenState {
     lastname: '',
     titel: '',
     hygienepass: false,
+    achievements:undefined,
     telephone: "",
     roles: [],
   };
