@@ -3,6 +3,7 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTre
 import {first, Observable} from 'rxjs';
 import {selectUserRole} from "@frontend-lb-nx/shared/services";
 import {Store} from "@ngrx/store";
+import {environment} from "../../../environments/environment";
 
 @Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate{
@@ -17,6 +18,9 @@ export class AuthGuard implements CanActivate{
         return true;
       }
       console.log(route.routeConfig?.path)
+      if(environment.production){
+        return new Observable();
+      }
       switch (route.routeConfig?.path) {
         case "users_overview":
           this.router.navigate(['user_overview']);
@@ -35,6 +39,7 @@ export class AuthGuard implements CanActivate{
           return false;
       }
     })
+
     return new Observable<any>((observer)=>{
       observer.next()
     })

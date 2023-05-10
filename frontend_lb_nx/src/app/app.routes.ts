@@ -25,7 +25,7 @@ export const appRoutes: Route[] = [
     {path: 'calendar', component: CalendarComponent},
     {path: 'points', component: PointsComponent},
     {path: 'event_add', component: EventAddComponent, canActivate: [AuthGuard]},
-    {path: 'shift_add', component: ShiftType_DoneEW_AddComponentDialog, canActivate: [AuthGuard]},
+    // {path: 'shift_add', component: ShiftType_DoneEW_AddComponentDialog, canActivate: [AuthGuard]},
     {path: 'shift_types', component: ShiftTypesOverviewComponent, canActivate: [AuthGuard]},
     // reoute to singleEventComponent with id
     {path: 'singleevent/:id', component: SingleEventComponent},

@@ -1,6 +1,6 @@
-.contentBodyWithoutWidth{
-  margin-left: 10vw;
-}
+//.contentBodyWithoutWidth{
+//  margin-left: 10vw;
+//}
 
 /*.deleteOverlay{
   top: 0;
@@ -31,6 +31,7 @@
 }
 
 .contentBodyWithoutWidth{
+  z-index: 4;
   margin-left: 0;
 }
 
@@ -38,7 +39,7 @@
 .containerOverlay {
 
   text-align: center;
-  z-index: 3;
+  z-index: 20;
   display: inline-flex;
   justify-content: center;
   color: white;

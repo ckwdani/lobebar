@@ -27,6 +27,6 @@
 
 
 </div>
-<app-loading-overlay [externInput]="true" [pulsing]="false" *ngIf="(store.vm$ | async)?.isLoading" @inOutAnimation>
-    <frontend-lb-nx-fancy-circle-loader></frontend-lb-nx-fancy-circle-loader>
+<app-loading-overlay *ngIf="(store.vm$ | async)?.isLoading || true" @inOutAnimation>
+<!--    <frontend-lb-nx-fancy-circle-loader></frontend-lb-nx-fancy-circle-loader>-->
 </app-loading-overlay>

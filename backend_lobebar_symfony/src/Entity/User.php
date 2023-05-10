@@ -120,7 +120,6 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     //#[Serializer\Groups(groups: ["list", "details"])]
     public function getAchievements(): array
     {
-        $achievementsData= [];
         $shiftsScore = $this->shifts->count();
         $negativeBalance =$this->getNegativeBalance();
         //shifts count für zeitraum fetchen oder immer 1 pro monat shiftstreak
@@ -132,7 +131,7 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
             'shiftStreak' => $shiftStreak,
         ];
 
-        return $achievementsData;
+        return $data;
     }
 
 

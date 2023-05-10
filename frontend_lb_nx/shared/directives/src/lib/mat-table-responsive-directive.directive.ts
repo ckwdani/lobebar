@@ -43,18 +43,17 @@ export class MatTableResponsiveDirective implements OnInit, AfterViewInit, OnDes
       });
       this.tbodyObserver.observe(this.tbody!, { childList: true });
 
-    /**
+
+      /**
      * Set the "data-column-name" attribute for every body row cell, either on
      * thead row changes (e.g. language changes) or tbody rows changes (add, delete).
      */
     combineLatest([this.theadChanged$, this.tbodyChanged$])
         .pipe(
             mapTo({ headRow: this.thead!.rows.item(0)!, bodyRows: this.tbody!.rows }),
-            tap(({ headRow, bodyRows }) => {
-                console.log('headRow', headRow, 'bodyRows', bodyRows);
-            }),
             map(({ headRow, bodyRows }) => ({
               columnNames: [...headRow.children].map(
+                  // eslint-disable-next-line @typescript-eslint/no-non-null-assertion
                   headerCell => headerCell.textContent!
               ),
               rows: [...bodyRows].map(row => [...row.children])

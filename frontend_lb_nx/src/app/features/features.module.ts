@@ -36,14 +36,6 @@ import { SingleEventComponent } from './single-event/single-event.component';
 import { SingleEventStore } from './single-event/single-event.store';
 import {MatDividerModule} from "@angular/material/divider";
 
-import {GermanDateProvider} from "../core/utils/GermanDateAdapter";
-import { de } from 'date-fns/locale';
-import {
-    MAT_MOMENT_DATE_ADAPTER_OPTIONS,
-    MAT_MOMENT_DATE_FORMATS,
-    MomentDateAdapter
-} from "@angular/material-moment-adapter";
-
 // Register the German locale data
 
 @NgModule({
