@@ -3,4 +3,5 @@ export interface Achievement {
     description: string,
     imageUrl: string,
     achieved: boolean,
+    extraString?: string,
 }
