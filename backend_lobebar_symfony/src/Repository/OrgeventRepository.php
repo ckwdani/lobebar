@@ -49,6 +49,7 @@ class OrgeventRepository extends ServiceEntityRepository
                 ->setParameter('start', (new \DateTime())->setTimestamp($start))
                 ->setParameter('end', (new \DateTime())->setTimestamp($end));
         }
+        $qb->orderBy('s.start', 'ASC');
         return $qb->getQuery()->getResult();
     }
 

@@ -26,6 +26,7 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
 
     #[ORM\Column]
     #[ReadOnlyProperty(readOnly: true)]
+    #[Serializer\Accessor(getter: 'getRoles')]
     private array $roles = [];
 
     /**
@@ -164,7 +165,10 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     public function getRoles(): array{
         $roles = $this->roles;
         // guarantee every user at least has ROLE_USER
-        $roles[] = $this->isApproved ? 'ROLE_USER' : 'ROLE_PENDING';
+        if ($this->isApproved){
+
+            $roles[] = 'ROLE_USER';
+        }
 
         return array_unique($roles);
     }
