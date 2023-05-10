@@ -181,4 +181,9 @@ class UserController extends _Base_Controller
             ->context(["username" => $user->getUserName(), "password" => $password]);
         $mailer->send($email);
     }
+
+    #[Route("/achievement/{userId}", methods: ["PUT"])]
+    public function putAchievement(string $userId, Request $request){
+
+    }
 }

@@ -76,6 +76,10 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     #[Exclude]
     private Collection $resetCodes;
 
+    #[ORM\Column(nullable: true)]
+    #[Serializer\Accessor('getAchievementCode')]
+    private ?int $selectedAchievement = null;
+
     public function __construct()
     {
         parent::__construct();
@@ -108,6 +112,18 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
             }, 0);
         $negative =  $this->getNegativeBalance();
         return $positive - $negative;
+    }
+
+    public function getAchievementCode():array|null {
+        $achievementCode = $this->selectedAchievement;
+        if(empty($achievementCode)){
+            return null;
+        }
+        $data = [
+            'achievementCode' => $achievementCode/1000,
+            'extraString' => $achievementCode%1000
+        ];
+        return $data;
     }
 
     public function getNegativeBalance(): int{
@@ -411,5 +427,17 @@ public function removeResetCode(ResetCode $resetCode): self
         }
 
         return ($streakCount > 0) ? $streakCount : 0;
+    }
+
+    public function getSelectedAchievement(): ?int
+    {
+        return $this->selectedAchievement;
+    }
+
+    public function setSelectedAchievement(?int $selectedAchievement): self
+    {
+        $this->selectedAchievement = $selectedAchievement;
+
+        return $this;
     }
 }
