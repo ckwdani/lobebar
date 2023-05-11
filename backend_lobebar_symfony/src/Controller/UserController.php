@@ -186,7 +186,7 @@ class UserController extends _Base_Controller
     public function putAchievement(Request $request){
         $user = $this->getUser();
 
-        $data = $request->getContent();
+        $data = json_decode($request->getContent(), true);
         $achievementCode = $data["achievementCode"];
         $extraString = $data["extraString"];
 

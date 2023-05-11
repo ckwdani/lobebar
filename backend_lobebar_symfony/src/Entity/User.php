@@ -80,7 +80,8 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
      * @var int|null
      */
     #[ORM\Column(nullable: true)]
-    #[Serializer\Accessor(getter: 'getAchievementCode')]
+    #[Serializer\Accessor(getter: 'getAchievementCode', setter: 'doNothing')]
+    #[Serializer\Type("array")]
     private ?int $selectedAchievement = null;
 
     //1001 emils ecke mitglied
@@ -96,7 +97,9 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
         $this->resetCodes = new ArrayCollection();
     }
 
-
+    public function doNothing(){
+        return;
+    }
 
 
 
@@ -127,7 +130,7 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
             return null;
         }
         $data = [
-            'extraString' => $achievementCode/1000,
+            'extraString' => (int)floor($achievementCode/1000),
             'achievementCode' => $achievementCode%1000,
         ];
         return $data;

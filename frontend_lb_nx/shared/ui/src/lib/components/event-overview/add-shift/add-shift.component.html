@@ -1,5 +1,5 @@
 <div class="flex justify-center">
-    <mat-expansion-panel class="outer" [expanded]="(expanded | async)">
+    <mat-expansion-panel class="outer p-4" [expanded]="(expanded | async)">
         <form class="outer">
             <div class="single">
                 <mat-form-field appearance="outline">
@@ -26,23 +26,26 @@
             <div class="duos">
                 <mat-form-field appearance="outline" class="mr-2">
                     <mat-label>Start</mat-label>
-                    <input matInput [matDatetimepicker]="pickerStart" [(ngModel)]="model.starttime"
+                    <input  [readonly]="true" matInput [matDatetimepicker]="pickerStart" [(ngModel)]="model.starttime"
                            [ngModelOptions]="{standalone: true}">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
+<!--                    <mat-hint>MM/DD/YYYY</mat-hint>-->
                     <mat-datetimepicker-toggle matIconSuffix [for]="pickerStart"></mat-datetimepicker-toggle>
                     <mat-datetimepicker #pickerStart type="datetime"></mat-datetimepicker>
                 </mat-form-field>
                 <mat-form-field appearance="outline" class="ml-2">
                     <mat-label>Ende</mat-label>
-                    <input matInput [matDatetimepicker]="pickerEnd" [(ngModel)]="model.endtime"
+                    <input  [readonly]="true" matInput [matDatetimepicker]="pickerEnd" [(ngModel)]="model.endtime"
                            [ngModelOptions]="{standalone: true}">
-                    <mat-hint>MM/DD/YYYY</mat-hint>
+<!--                    <mat-hint>MM/DD/YYYY</mat-hint>-->
                     <mat-datetimepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datetimepicker-toggle>
                     <mat-datetimepicker #pickerEnd type="datetime"></mat-datetimepicker>
                 </mat-form-field>
             </div>
+            <div class="text-red-500" *ngIf="getValidSplitted().startEndInco">Überprüfe bitte ob die Anfangszeit vor der Endzeit liegt</div>
+            <div class="text-red-500" *ngIf="getValidSplitted().eventBoudries">Überprüfe ob die Shichtzeit in der Veranstaltungszeit liegt</div>
+            <div class="text-red-500" *ngIf="getValidSplitted().headcountSTZ">Es muss midestens eine Person pro Schicht geben</div>
             <div class="single">
-                <button mat-fab color="primary" (click)="addShift()">
+                <button mat-fab color="primary" [disabled]="validate()" (click)="addShift()">
                     <mat-icon>add</mat-icon>
                 </button>
             </div>

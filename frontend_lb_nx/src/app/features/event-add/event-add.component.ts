@@ -21,6 +21,8 @@ import {DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE} from "@angular/material/
   styleUrls: ['./event-add.component.scss'],
   providers: [EventAddStore,
     // {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
+    // {provide: LOCALE_ID, useValue: 'de'},
+    // {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
     //
     // // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
     // // `MatMomentDateModule` in your applications root module. We provide it at the component level
@@ -66,6 +68,32 @@ export class EventAddComponent {
     // this.store.dispatch(addOrgEvent({orgEvent: copyModel}))
   }
 
+  changeDate(event: any, start: boolean) {
+
+    const date = event as Date;
+    console.log(date.getTime())
+    if (start) {
+      // set the end date to the same as the start date plus 1 hour
+      this.model.end = new Date(date.getTime() + 60 * 60 * 1000);
+    }
+    else {
+        this.model.start = new Date(date.getTime() - 60 * 60 * 1000);
+    }
+  }
+
+  changeTime(event: any, start: boolean) {
+    const time = event as Date;
+    if (start) {
+      this.model.start = new Date(this.model.start.getFullYear(), this.model.start.getMonth(), this.model.start.getDate(), time.getHours(), time.getMinutes());
+    }
+    else {
+      this.model.end = new Date(this.model.end.getFullYear(), this.model.end.getMonth(), this.model.end.getDate(), time.getHours(), time.getMinutes());
+    }
+  }
+
+  testChange(event: any) {
+    console.log(event)
+  }
 
   protected readonly of = of;
 }

@@ -85,14 +85,18 @@ class ShiftController extends _Base_Controller
         return JsonResponse::fromJsonString($this->serializer->serialize($shiftType, 'json'));
     }
     // assign logged in user to shift given by the shiftid
-    #[Route("/api/assignShift/{shiftId}", methods: ["POST"])]
-    public function assignShift(string $shiftId){
+    #[Route("/api/assignShift/{shiftId}/{deassign?}", methods: ["POST"])]
+    public function assignShift(string $shiftId, bool $deassign = false){
         /** @var Shift $shift */
         $shift = $this->doctrine->getManager()->getRepository(Shift::class)->find(Uuid::fromString($shiftId));
         if(empty($shift)){
             throw new NotFoundHttpException();
         }
-        $shift->addUser($this->getUser());
+        if($deassign) {
+            $shift->removeUser($this->getUser());
+        } else {
+            $shift->addUser($this->getUser());
+        }
         $this->persistFlushConflict($shift);
         return JsonResponse::fromJsonString($this->serializer->serialize($shift, 'json'));
     }

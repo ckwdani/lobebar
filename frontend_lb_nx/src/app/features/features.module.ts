@@ -35,6 +35,7 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { SingleEventComponent } from './single-event/single-event.component';
 import { SingleEventStore } from './single-event/single-event.store';
 import {MatDividerModule} from "@angular/material/divider";
+import {MatTooltipModule} from "@angular/material/tooltip";
 
 // Register the German locale data
 
@@ -76,12 +77,13 @@ import {MatDividerModule} from "@angular/material/divider";
         ReactiveFormsModule,
         MatExpansionModule,
         MatDividerModule,
+        MatTooltipModule,
     ],
   providers: [
     EventsOverviewStore,
     UsersOverviewStore,
     SingleEventStore,
-      // {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
+      {provide: MAT_DATE_LOCALE, useValue: 'de-DE'},
       //
       // // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
       // // `MatMomentDateModule` in your applications root module. We provide it at the component level

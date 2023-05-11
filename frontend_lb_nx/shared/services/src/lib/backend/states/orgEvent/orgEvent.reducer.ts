@@ -58,7 +58,12 @@ export const reducer = createReducer(
     on(OrgEventActions.deleteOrgEventFailure, (state, {error}) => ({...state, error, success: false})),
 );
 
-
+/**
+ * Adds an event to one of the arrays, this cant be done directly in the reducer, because the date has to be compared
+ * @param orgevent
+ * @param pastEvents
+ * @param upcomingEvents
+ */
 export function addToOneArray(orgevent: OrgEvent, pastEvents: OrgEvent[], upcomingEvents: OrgEvent[]): [OrgEvent[], OrgEvent[]]{
 
     if (orgevent.start.getTime() < Date.now()){
@@ -69,6 +74,12 @@ export function addToOneArray(orgevent: OrgEvent, pastEvents: OrgEvent[], upcomi
     return [pastEvents, upcomingEvents];
 }
 
+/**
+ * Removes an event from one of the arrays, this cant be done directly in the reducer, because the date has to be compared
+ * @param orgevent
+ * @param pastEvents
+ * @param upcomingEvents
+ */
 export function removeEventFromArrays(orgevent: OrgEvent, pastEvents: OrgEvent[], upcomingEvents: OrgEvent[]): [OrgEvent[], OrgEvent[]]{
 
         pastEvents = pastEvents.filter(event => event.id !== orgevent.id);
