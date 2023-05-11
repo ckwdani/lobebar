@@ -76,9 +76,16 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     #[Exclude]
     private Collection $resetCodes;
 
+    /**
+     * @var int|null
+     */
     #[ORM\Column(nullable: true)]
-    #[Serializer\Accessor('getAchievementCode')]
+    #[Serializer\Accessor(getter: 'getAchievementCode')]
     private ?int $selectedAchievement = null;
+
+    //1001 emils ecke mitglied
+    //X002 schichten übernommen
+    //X003 shiftstreak
 
     public function __construct()
     {

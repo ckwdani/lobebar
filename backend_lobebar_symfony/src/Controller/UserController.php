@@ -182,8 +182,19 @@ class UserController extends _Base_Controller
         $mailer->send($email);
     }
 
-    #[Route("/achievement/{userId}", methods: ["PUT"])]
-    public function putAchievement(string $userId, Request $request){
+    #[Route("/achievement", methods: ["PUT"])]
+    public function putAchievement(Request $request){
+        $user = $this->getUser();
 
+        $data = $request->getContent();
+        $achievementCode = $data["achievementCode"];
+        $extraString = $data["extraString"];
+
+        $user->setSelectedAchievement((int)$extraString *1000+$achievementCode);
+
+        $em = $this->doctrine->getManager();
+        $em->persist($user);
+        $em->flush();
+        return JsonResponse::fromJsonString($this->serializer->serialize($user, 'json'));
     }
 }
