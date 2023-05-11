@@ -1,7 +1,7 @@
 import {Component, Inject, LOCALE_ID} from '@angular/core';
 import {OrgEvent, OrgEventClass} from "@frontend-lb-nx/shared/entities";
 import {Store} from "@ngrx/store";
-import {OrgEventBackendService, selectSuccess, selectToken} from "@frontend-lb-nx/shared/services";
+import {addOrgEvent, OrgEventBackendService, selectSuccess, selectToken} from "@frontend-lb-nx/shared/services";
 import {filter, Observable, of} from "rxjs";
 import { EventAddStore } from './event-add-store.store';
 import {AbstractControl, FormBuilder, Validators} from "@angular/forms";

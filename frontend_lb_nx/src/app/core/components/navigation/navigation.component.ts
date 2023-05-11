@@ -14,11 +14,13 @@ import {
 import {loadShiftTypes} from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
 import * as AuthActions from "../../../../../shared/services/src/lib/backend/states/auth/auth.actions";
 import {UserFunctions, UserRoles} from "@frontend-lb-nx/shared/entities";
+import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
 
 @Component({
   selector: 'frontend-lb-nx-navigation',
   templateUrl: './navigation.component.html',
-  styleUrls: ['./navigation.component.css']
+  styleUrls: ['./navigation.component.css'],
+  animations: [InSiteAnimations.sequentialFadeIn]
 })
 export class NavigationComponent implements AfterViewInit{
 

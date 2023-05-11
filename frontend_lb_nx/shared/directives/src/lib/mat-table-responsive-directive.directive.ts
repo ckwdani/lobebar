@@ -65,7 +65,6 @@ export class MatTableResponsiveDirective implements OnInit, AfterViewInit, OnDes
             takeUntil(this.onDestroy$)
         )
         .subscribe(({ columnNames, rows }) => {
-            console.log(columnNames, rows)
             return    rows.forEach(rowCells =>
                     rowCells.forEach(cell =>
                         this.renderer.setAttribute(

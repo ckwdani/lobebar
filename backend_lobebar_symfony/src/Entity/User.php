@@ -127,8 +127,8 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
             return null;
         }
         $data = [
-            'achievementCode' => $achievementCode/1000,
-            'extraString' => $achievementCode%1000
+            'extraString' => $achievementCode/1000,
+            'achievementCode' => $achievementCode%1000,
         ];
         return $data;
     }

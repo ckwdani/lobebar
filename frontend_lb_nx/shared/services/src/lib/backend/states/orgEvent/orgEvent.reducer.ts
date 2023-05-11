@@ -44,10 +44,35 @@ export const reducer = createReducer(
     }),
 
     on(OrgEventActions.addOrgEvent, (state) => {return{...state, isLoading: true}}),
-    on(OrgEventActions.addOrgEventSuccess, (state,{orgEvent})=>{return{...state, orgEvent: orgEvent, isLoading: false}}),
+    on(OrgEventActions.addOrgEventSuccess, (state,{orgEvent})=>{
+        const [pastEvents, upcomingEvents] = addToOneArray(orgEvent, state.pastEvents, state.comingEvents);
+        return{...state, pastEvents: pastEvents, comingEvents: upcomingEvents, isLoading: false}
+    }),
     on(OrgEventActions.addOrgEventFailure, (state, {error}) => ({...state, error, success: false})),
 
     on(OrgEventActions.deleteOrgEvent, (state) => {return{...state, isLoading: true}}),
-    on(OrgEventActions.deleteOrgEventSuccess, (state,{orgEvent})=>{return{...state, orgEvent: state.orgEvent , isLoading: false}}),
+    on(OrgEventActions.deleteOrgEventSuccess, (state,{orgEvent})=>{
+        const [pastEvents, upcomingEvents] = removeEventFromArrays(orgEvent, state.pastEvents, state.comingEvents);
+        return{...state, pastEvents: pastEvents, comingEvents: upcomingEvents, isLoading: false}
+    }),
     on(OrgEventActions.deleteOrgEventFailure, (state, {error}) => ({...state, error, success: false})),
 );
+
+
+export function addToOneArray(orgevent: OrgEvent, pastEvents: OrgEvent[], upcomingEvents: OrgEvent[]): [OrgEvent[], OrgEvent[]]{
+
+    if (orgevent.start.getTime() < Date.now()){
+        pastEvents.push(orgevent);
+    }else{
+        upcomingEvents.push(orgevent);
+    }
+    return [pastEvents, upcomingEvents];
+}
+
+export function removeEventFromArrays(orgevent: OrgEvent, pastEvents: OrgEvent[], upcomingEvents: OrgEvent[]): [OrgEvent[], OrgEvent[]]{
+
+        pastEvents = pastEvents.filter(event => event.id !== orgevent.id);
+        upcomingEvents = upcomingEvents.filter(event => event.id !== orgevent.id);
+
+        return [pastEvents, upcomingEvents];
+}

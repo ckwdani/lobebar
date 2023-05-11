@@ -1,7 +1,7 @@
 <frontend-lb-nx-calendar-header [(viewDate)]="viewDate" (viewDateChange)="dateChanged($event)"></frontend-lb-nx-calendar-header>
 <mwl-calendar-month-view class="text-black"
             [viewDate]="viewDate"
-            [events]="genCalenderEvents((this.$orgEvents | async)??[])" [cellTemplate]="customCellTemplate" [activeDayIsOpen]="activeDayIsOpen"   [openDayEventsTemplate]="nrtw" (dayClicked)="dayClicked($event.day)">
+            [events]="genCalenderEvents((this.$orgEvents | async)??[])"  [cellTemplate]="customCellTemplate" [activeDayIsOpen]="activeDayIsOpen"   [openDayEventsTemplate]="nrtw" (dayClicked)="dayClicked($event.day)">
 </mwl-calendar-month-view>
 
 <ng-template #customCellTemplate let-day="day" let-locale="locale">
@@ -12,17 +12,19 @@
         </span>
         </div>
     <a  class="mt-2 text-center text-blue-50" *ngFor="let event of day.events" routerLink="/singleevent/{{event.meta.id}}"><small class="w-full block" [ngClass]="checkEventStatus(event.meta)">{{ event.title }}</small></a>
-    <div class="flex w-full justify-center">
+
+</ng-template>
+
+<ng-template #nrtw let-day="events" let-d="activeDay"  let-open="isOpen">
+    <mat-expansion-panel [expanded]="open" >
+        <div class="flex w-full justify-center">
                     <span class=""><a class="inline" routerLink="/event_add/">
-                <button mat-icon-button  class="inline text-blue-500" style="opacity: 0.5">
+                <button mat-icon-button class="w-16" color="accent">
                     <mat-icon>add</mat-icon>
                 </button>
             </a></span>
-    </div>
-</ng-template>
-
-<ng-template #nrtw let-day="events"  let-open="isOpen">
-    <mat-expansion-panel [expanded]="open" >
+        </div>
+    <h1 class="text-orange-500 text-center mt-4">{{activeDay | date: "dd. MMMM yyyy"}}</h1>
 
         <div class="flex flex-row flex-wrap">
             <div *ngFor="let ev of day" class="m-4 p-4 border border-orange-500 w-max">
@@ -40,23 +42,6 @@
         </div>
     </mat-expansion-panel>
 
-<!--    <div class="cal-open-month-events">
-        <div *ngFor="let event of day.events">
-            <b>{{ event.name }}</b>
-            <i>{{ event.start }}</i>
-        </div>
-    </div>
-    {{checker(day)}}-->
-<!--    <div class="cal-cell-top">
-        <span class="cal-day-badge" *ngIf="day.badgeTotal > 0">{{ day.badgeTotal }}</span>
-        <span class="cal-day-number">
-            {{ day.date | calendarDate:'monthViewDayNumber':locale }}
-        </span>
-    </div>-->
-
-<!--
-    <small style="margin: 5px" [ngClass]="checkEventStatus(day.events![0]??0 !== 0 ? day.events![0].meta : undefined)">
-        {{ day.events![0]??0 !== 0 ? day.events![0].title : "" }}</small>-->
 </ng-template>
 <!-- https://github.com/mattlewis92/angular-calendar#how-do-i-use-a-custom-template -->
 <!-- https://mattlewis92.github.io/angular-calendar/#/custom-templates -->

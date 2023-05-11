@@ -26,7 +26,8 @@ import {take} from "rxjs";
 export class CalendarComponent {
   view: CalendarView = CalendarView.Month;
 
-  activeDayIsOpen = true;
+  activeDayIsOpen = false;
+  activeDay?: Date;
 
   $orgEvents = this.store.select(selectOrgEvents)
   $eventState = this.store.select(selectOrgEventsState)
@@ -67,6 +68,7 @@ export class CalendarComponent {
   }
 
   dateChanged($event: Date){
+    this.activeDayIsOpen = false;
     // reset date to the first of the month
     const testDate = new Date($event.getFullYear(), $event.getMonth()-1, 1)
     // get timestamp from date
@@ -116,11 +118,11 @@ export class CalendarComponent {
   }
 
   dayClicked({ date, events }: { date: Date; events: CalendarEvent[] }): void {
+    this.activeDay=date;
     console.log(events)
     if (isSameMonth(date, this.viewDate)) {
       if (
-          (isSameDay(this.viewDate, date) && this.activeDayIsOpen) ||
-          events.length === 0
+          (isSameDay(this.viewDate, date) && this.activeDayIsOpen)
       ) {
         this.activeDayIsOpen = false;
       } else {
