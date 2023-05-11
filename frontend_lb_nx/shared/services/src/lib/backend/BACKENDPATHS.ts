@@ -36,7 +36,7 @@ export class BACKENDPATHS{
 
 
     // Achievement
-    static readonly postAchievement = this.baseApiUrl+ "/achievement"
+    static readonly putAchievement = this.baseApiUrl+ "/achievement"
 
 
 

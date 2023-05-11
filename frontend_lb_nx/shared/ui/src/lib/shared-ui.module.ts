@@ -29,11 +29,12 @@ import { FancyCircleLoaderComponent } from './animations/components/fancy-circle
 import { AddShiftComponent } from './components/event-overview/add-shift/add-shift.component';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { CountdownComponent } from './components/countdown/countdown.component';
-import {RouterLink} from "@angular/router";
+import { RouterLink } from '@angular/router';
 import { AchievementsOverviewComponent } from './components/achievements-overview/achievements-overview.component';
 import { SingleAchievementComponent } from './components/achievements-overview/single-achievement/single-achievement.component';
-import {SharedDirectivesModule} from "@frontend-lb-nx/shared/directives";
-import {MatSortModule} from "@angular/material/sort";
+import { SharedDirectivesModule } from '@frontend-lb-nx/shared/directives';
+import { MatSortModule } from '@angular/material/sort';
+import { UserBadgeComponent } from './components/achievements-overview/user-badge/user-badge.component';
 
 @NgModule({
   imports: [
@@ -55,8 +56,10 @@ import {MatSortModule} from "@angular/material/sort";
     ReactiveFormsModule,
     MatProgressBarModule,
     MatDialogModule,
-    MatExpansionModule, RouterLink,
-    SharedDirectivesModule, MatSortModule
+    MatExpansionModule,
+    RouterLink,
+    SharedDirectivesModule,
+    MatSortModule,
   ],
   declarations: [
     SingleFormDialogComponent,
@@ -72,6 +75,7 @@ import {MatSortModule} from "@angular/material/sort";
     CountdownComponent,
     AchievementsOverviewComponent,
     SingleAchievementComponent,
+    UserBadgeComponent,
   ],
   exports: [
     SingleFormDialogComponent,
@@ -84,7 +88,9 @@ import {MatSortModule} from "@angular/material/sort";
     RegisterComponent,
     FancyCircleLoaderComponent,
     CountdownComponent,
-      AchievementsOverviewComponent,
+    AchievementsOverviewComponent,
+    SingleAchievementComponent,
+    UserBadgeComponent,
   ],
 })
 export class SharedUiModule {}

@@ -45,7 +45,4 @@ export const reducer = createReducer(
         return { ...state, user: user };
     }),
 
-    
-
-
 );

@@ -1,13 +1,13 @@
 import {Component, ElementRef, QueryList, ViewChild, ViewChildren} from '@angular/core';
 import {
   Achievement,
-  AchievementBackend,
+  AchievementBackend, AchievementMitglied,
   AchievementSchichtenAnzahl,
   AchievementStreak,
   Shift
 } from "@frontend-lb-nx/shared/entities";
 import {Store} from "@ngrx/store";
-import {selectUser} from "@frontend-lb-nx/shared/services";
+import {selectUser, updateSelectedAchievement} from "@frontend-lb-nx/shared/services";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
@@ -33,12 +33,13 @@ export class AchievementsOverviewComponent {
   achievementsLoaded?: AchievementBackend
   //@ViewChildren('myDiv') myDivList: QueryList<ElementRef>|undefined;
   myDivState = 'start';
+  selectedAchievment?: Partial<Achievement>
 
-  achievements: Achievement[] = [{title: "Mitglied", description: "Mitglied von EmilsEcke", imageUrl: "assets/emilsecke_logo.png", achieved: true, selected: false},
-  ];
+  achievements: Achievement[] = [];
   constructor(private store: Store) {
     this.$userObs.subscribe(next=> {
       this.achievementsLoaded=next?.achievements
+      this.selectedAchievment = next?.selectedAchievement
       this.genAchievements();
     })
   }
@@ -48,6 +49,7 @@ export class AchievementsOverviewComponent {
       const shiftsScore = this.achievementsLoaded?.shiftsScore ?? 0;
       const negativeBalance = this.achievementsLoaded?.negativeBalance ?? 0;
       const shiftsStreak = this.achievementsLoaded?.shiftStreak?? 0;
+      this.achievements.push(new AchievementMitglied())
       if(shiftsStreak>0){
         this.achievements.push(new AchievementStreak(false,true, shiftsStreak.toString()))
       }else{
@@ -57,6 +59,11 @@ export class AchievementsOverviewComponent {
         this.achievements.push(new AchievementSchichtenAnzahl(false,true, shiftsScore.toString()))
       }else{
         this.achievements.push(new AchievementSchichtenAnzahl(false,false, undefined))
+      }
+      if(this.selectedAchievment?.extraString!=undefined&& this.selectedAchievment?.extraString!='0'){
+        this.achievements.forEach(a => a.achievementCode==this.selectedAchievment?.achievementCode ? (a.selected=true, a.extraString=this.selectedAchievment.extraString) : a.selected=false)
+      }else{
+        this.achievements.forEach(a => a.achievementCode==this.selectedAchievment?.achievementCode ? a.selected=true : a.selected=false)
       }
     }
     }
@@ -70,6 +77,7 @@ export class AchievementsOverviewComponent {
       this.achievements.forEach(a =>{
         a!=elem ? a.selected=false : a.selected=true
       })
+      this.store.dispatch(updateSelectedAchievement({achievement: elem}))
       this.myDivState ="start";
     }
   }

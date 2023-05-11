@@ -1,6 +1,7 @@
 <div class="w-full h-full">
     <div class="text-center">
-        <p>Herzlich Willkommen, lieber Barmensch {{($userNameObs | async)?.username}}.</p>
+        <p>Herzlich Willkommen, lieber Barmensch</p>
+        <frontend-lb-nx-user-badge class="flex justify-center" *ngIf="($userNameObs|async)!==undefined" [user]="($userNameObs|async)!"></frontend-lb-nx-user-badge>
         <p>Danke für dein Engagement!</p>
         <br>
         <p>Punkte: {{($userNameObs | async)?.xPScore}}</p>

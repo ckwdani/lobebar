@@ -1,4 +1,4 @@
-import {AchievementBackend} from "./achievement";
+import {Achievement, AchievementBackend} from "./achievement";
 
 export interface User{
     id?: string,
@@ -13,7 +13,7 @@ export interface User{
     hygienepass: boolean,
     telephone: string,
     achievements?: AchievementBackend,
-
+    selectedAchievement?: Partial<Achievement>
     xPScore?: number,
     balance?: number,
 }

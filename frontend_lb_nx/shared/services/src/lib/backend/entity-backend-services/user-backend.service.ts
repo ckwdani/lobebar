@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import {BaseCommunicatorService} from "../common/base-communicator.service";
-import {ShiftType, User} from "@frontend-lb-nx/shared/entities";
+import {Achievement, ShiftType, User} from "@frontend-lb-nx/shared/entities";
 import {Observable} from "rxjs";
 import {BACKENDPATHS} from "../BACKENDPATHS";
 
@@ -24,7 +24,7 @@ export class UserBackendService extends BaseCommunicatorService<User>{
     return super.put(BACKENDPATHS.approveUser+'/'+user.id, user)
     }
 
-    updateAchievement(user: User): Observable<User>{
-    return super.post(BACKENDPATHS.postAchievement+'/'+user.id, user)
+    updateAchievement(achievement: Achievement): Observable<User>{
+    return super.put(BACKENDPATHS.putAchievement, {"achievementCode": achievement.achievementCode,"extraString": achievement.extraString??"0"})
     }
 }

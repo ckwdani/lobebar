@@ -47,7 +47,7 @@ export class BaseCommunicatorService<T> {
     const response = this.http.post<T>(path, body, this.httpOptions);
     return this.genGenerObs(response);
   }
-  put(path: string, body: T): Observable<T>{
+  put<ALT>(path: string, body: T|ALT): Observable<T>{
     // has to be done if the localstroage has changed
     //this.setHeaders();
     const response = this.http.put<T>(path, body, this.httpOptions);

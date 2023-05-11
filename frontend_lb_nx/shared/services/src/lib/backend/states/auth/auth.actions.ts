@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import {User} from "@frontend-lb-nx/shared/entities";
+import {Achievement, User} from "@frontend-lb-nx/shared/entities";
 import {HttpErrorResponse} from "@angular/common/http";
 
 
@@ -31,6 +31,21 @@ export const loadUserError = createAction(
 export const updateUser = createAction(
     '[User] Update User',
     props<{ user: User }>()
+);
+
+export const updateSelectedAchievement = createAction(
+    '[User] Update Achievement',
+    props<{achievement: Achievement}>()
+)
+
+export const updateUserSuccessful = createAction(
+    '[User] Update User Success',
+    props<{ user: User }>()
+);
+
+export const updateUserFailure = createAction(
+    '[User] Update User Failure',
+    props<{ error: HttpErrorResponse }>()
 );
 
 export const loadAuthsFailure = createAction(

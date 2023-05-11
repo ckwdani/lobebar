@@ -6,6 +6,7 @@ import * as AuthActions from './auth.actions';
 import {AuthService} from "../../entity-backend-services/auth.service";
 import {Router} from "@angular/router";
 import {createAction} from "@ngrx/store";
+import {UserBackendService} from "../../entity-backend-services/user-backend.service";
 
 const localStorageTokenString = 'lobebar-token';
 
@@ -68,7 +69,21 @@ export class AuthEffects {
         }));
     });
 
+    updateSelectedAchievement$ = createEffect(()=> {
+        return this.actions$.pipe(
+            ofType(AuthActions.updateSelectedAchievement),
+            switchMap((action)=>
+                this.userService.updateAchievement(action.achievement).pipe(
+                    map((user)=>{
+                        return AuthActions.updateUserSuccessful({user: user})
+                    }),
+                    catchError((error) => of(AuthActions.updateUserFailure({error})))
+                )
+            )
+        )
+    })
 
-  constructor(private actions$: Actions, private authService: AuthService, private router: Router) {
+
+  constructor(private actions$: Actions, private authService: AuthService, private router: Router, private userService: UserBackendService) {
   }
 }
