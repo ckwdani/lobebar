@@ -17,8 +17,8 @@ export class ShiftsBackendService extends BaseCommunicatorService<Shift>{
     return super.getList(BACKENDPATHS.shift_outstanding_shifts+ '/' +unixstart + '/' +unixend + '/' +userId ).pipe(map(shifts => shifts.map(shifts=>this.mapShift(shifts))))
   }
 
-  public assign(shift: Shift, userId?: string): Observable<Shift> {
-    return super.post(BACKENDPATHS.shift_assign + '/' + shift.id , shift)
+  public assign(shift: Shift, deassign: boolean = false,  userId?: string): Observable<Shift> {
+    return super.post(BACKENDPATHS.shift_assign + '/' + shift.id +'/' +deassign , shift)
   }
 
   private mapShift(shift: Shift): Shift {

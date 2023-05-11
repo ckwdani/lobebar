@@ -31,5 +31,9 @@ export const reducer = createReducer(
     on(ShiftActions.assignShift, state => state),
     on(ShiftActions.assignShiftSuccess, (state, {shift})=>{return {...state, ownShifts: state.ownShifts.map(s => s.id !==shift.id ? s: shift), isLoading: false}}),
     on(ShiftActions.assignShiftFailure, (state, {error}) =>({...state, error, success: false})),
+
+    on(ShiftActions.deassignShift, state => state),
+    on(ShiftActions.deassignShiftSuccess, (state, {shift})=>{return {...state, ownShifts: state.ownShifts.filter(s => s.id !==shift.id), isLoading: false}}),
+    on(ShiftActions.deassignShiftFailure, (state, {error}) =>({...state, error, success: false})),
 );
 

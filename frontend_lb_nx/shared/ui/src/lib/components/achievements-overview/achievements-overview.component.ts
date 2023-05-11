@@ -37,6 +37,7 @@ export class AchievementsOverviewComponent {
 
   achievements: Achievement[] = [];
   constructor(private store: Store) {
+    //TODO: handle this in a more robust way,
     this.$userObs.subscribe(next=> {
       this.achievementsLoaded=next?.achievements
       this.selectedAchievment = next?.selectedAchievement

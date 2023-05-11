@@ -45,6 +45,21 @@ export const assignShiftFailure = createAction(
     props<{error: number}>()
 );
 
+export const deassignShift = createAction(
+    '[Shift] Deassigning Shifts',
+    props<{shift: Shift}>()
+);
+
+export const deassignShiftSuccess = createAction(
+    '[Shift] Deassign Shift Success',
+    props<{shift: Shift}>()
+);
+
+export const deassignShiftFailure = createAction(
+    '[Shift] Deassign Shift Failure',
+    props<{error: number}>()
+);
+
 
 
 

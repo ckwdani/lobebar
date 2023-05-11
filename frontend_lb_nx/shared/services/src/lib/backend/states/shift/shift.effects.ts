@@ -47,5 +47,18 @@ export class ShiftEffects {
         )
     })
 
+    deassignShift$ = createEffect(()=>{
+        return this.actions$.pipe(
+            ofType(ShiftActions.deassignShift),
+            switchMap((action)=>
+                this.shiftsService.assign(action.shift, true).pipe(
+                    map(()=>{
+                        return ShiftActions.deassignShiftSuccess({shift: action.shift});
+                    }),
+                    catchError((error)=>of(ShiftActions.deassignShiftFailure({error})))
+                ))
+        )
+    })
+
   constructor(private actions$: Actions, private shiftsService: ShiftsBackendService) {}
 }
