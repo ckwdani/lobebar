@@ -1,7 +1,7 @@
 import {Component, Input} from '@angular/core';
 import {OrgEvent, Shift, ShiftType, User} from "@frontend-lb-nx/shared/entities";
-import {Store} from "@ngrx/store";
-import {assignShift, deassignShift, selectUser} from "@frontend-lb-nx/shared/services";
+import {on, Store} from "@ngrx/store";
+import {assignShift, deassignShift, selectUser, ShiftEffects} from "@frontend-lb-nx/shared/services";
 
 @Component({
   selector: 'frontend-lb-nx-shift-table',
@@ -73,7 +73,7 @@ export class ShiftTableComponent {
           const userIds=shift.users.map(u=>u.id)
           if(userIds.indexOf(this.user["id"])!=-1){
             this.store.dispatch(deassignShift({shift}))
-            shiftCopy.users=shiftCopy.users?.filter(user=> user.id==this.user?.id)
+            shiftCopy.users=shiftCopy.users?.filter(user=>user.id!== this.user?.id)
           }
         }
       }
