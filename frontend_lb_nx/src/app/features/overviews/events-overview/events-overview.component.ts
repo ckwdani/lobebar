@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {OrgEvent, Shift, ShiftType, User} from "@frontend-lb-nx/shared/entities";
+import {OrgEvent, Shift, ShiftType, User, UserFunctions, UserRoles} from "@frontend-lb-nx/shared/entities";
 import { EventsOverviewStore } from './events-overview.store';
 import {Observable, of} from "rxjs";
 import {Store} from "@ngrx/store";
@@ -8,8 +8,9 @@ import {
   selectOrgEvents,
   selectOrgEventsState,
   selectOutstandingShifts,
-  selectOwnShifts, selectUserRole
+  selectOwnShifts, selectUser, selectUserRole
 } from "@frontend-lb-nx/shared/services";
+import {map} from "rxjs/operators";
 
 @Component({
   selector: 'frontend-lb-nx-events-overview',
@@ -23,7 +24,7 @@ export class EventsOverviewComponent {
   yourShifts$ = this.eventsOverviewStore.yourShifts$
   previousShifts$ = this.eventsOverviewStore.previousShifts$
 
-  $roleUser = this.store.select(selectUserRole)
+  $roleUser = this.store.select(selectUser).pipe(map(next=> (next??0 !== 0) ? UserFunctions.getRole(next!) : next))
 
   $ownShiftsObs= this.store.select(selectOwnShifts)
   //$outStandingShiftsObs = this.store.select(selectOutstandingShifts)
@@ -35,4 +36,5 @@ export class EventsOverviewComponent {
   }
 
   protected readonly of = of;
+    protected readonly UserRoles = UserRoles;
 }

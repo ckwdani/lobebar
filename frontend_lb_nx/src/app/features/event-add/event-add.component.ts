@@ -51,6 +51,9 @@ export class EventAddComponent {
 
   formBuilder: FormBuilder = new FormBuilder();
 
+  startDateEdited = false;
+    endDateEdited = false;
+
   myForm = this.formBuilder.group({
     date: ['', Validators.required],
     afterDate: ['', Validators.required],
@@ -74,21 +77,46 @@ export class EventAddComponent {
     console.log(date.getTime())
     if (start) {
       // set the end date to the same as the start date plus 1 hour
-      this.model.end = new Date(date.getTime() + 60 * 60 * 1000);
+      if(!this.startEndValid(date, this.model.end)){
+        // flag for displaying a warning
+        this.endDateEdited = true;
+        // edit the counter date, so that the constraints are met
+        this.model.end = new Date(date.getTime() + 60 * 60 * 1000);
+      }else{
+        this.endDateEdited = false;
+      }
     }
     else {
+      if(!this.startEndValid(this.model.start, date)){
+        // flag for displaying a warning
+        this.startDateEdited = true;
+        // edit the counter date, so that the constraints are met
         this.model.start = new Date(date.getTime() - 60 * 60 * 1000);
+      }else{
+        this.startDateEdited = false;
+      }
     }
   }
 
   changeTime(event: any, start: boolean) {
     const time = event as Date;
+
     if (start) {
       this.model.start = new Date(this.model.start.getFullYear(), this.model.start.getMonth(), this.model.start.getDate(), time.getHours(), time.getMinutes());
+      // after the change, call the change Date method, as it handles the event to public
+      this.changeDate(this.model.start, true);
     }
     else {
       this.model.end = new Date(this.model.end.getFullYear(), this.model.end.getMonth(), this.model.end.getDate(), time.getHours(), time.getMinutes());
+      // after the change, call the change Date method, as it handles the event to public
+      this.changeDate(this.model.end, false);
     }
+
+
+  }
+
+  startEndValid(start: Date, end: Date){
+    return start.getTime() < end.getTime();
   }
 
   testChange(event: any) {

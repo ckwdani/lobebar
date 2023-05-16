@@ -1,4 +1,13 @@
-import {animate, query, stagger, state, style, transition, trigger} from '@angular/animations';
+import {
+    animate,
+    AnimationTriggerMetadata,
+    query,
+    stagger,
+    state,
+    style,
+    transition,
+    trigger
+} from '@angular/animations';
 import {delay} from 'rxjs/operators';
 
 export class InSiteAnimations{
@@ -86,4 +95,29 @@ export class InSiteAnimations{
       transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
       transition('expanded <=> void', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
     ])];
+
+
+    static getInOutAnimationWithLEngth(length: number): AnimationTriggerMetadata {
+        return trigger(
+            'inOutAnimation',
+            [
+                transition(
+                    ':enter',
+                    [
+                        style({ opacity: 0, height: 0 }),
+                        animate(length + 'ms ease-out',
+                            style({ opacity: 1, height: '*' }))
+                    ]
+                ),
+                transition(
+                    ':leave',
+                    [
+                        style({ opacity: 1, heigth: '*' }),
+                        animate(length / 3 + 'ms ease-in',
+                            style({ opacity: 0, height: 0 }))
+                    ]
+                )
+            ]
+        );
+    }
 }

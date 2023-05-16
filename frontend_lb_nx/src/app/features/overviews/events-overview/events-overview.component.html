@@ -2,7 +2,7 @@
     <mat-tab label="Bevorstehende Veranstaltungen">
         <br>
         <div [ngSwitch]="$roleUser|async" class="flex justify-center">
-            <button *ngSwitchCase="'ROLE_ADMIN'||'ROLE_MOD'" routerLink="/event_add" mat-icon-button color="primary"><mat-icon>add</mat-icon></button>
+            <button *ngSwitchCase="UserRoles.ADMIN||UserRoles.MODERATOR" routerLink="/event_add" mat-icon-button color="primary"><mat-icon>add</mat-icon></button>
         </div>
         <br>
             <div *ngFor="let elem of ($orgEventsObs | async)">
