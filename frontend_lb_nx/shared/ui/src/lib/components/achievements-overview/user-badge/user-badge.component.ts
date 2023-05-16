@@ -1,17 +1,21 @@
 import {Component, Input, OnInit} from '@angular/core';
 import {Achievement, genSelectedAchievement, User} from "@frontend-lb-nx/shared/entities";
-import {Observable, switchMap} from "rxjs";
+import {Observable, of, Subscription, switchMap} from "rxjs";
+import {Store} from "@ngrx/store";
+import {selectSelectedAchievment, selectUser} from "@frontend-lb-nx/shared/services";
 
 @Component({
   selector: 'frontend-lb-nx-user-badge',
   templateUrl: './user-badge.component.html',
   styleUrls: ['./user-badge.component.scss'],
 })
-export class UserBadgeComponent implements OnInit{
-  @Input() user?: User;
-  achievement?: Achievement
+export class UserBadgeComponent{
+  @Input() user?: User
+  $selAchievement = this.store.select(selectSelectedAchievment)
 
-  ngOnInit(): void {
-    this.achievement=genSelectedAchievement(this.user?.selectedAchievement?.achievementCode, this.user?.selectedAchievement?.extraString)
+  constructor(private store: Store) {
   }
+
+  protected readonly of = of;
+  protected readonly genSelectedAchievement = genSelectedAchievement;
 }

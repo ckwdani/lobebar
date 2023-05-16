@@ -62,7 +62,7 @@ export class AchievementsOverviewComponent {
         this.achievements.push(new AchievementSchichtenAnzahl(false,false, undefined))
       }
       if(this.selectedAchievment?.extraString!=undefined&& this.selectedAchievment?.extraString!='0'){
-        this.achievements.forEach(a => a.achievementCode==this.selectedAchievment?.achievementCode ? (a.selected=true, a.extraString=this.selectedAchievment.extraString) : a.selected=false)
+        this.achievements.forEach(a => a.achievementCode==this.selectedAchievment?.achievementCode ? (a.selected=true , a.extraString=this.selectedAchievment.extraString) : a.selected=false)
       }else{
         this.achievements.forEach(a => a.achievementCode==this.selectedAchievment?.achievementCode ? a.selected=true : a.selected=false)
       }
@@ -79,6 +79,7 @@ export class AchievementsOverviewComponent {
         a!=elem ? a.selected=false : a.selected=true
       })
       this.store.dispatch(updateSelectedAchievement({achievement: elem}))
+      this.achievements = []
       this.myDivState ="start";
     }
   }

@@ -10,4 +10,5 @@ export class SingleAchievementComponent {
   @Input() achievement?: Achievement;
   @Input() displayTitle = true;
   @Input() widthAndHeight = "w-12 h-12"
+
 }
