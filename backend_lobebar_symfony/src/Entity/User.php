@@ -115,11 +115,7 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     //#[Serializer\Groups(groups: ["list", "details"])]
     public function getBalance(): int
     {
-        $positive = $this->shifts->count()  + (int) $this->doneExtrawork->map(function (DoneExtraWork $extraWork) {
-            return $extraWork->getExtraWorkType()->getValue();
-        })->reduce(function ($carry, $value) {
-                return $carry + $value;
-            }, 0);
+        $positive = $this->getPositiveBalance();
         $negative =  $this->getNegativeBalance();
         return $positive - $negative;
     }
@@ -141,6 +137,21 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
             return $carry + $value;
         }, 0);
     }
+
+    public function getPositiveBalance(): int
+    {
+        return $this->shifts
+                ->filter(function (Shift $shift) {
+                    return $shift->getEndtime()->getTimestamp() < (new \DateTime("now"))->getTimestamp();
+                })
+                ->count()  +
+            (int) $this->doneExtrawork->map(function (DoneExtraWork $extraWork) {
+                return $extraWork->getExtraWorkType()->getValue();
+            })->reduce(function ($carry, $value) {
+                return $carry + $value;
+            }, 0);
+    }
+
 
     #[Serializer\VirtualProperty(name: "achievements")]
     //#[Serializer\Groups(groups: ["list", "details"])]
@@ -165,11 +176,7 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     //#[Serializer\Groups(groups: ["list", "details"])]
     public function getXPScore(): int
     {
-        $positive = $this->shifts->count()  + (int) $this->doneExtrawork->map(function (DoneExtraWork $extraWork) {
-            return $extraWork->getExtraWorkType()->getValue();
-        })->reduce(function ($carry, $value) {
-                return $carry + $value;
-            }, 0);
+        $positive = $this->getPositiveBalance();
         return $positive * 14;
     }
 

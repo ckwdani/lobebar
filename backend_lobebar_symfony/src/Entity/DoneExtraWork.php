@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\ExtraWorkTypesUserRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\PostDeserialize;
 
 #[ORM\Entity(repositoryClass: ExtraWorkTypesUserRepository::class)]
 class DoneExtraWork extends _Base_Entity
@@ -15,12 +16,15 @@ class DoneExtraWork extends _Base_Entity
     #[ORM\JoinColumn(nullable: false)]
     private ?User $user = null;
 
-    #[ORM\ManyToOne(cascade: ["remove"], inversedBy: 'usersDoneWork')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\ManyToOne(inversedBy: 'usersDoneWork')]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     private ?ExtraWorkTypes $extraWorkType = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
+
+    #[ORM\Column]
+    private ?int $valueAtInit = null;
 
 
     public function __construct()
@@ -29,6 +33,13 @@ class DoneExtraWork extends _Base_Entity
         $this->date = new \DateTime('now');
     }
 
+
+    // after deserialization set valueAtInit to the current value of the extraWorkType
+    #[PostDeserialize]
+    public function setValue(): void
+    {
+        $this->valueAtInit = $this->extraWorkType->getValue();
+    }
 
     public function getUser(): ?User
     {
@@ -62,6 +73,18 @@ class DoneExtraWork extends _Base_Entity
     public function setDate(\DateTimeInterface $date): self
     {
         $this->date = $date;
+
+        return $this;
+    }
+
+    public function getValueAtInit(): ?int
+    {
+        return $this->valueAtInit;
+    }
+
+    public function setValueAtInit(int $valueAtInit): self
+    {
+        $this->valueAtInit = $valueAtInit;
 
         return $this;
     }
