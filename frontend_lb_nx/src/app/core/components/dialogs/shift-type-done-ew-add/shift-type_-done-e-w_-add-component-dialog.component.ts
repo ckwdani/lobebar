@@ -1,5 +1,5 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
-import {ShiftType} from "@frontend-lb-nx/shared/entities";
+import {ShiftType, SnackType} from "@frontend-lb-nx/shared/entities";
 import {
   ShiftTypeBackendService
 } from "../../../../../../shared/services/src/lib/backend/entity-backend-services/shifts-type-backend.service";
@@ -11,7 +11,7 @@ import {
 import {combineLatest, combineLatestAll, distinctUntilChanged, filter, find, pairwise, tap} from "rxjs";
 import {
   addExtraWorkType,
-  addShiftType,
+  addShiftType, addSnackType,
   deleteShiftType
 } from "../../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
 import {FormControl, Validators} from "@angular/forms";
@@ -23,6 +23,7 @@ import {DoneExtraWorkTypes} from "../../../../../../shared/entities/src/lib/done
 
 export interface DialogDataST {
   isShiftType: boolean;
+  isEwType: boolean
 }
 
 @Component({
@@ -43,7 +44,9 @@ export class ShiftType_DoneEW_AddComponentDialog {
     value: 0,
   }
 
+
   isShiftType = true;
+  isEwType = false
   isEdit = false;
   fcname = new FormControl(this.model.name, [Validators.required, Validators.minLength(3)])
   value = new FormControl((this.model as DoneExtraWorkTypes).value, [Validators.required, Validators.min(1)])
@@ -51,10 +54,31 @@ export class ShiftType_DoneEW_AddComponentDialog {
   $loading = this.store.select(selectShiftTypesAdding);
   $error = this.store.select(selectShiftTypesError);
 
+  typeHeading = ''
+  typeLabel = ''
+  typeValueLabel = ''
+
 
   constructor(private  shiftTypeService: ShiftTypeBackendService, private store: Store, @Inject(MAT_DIALOG_DATA) public data: DialogDataST,  public dialogRef: MatDialogRef<ShiftType_DoneEW_AddComponentDialog>,) {
 
     this.isShiftType = data.isShiftType;
+    this.isEwType = data.isEwType
+
+    if(this.isShiftType){
+      this.typeHeading = 'Erstelle Schichtarten.'
+      this.typeLabel = 'Schichttypname'
+      this.typeValueLabel = 'Schichtwert'
+    }
+    if(this.isEwType){
+      this.typeHeading = 'Erstelle Extra Arbeiten'
+      this.typeLabel = 'Extra Arbeitname'
+      this.typeValueLabel = 'Extra Arbeitwert'
+    }
+    if(!this.isShiftType&&!this.isEwType){
+      this.typeHeading = 'Erstelle Snackarten'
+      this.typeLabel = 'Snackarten'
+      this.typeValueLabel = 'Snackartwert'
+    }
 
     this.store.select(selectShiftTypes).subscribe(next =>
     {
@@ -85,7 +109,12 @@ export class ShiftType_DoneEW_AddComponentDialog {
       this.store.dispatch(addShiftType({shiftType: this.model}))
     }
     else{
-      this.store.dispatch(addExtraWorkType({ew_type: this.model}))
+      if(this.isEwType){
+        this.store.dispatch(addExtraWorkType({ew_type: this.model}))
+      }else{
+        this.store.dispatch(addSnackType({snackType: this.model as SnackType}))
+      }
+
     }
     // this.model.name=""
   }

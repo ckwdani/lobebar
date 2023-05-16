@@ -1,15 +1,15 @@
 <div class="p-4">
-    <p>Erstelle Schichtarten.</p>
+    <p>{{typeHeading}}</p>
     <form>
         <div class="flex justify-around {{isShiftType ? 'h-32' : 'h-48'}}   {{isShiftType ? 'min-h-[100px]' : 'min-h-[250px]'}} {{isShiftType ? 'max-h-[250px]' : 'max-h-[350px]'}} flex-col">
             <mat-form-field appearance="outline" [class.mb-10]="!fcname.valid">
-                <mat-label>Schichttypname</mat-label>
+                <mat-label>{{typeLabel}}</mat-label>
                 <input matInput [(ngModel)]="model.name" [formControl]="fcname">
                 <mat-error>Der Name muss mindestens 3 Zeichen lang sein</mat-error>
                 <!--            <div *ngIf="fcname.errors?.['minLength']">Der Name muss mindestens 3 Zeichen lang sein.</div>-->
             </mat-form-field>
             <mat-form-field appearance="outline"  [class.mb-12]="!value.valid" *ngIf="!isShiftType">
-                <mat-label>Schichtwert</mat-label>
+                <mat-label>{{typeValueLabel}}</mat-label>
                 <input matInput [(ngModel)]="model.value" [formControl]="value">
                 <mat-error>Die minimalzahl ist 1</mat-error>
                 <!--            <div *ngIf="fcname.errors?.['minLength']">Der Name muss mindestens 3 Zeichen lang sein.</div>-->

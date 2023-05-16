@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import {DoneExtraWorkTypes, ShiftType} from "@frontend-lb-nx/shared/entities";
+import {DoneExtraWorkTypes, ShiftType, SnackType} from "@frontend-lb-nx/shared/entities";
 
 export const loadShiftTypes = createAction(
   '[ShiftType] Load ShiftTypes'
@@ -7,7 +7,7 @@ export const loadShiftTypes = createAction(
 
 export const loadShiftTypesSuccess = createAction(
   '[ShiftType] Load ShiftTypes Success',
-  props<{ shiftTypes: ShiftType[], ew_types: DoneExtraWorkTypes[] }>()
+  props<{ shiftTypes: ShiftType[], ew_types: DoneExtraWorkTypes[], snackTypes: SnackType[]}>()
 );
 
 export const loadShiftTypesFailure = createAction(
@@ -18,12 +18,12 @@ export const loadShiftTypesFailure = createAction(
 
 export const EditName = createAction(
     '[ShiftType | EW_Type] Edit Name',
-    props<{shiftType?: ShiftType, ew_type?: DoneExtraWorkTypes}>()
+    props<{shiftType?: ShiftType, ew_type?: DoneExtraWorkTypes, snackType?: SnackType}>()
 );
 
 export const EditNameSuccess = createAction(
     '[ShiftType | EW_Type] Edit Name Success',
-    props<{shiftType?: ShiftType, ew_type?: DoneExtraWorkTypes}>()
+    props<{shiftType?: ShiftType, ew_type?: DoneExtraWorkTypes, snackType?: SnackType}>()
 );
 
 export const EditNameFailure = createAction(
@@ -62,6 +62,21 @@ export const addExtraWorkTypeFailure = createAction(
     props<{error: number}>()
 )
 
+export const addSnackType = createAction(
+    '[SnackType] Adding SnackType',
+    props<{snackType: SnackType}>()
+);
+
+export const addSnackTypeSuccess = createAction(
+    '[SnackType] Adding SnackType Success',
+    props<{snackType: SnackType}>()
+)
+
+export const addSnackTypeFailure = createAction(
+    '[SnackType] Adding SnackType Failure',
+    props<{error: number}>()
+)
+
 export const deleteShiftType = createAction(
     '[ShiftType] Deleting ShiftType',
     props<{shiftType: ShiftType}>()
@@ -93,3 +108,17 @@ export const deleteEWTFailure = createAction(
     props<{error: number}>()
 )
 
+export const deleteSnT = createAction(
+    '[SnackType] Deleting SnackType',
+    props<{snackTypes: SnackType}>()
+);
+
+export const deleteSnTSuccess = createAction(
+    '[SnackType] Deleting SnackType Success',
+    props<{snackTypes: SnackType}>()
+)
+
+export const deleteSnTFailure = createAction(
+    '[SnackType] Deleting SnackType Failure',
+    props<{error: number}>()
+)

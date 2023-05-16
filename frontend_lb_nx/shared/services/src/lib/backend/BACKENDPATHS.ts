@@ -38,8 +38,16 @@ export class BACKENDPATHS{
     // Achievement
     static readonly putAchievement = this.baseApiUrl+ "/achievement"
 
+    // SnackType
+    static readonly getSnackTypes = this.baseApiUrl+ '/mod_api/snack/types'
+    static readonly addSnackType  = this.baseApiUrl + '/mod_api/snack/addtype'
+    static readonly deleteSnackType  = this.baseApiUrl + '/mod_api/snack/deleteType' // snackTypeId
+    static readonly updateSnackType = this.baseApiUrl + '/mod_api/snack/updateSnackTypeName' ///{snackTypeId}/{newName}
 
-
-
-
+    //Snack
+    static readonly snackUsed = this.baseApiUrl + '/api/snack/used' //{snackId}/{userId?}
+    static readonly getOwnSnacks = this.baseApiUrl + '/api/snacks/own' //{start?}/{end?}
+    static readonly getUsedSnacks = this.baseApiUrl + '/api/snacks' //{start?}/{end?}/{userId?}
+    static readonly countUsedSnacks = this.baseApiUrl + '/mod_api/snacks/count' //{start?}/{end?}/{userId?}
 }
+
