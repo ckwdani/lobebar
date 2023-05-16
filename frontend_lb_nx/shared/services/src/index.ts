@@ -32,3 +32,7 @@ export * from './lib/backend/states/shift/shift.selectors';
 
 export * from './lib/validators/DateValidator';
 
+// own user
+export * from './lib/backend/states/own-user/own-user.actions';
+export * from './lib/backend/states/own-user/own-user.effects';
+export * from './lib/backend/states/own-user/own-user.selectors';

@@ -19,6 +19,7 @@ import * as fromShiftType from './backend/states/shift-types/shift-type.reducer'
 import { ShiftTypeEffects } from './backend/states/shift-types/shift-type.effects';
 import {OrgEventEffects} from "./backend/states/orgEvent/orgEvent.effects";
 import {ShiftEffects} from "./backend/states/shift/shift.effects";
+import * as fromOwnUser from './backend/states/own-user/own-user.reducer';
 
 
 
@@ -32,6 +33,7 @@ import {ShiftEffects} from "./backend/states/shift/shift.effects";
       StoreModule.forFeature(fromShiftType.shiftTypeFeatureKey, fromShiftType.reducer),
     StoreModule.forFeature(fromOrgEvent.orgEventFeatureKey, fromOrgEvent.reducer),
       StoreModule.forFeature(fromShift.shiftFeatureKey, fromShift.reducer),
+      StoreModule.forFeature(fromOwnUser.ownUserFeatureKey, fromOwnUser.reducer),
   ],
   providers: [BaseCommunicatorService, AuthService, AuthEffects, DatePipe],
 })
