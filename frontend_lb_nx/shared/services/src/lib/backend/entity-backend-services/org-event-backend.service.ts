@@ -27,7 +27,12 @@ export class OrgEventBackendService extends BaseCommunicatorService<OrgEvent>{
   }
 
   public getById(id: string): Observable<OrgEvent> {
-    return super.get(BACKENDPATHS.getSingleOrgEvent+'/'+id).pipe(map(orgEvent=>this.mapOrgEvent(orgEvent)))
+    return super.get(BACKENDPATHS.getSingleOrgEvent+'/'+id)
+        .pipe(
+            map(orgEvent=>this.mapOrgEvent(orgEvent)),
+            map(orgEvent => this.deserOrgEventDate(orgEvent)
+            )
+        )
     //return super.getById(id).pipe(map(orgEvent=>this.mapOrgEvent(orgEvent)));
   }
 
@@ -43,14 +48,22 @@ export class OrgEventBackendService extends BaseCommunicatorService<OrgEvent>{
     return super.put(BACKENDPATHS.updateOrgEvent+'/'+orgEvent.id, orgEvent).pipe(map(orgEvent=> this.mapOrgEvent(orgEvent)))
   }
 
+
+
   /*
   public getWithQuery(params: string | QueryParams): Observable<OrgEvent[]> {
     return super.getWithQuery(params).pipe(map(orgEvents => orgEvents.map(orgEvent => this.mapOrgEvent(orgEvent))));
   }
-
    */
 
+  deserOrgEventDate(orgEvent: OrgEvent): OrgEvent {
+    orgEvent.start = this.deserializeDate(orgEvent.start as unknown as string);
+    orgEvent.end = this.deserializeDate(orgEvent.end as unknown as string);
+    return orgEvent;
+  }
+
   private mapOrgEvent(orgEvent: OrgEvent): OrgEvent {
+    orgEvent = this.deserOrgEventDate(orgEvent);
     return { ...orgEvent};
   }
 

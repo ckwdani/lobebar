@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import {CommonModule, DatePipe} from '@angular/common';
 import * as fromAuth from './backend/states/auth/auth.reducer';
 import {StoreModule} from "@ngrx/store";
 
@@ -33,7 +33,7 @@ import {ShiftEffects} from "./backend/states/shift/shift.effects";
     StoreModule.forFeature(fromOrgEvent.orgEventFeatureKey, fromOrgEvent.reducer),
       StoreModule.forFeature(fromShift.shiftFeatureKey, fromShift.reducer),
   ],
-  providers: [BaseCommunicatorService, AuthService, AuthEffects],
+  providers: [BaseCommunicatorService, AuthService, AuthEffects, DatePipe],
 })
 export class SharedServicesModule {}
 

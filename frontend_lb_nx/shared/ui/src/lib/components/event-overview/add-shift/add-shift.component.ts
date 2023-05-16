@@ -49,7 +49,10 @@ export class AddShiftComponent implements OnInit{
       // intrinsic validation
     const intrinsic = this.model.starttime < this.model.endtime;
     // check wheter the shift is in the eventtimespan
-    const extrinsic = this.orgEvent !== undefined && this.orgEvent.start.getTime() <= this.model.starttime.getTime() && this.orgEvent.end.getTime() >= this.model.endtime.getTime();
+    const extrinsic = this.orgEvent !== undefined &&
+        this.orgEvent.start?.getTime()
+        <= this.model.starttime.getTime()
+        && this.orgEvent.end.getTime() >= this.model.endtime.getTime();
 
     return {headcountSTZ: !headcountSTZ, startEndInco: !intrinsic, eventBoudries: !extrinsic};
   }
@@ -59,4 +62,5 @@ export class AddShiftComponent implements OnInit{
     return valid.headcountSTZ && valid.startEndInco && valid.eventBoudries;
   }
 
+  
 }
