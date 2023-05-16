@@ -109,6 +109,13 @@ class SnackController extends _Base_Controller
         }
     }
 
+    // getAllSnacktypes
+    #[Route("/mod_api/snack/types", methods: ["GET"])]
+    public function getAllSnackTypes():JsonResponse{
+        $snackTypesRepo = $this->doctrine->getManager()->getRepository(SnackTypes::class);
+        $snackTypes = $snackTypesRepo->findAll();
+        return JsonResponse::fromJsonString($this->serializer->serialize($snackTypes, "json"));
+    }
 
     #[Route("/mod_api/snacks/count/{start?}/{end?}/{userId?}")]
     public function countUsedSnacks(?int $start, ?int $end, ?string $userId){

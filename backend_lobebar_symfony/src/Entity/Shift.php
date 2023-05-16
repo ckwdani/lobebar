@@ -34,7 +34,7 @@ class Shift extends _Base_Entity
     private Collection $users;
 
     #[ORM\ManyToOne]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true, onDelete: "SET NULL")]
     #[Type(Shiftype::class)]
     private ?Shiftype $type = null;
 

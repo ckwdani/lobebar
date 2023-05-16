@@ -1,6 +1,8 @@
 import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
 import {OrgEvent, Shift, ShiftType} from "@frontend-lb-nx/shared/entities";
 import {filter, Observable, of} from "rxjs";
+import {FormBuilder, Validators} from "@angular/forms";
+import {DateValidator} from "@frontend-lb-nx/shared/services";
 
 @Component({
   selector: 'frontend-lb-nx-add-shift',
@@ -17,6 +19,15 @@ export class AddShiftComponent implements OnInit{
   model: Shift = this.startModel()
 
   @Input() expanded: Observable<boolean> = of(true);
+
+
+  fb = new FormBuilder();
+  myForm = this.fb.group({
+    date: ['', Validators.required],
+    afterDate: ['', Validators.required],
+  }, {
+    validators: DateValidator.dateAfter('date', 'afterDate')
+  });
 
 
     ngOnInit(): void {
@@ -59,7 +70,7 @@ export class AddShiftComponent implements OnInit{
 
   validate(): boolean{
     const valid = this.getValidSplitted();
-    return valid.headcountSTZ && valid.startEndInco && valid.eventBoudries;
+    return !valid.headcountSTZ && !valid.startEndInco && !valid.eventBoudries;
   }
 
   

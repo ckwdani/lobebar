@@ -10,8 +10,8 @@ export interface OrgEvent{
 }
 
 export class OrgEventClass implements OrgEvent{
-    id?: string="124124";
-    name = "test";
+    id?: string="";
+    name = "";
     start: Date= new Date();
     end: Date= new Date();
     shifts?: Shift[]= undefined;

@@ -30,3 +30,5 @@ export * from './lib/backend/states/shift/shift.actions';
 export * from './lib/backend/states/shift/shift.effects';
 export * from './lib/backend/states/shift/shift.selectors';
 
+export * from './lib/validators/DateValidator';
+

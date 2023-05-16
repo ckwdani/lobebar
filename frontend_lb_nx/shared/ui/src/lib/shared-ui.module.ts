@@ -35,6 +35,7 @@ import { SingleAchievementComponent } from './components/achievements-overview/s
 import { SharedDirectivesModule } from '@frontend-lb-nx/shared/directives';
 import { MatSortModule } from '@angular/material/sort';
 import { UserBadgeComponent } from './components/achievements-overview/user-badge/user-badge.component';
+import { StartEndDateInputComponent } from './components/start-end-date-input/start-end-date-input.component';
 
 @NgModule({
   imports: [
@@ -76,8 +77,10 @@ import { UserBadgeComponent } from './components/achievements-overview/user-badg
     AchievementsOverviewComponent,
     SingleAchievementComponent,
     UserBadgeComponent,
+    StartEndDateInputComponent,
   ],
   exports: [
+      StartEndDateInputComponent,
     SingleFormDialogComponent,
     LoadingOverlayComponent,
     ShiftTableComponent,

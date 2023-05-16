@@ -6,62 +6,67 @@
             <div class="flex flex-col justify-around">
                 <mat-form-field appearance="outline">
                     <mat-label>Name</mat-label>
-                    <input class="text-center" matInput [(ngModel)]="model.name" [ngModelOptions]="{standalone: true}">
+                    <input class="text-center" matInput [(ngModel)]="model.name" formControlName="text">
                 </mat-form-field>
-                <div class="flex flex-row">
-                    <div>
+                <frontend-lb-nx-start-end-date-input [(startDate)]="model.start" [(EndDate)]="model.end" [myForm]="myForm.controls.dates"></frontend-lb-nx-start-end-date-input>
+<!--                <div class="flex flex-row">-->
+<!--                    <div>-->
 
 
-                        <mat-form-field appearance="outline" class="mr-3">
-                            <mat-label>Start</mat-label>
-                            <input [readonly]="true" formControlName="date" matInput [matDatetimepicker]="pickerStart"
-                                   [(ngModel)]="model.start">
-                            <!--                        <mat-hint>MM/DD/YYYY</mat-hint>-->
-                            <mat-datetimepicker-toggle matIconSuffix [for]="pickerStart"></mat-datetimepicker-toggle>
-                            <mat-datetimepicker #pickerStart type="datetime"
-                                                (selectedChanged)="changeDate($event, true)"></mat-datetimepicker>
+<!--                        <mat-form-field appearance="outline" class="mr-3">-->
+<!--                            <mat-label>Start</mat-label>-->
+<!--                            <input [readonly]="true" formControlName="date" matInput [matDatetimepicker]="pickerStart"-->
+<!--                                   [(ngModel)]="model.start">-->
+<!--                            &lt;!&ndash;                        <mat-hint>MM/DD/YYYY</mat-hint>&ndash;&gt;-->
+<!--                            <mat-datetimepicker-toggle matIconSuffix [for]="pickerStart"></mat-datetimepicker-toggle>-->
+<!--                            <mat-datetimepicker #pickerStart type="datetime"-->
+<!--                                                (selectedChanged)="changeDate($event, true)"></mat-datetimepicker>-->
 
-                            <input hidden="hidden" [value]="model.start.getTime()" [matDatetimepicker]="pickerStarttime"
-                                   [ngModel]="model.start" [ngModelOptions]="{standalone: true}">
-                            <!-- Only change the time                       -->
-                            <mat-datetimepicker-toggle matIconSuffix [for]="pickerStarttime"
-                                                       matTooltip="Nur Zeit ändern"></mat-datetimepicker-toggle>
-                            <mat-datetimepicker #pickerStarttime type="time"
-                                                (selectedChanged)="changeTime($event, true)"></mat-datetimepicker>
+<!--                            <input hidden="hidden" [value]="model.start.getTime()" [matDatetimepicker]="pickerStarttime"-->
+<!--                                   [ngModel]="model.start" [ngModelOptions]="{standalone: true}">-->
+<!--                            &lt;!&ndash; Only change the time                       &ndash;&gt;-->
+<!--                            <mat-datetimepicker-toggle matIconSuffix [for]="pickerStarttime"-->
+<!--                                                       matTooltip="Nur Zeit ändern"></mat-datetimepicker-toggle>-->
+<!--                            <mat-datetimepicker #pickerStarttime type="time"-->
+<!--                                                (selectedChanged)="changeTime($event, true)"></mat-datetimepicker>-->
+<!--                            <mat-hint>-->
+<!--                                <span class="text-center text-orange-500 mr-3" [@inOutAnimation] *ngIf="startDateEdited">Das Startdatum wurde angepasst</span>-->
+<!--                            </mat-hint>-->
+<!--                        </mat-form-field>-->
+<!--                    </div>-->
+<!--                    <div>-->
+<!--                        <mat-form-field appearance="outline" class="ml-3 mb-0">-->
+<!--                            <mat-label>Ende</mat-label>-->
+<!--                            <input [readonly]="true" formControlName="afterDate" matInput-->
+<!--                                   [matDatetimepicker]="pickerEnd"-->
+<!--                                   [(ngModel)]="model.end">-->
+<!--                            &lt;!&ndash;                        <mat-hint>MM/DD/YYYY</mat-hint>&ndash;&gt;-->
+<!--                            <mat-datetimepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datetimepicker-toggle>-->
+<!--                            <mat-datetimepicker #pickerEnd (selectedChanged)="changeDate($event, false)"-->
+<!--                                                type="datetime"></mat-datetimepicker>-->
 
-                        </mat-form-field>
-                        <div class="text-center text-orange-500 mr-3" *ngIf="startDateEdited">Das Startdatum wurde angepasst</div>
-                    </div>
-                    <div>
-
-
-                        <mat-form-field appearance="outline" class="ml-3">
-                            <mat-label>Ende</mat-label>
-                            <input [readonly]="true" formControlName="afterDate" matInput
-                                   [matDatetimepicker]="pickerEnd"
-                                   [(ngModel)]="model.end">
-                            <!--                        <mat-hint>MM/DD/YYYY</mat-hint>-->
-                            <mat-datetimepicker-toggle matIconSuffix [for]="pickerEnd"></mat-datetimepicker-toggle>
-                            <mat-datetimepicker #pickerEnd (selectedChanged)="changeDate($event, false)"
-                                                type="datetime"></mat-datetimepicker>
-
-                            <input hidden="hidden" [ngModel]="model.end" [matDatetimepicker]="pickerEndTime"
-                                   [ngModelOptions]="{standalone: true}">
-                            <!-- Only change the time                       -->
-                            <mat-datetimepicker-toggle matIconSuffix [for]="pickerEndTime"
-                                                       matTooltip="Nur Zeit ändern"></mat-datetimepicker-toggle>
-                            <mat-datetimepicker #pickerEndTime type="time"
-                                                (selectedChanged)="changeTime($event, false)"></mat-datetimepicker>
-                        </mat-form-field>
-                        <div class="text-center text-orange-500 ml-3" *ngIf="endDateEdited">Das Enddatum wurde angepasst</div>
-                    </div>
+<!--                            <input hidden="hidden" [ngModel]="model.end" [matDatetimepicker]="pickerEndTime"-->
+<!--                                   [ngModelOptions]="{standalone: true}">-->
+<!--                            &lt;!&ndash; Only change the time                       &ndash;&gt;-->
+<!--                            <mat-datetimepicker-toggle matIconSuffix [for]="pickerEndTime"-->
+<!--                                                       matTooltip="Nur Zeit ändern"></mat-datetimepicker-toggle>-->
+<!--                            <mat-datetimepicker #pickerEndTime type="time"-->
+<!--                                                (selectedChanged)="changeTime($event, false)"></mat-datetimepicker>-->
+<!--                            <mat-hint>-->
+<!--                                <span class="text-center text-orange-500 ml-3" [@inOutAnimation] *ngIf="endDateEdited">Das Enddatum wurde angepasst</span>-->
+<!--                            </mat-hint>-->
+<!--                        </mat-form-field>-->
+<!--                    </div>-->
+<!--                </div>-->
+                <mat-error class="text-center" *ngIf="myForm.controls.dates.hasError('dateAfter')">Das Ennddatum darf nicht am oder vor dem Startdatum liegen</mat-error>
+                <mat-error class="text-center" *ngIf="!myForm.controls.text.valid">Es muss ein Titel eingegeben werden</mat-error>
+                <div class="w-full flex flex-row justify-center p-4">
+                    <button mat-fab color="primary" (click)="checkAndBuildEvent()"
+                            [disabled]="($shiftTypesLoading | async) || !myForm.valid">
+                        <mat-icon>save</mat-icon>
+                    </button>
                 </div>
-                <button mat-icon-button color="primary" (click)="checkAndBuildEvent()"
-                        [disabled]="($shiftTypesLoading | async) || !myForm.valid">
-                    <mat-icon>save</mat-icon>
-                </button>
-                <!--    <mat-error *ngIf="myForm.hasError('dateAfter')">asdasdad</mat-error>-->
-                <mat-error *ngIf="!myForm.valid">asdasdad</mat-error>
+<!--                <mat-error *ngIf="!myForm.valid"></mat-error>-->
             </div>
         </form>
         <div *ngIf="eventDefined$ | async">

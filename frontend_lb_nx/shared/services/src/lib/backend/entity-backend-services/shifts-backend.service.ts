@@ -18,7 +18,7 @@ export class ShiftsBackendService extends BaseCommunicatorService<Shift>{
   }
 
   public assign(shift: Shift, deassign: boolean = false,  userId?: string): Observable<Shift> {
-    return super.post(BACKENDPATHS.shift_assign + '/' + shift.id +'/' +deassign , shift)
+    return super.post(BACKENDPATHS.shift_assign + '/' + shift.id +'/' + (deassign? 1 : 0) , shift)
   }
 
   private mapShift(shift: Shift): Shift {
