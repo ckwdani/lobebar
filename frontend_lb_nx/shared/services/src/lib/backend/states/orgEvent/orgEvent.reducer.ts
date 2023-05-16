@@ -34,7 +34,8 @@ export const reducer = createReducer(
     on(OrgEventActions.loadOrgEventsSuccess, (state, {orgEventsPast, orgEventsFuture}) => { return {...state, comingEvents: orgEventsFuture, pastEvents: orgEventsPast, isLoading: false}}),
     on(OrgEventActions.loadOrgEventsFailure, (state, {error}) => ({...state, error, success: false})),
 
-    on(OrgEventActions.loadMoreFromFuture || OrgEventActions.loadMoreFromPast, (state) => {return{...state, isLoading: true}}),
+    on(OrgEventActions.loadMoreFromPast, (state) => {return{...state, isLoading: true}}),
+    on(OrgEventActions.loadMoreFromFuture, (state) => {return{...state, isLoading: true}}),
     on(OrgEventActions.loadMoreSuccess, (state, {orgEvents, months}) => {
        if(months > 0){
            return {...state, comingEvents: [...state.comingEvents, ...orgEvents], higherTimeStamp: state.higherTimestamp + monthSeconds * months, isLoading: false}
@@ -65,13 +66,14 @@ export const reducer = createReducer(
  * @param upcomingEvents
  */
 export function addToOneArray(orgevent: OrgEvent, pastEvents: OrgEvent[], upcomingEvents: OrgEvent[]): [OrgEvent[], OrgEvent[]]{
-
+    const pastEventsMut = [...pastEvents];
+    const upcomingEventsMut = [...upcomingEvents];
     if (orgevent.start.getTime() < Date.now()){
-        pastEvents.push(orgevent);
+        pastEventsMut.push(orgevent);
     }else{
-        upcomingEvents.push(orgevent);
+        upcomingEventsMut.push(orgevent);
     }
-    return [pastEvents, upcomingEvents];
+    return [pastEventsMut, upcomingEventsMut];
 }
 
 /**

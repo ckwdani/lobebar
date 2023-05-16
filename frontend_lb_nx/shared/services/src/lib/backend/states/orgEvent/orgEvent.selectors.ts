@@ -15,6 +15,11 @@ export const selectCommingOrgEvents = createSelector(
     (state: fromOrgEvents.OrgEventsState)=>state.comingEvents
 )
 
+export const selectPreviousOrgEvents = createSelector(
+    selectOrgEventsState,
+    (state: fromOrgEvents.OrgEventsState)=>state.pastEvents
+)
+
 
 export const selectOrgEventsLoading = createSelector(
     selectOrgEventsState,

@@ -31,10 +31,12 @@ export class EventOverviewComponent implements OnInit{
     const shiftsByType: {[key: string]: Shift[]} = {};
 
     for (const shift of shifts) {
-      if (!shiftsByType[shift.type.name]) {
-        shiftsByType[shift.type.name] = [];
+      if(shift.type !== null && shift.type !== undefined) {
+        if (!shiftsByType[shift.type.name]) {
+          shiftsByType[shift.type.name] = [];
+        }
+        shiftsByType[shift.type.name].push(shift);
       }
-      shiftsByType[shift.type.name].push(shift);
     }
     this.splittedShifts = Object.values(shiftsByType);
   }

@@ -5,10 +5,27 @@
             <button *ngSwitchCase="UserRoles.ADMIN||UserRoles.MODERATOR" routerLink="/event_add" mat-icon-button color="primary"><mat-icon>add</mat-icon></button>
         </div>
         <br>
-            <div *ngFor="let elem of ($orgEventsObs | async)">
-                <frontend-lb-nx-event-overview [shifts]="of(elem.shifts??[])" [orgEvent]="of(elem)" ></frontend-lb-nx-event-overview>
+        <button mat-flat-button class="w-full" color="accent" (click)="showPrevoius = !showPrevoius">
+            <span *ngIf="!showPrevoius">Vergangene Laden</span>
+            <span *ngIf="showPrevoius">Vergangene verbergen</span>
+        </button>
+        <span *ngIf="showPrevoius">
+            <button mat-flat-button class="w-full mt-3 mb-3" (click)="currentPreviousIndex = currentPreviousIndex + 6" *ngIf="($orgEventsLoading | async) === false">M E H R  &nbsp; &nbsp; L A D E N</button>
+<!--            <button mat-flat-button class="w-full mt-3 mb-3" (click)="loadOrgEvents(true)" *ngIf="($orgEventsLoading | async) === false">M E H R  &nbsp; &nbsp; L A D E N</button>-->
+            <button mat-flat-button class="w-full mt-3 mb-3"  *ngIf="($orgEventsLoading | async)"><mat-spinner color="primary" diameter="15"></mat-spinner></button>
+            <div  *ngFor="let elem of (getOldOrgEventsWithIndex() | async);">
+                <frontend-lb-nx-event-overview [shifts]="of(elem.shifts??[])"
+                                               [orgEvent]="of(elem)"></frontend-lb-nx-event-overview>
                 <mat-divider></mat-divider>
             </div>
+        </span>
+        <div *ngFor="let elem of (getNewWithIndex() | async)">
+            <frontend-lb-nx-event-overview [shifts]="of(elem.shifts??[])" [orgEvent]="of(elem)" ></frontend-lb-nx-event-overview>
+            <mat-divider></mat-divider>
+        </div>
+        <button mat-flat-button class="w-full mt-3 mb-3" (click)="currentUpComingIndex = currentUpComingIndex + 6" *ngIf="($orgEventsLoading | async) === false">M E H R  &nbsp; &nbsp; L A D E N</button>
+        <!--            <button mat-flat-button class="w-full mt-3 mb-3" (click)="loadOrgEvents(true)" *ngIf="($orgEventsLoading | async) === false">M E H R  &nbsp; &nbsp; L A D E N</button>-->
+        <button mat-flat-button class="w-full mt-3 mb-3"  *ngIf="($orgEventsLoading | async)"><mat-spinner color="primary" diameter="15"></mat-spinner></button>
     </mat-tab>
     <mat-tab label="Deine kommenden Schichten">
         <br>
