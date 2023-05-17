@@ -19,8 +19,14 @@ export const initialState: SnackState = {
 export const reducer = createReducer(
   initialState,
 
-  on(SnackActions.loadOwnUsedSnacks, state => state),
-    on(SnackActions.useSnack, (state,{snack})=>{
+  on(SnackActions.loadOwnUsedSnacks, (state) => state),
+    on(SnackActions.loadOwnUsedSnacksSuccesfully,(state, {ownUsedSnacks})=>{
+        return{...state, usedSnacks: ownUsedSnacks, isLoading: false}
+    }),
+    on(SnackActions.loadOwnUsedSnacksFailure, (state, {error})=>({
+        ...state, error: error
+    })),
+    on(SnackActions.useSnack, (state,{snackType})=>{
         return{...state, isLoading: true}
     }),
     on(SnackActions.useSnackSuccesfully, (state,{snackType})=>{

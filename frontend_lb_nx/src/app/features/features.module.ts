@@ -37,6 +37,9 @@ import { SingleEventStore } from './single-event/single-event.store';
 import {MatDividerModule} from "@angular/material/divider";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { SnackUseOverviewComponent } from './overviews/snack-use-overview/snack-use-overview.component';
+import {MatListModule} from "@angular/material/list";
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatSortModule} from "@angular/material/sort";
 
 // Register the German locale data
 
@@ -80,6 +83,9 @@ import { SnackUseOverviewComponent } from './overviews/snack-use-overview/snack-
         MatExpansionModule,
         MatDividerModule,
         MatTooltipModule,
+        MatListModule,
+        MatPaginatorModule,
+        MatSortModule,
     ],
   providers: [
     EventsOverviewStore,

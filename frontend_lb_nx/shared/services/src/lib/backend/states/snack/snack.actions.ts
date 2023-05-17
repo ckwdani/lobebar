@@ -31,7 +31,7 @@ export const loadOwnUsedSnacksCountFailure = createAction(
 
 export const useSnack = createAction(
     '[Snack] Use Snack',
-    props<{snack: Snack, userId?: string}>()
+    props<{snackType: SnackType, amount?: number, userId?: string}>()
 );
 
 export const useSnackSuccesfully = createAction(

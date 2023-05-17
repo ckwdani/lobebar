@@ -5,17 +5,24 @@ import {catchError, concatMap, map, switchMap} from 'rxjs/operators';
 import {Observable, EMPTY, of} from 'rxjs';
 import * as SnackActions from './snack.actions';
 import {SnackService} from "../../entity-backend-services/snack.service";
+import {addMonthsToDate, dateToUnix} from "../../../../../../../src/app/core/utils/date-functions";
 
 @Injectable()
 export class SnackEffects {
 
 
   loadOwnUsedSnacks$ = createEffect(() => {
-    return this.actions$.pipe( 
-
+    return this.actions$.pipe(
       ofType(SnackActions.loadOwnUsedSnacks),
-      /** An EMPTY observable only emits completion. Replace with your own observable API request */
-      concatMap(() => EMPTY as Observable<{ type: string }>)
+        switchMap(()=>
+            //TODO: use real id
+        this.snackService.getUsedSnacks(dateToUnix(addMonthsToDate(new Date(), -12)), dateToUnix(new Date()), "3d66860a-76d5-4019-a258-967e64856aab").pipe(
+            map((snacks)=>{
+                return SnackActions.loadOwnUsedSnacksSuccesfully({ownUsedSnacks: snacks})
+            }),
+            catchError((error)=> of(SnackActions.loadOwnUsedSnacksFailure({error})))
+        )
+        )
     );
   });
 
@@ -23,7 +30,7 @@ export class SnackEffects {
     return this.actions$.pipe(
         ofType(SnackActions.useSnack),
         switchMap((action) =>
-            this.snackService.snackUsed(action.snack.id??"", action.userId).pipe(
+            this.snackService.snackUsed(action.snackType.id??"",action.amount??1, action.userId).pipe(
                 map((snackType)=>{
                   return SnackActions.useSnackSuccesfully({snackType})
                 }),

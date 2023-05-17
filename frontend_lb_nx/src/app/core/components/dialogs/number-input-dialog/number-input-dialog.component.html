@@ -1,0 +1,13 @@
+<h1 mat-dialog-title>{{displayString}} benutzen.</h1>
+<div mat-dialog-content class="!flex !justify-around !flex-col">
+    <mat-form-field appearance="outline" class="max-w-[300px] w-48 mb-3">
+        <mat-label>Anzahl</mat-label>
+        <input matInput type="number" min="1" [(ngModel)]="data.value" [formControl]="fcnumber" (keydown.enter)="onSubmit()">
+        <mat-error *ngIf="!fcnumber.valid||!checkInteger(data.value)">Anzahl muss grösser als 0 sein und ganzzahlig.</mat-error>
+    </mat-form-field>
+</div>
+<div *ngIf="data.errorcode !== undefined" class="text-red-600 w-full flex justify-center"><p>{{getErrorMessage(data.errorcode!)}}</p></div>
+<div mat-dialog-actions class="mat-dialog-flexed" >
+    <button mat-button (click)="onNoClick()">Abbrechen</button>
+    <button mat-button [disabled]="!fcnumber.valid||!checkInteger(data.value)" (click)="onSubmit()" [mat-dialog-close]="data.value">Ok <mat-icon>send</mat-icon></button>
+</div>

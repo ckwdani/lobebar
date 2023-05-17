@@ -16,6 +16,7 @@ import {
   ImportantDeleteDialogComponent
 } from "./components/dialogs/important-delete-dialog/important-delete-dialog.component";
 import {Store} from "@ngrx/store";
+import { NumberInputDialogComponent } from './components/dialogs/number-input-dialog/number-input-dialog.component';
 
 
 @NgModule({
@@ -23,6 +24,7 @@ import {Store} from "@ngrx/store";
     NavigationComponent,
     EditStringDialogComponent,
     ImportantDeleteDialogComponent,
+    NumberInputDialogComponent,
   ],
   exports: [NavigationComponent, EditStringDialogComponent, ImportantDeleteDialogComponent],
   imports: [
