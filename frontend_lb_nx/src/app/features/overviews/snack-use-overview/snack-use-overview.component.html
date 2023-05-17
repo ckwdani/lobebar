@@ -1,10 +1,10 @@
 <div class="flex flex-row justify-center items-center">
     <div *ngIf="usedSnacks" class="list">
         <p class="text-center">Snackhistorie:</p>
-        <mat-list matSort class="mat-elevation-z1" *ngFor="let elem of (displayData | async)" role="list">
-            <mat-list-item role="listitem">
-                <span matListItemTitle class="text-sm">{{elem.snackType.name}} </span>
-                <span matListItemLine class="text-sm">{{elem.date |date: 'dd. MMMM yyyy \'um\' HH:mm':'de-DE'}}</span>
+        <mat-list matSort class="item p-0!" *ngFor="let elem of (displayData | async)" role="list">
+            <mat-list-item  role="listitem">
+                <span matListItemTitle>{{elem.snackType.name}}  </span>
+                <span matListItemLine>{{elem.date |date: 'dd. MMMM yyyy \'um\' HH:mm':'de-DE'}}</span>
             </mat-list-item>
         </mat-list>
         <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]"

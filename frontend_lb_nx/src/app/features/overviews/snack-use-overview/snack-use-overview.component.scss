@@ -7,14 +7,20 @@ $dark-foreground-palette: map-get($lobebar-theme, background);
 $orig-selected-row-fill-color: mdc-data-table-theme.$selected-row-fill-color;
 //$background: map-get($dark-foreground-palette, background);
 //$test: theming.get-color-from-palette($background, 'card');
-$lighnedup: color.adjust(mat-color($dark-foreground-palette, background), $lightness: 10%);
+$lighnedupDark: color.adjust(mat-color($dark-foreground-palette, background), $lightness: 20%);
+$lighnedup: color.adjust(mat-color($dark-foreground-palette, background), $lightness: 6%);
 $lighnedupMore: color.adjust($lighnedup, $lightness: 5%);
 .list{
     font-size: 14px;
     min-width: 200px;
-    background-color: $lighnedup;
+    background-color: $lighnedupDark;
     border-radius: 30px;
     box-shadow: $lighnedupMore;
     padding: 20px;
-    margin-bottom: 30px;
+    margin-bottom: 20px;
+}
+
+.item{
+    background-color: $lighnedup;
+    font-size: 14px!important;
 }
