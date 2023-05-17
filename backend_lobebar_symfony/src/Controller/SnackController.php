@@ -73,7 +73,6 @@ class SnackController extends _Base_Controller
     #[Route("/api/snacks/own/{start?}/{end?}", methods: ["GET"])]
     public function getOwnSnacks(?int $start, ?int $end):JsonResponse{
         return $this->getUsedSnacks($start, $end, $this->getUser()->convertOwnUuid());
-
     }
 
 

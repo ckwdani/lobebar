@@ -58,7 +58,9 @@ class ShiftRepository extends ServiceEntityRepository
             $qb->andWhere($qb->expr()->in('su', ':user_id'))
                 ->setParameter('user_id', $user_id->toBinary());
         }
-        return $qb->getQuery()->getResult();
+        return array_filter($qb->getQuery()->getResult(), function(Shift $shift){
+            return $shift->getType() !== null;
+        });
     }
 
     // get outstanding shifts where the headcount is not met by the number of users related to the shift via the shift_user table and where the logged in user is not signed up for
