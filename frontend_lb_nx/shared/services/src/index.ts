@@ -36,3 +36,8 @@ export * from './lib/validators/DateValidator';
 export * from './lib/backend/states/own-user/own-user.actions';
 export * from './lib/backend/states/own-user/own-user.effects';
 export * from './lib/backend/states/own-user/own-user.selectors';
+
+//snacks
+export * from './lib/backend/states/snack/snack.actions';
+export * from './lib/backend/states/snack/snack.effects';
+export * from './lib/backend/states/snack/snack.selectors';

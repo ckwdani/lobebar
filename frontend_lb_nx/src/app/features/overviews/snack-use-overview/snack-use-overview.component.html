@@ -1,0 +1,6 @@
+<app-simple-table [loading]="loadingSnackTypes"
+                  [showAddEditDelete]="false"
+                  (use)="openDialog(false, false)"
+                  [additionalColumns]="[{displayedString: 'value', getter: value}]"
+                  *ngIf="($shiftTypesLoading |async) === false"  [data]="($snackTypes | async)??[]" [convert]="nameFromSnackType"  caption="Snackarten" #tableSnack></app-simple-table>
+

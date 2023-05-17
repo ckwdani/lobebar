@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {Store} from "@ngrx/store";
-import {selectUser} from "@frontend-lb-nx/shared/services";
+import {selectOwnUser, selectUser} from "@frontend-lb-nx/shared/services";
 
 @Component({
   selector: 'frontend-lb-nx-own-user-overview',
@@ -9,7 +9,7 @@ import {selectUser} from "@frontend-lb-nx/shared/services";
 })
 export class OwnUserOverviewComponent {
 
-  $userObs = this.store.select(selectUser);
+  $userObs = this.store.select(selectOwnUser);
 
   // constructor with store
     constructor(public store: Store){

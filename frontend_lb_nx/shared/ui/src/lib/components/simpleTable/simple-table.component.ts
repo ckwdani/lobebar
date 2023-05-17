@@ -39,11 +39,18 @@ export class SimpleTableComponent<E> implements OnInit, OnChanges, AfterViewInit
    * the component defines the editelement event, it gives back an specific element when some button to edit was clicked
    */
   @Output() edit = new EventEmitter<E>();
+
+  /**
+   * the component defines the use element event, it gives back an specific element when some button to use was clicked
+   */
+  @Output() use = new EventEmitter<E>();
   /**
    * the component degines the deleteelement event, it gives back an specific element when some button to delete was clicked
    */
   @Output() delete = new EventEmitter<E>();
   @Output() add = new EventEmitter<void>();
+
+  @Input() showAddEditDelete= true
 
 
   /**
@@ -72,6 +79,7 @@ export class SimpleTableComponent<E> implements OnInit, OnChanges, AfterViewInit
     this.additionalColumns.forEach((column) => {
         this.displayedColumns.splice(1, 0, column.displayedString);
     });
+
     // this.displayedColumns = this.displayedColumns.concat(this.additionalColumnsDisplayed);
 
 
@@ -117,6 +125,9 @@ export class SimpleTableComponent<E> implements OnInit, OnChanges, AfterViewInit
     this.edit.emit(element);
   }
 
+  onUseClick(element: E): void {
+    this.use.emit(element)
+  }
 }
 
 export class SimpleTableState<E> {

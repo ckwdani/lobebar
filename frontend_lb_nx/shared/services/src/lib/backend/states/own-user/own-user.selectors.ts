@@ -9,3 +9,13 @@ export const selectOwnUser = createSelector(
     selectOwnUserState,
     (state: fromOwnUser.OwnUserState)=>state.ownUser
 );
+
+export const selectAchievements = createSelector(
+    selectOwnUserState,
+    (state: fromOwnUser.OwnUserState) => state.ownUser?.achievements
+);
+
+export const selectSelectedAchievment = createSelector(
+    selectOwnUserState,
+    (state: fromOwnUser.OwnUserState) => state.ownUser?.selectedAchievement
+);

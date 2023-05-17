@@ -1,7 +1,7 @@
 <div class="tableFlexContainer test" [@sequentialFadeIn] >
   <div class="tableFlexElement fadeInElement">
     <div class="w-full flex justify-center mb-3">
-      <button mat-flat-button color="primary" (click)="add.emit()" class="matButton">{{caption}} hinzufügen</button>
+      <button *ngIf="showAddEditDelete" mat-flat-button color="primary" (click)="add.emit()" class="matButton">{{caption}} hinzufügen</button>
     </div>
     <div id="tableContainer">
       <mat-progress-bar *ngIf="loading" class="w-full" mode="buffer"></mat-progress-bar>
@@ -28,11 +28,14 @@
           <th mat-header-cell *matHeaderCellDef> Aktionen </th>
           <td mat-cell *matCellDef="let element" >
             <div id="elementActions">
-              <button mat-icon-button (click)="onDeletionClick(element)" aria-label="Example icon button with a delete icon">
+              <button *ngIf="showAddEditDelete" mat-icon-button (click)="onDeletionClick(element)" aria-label="Example icon button with a delete icon">
                 <mat-icon>delete</mat-icon>
               </button>
-              <button mat-icon-button (click)="onEditClick(element)" aria-label="Example icon button with a delete icon">
+              <button *ngIf="showAddEditDelete" mat-icon-button (click)="onEditClick(element)" aria-label="Example icon button with a delete icon">
                 <mat-icon>edit</mat-icon>
+              </button>
+              <button *ngIf="!showAddEditDelete" mat-icon-button (click)="onUseClick(element)" aria-label="Example icon button with a delete icon">
+                <mat-icon>add</mat-icon>
               </button>
               <!-- <button mat-icon-button color="primary" aria-label="Example icon button with a delete icon">
                 <mat-icon>edit</mat-icon>

@@ -4,7 +4,9 @@
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
     <mat-toolbar>Menu <img class="p-2 h-14 w-14" src="assets/emilsecke_logo.png" alt="Image"></mat-toolbar>
-    <mat-toolbar *ngIf="$userLoaded | async">Wilkommen {{($loggedInUser | async)?.firstname}}</mat-toolbar>
+    <mat-toolbar *ngIf="$userLoaded | async">
+         Willkommen {{($loggedInUser | async)?.firstname}}
+    </mat-toolbar>
         <mat-nav-list [ngSwitch]="$roleUser|async">
           <mat-divider></mat-divider>
           <a *ngIf="!$isLoggedIn" mat-list-item routerLink="/login">Login</a>

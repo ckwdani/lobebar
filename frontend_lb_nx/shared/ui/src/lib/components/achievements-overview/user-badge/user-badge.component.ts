@@ -2,7 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {Achievement, genSelectedAchievement, User} from "@frontend-lb-nx/shared/entities";
 import {Observable, of, Subscription, switchMap} from "rxjs";
 import {Store} from "@ngrx/store";
-import {selectSelectedAchievment, selectUser} from "@frontend-lb-nx/shared/services";
+import {selectSelectedAchievment} from "@frontend-lb-nx/shared/services";
 
 @Component({
   selector: 'frontend-lb-nx-user-badge',

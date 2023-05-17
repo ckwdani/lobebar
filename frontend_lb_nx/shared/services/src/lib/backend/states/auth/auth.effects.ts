@@ -69,21 +69,6 @@ export class AuthEffects {
         }));
     });
 
-    updateSelectedAchievement$ = createEffect(()=> {
-        return this.actions$.pipe(
-            ofType(AuthActions.updateSelectedAchievement),
-            switchMap((action)=>
-                this.userService.updateAchievement(action.achievement).pipe(
-                    map((user)=>{
-                        return AuthActions.updateUserSuccessful({user: user})
-                    }),
-                    catchError((error) => of(AuthActions.updateUserFailure({error})))
-                )
-            )
-        )
-    })
-
-
   constructor(private actions$: Actions, private authService: AuthService, private router: Router, private userService: UserBackendService) {
   }
 }

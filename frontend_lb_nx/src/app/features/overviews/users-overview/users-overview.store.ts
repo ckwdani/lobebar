@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import {Observable, of, switchMap, tap} from "rxjs";
 import {User} from "@frontend-lb-nx/shared/entities";
-import {
-    UserBackendService
-} from "../../../../../shared/services/src/lib/backend/entity-backend-services/user-backend.service";
+import {UserBackendService} from "../../../../../shared/services/src/lib/backend/entity-backend-services/user-backend.service";
 import {catchError} from "rxjs/operators";
 import {createAction, props, select, Store} from '@ngrx/store';
 import {selectUser, updateUser} from "@frontend-lb-nx/shared/services";

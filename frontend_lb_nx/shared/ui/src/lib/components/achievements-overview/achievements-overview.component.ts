@@ -7,7 +7,12 @@ import {
   Shift
 } from "@frontend-lb-nx/shared/entities";
 import {Store} from "@ngrx/store";
-import {selectUser, updateSelectedAchievement} from "@frontend-lb-nx/shared/services";
+import {
+  selectOwnUser,
+  selectOwnUserState,
+  selectUser,
+  updateSelectedAchievement
+} from "@frontend-lb-nx/shared/services";
 import {animate, state, style, transition, trigger} from "@angular/animations";
 
 @Component({
@@ -29,7 +34,7 @@ import {animate, state, style, transition, trigger} from "@angular/animations";
   ]
 })
 export class AchievementsOverviewComponent {
-  $userObs = this.store.select(selectUser)
+  $userObs = this.store.select(selectOwnUser)
   achievementsLoaded?: AchievementBackend
   //@ViewChildren('myDiv') myDivList: QueryList<ElementRef>|undefined;
   myDivState = 'start';

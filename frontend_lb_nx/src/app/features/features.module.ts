@@ -36,6 +36,7 @@ import { SingleEventComponent } from './single-event/single-event.component';
 import { SingleEventStore } from './single-event/single-event.store';
 import {MatDividerModule} from "@angular/material/divider";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { SnackUseOverviewComponent } from './overviews/snack-use-overview/snack-use-overview.component';
 
 // Register the German locale data
 
@@ -53,6 +54,7 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     ShiftType_DoneEW_AddComponentDialog,
     ShiftTypesOverviewComponent,
     SingleEventComponent,
+    SnackUseOverviewComponent,
   ],
   exports: [DashboardComponent, OwnUserOverviewComponent],
     imports: [

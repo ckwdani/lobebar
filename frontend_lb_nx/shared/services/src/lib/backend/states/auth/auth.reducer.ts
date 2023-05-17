@@ -40,11 +40,4 @@ export const reducer = createReducer(
   on(AuthActions.loadUser, (state) => ({...state, isLoading: true, userLoaded: false})),
   on(AuthActions.loadUserError, (state, {error}) => ({...state, error, isLoading: false})),
   on(AuthActions.logout, () => (initialState)),
-    on(AuthActions.updateUser, (state, { user }) => {
-        return { ...state, user: user };
-    }),
-    on(AuthActions.updateUserSuccessful, (state,{user}) => {
-        return {...state, user: user}
-    })
-
 );

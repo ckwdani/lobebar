@@ -23,16 +23,6 @@ export const selectUser = createSelector(
     (state: fromAuth.AuthState) => state.user
 );
 
-export const selectAchievements = createSelector(
-    selectAuthState,
-    (state: fromAuth.AuthState) => state.user?.achievements
-);
-
-export const selectSelectedAchievment = createSelector(
-    selectAuthState,
-    (state: fromAuth.AuthState) => state.user?.selectedAchievement
-);
-
 export const selectUserRole = createSelector(
     selectAuthState,
     (state: fromAuth.AuthState) => state.user?.roles
