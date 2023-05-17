@@ -22,7 +22,12 @@
                 <mat-icon>add</mat-icon>
             </button>
         </div>
-        <frontend-lb-nx-event-overview [showAddShift]="of((store.vm$ | async)?.showAddShift ?? false)" [showName]="false" [shifts]="of((store.vm$ | async)?.event?.shifts??[])" [orgEvent]="of((store.vm$ | async)!.event!)" ></frontend-lb-nx-event-overview>
+        <frontend-lb-nx-event-overview (deleteShiftEvent)="store.deleteShift($event)" [startDate]="(store.vm$ | async)?.event?.start!"
+                                       [showAddShift]="of((store.vm$ | async)?.showAddShift ?? false)"
+                                       [showName]="false" [shifts]="shifts$" [orgEvent]="of((store.vm$ | async)!.event!)"
+                                       (addShiftEvent)="store.addShift($event)"
+                                       [shiftTypes]="store.$shiftTypes"
+        ></frontend-lb-nx-event-overview>
     </div>
 
 

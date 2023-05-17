@@ -21,6 +21,13 @@ export class ShiftsBackendService extends BaseCommunicatorService<Shift>{
     return super.post(BACKENDPATHS.shift_assign + '/' + shift.id +'/' + (deassign? 1 : 0) , shift)
   }
 
+  public addShiftToEvent(shift: Shift, orgEvent: OrgEvent): Observable<Shift> {
+    return super.post(BACKENDPATHS.shift_event_add + '/' + orgEvent.id, shift)
+  }
+  public deleteShift(shift: Shift): Observable<Shift> {
+    return super.delete(BACKENDPATHS.shift_event_delete + '/' + shift.id)
+  }
+
   private mapShift(shift: Shift): Shift {
     return { ...shift};
   }

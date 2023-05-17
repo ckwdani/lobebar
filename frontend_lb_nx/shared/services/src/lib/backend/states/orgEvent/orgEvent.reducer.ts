@@ -1,7 +1,8 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as OrgEventActions from './orgEvent.actions';
-import {OrgEvent, OrgEventClass} from "@frontend-lb-nx/shared/entities";
+import {OrgEvent, OrgEventClass, Shift} from "@frontend-lb-nx/shared/entities";
 import * as ShiftTypeActions from "../shift-types/shift-type.actions";
+import * as ShiftActions from "../shift/shift.actions";
 
 export const orgEventFeatureKey = 'orgEvent';
 
@@ -57,6 +58,20 @@ export const reducer = createReducer(
         return{...state, pastEvents: pastEvents, comingEvents: upcomingEvents, isLoading: false}
     }),
     on(OrgEventActions.deleteOrgEventFailure, (state, {error}) => ({...state, error, success: false})),
+
+    /**
+     * Updates the orgEvent in the state
+     * Comes from [ShiftActions]
+     */
+    on(ShiftActions.addShiftToEventSuccess, (state, {shift})=>{
+        const [pastEvents, upcomingEvents] = addShifttoEvent(shift, state.pastEvents, state.comingEvents);
+        return {...state, pastEvents: pastEvents, comingEvents: upcomingEvents}}
+    ),
+
+    on(ShiftActions.deleteShiftFromEventSuccess, (state, {shift})=>{
+        const [pastEvents, upcomingEvents] = deleteShiftFromEvent(shift, state.pastEvents, state.comingEvents);
+        return {...state, pastEvents: pastEvents, comingEvents: upcomingEvents}}
+    ),
 );
 
 /**
@@ -73,6 +88,52 @@ export function addToOneArray(orgevent: OrgEvent, pastEvents: OrgEvent[], upcomi
     }else{
         upcomingEventsMut.push(orgevent);
     }
+    return [pastEventsMut, upcomingEventsMut];
+}
+
+
+/**
+ * delete shift from event that is either in past or future
+ */
+export function deleteShiftFromEvent(shift: Shift, pastEvents: OrgEvent[], upcomingEvents: OrgEvent[]): [OrgEvent[], OrgEvent[]]{
+    return [
+        pastEvents.map(event => {
+            if(event.id === shift.orgEvent?.id){
+                return {...event, shifts: event.shifts?.filter(s => s.id !== shift.id)};
+            }
+            return event;
+        }),
+        upcomingEvents.map(event => {
+            if(event.id === shift.orgEvent?.id){
+                return {...event, shifts: event.shifts?.filter(s => s.id !== shift.id)};
+            }
+            return event;
+        })
+    ];
+}
+
+/**
+ * finds the correct event and adds the shift to it
+ * @param shift
+ * @param pastEvents
+ * @param upcomingEvents
+ */
+export  function  addShifttoEvent(shift: Shift, pastEvents: OrgEvent[], upcomingEvents: OrgEvent[]): [OrgEvent[], OrgEvent[]]{
+
+
+    const pastEventsMut = pastEvents.map(event => {
+        if(event.id === shift.orgEvent?.id){
+            return {...event, shifts: [...event.shifts??[], shift]};
+        }
+        return event;
+    });
+    const upcomingEventsMut = upcomingEvents.map(event => {
+        if(event.id === shift.orgEvent?.id){
+            return {...event, shifts: [...event.shifts??[], shift]};
+
+        }
+        return event;
+    });
     return [pastEventsMut, upcomingEventsMut];
 }
 

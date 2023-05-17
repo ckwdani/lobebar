@@ -3,11 +3,13 @@ import {OrgEvent, Shift, ShiftType} from "@frontend-lb-nx/shared/entities";
 import {filter, Observable, of} from "rxjs";
 import {Store} from "@ngrx/store";
 import {selectOwnShifts} from "@frontend-lb-nx/shared/services";
+import {InSiteAnimations} from "../../animations/InSiteAnimations";
 
 @Component({
   selector: 'frontend-lb-nx-event-overview',
   templateUrl: './event-overview.component.html',
   styleUrls: ['./event-overview.component.scss'],
+  animations: [InSiteAnimations.inOutAnimation]
 })
 export class EventOverviewComponent implements OnInit{
   @Input() orgEvent?: Observable<OrgEvent>;
@@ -17,6 +19,7 @@ export class EventOverviewComponent implements OnInit{
   @Input() shiftTypes?: Observable<ShiftType[]>;
   @Input() showAddShift: Observable<boolean> = of(false);
   @Output() addShiftEvent = new EventEmitter<Shift>();
+  @Output() deleteShiftEvent = new EventEmitter<Shift>();
 
   @Input() showName = true;
 

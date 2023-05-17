@@ -36,6 +36,20 @@ export class ShiftEffects {
                 )));
     });
 
+
+    addShiftToEvent$ = createEffect(()=>{
+        return this.actions$.pipe(
+            ofType(ShiftActions.addShiftToEvent),
+            switchMap((action)=>
+                this.shiftsService.addShiftToEvent(action.shift, action.event).pipe(
+                    map((returnedShift)=>{
+                        return ShiftActions.addShiftToEventSuccess({shift: returnedShift});
+                    }),
+                    catchError((error)=> of(ShiftActions.addShiftToEventFailure({error})))
+                ))
+        );
+    })
+
     assignShift$ = createEffect(()=>{
         return this.actions$.pipe(
             ofType(ShiftActions.assignShift),

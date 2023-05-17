@@ -24,6 +24,8 @@ export class SingleEventComponent implements OnInit{
     }
 
 
+    shifts$ = this.store.vm$.pipe(map(next => next.event?.shifts??[]));
+
 
     missbiggerZero$ = this.store.selectMissingPersons$.pipe(map(next => next > 0));
 
@@ -32,6 +34,8 @@ export class SingleEventComponent implements OnInit{
     ngOnInit() {
         registerLocaleData(localeDe);
     }
+
+
 
 
     protected readonly of = of;

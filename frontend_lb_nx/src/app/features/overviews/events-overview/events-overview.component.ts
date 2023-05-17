@@ -95,7 +95,7 @@ export class EventsOverviewComponent {
 
       }
       const eventsMut = [...events]
-      return eventsMut.reverse().slice(0, this.currentUpComingIndex)
+      return eventsMut.reverse().slice(0, this.currentUpComingIndex).reverse()
     }))
   }
 }

@@ -25,6 +25,8 @@ export class BACKENDPATHS{
 
     //SHIFT
     static readonly shift_user_shifts = this.baseApiUrl + "/api/getUserShifts" ///{userId}/{start}/{end}
+    static readonly shift_event_add = this.baseApiUrl + "/mod_api/shift/add" ///{eventId}
+    static readonly shift_event_delete = this.baseApiUrl + "/mod_api/shift/delete" ///{shiftId}
     static readonly shift_outstanding_shifts = this.baseApiUrl + "/api/getOutstandingShifts" // /{start}/{end}/{user_id}
     //ASSIGN
     static readonly shift_assign = this.baseApiUrl + "/api/assignShift" // /shift id

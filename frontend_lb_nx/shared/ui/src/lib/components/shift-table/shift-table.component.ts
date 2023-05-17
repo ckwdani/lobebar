@@ -1,14 +1,27 @@
-import {Component, Input} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  EventEmitter,
+  Input,
+  OnChanges,
+  OnInit,
+  Output,
+  SimpleChanges,
+  ViewChild
+} from '@angular/core';
 import {OrgEvent, Shift, ShiftType, User} from "@frontend-lb-nx/shared/entities";
 import {on, Store} from "@ngrx/store";
 import {assignShift, deassignShift, selectUser, ShiftEffects} from "@frontend-lb-nx/shared/services";
+import {MatPaginator} from "@angular/material/paginator";
+import {MatTableDataSource} from "@angular/material/table";
 
 @Component({
   selector: 'frontend-lb-nx-shift-table',
   templateUrl: './shift-table.component.html',
   styleUrls: ['./shift-table.component.scss'],
 })
-export class ShiftTableComponent {
+export class ShiftTableComponent implements AfterViewInit, OnInit, OnChanges {
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
   @Input() shifts: Shift[] = []
   @Input() orgEvent: OrgEvent={
     name: "",
@@ -17,6 +30,10 @@ export class ShiftTableComponent {
     shifts: this.shifts
   }
   @Input() showEditDelete=false
+  @Output() deleteShiftEvent = new EventEmitter<Shift>();
+
+
+  elementsDatasource: MatTableDataSource<Shift> = new MatTableDataSource<Shift>();
 
   displayedColumns: string[] = ['datetime', 'description', 'num_persons', 'persons', 'assign'];
   user: User|undefined = undefined
@@ -24,6 +41,21 @@ export class ShiftTableComponent {
 
   constructor(private store: Store) {
     this.store.select(selectUser).subscribe(next => this.user=next)
+  }
+
+  ngOnChanges(changes: SimpleChanges): void{
+    if (changes['data'] !== undefined) {
+      this.setTableData(changes['data'].currentValue);
+    }
+  }
+
+  ngOnInit(): void {
+    this.setTableData(this.shifts);
+  }
+  ngAfterViewInit() {
+    if (this.paginator !== undefined) {
+      this.elementsDatasource.paginator = this.paginator;
+    }
   }
 
   //change the row color
@@ -82,21 +114,19 @@ export class ShiftTableComponent {
   }
 
   deleteShift(rowData: Shift){
-    /*
-    const index=ELEMENT_DATA.indexOf(rowData)
-    ELEMENT_DATA.splice(index,1)
-    const index2= this.shifts.indexOf(rowData)
-    this.shifts.splice(index2, 1)
-    console.log(this.shifts)
-    if(this.orgEvent.shifts!=undefined){
-      const index3 = this.orgEvent.shifts.indexOf(rowData)
-      this.orgEvent.shifts.splice(index3, 1)
-    }
-
-     */
+    this.deleteShiftEvent.emit(rowData);
   }
 
   mapToName(arr: User[]){
     return arr.map( (u)=> " "+u.username)
   }
+
+
+  /**
+   * convert the array to the table data
+   */
+  setTableData(elements: Shift[]): void{
+    this.elementsDatasource.data = elements;
+  }
+
 }

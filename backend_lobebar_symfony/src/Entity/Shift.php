@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
+use JMS\Serializer\Annotation\SerializedName;
 use JMS\Serializer\Annotation\Type;
 
 #[ORM\Entity(repositoryClass: ShiftRepository::class)]
@@ -28,6 +29,7 @@ class Shift extends _Base_Entity
 
     #[ORM\ManyToOne(inversedBy: 'shifts', cascade: ["persist"])]
     #[ORM\JoinColumn(nullable: false, onDelete: "CASCADE")]
+    #[SerializedName('orgEvent')]
     private ?Orgevent $orgevent = null;
 
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'shifts')]
