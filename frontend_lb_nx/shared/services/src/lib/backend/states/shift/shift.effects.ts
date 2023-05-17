@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {catchError, concatMap, map, switchMap} from 'rxjs/operators';
+import {catchError, concatMap, map, switchMap, withLatestFrom} from 'rxjs/operators';
 import {Observable, EMPTY, of} from 'rxjs';
 import * as ShiftActions from './shift.actions';
-import {ShiftsBackendService} from "@frontend-lb-nx/shared/services";
+import {selectOrgEventsState, selectUser, ShiftsBackendService} from "@frontend-lb-nx/shared/services";
 import {addMonthsToDate, dateToUnix} from "../../../../../../../src/app/core/utils/date-functions";
+import {Store} from "@ngrx/store";
 
 @Injectable()
 export class ShiftEffects {
@@ -25,8 +26,9 @@ export class ShiftEffects {
     loadOutstandingShifts$ = createEffect(() => {
         return this.actions$.pipe(
             ofType(ShiftActions.loadOutstandingShifts),
-            switchMap(( ) =>
-                this.shiftsService.getOutstandingShifts("3d66860a-76d5-4019-a258-967e64856aab", dateToUnix(new Date()), dateToUnix(addMonthsToDate(new Date(), 3))).pipe(
+            withLatestFrom(this.store.select(selectUser)),
+            switchMap(([action, user]) =>
+                this.shiftsService.getOutstandingShifts(user?.id?? "00", dateToUnix(new Date()), dateToUnix(addMonthsToDate(new Date(), 3))).pipe(
                     map((shifts) => {
                         return ShiftActions.loadOutstandingShiftsSuccess({outstandingShifts: shifts})
                     }),
@@ -60,5 +62,5 @@ export class ShiftEffects {
         )
     })
 
-  constructor(private actions$: Actions, private shiftsService: ShiftsBackendService) {}
+  constructor(private actions$: Actions, private shiftsService: ShiftsBackendService, private store: Store) {}
 }

@@ -30,7 +30,7 @@ export const orgEventInitialState: OrgEventsState = {
 
 export const reducer = createReducer(
   orgEventInitialState,
-    on(OrgEventActions.loadOrgEvents, state => state),
+    on(OrgEventActions.loadOrgEvents, state => ({...state, isLoading: true})),
     on(OrgEventActions.loadOrgEventsSuccess, (state, {orgEventsPast, orgEventsFuture}) => { return {...state, comingEvents: orgEventsFuture, pastEvents: orgEventsPast, isLoading: false}}),
     on(OrgEventActions.loadOrgEventsFailure, (state, {error}) => ({...state, error, success: false})),
 
