@@ -4,8 +4,12 @@ import {ActivatedRoute} from "@angular/router";
 import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
 import {registerLocaleData} from "@angular/common";
 import localeDe from '@angular/common/locales/de';
-import {of} from "rxjs";
+import {filter, of, take} from "rxjs";
 import {map} from "rxjs/operators";
+import {EditStringDialogComponent} from "../../core/components/dialogs/edit-string-dialog/edit-string-dialog.component";
+import {EditName} from "../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
+import {DoneExtraWorkTypes, SnackType} from "@frontend-lb-nx/shared/entities";
+import {MatDialog} from "@angular/material/dialog";
 
 @Component({
   selector: 'frontend-lb-nx-single-event',
@@ -17,7 +21,7 @@ import {map} from "rxjs/operators";
 export class SingleEventComponent implements OnInit{
 
   // import componentstore into constructor and get the id from the route
-    constructor(protected readonly store: SingleEventStore, private route: ActivatedRoute) {
+    constructor(protected readonly store: SingleEventStore, private route: ActivatedRoute, public dialog: MatDialog) {
         this.route.params.subscribe(params => {
             this.store.fetchEvent(params['id']);
         });
@@ -34,6 +38,24 @@ export class SingleEventComponent implements OnInit{
     ngOnInit() {
         registerLocaleData(localeDe);
     }
+
+
+    updateName() {
+        this.store.vm$.pipe(
+            take(1),
+            map(next => next.event?.name),
+            filter(next => next !== undefined)
+        ).subscribe(next => {
+            const dialogRef = this.dialog.open(EditStringDialogComponent, {data: {name: next,displaySting: "Event Titel bearbeiten", errorcode: undefined}});
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.store.updateName(result);
+                }
+            });
+        });
+
+    }
+
 
 
 

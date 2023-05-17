@@ -18,6 +18,7 @@ export class EventOverviewComponent implements OnInit{
   @Input() startDate?: Date;
   @Input() shiftTypes?: Observable<ShiftType[]>;
   @Input() showAddShift: Observable<boolean> = of(false);
+  @Input() showEditDelete = false;
   @Output() addShiftEvent = new EventEmitter<Shift>();
   @Output() deleteShiftEvent = new EventEmitter<Shift>();
 

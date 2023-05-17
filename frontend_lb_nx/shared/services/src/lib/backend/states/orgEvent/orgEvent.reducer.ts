@@ -57,6 +57,10 @@ export const reducer = createReducer(
         const [pastEvents, upcomingEvents] = removeEventFromArrays(orgEvent, state.pastEvents, state.comingEvents);
         return{...state, pastEvents: pastEvents, comingEvents: upcomingEvents, isLoading: false}
     }),
+    on(OrgEventActions.editOrgEventSuccess, (state,{orgEvent})=>{
+        const [pastEvents, upcomingEvents] = editEvent(orgEvent, state.pastEvents, state.comingEvents);
+        return{...state, pastEvents: pastEvents, comingEvents: upcomingEvents, isLoading: false}
+    }),
     on(OrgEventActions.deleteOrgEventFailure, (state, {error}) => ({...state, error, success: false})),
 
     /**
@@ -72,6 +76,9 @@ export const reducer = createReducer(
         const [pastEvents, upcomingEvents] = deleteShiftFromEvent(shift, state.pastEvents, state.comingEvents);
         return {...state, pastEvents: pastEvents, comingEvents: upcomingEvents}}
     ),
+
+
+
 );
 
 /**
@@ -89,6 +96,23 @@ export function addToOneArray(orgevent: OrgEvent, pastEvents: OrgEvent[], upcomi
         upcomingEventsMut.push(orgevent);
     }
     return [pastEventsMut, upcomingEventsMut];
+}
+
+export function editEvent(orgEvent: OrgEvent, pastEvents: OrgEvent[], upcomingEvents: OrgEvent[]): [OrgEvent[], OrgEvent[]]{
+    return [
+        pastEvents.map(event => {
+            if(event.id === orgEvent.id){
+                return {...event, name: orgEvent.name, end: orgEvent.end};
+            }
+            return event;
+        }),
+        upcomingEvents.map(event => {
+            if(event.id === orgEvent.id){
+                return {...event, name: orgEvent.name, end: orgEvent.end};
+            }
+            return event;
+        })
+    ];
 }
 
 

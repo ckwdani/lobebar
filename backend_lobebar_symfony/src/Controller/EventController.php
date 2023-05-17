@@ -44,6 +44,12 @@ class EventController extends _Base_Controller
         return JsonResponse::fromJsonString($this->serializer->serialize($event, 'json'));
     }
 
+    /** ATTENTION!! ONLY UPDATES NAME AND END DATE OF EVENT
+     *
+     * @param Request $request
+     * @param string $eventId
+     * @return JsonResponse
+     */
     #[Route("/mod_api/event/updateEvent/{eventId}", methods: ["PUT"])]
     public function updateEvent(Request $request, string $eventId){
         $eventChanges = $this->serializer->deserialize($request->getContent(), Orgevent::class, "json");
@@ -56,10 +62,13 @@ class EventController extends _Base_Controller
         if ($eventChanges->getName()) {
             $event->setName($eventChanges->getName());
         }
-        if ($eventChanges->getStart()) {
-            $event->setStart($eventChanges->getStart());
-        }
+//        if ($eventChanges->getStart()) {
+//            $event->setStart($eventChanges->getStart());
+//        }
         if ($eventChanges->getEnd()) {
+            if($eventChanges->getEnd() < $event->getEnd()){
+                throw new \Exception("End date cannot be before old end date");
+            }
             $event->setEnd($eventChanges->getEnd());
         }
         // missing implementation of copying new properties to the persistent OrgEvent object
@@ -67,6 +76,10 @@ class EventController extends _Base_Controller
         $this->doctrine->getManager()->flush();
         return JsonResponse::fromJsonString($this->serializer->serialize($event, 'json'));
     }
+
+
+
+
 
 
     #[Route("/mod_api/event/getSingle/{eventId}", methods: ["GET"])]

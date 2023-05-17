@@ -3,10 +3,13 @@
 
     <div class="flex justify-center">
         <div class=" content-center">
-            <h1 class="text-center text-6xl mb-6">{{(store.vm$ | async)?.event?.name}}</h1>
+            <h1 class="text-center text-6xl mb-6">{{(store.vm$ | async)?.event?.name}} <button mat-icon-button (click)="updateName()"><mat-icon>edit</mat-icon></button></h1>
             <h2 class="text-center text-3xl text-orange-500 font-extrabold">
                 {{(store.vm$ | async)?.event?.start | date: 'dd. MMMM yyyy \'um\' HH:mm':'de-DE'}}
             </h2>
+            <h4 class="text-center text-xl text-orange-300 font-bold">
+                bis {{(store.vm$ | async)?.event?.end | date: 'dd. MMMM yyyy \'um\' HH:mm':'de-DE'}} <button mat-icon-button><mat-icon>edit</mat-icon></button>
+            </h4>
         </div>
     </div>
 
@@ -22,7 +25,7 @@
                 <mat-icon>add</mat-icon>
             </button>
         </div>
-        <frontend-lb-nx-event-overview (deleteShiftEvent)="store.deleteShift($event)" [startDate]="(store.vm$ | async)?.event?.start!"
+        <frontend-lb-nx-event-overview [showEditDelete]="true" (deleteShiftEvent)="store.deleteShift($event)" [startDate]="(store.vm$ | async)?.event?.start!"
                                        [showAddShift]="of((store.vm$ | async)?.showAddShift ?? false)"
                                        [showName]="false" [shifts]="shifts$" [orgEvent]="of((store.vm$ | async)!.event!)"
                                        (addShiftEvent)="store.addShift($event)"

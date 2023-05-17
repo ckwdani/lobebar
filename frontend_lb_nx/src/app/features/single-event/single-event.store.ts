@@ -4,7 +4,7 @@ import {OrgEvent, Shift} from "@frontend-lb-nx/shared/entities";
 import {combineLatest, Observable, of, tap} from "rxjs";
 import {
     addShiftToEvent,
-    addShiftToEventSuccess, deleteShiftFromEventSuccess,
+    addShiftToEventSuccess, deleteShiftFromEventSuccess, editOrgEventSuccess,
     OrgEventBackendService,
     ShiftsBackendService
 } from "@frontend-lb-nx/shared/services";
@@ -16,6 +16,7 @@ export interface SingleEventState {
   event?: OrgEvent,
   isLoading: boolean,
   error?: string,
+  updating?: boolean,
   showAddShift: boolean,
 };
 
@@ -30,11 +31,12 @@ export class SingleEventStore extends ComponentStore<SingleEventState> {
   $shiftTypes = this.store.select(selectShiftTypes);
 
   // viewModel
-    readonly vm$ = this.select(({ event, isLoading, error , showAddShift}) => ({
+    readonly vm$ = this.select(({ event, isLoading, error , showAddShift, updating}) => ({
         event,
         isLoading,
         error,
         showAddShift,
+        updating
     }));
 
   // updater to set event
@@ -42,6 +44,12 @@ export class SingleEventStore extends ComponentStore<SingleEventState> {
         ...state,
         event,
         isLoading: false,
+    }));
+
+    // updater to set event
+    readonly setUpdating = this.updater((state, updating: boolean) => ({
+        ...state,
+        updating,
     }));
 
     readonly addShiftToEvent = this.updater((state, shift: Shift) => ({
@@ -89,6 +97,20 @@ export class SingleEventStore extends ComponentStore<SingleEventState> {
     }));
 
 
+    readonly updateName = this.effect((name$: Observable<string>) =>
+        name$.pipe(
+            withLatestFrom(this.select((state) => state.event)),
+            switchMap(([name, event]) => {
+                return this.updateEvent({...event!, name});
+            })));
+
+    readonly updateEnd = this.effect((end$: Observable<Date>) =>
+        end$.pipe(
+            withLatestFrom(this.select((state) => state.event)),
+            switchMap(([end, event]) => {
+                return this.updateEvent({...event!, end});
+            })));
+
 
     readonly addShift = this.effect((shift$: Observable<Shift>) =>
         shift$.pipe(
@@ -129,6 +151,8 @@ export class SingleEventStore extends ComponentStore<SingleEventState> {
     );
 
 
+
+
   // effect to fetch event by id
     readonly fetchEvent = this.effect((id$: Observable<string>) =>
         id$.pipe(
@@ -141,5 +165,16 @@ export class SingleEventStore extends ComponentStore<SingleEventState> {
         ),
     );
 
+    updateEvent(event: OrgEvent): Observable<OrgEvent> {
+        return this.eventService.update({...event, shifts: undefined}).pipe(tap({
+            next: (oEvent: OrgEvent) => {
+                this.setEvent({...event, name: oEvent.name, end: oEvent.end});
+                this.store.dispatch(editOrgEventSuccess({orgEvent: oEvent}));
+            },
+            error: (error) => {
+                this.setError(error);
+            }
+        }));
+    }
 
 }

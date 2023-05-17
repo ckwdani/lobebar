@@ -12,7 +12,7 @@
         <frontend-lb-nx-add-shift *ngIf="showAddShift" [orgEvent]="(orgEvent | async)??undefined" [startDate]="startDate" [shiftTypes]="shiftTypes" [expanded]="showAddShift" (addShiftEvent)="addShiftEvent.emit($event)"></frontend-lb-nx-add-shift>
         <div *ngFor="let elem of splittedShifts">
             <p class="text-xl">{{elem[0].type!.name}}</p>
-            <frontend-lb-nx-shift-table (deleteShiftEvent)="deleteShiftEvent.emit($event)" *ngIf="(orgEvent | async)??0 !== 0" [orgEvent]="(orgEvent | async)!" [shifts]="elem" [showEditDelete]="(showAddShift | async)??false"></frontend-lb-nx-shift-table>
+            <frontend-lb-nx-shift-table (deleteShiftEvent)="deleteShiftEvent.emit($event)" *ngIf="(orgEvent | async)??0 !== 0" [orgEvent]="(orgEvent | async)!" [shifts]="elem" [showEditDelete]="showEditDelete"></frontend-lb-nx-shift-table>
             <br>
             <br>
         </div>

@@ -47,6 +47,9 @@ class Orgevent extends _Base_Entity
 
     #[PostDeserialize]
     public function giveIdToShiftsWithoutEvent(){
+        if(empty($this->shifts)){
+            return;
+        }
         // go through all shifts and give them an event if they don't have one
         foreach ($this->shifts as $shift) {
             if ($shift->getOrgevent() === null) {

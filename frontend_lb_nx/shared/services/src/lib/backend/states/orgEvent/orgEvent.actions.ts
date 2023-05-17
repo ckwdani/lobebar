@@ -2,6 +2,12 @@ import { createAction, props } from '@ngrx/store';
 import {OrgEvent, ShiftType} from "@frontend-lb-nx/shared/entities";
 
 
+
+export const editOrgEventSuccess= createAction(
+    '[OrgEvents] Edit OrgEvent Success',
+    props<{orgEvent: OrgEvent}>()
+);
+
 export const loadOrgEvents = createAction(
     '[OrgEvents] Load OrgEvents'
 );
