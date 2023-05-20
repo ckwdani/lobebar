@@ -72,24 +72,25 @@ class ShiftRepository extends ServiceEntityRepository
         // join with event to get event start date
         $qb->join('s.orgevent', 'e');
         // join with shift_user to get the number of users signed up for the shift
-        $qb->join('s.users', 'su');
+        $qb->leftJoin('s.users', 'su');
+//        $qb->join('s.users', 'su');
         // get the number of users signed up for the shift
-        $qb->select('s, e, COUNT(su) as HIDDEN user_count');
+        $qb->select('s,e, COUNT(su) as HIDDEN user_count');
         // group by shift id
         $qb->groupBy('s.id');
-        // where the headcount is not met by the number of users signed up for the shift
-        $qb->having('s.headcount > user_count');
+        // where the headcount is higher than the number of users signed up for the shift
+        $qb->having('s.headcount > COUNT(su)');
+//        $qb->having('s.headcount > user_count');
         if(!empty($start) && !empty($end)){
             $qb->andWhere($qb->expr()->between('e.start', ':start', ':end'))
                 ->setParameter('start', (new \DateTime())->setTimestamp($start))
                 ->setParameter('end', (new \DateTime())->setTimestamp($end));
         }
         if(!empty($user_id)){
-            // where the logged in user is not signed up for the shift
-            $qb->andWhere($qb->expr()->notIn('su', ':user_id'))
+           //  filter out shifts where the user with the userid is signed up for
+            $qb->andWhere($qb->expr()->orX($qb->expr()->notIn('su', ':user_id'), $qb->expr()->isNull('su')))
                 ->setParameter('user_id', $user_id->toBinary());
-//            $qb->andWhere($qb->expr()->notIn('s.id', ':user_id'))
-//                ->setParameter('user_id', $user_id->toBinary());
+
         }
         // order by event start date
         $qb->orderBy('e.start', 'ASC');

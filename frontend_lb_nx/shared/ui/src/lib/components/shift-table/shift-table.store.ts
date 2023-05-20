@@ -75,7 +75,7 @@ export class ShiftTableStore extends ComponentStore<ShiftTableState> {
 
     showPastError(){
         this.snackBar.openFromComponent(ErrorSnackBarComponent, {data:  new ErrorBarData('' +
-                '<h3>Die Shicht liegt in der Vergangenheit, eine Änderung ist nicht möglich</h3>', 'Ok'), duration: 3000})
+                '<h3>Die Schicht liegt in der Vergangenheit, eine Änderung ist nicht möglich</h3>', 'Ok'), duration: 3000})
     }
 
 

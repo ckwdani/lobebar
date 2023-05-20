@@ -3,7 +3,8 @@ import {OrgEvent, Shift} from "@frontend-lb-nx/shared/entities";
 import {HttpErrorResponse} from "@angular/common/http";
 
 export const loadOwnShifts = createAction(
-  '[Shift] Load Own Shifts'
+  '[Shift] Load Own Shifts',
+        props<({userId: string})>()
 );
 
 export const loadOwnShiftsSuccess = createAction(

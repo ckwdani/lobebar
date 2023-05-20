@@ -54,10 +54,12 @@ export class NavigationComponent implements AfterViewInit{
       if(isLoggedInAll && !shiftTypesLoaded){
         // where do we want to load this all
         this.store.dispatch(loadShiftTypes());
-        this.$loggedInUser.pipe().subscribe(next=>
-            this.store.dispatch(loadOutstandingShifts({userId: next?.id?? "IdIsNull"}))
+        this.$loggedInUser.pipe(filter(next => next !== undefined)).subscribe(next=> {
+              this.store.dispatch(loadOutstandingShifts({userId: next?.id ?? "IdIsNull"}))
+              this.store.dispatch(loadOwnShifts({userId: next?.id ?? "IdIsNull"}));
+            }
         )
-        this.store.dispatch(loadOwnShifts());
+
         this.store.dispatch(loadOrgEvents());
       }
     });

@@ -34,6 +34,8 @@ export class ShiftTableComponent implements AfterViewInit, OnInit, OnChanges {
   }
   @Input() showEditDelete=false
   @Output() deleteShiftEvent = new EventEmitter<Shift>();
+  @Input() log=false;
+
 
   $shiftsFromStore = this.shiftTableStore.selectShifts;
 
@@ -50,8 +52,13 @@ export class ShiftTableComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   ngOnChanges(changes: SimpleChanges): void{
-    if (changes['data'] !== undefined) {
-      this.shiftTableStore.$updateShifts(changes['data'].currentValue);
+    if(this.log){
+      console.log("shift-table: ngOnChanges")
+      console.log(changes)
+    }
+    if (changes['shifts'] !== undefined) {
+      // console.log("shift-table: ngOnChanges: shifts changed")
+      this.shiftTableStore.$updateShifts(changes['shifts'].currentValue);
       // this.setTableData(changes['data'].currentValue);
     }
   }

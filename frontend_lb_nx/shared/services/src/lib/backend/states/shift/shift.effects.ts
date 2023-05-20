@@ -14,8 +14,8 @@ export class ShiftEffects {
   loadOwnShifts$ = createEffect(() => {
     return this.actions$.pipe(
         ofType(ShiftActions.loadOwnShifts),
-        switchMap(( ) =>
-            this.shiftsService.getShiftsUser(dateToUnix(new Date()), dateToUnix(addMonthsToDate(new Date(), 3)), "3d66860a-76d5-4019-a258-967e64856aab").pipe(
+        switchMap((action) =>
+            this.shiftsService.getShiftsUser(dateToUnix(new Date()), dateToUnix(addMonthsToDate(new Date(), 120)), action.userId).pipe(
                 map((shifts) => {
                   return ShiftActions.loadOwnShiftsSuccess({ownShifts: shifts})
                 }),
@@ -28,7 +28,7 @@ export class ShiftEffects {
             ofType(ShiftActions.loadOutstandingShifts),
             withLatestFrom(this.store.select(selectUser)),
             switchMap(([action, user]) =>
-                this.shiftsService.getOutstandingShifts(user?.id?? "", dateToUnix(new Date()), dateToUnix(addMonthsToDate(new Date(), 3))).pipe(
+                this.shiftsService.getOutstandingShifts(user?.id?? "", dateToUnix(new Date()), dateToUnix(addMonthsToDate(new Date(), 120))).pipe(
                     map((shifts) => {
                         return ShiftActions.loadOutstandingShiftsSuccess({outstandingShifts: shifts})
                     }),

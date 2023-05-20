@@ -29,7 +29,14 @@ export const reducer = createReducer(
     on(ShiftActions.loadOutstandingShiftsFailure, (state, {error}) =>({...state, error, success: false})),
 
     on(ShiftActions.changeShiftAssignment, state => state),
-    on(ShiftActions.changeShiftAssignmentSuccess, (state, {shift})=>{return {...state, ownShifts: state.ownShifts.map(s => s.id !==shift.id ? s: shift), isLoading: false}}),
+    on(ShiftActions.changeShiftAssignmentSuccess, (state, {shift, deassign})=>{
+        return {...state,
+            outstandingShifts: state.outstandingShifts.map(s => s.id !==shift.id ? s: shift),
+            ownShifts: deassign ? state.ownShifts.filter(s => s.id !==shift.id) : [...state.ownShifts, shift],
+            //ownShifts: state.ownShifts.map(s => s.id !==shift.id ? s: shift),
+
+        isLoading: false}
+    }),
     on(ShiftActions.changeShiftAssignmentFailure, (state, {error}) =>({...state, error: error.status, success: false})),
 
     // on(ShiftActions.deassignShift, state => state),
