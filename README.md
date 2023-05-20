@@ -26,13 +26,13 @@ The order of the todos is not the order they should be executed in!
     - [X] add event form
     - [X] add user login form
     - [X] add user edit form (same for self and admin edit)
-    - [ ] add supply form
+    - [X] add supply form
 - [ ] add overviews
     - [X] (ADMIN) add user overviews
     - [ ] add own shifts overview
         - [ ] add upcoming shifts  overview
         - [ ] add recent shifts overview
-    - [ ] add own used supply overview
+    - [X] add own used supply overview
     - [X] add events overview
         - [X] list with open shifts
         - [X] callendar
@@ -41,12 +41,12 @@ The order of the todos is not the order they should be executed in!
     - [ ] (ADMIN) add supplietypes overview
     - [X] add points and balance overwiew
     - [ ] add user-scoreboard overview
-- [ ] add actions
+- [X] add actions
     - [X] add sign up for shift action
-    - [ ] add use suply action (maybee balance overview)
+    - [X] add use suply action (maybee balance overview)
 - [X] add ngrx state management
     - [X] add state for logged in user
-- [ ] add services for backend
+- [X] add services for backend
 - [ ] add error handling with snackbars
 - [X] add achievements and badge and selecting achievements etc. 
 
