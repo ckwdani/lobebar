@@ -50,31 +50,44 @@ export class ShiftEffects {
         );
     })
 
-    assignShift$ = createEffect(()=>{
+    // assignShift$ = createEffect(()=>{
+    //     return this.actions$.pipe(
+    //         ofType(ShiftActions.changeShiftAssignment),
+    //         switchMap((action)=>
+    //         this.shiftsService.assign(action.shift).pipe(
+    //             map(()=>{
+    //                 return ShiftActions.changeShiftAssignmentSuccess({shift: action.shift});
+    //             }),
+    //             catchError((error)=>of(ShiftActions.changeShiftAssignmentFailure({error})))
+    //         ))
+    //     )
+    // })
+    //
+    // deassignShift$ = createEffect(()=>{
+    //     return this.actions$.pipe(
+    //         ofType(ShiftActions.deassignShift),
+    //         switchMap((action)=>
+    //             this.shiftsService.assign(action.shift, true).pipe(
+    //                 map(()=>{
+    //                     return ShiftActions.deassignShiftSuccess({shift: action.shift});
+    //                 }),
+    //                 catchError((error)=>of(ShiftActions.deassignShiftFailure({error})))
+    //             ))
+    //     )
+    // })
+    //
+    changeShiftAssignment$ = createEffect(()=>{
         return this.actions$.pipe(
-            ofType(ShiftActions.assignShift),
+            ofType(ShiftActions.changeShiftAssignment),
             switchMap((action)=>
-            this.shiftsService.assign(action.shift).pipe(
-                map(()=>{
-                    return ShiftActions.assignShiftSuccess({shift: action.shift});
-                }),
-                catchError((error)=>of(ShiftActions.assignShiftFailure({error})))
-            ))
-        )
-    })
-
-    deassignShift$ = createEffect(()=>{
-        return this.actions$.pipe(
-            ofType(ShiftActions.deassignShift),
-            switchMap((action)=>
-                this.shiftsService.assign(action.shift, true).pipe(
+                this.shiftsService.assign(action.shift, action.deassign).pipe(
                     map(()=>{
-                        return ShiftActions.deassignShiftSuccess({shift: action.shift});
+                        return ShiftActions.changeShiftAssignmentSuccess({shift: action.shift, deassign: action.deassign});
                     }),
-                    catchError((error)=>of(ShiftActions.deassignShiftFailure({error})))
+                    catchError((error)=>of(ShiftActions.changeShiftAssignmentFailure({error, deassign: action.deassign})))
                 ))
         )
-    })
+    });
 
   constructor(private actions$: Actions, private shiftsService: ShiftsBackendService, private store: Store) {}
 }

@@ -31,36 +31,21 @@ export const loadOutstandingShiftsFailure = createAction(
     props<{error: number}>()
 );
 
-export const assignShift = createAction(
+export const changeShiftAssignment = createAction(
     '[Shift] Assigning Shifts',
-    props<{shift: Shift}>()
-
+    props<{shift: Shift, deassign: boolean}>()
 );
 
-export const assignShiftSuccess = createAction(
+export const changeShiftAssignmentSuccess = createAction(
     '[Shift] Assign Shift Success',
-    props<{shift: Shift}>()
+    props<{shift: Shift, deassign: boolean}>()
 );
 
-export const assignShiftFailure = createAction(
+export const changeShiftAssignmentFailure = createAction(
     '[Shift] Assign Shift Failure',
-    props<{error: number}>()
+    props<{error: HttpErrorResponse, deassign: boolean}>()
 );
 
-export const deassignShift = createAction(
-    '[Shift] Deassigning Shifts',
-    props<{shift: Shift}>()
-);
-
-export const deassignShiftSuccess = createAction(
-    '[Shift] Deassign Shift Success',
-    props<{shift: Shift}>()
-);
-
-export const deassignShiftFailure = createAction(
-    '[Shift] Deassign Shift Failure',
-    props<{error: number}>()
-);
 
 export const addShiftToEvent = createAction(
     '[Shift] Add Shift To Event',

@@ -13,8 +13,11 @@ use JMS\Serializer\SerializerBuilder;
 use JMS\Serializer\SerializerInterface;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpKernel\Exception\ConflictHttpException;
+use Symfony\Component\HttpKernel\Exception\LockedHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\Security\Core\Exception\LockedException;
 use Symfony\Component\Uid\Uuid;
 
 class ShiftController extends _Base_Controller
@@ -89,8 +92,13 @@ class ShiftController extends _Base_Controller
     public function assignShift(string $shiftId, bool $deassign = false){
         /** @var Shift $shift */
         $shift = $this->doctrine->getManager()->getRepository(Shift::class)->find(Uuid::fromString($shiftId));
+
         if(empty($shift)){
             throw new NotFoundHttpException();
+        }
+
+        if($shift->getStarttime() < new \DateTime()){
+            throw new LockedHttpException("Shift already started");
         }
         if($deassign) {
             $shift->removeUser($this->getUser());

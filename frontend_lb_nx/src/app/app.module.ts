@@ -21,6 +21,7 @@ import {EntityDataModule} from "@ngrx/data";
 import {entityConfig} from "../../shared/entities/src/lib/entity-metadata";
 import {provideEntityDataConfig} from "@ngrx/data/src/provide-entity-data";
 import {GermanDateProvider} from "./core/utils/GermanDateAdapter";
+import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
   declarations: [AppComponent],
@@ -41,6 +42,7 @@ import {GermanDateProvider} from "./core/utils/GermanDateAdapter";
     FeaturesModule,
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig),
+    MatSnackBarModule,
   ],
   providers: [
 

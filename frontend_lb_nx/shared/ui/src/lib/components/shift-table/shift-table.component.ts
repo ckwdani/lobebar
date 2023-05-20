@@ -11,14 +11,17 @@ import {
 } from '@angular/core';
 import {OrgEvent, Shift, ShiftType, User} from "@frontend-lb-nx/shared/entities";
 import {on, Store} from "@ngrx/store";
-import {assignShift, deassignShift, selectUser, ShiftEffects} from "@frontend-lb-nx/shared/services";
+import {changeShiftAssignment, selectUser, ShiftEffects} from "@frontend-lb-nx/shared/services";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
+import { ShiftTableStore } from './shift-table.store';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 @Component({
   selector: 'frontend-lb-nx-shift-table',
   templateUrl: './shift-table.component.html',
   styleUrls: ['./shift-table.component.scss'],
+  providers: [ShiftTableStore],
 })
 export class ShiftTableComponent implements AfterViewInit, OnInit, OnChanges {
   @ViewChild(MatPaginator) paginator?: MatPaginator;
@@ -32,6 +35,7 @@ export class ShiftTableComponent implements AfterViewInit, OnInit, OnChanges {
   @Input() showEditDelete=false
   @Output() deleteShiftEvent = new EventEmitter<Shift>();
 
+  $shiftsFromStore = this.shiftTableStore.selectShifts;
 
   elementsDatasource: MatTableDataSource<Shift> = new MatTableDataSource<Shift>();
 
@@ -39,18 +43,22 @@ export class ShiftTableComponent implements AfterViewInit, OnInit, OnChanges {
   user: User|undefined = undefined
 
 
-  constructor(private store: Store) {
+
+  constructor(private store: Store, public shiftTableStore: ShiftTableStore, private snackBar: MatSnackBar) {
+    this.$shiftsFromStore.subscribe(next => this.setTableData(next));
     this.store.select(selectUser).subscribe(next => this.user=next)
   }
 
   ngOnChanges(changes: SimpleChanges): void{
     if (changes['data'] !== undefined) {
-      this.setTableData(changes['data'].currentValue);
+      this.shiftTableStore.$updateShifts(changes['data'].currentValue);
+      // this.setTableData(changes['data'].currentValue);
     }
   }
 
   ngOnInit(): void {
-    this.setTableData(this.shifts);
+    this.shiftTableStore.$updateShifts(this.shifts);
+    // this.setTableData(this.shifts);
   }
   ngAfterViewInit() {
     if (this.paginator !== undefined) {
@@ -85,32 +93,37 @@ export class ShiftTableComponent implements AfterViewInit, OnInit, OnChanges {
     return false
   }
 
+  // assignShift(shift: Shift, assign: boolean){
+  //   const shiftCopy = Object.assign({}, shift)
+  //   if(assign){
+  //     if(this.user!=undefined){
+  //       if(shift.users!=undefined){
+  //         const userIds=shift.users.map(u=>u.id)
+  //         if(userIds.indexOf(this.user["id"])==-1){
+  //           this.store.dispatch(changeShiftAssignment({shift, deassign: !assign}));
+  //           shiftCopy.users=shift.users?.concat(this.user)
+  //         }
+  //       }
+  //     }
+  //     this.shifts = this.shifts.map(function(s) { return s.id == shift.id ? shiftCopy : s; });
+  //   }else{
+  //     if(this.user!=undefined){
+  //       if(shift.users!=undefined){
+  //         const userIds=shift.users.map(u=>u.id)
+  //         if(userIds.indexOf(this.user["id"])!=-1){
+  //           this.store.dispatch(deassignShift({shift}))
+  //           shiftCopy.users=shiftCopy.users?.filter(user=>user.id!== this.user?.id)
+  //         }
+  //       }
+  //     }
+  //   }
+  //   this.shifts = this.shifts.map(function(s) { return s.id == shift.id ? shiftCopy : s; });
+  //   this.setTableData(this.shifts);
+  // }
+
   assignShift(shift: Shift, assign: boolean){
-    if(assign){
-      const shiftCopy = Object.assign({}, shift)
-      if(this.user!=undefined){
-        if(shift.users!=undefined){
-          const userIds=shift.users.map(u=>u.id)
-          if(userIds.indexOf(this.user["id"])==-1){
-            this.store.dispatch(assignShift({shift}))
-            shiftCopy.users=shift.users?.concat(this.user)
-          }
-        }
-      }
-      this.shifts = this.shifts.map(function(s) { return s.id == shift.id ? shiftCopy : s; });
-    }else{
-      const shiftCopy = Object.assign({}, shift)
-      if(this.user!=undefined){
-        if(shift.users!=undefined){
-          const userIds=shift.users.map(u=>u.id)
-          if(userIds.indexOf(this.user["id"])!=-1){
-            this.store.dispatch(deassignShift({shift}))
-            shiftCopy.users=shiftCopy.users?.filter(user=>user.id!== this.user?.id)
-          }
-        }
-      }
-      this.shifts = this.shifts.map(function(s) { return s.id == shift.id ? shiftCopy : s; });
-    }
+    const deassign = !assign;
+    this.shiftTableStore.$changeAssignment({shift, deassign})
   }
 
   deleteShift(rowData: Shift){

@@ -3,6 +3,7 @@ import * as OrgEventActions from './orgEvent.actions';
 import {OrgEvent, OrgEventClass, Shift} from "@frontend-lb-nx/shared/entities";
 import * as ShiftTypeActions from "../shift-types/shift-type.actions";
 import * as ShiftActions from "../shift/shift.actions";
+import {changeShiftAssignmentSuccess} from "../shift/shift.actions";
 
 export const orgEventFeatureKey = 'orgEvent';
 
@@ -77,6 +78,11 @@ export const reducer = createReducer(
         return {...state, pastEvents: pastEvents, comingEvents: upcomingEvents}}
     ),
 
+    on(ShiftActions.changeShiftAssignmentSuccess, (state, {shift})=>{
+        const [pastEvents, upcomingEvents] = assignShift(shift, state.pastEvents, state.comingEvents);
+        return {...state, pastEvents: pastEvents, comingEvents: upcomingEvents}}
+    ),
+
 
 
 );
@@ -96,6 +102,30 @@ export function addToOneArray(orgevent: OrgEvent, pastEvents: OrgEvent[], upcomi
         upcomingEventsMut.push(orgevent);
     }
     return [pastEventsMut, upcomingEventsMut];
+}
+
+
+/**
+ * If shift is assigned or unassiged this is called to update the state
+ * @param shift
+ * @param pastEvents
+ * @param upcomingEvents
+ */
+export function assignShift(shift: Shift, pastEvents: OrgEvent[], upcomingEvents: OrgEvent[]): [OrgEvent[], OrgEvent[]]{
+    return [
+        pastEvents.map(event => {
+            if(event.id === shift.orgEvent?.id){
+                return {...event, shifts: event.shifts?.map(s => s.id === shift.id ? shift : s)}
+            }
+            return event;
+        }),
+        upcomingEvents.map(event => {
+            if(event.id === shift.orgEvent?.id){
+                return {...event, shifts: event.shifts?.map(s => s.id === shift.id ? shift : s)}
+            }
+            return event;
+        })
+    ];
 }
 
 export function editEvent(orgEvent: OrgEvent, pastEvents: OrgEvent[], upcomingEvents: OrgEvent[]): [OrgEvent[], OrgEvent[]]{

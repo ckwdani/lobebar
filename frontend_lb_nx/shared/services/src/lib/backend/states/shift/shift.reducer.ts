@@ -28,13 +28,13 @@ export const reducer = createReducer(
     on(ShiftActions.loadOutstandingShiftsSuccess, (state, {outstandingShifts})=>{return {...state, outstandingShifts, isLoading: false}}),
     on(ShiftActions.loadOutstandingShiftsFailure, (state, {error}) =>({...state, error, success: false})),
 
-    on(ShiftActions.assignShift, state => state),
-    on(ShiftActions.assignShiftSuccess, (state, {shift})=>{return {...state, ownShifts: state.ownShifts.map(s => s.id !==shift.id ? s: shift), isLoading: false}}),
-    on(ShiftActions.assignShiftFailure, (state, {error}) =>({...state, error, success: false})),
+    on(ShiftActions.changeShiftAssignment, state => state),
+    on(ShiftActions.changeShiftAssignmentSuccess, (state, {shift})=>{return {...state, ownShifts: state.ownShifts.map(s => s.id !==shift.id ? s: shift), isLoading: false}}),
+    on(ShiftActions.changeShiftAssignmentFailure, (state, {error}) =>({...state, error: error.status, success: false})),
 
-    on(ShiftActions.deassignShift, state => state),
-    on(ShiftActions.deassignShiftSuccess, (state, {shift})=>{return {...state, ownShifts: state.ownShifts.filter(s => s.id !==shift.id), isLoading: false}}),
-    on(ShiftActions.deassignShiftFailure, (state, {error}) =>({...state, error, success: false})),
+    // on(ShiftActions.deassignShift, state => state),
+    // on(ShiftActions.deassignShiftSuccess, (state, {shift})=>{return {...state, ownShifts: state.ownShifts.filter(s => s.id !==shift.id), isLoading: false}}),
+    // on(ShiftActions.deassignShiftFailure, (state, {error}) =>({...state, error, success: false})),
 
     // all addShiftToEvent actions
     on(ShiftActions.addShiftToEvent, state => ({...state, isLoading: true})),
