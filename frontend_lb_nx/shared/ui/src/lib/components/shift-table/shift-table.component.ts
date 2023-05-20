@@ -16,6 +16,9 @@ import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import { ShiftTableStore } from './shift-table.store';
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {
+  EditStringDialogComponent
+} from "../../../../../../src/app/core/components/dialogs/edit-string-dialog/edit-string-dialog.component";
 
 @Component({
   selector: 'frontend-lb-nx-shift-table',
@@ -140,6 +143,15 @@ export class ShiftTableComponent implements AfterViewInit, OnInit, OnChanges {
   mapToName(arr: User[]){
     return arr.map( (u)=> " "+u.username)
   }
+
+  // editShiftDescription(rowData: Shift){
+  //   const dialogRef = this.dialog.open(EditStringDialogComponent, {data: {name: type.name, errorcode: error}});
+  //
+  //   dialogRef.afterClosed().subscribe(result => {
+  //     if (result) {
+  //       this.store.dispatch(editShiftDescription({shift: rowData, description: result}))
+  //     });
+  // }
 
 
   /**

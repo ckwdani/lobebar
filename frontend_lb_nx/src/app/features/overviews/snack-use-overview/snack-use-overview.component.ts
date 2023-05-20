@@ -25,8 +25,8 @@ import {map} from "rxjs/operators";
   styleUrls: ['./snack-use-overview.component.scss']
 })
 export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
-  @ViewChild(MatPaginator,{static: false}) paginator?: MatPaginator;
-  @ViewChild(MatPaginator, {static: false}) sort: MatPaginator | undefined;
+  @ViewChild(MatPaginator) paginator?: MatPaginator;
+  @ViewChild(MatPaginator, {static: true}) sort: MatPaginator | undefined;
   @ViewChild('table3') table3: SimpleTableComponent<SnackType> = new SimpleTableComponent<SnackType>();
 
   @Input() usedSnacks?: Observable<Snack[]>
@@ -62,10 +62,12 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit(): void {
+    this.displayData=this.groupSnacksForSameDate(this.usedSnacks)
     if(this.paginator!==undefined){
       this.sort = this.paginator
-      console.log('paginator index')
     }
+    this.onPageChange({pageIndex: 1, pageSize: this.paginator?.pageSize??5, length: 0})
+
     }
 
   ngOnInit(): void {

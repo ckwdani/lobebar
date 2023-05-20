@@ -73,6 +73,18 @@ export class ShiftTableStore extends ComponentStore<ShiftTableState> {
     });
 
 
+    // readonly $changeDescription = this.effect((data$: Observable<{shift: Shift, description: string }>) => {
+    //    return data$.pipe(
+    //           switchMap(({shift, description}) => this.backend.changeDescription(shift, description).pipe(
+    //                 tap(
+    //                     {
+    //                         next: (newShift) => {
+    //                             this.store.dispatch(changeShiftAssignmentSuccess({shift: newShift, deassign: false}));
+    //                             return this.$updateShift(newShift);
+    //                         }
+    //                     }
+    // });
+
     showPastError(){
         this.snackBar.openFromComponent(ErrorSnackBarComponent, {data:  new ErrorBarData('' +
                 '<h3>Die Schicht liegt in der Vergangenheit, eine Änderung ist nicht möglich</h3>', 'Ok'), duration: 3000})
