@@ -47,7 +47,7 @@ export class BACKENDPATHS{
     static readonly updateSnackType = this.baseApiUrl + '/mod_api/snack/updateSnackTypeName' ///{snackTypeId}/{newName}
 
     //Snack
-    static readonly snackUsed = this.baseApiUrl + '/api/snack/used' //{snackId}/{userId?}
+    static readonly snackUsed = this.baseApiUrl + '/api/snack/used' //{snackId}/{amount}/{userId?}
     static readonly getOwnSnacks = this.baseApiUrl + '/api/snacks/own' //{start?}/{end?}
     static readonly getUsedSnacks = this.baseApiUrl + '/api/snacks' //{start?}/{end?}/{userId?}
     static readonly countUsedSnacks = this.baseApiUrl + '/mod_api/snacks/count' //{start?}/{end?}/{userId?}

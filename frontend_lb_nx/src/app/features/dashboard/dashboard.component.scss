@@ -1,0 +1,20 @@
+@use 'sass:color';
+@import '/src/app/core/styles/lobebar-theme.scss';
+@import "@angular/material/theming";
+
+
+$dark-foreground-palette: map-get($lobebar-theme, background);
+$lighnedup: color.adjust(mat-color($dark-foreground-palette, background), $lightness: 20%);
+$primary : map-get($lobebar-theme, $my-primary);
+
+.clickable-element {
+  cursor: pointer;
+}
+
+.clickable-element:hover {
+  background-color: $lighnedup;
+}
+
+.orange-text{
+  color: chocolate !important;
+}

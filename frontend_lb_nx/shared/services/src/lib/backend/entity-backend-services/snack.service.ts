@@ -11,7 +11,7 @@ import {map} from "rxjs/operators";
 export class SnackService extends BaseCommunicatorService<Snack>{
 
   public snackUsed(snack_typeId: string, amount?: number, userId? : string): Observable<SnackType>{
-    return super.post(BACKENDPATHS.snackUsed + '/' + snack_typeId +'/' + userId, []);
+    return super.post(BACKENDPATHS.snackUsed + '/' + snack_typeId + '/' + amount +'/' + userId, []);
   }
 
   public getOwnSnacks(unixstart?: number, unixend?: number): Observable<Snack[]>{

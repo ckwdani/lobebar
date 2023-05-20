@@ -30,7 +30,7 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
   @ViewChild('table3') table3: SimpleTableComponent<SnackType> = new SimpleTableComponent<SnackType>();
 
   @Input() usedSnacks?: Observable<Snack[]>
-  displayData = this.usedSnacks
+  displayData = this.groupSnacksForSameDate(this.usedSnacks)
 
   $snackTypes = this.store.select(selectSnackTypes).pipe();
   loadingSnackTypes = false
@@ -48,6 +48,7 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
     const dialogRef = this.dialog.open(NumberInputDialogComponent, {data: {displayString: snackType.name}});
     dialogRef.afterClosed().subscribe(result => {
       if(result){
+        console.log(result)
         this.store.select(selectOwnUser).pipe().subscribe(
             next=> this.store.dispatch(useSnack({snackType, amount: result, userId: next?.id}))
         )
@@ -61,14 +62,14 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    this.displayData=this.usedSnacks
-        if(this.paginator!==undefined){
-          this.sort = this.paginator
-        }
+    this.displayData=this.groupSnacksForSameDate(this.usedSnacks)
+    if(this.paginator!==undefined){
+      this.sort = this.paginator
+    }
+
     }
 
   ngOnInit(): void {
-
   }
 
   onPageChange($event: PageEvent) {
@@ -77,8 +78,44 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
     this.displayData = this.usedSnacks?.pipe(map(snacks => snacks.slice(startIndex, endIndex)));
   }
 
+  groupSnacksForSameDate(entities$: Observable<Snack[]> | undefined){
+    if(entities$!=undefined) {
+      entities$
+          .pipe(
+              map(entities => {
+                const groupedEntities = entities.reduce((groups: Map<Date, Snack[]>, entity) => {
+                  const date = entity.date;
 
+                  if (groups.has(date)) {
+                    groups.get(date)?.push(entity);
+                  } else {
+                    groups.set(date, [entity]);
+                  }
 
+                  return groups;
+                }, new Map<Date, Snack[]>());
+
+                groupedEntities.forEach((group: Snack[]) => {
+                  const groupSize = group.length;
+                  const newName = `name ${groupSize}`;
+
+                  // Change the name of the first entity with the shared date
+                  if (groupSize >= 2) {
+                    group[0].snackType.name = newName;
+                  }
+                });
+
+                const reducedArray = Array.from(groupedEntities.values()).flat();
+                return reducedArray;
+              })
+          )
+          .subscribe(reducedEntities => {
+            console.log(reducedEntities);
+          });
+
+    }
+    return this.usedSnacks
+  }
 
 }
 

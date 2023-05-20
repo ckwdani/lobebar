@@ -17,7 +17,8 @@ export const loadOwnShiftsFailure = createAction(
 );
 
 export const loadOutstandingShifts = createAction(
-    '[Shift] Load Outstanding Shifts'
+    '[Shift] Load Outstanding Shifts',
+    props<{userId: string}>()
 );
 
 export const loadOutstandingShiftsSuccess = createAction(

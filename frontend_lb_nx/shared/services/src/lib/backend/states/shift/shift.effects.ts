@@ -3,7 +3,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {catchError, concatMap, map, switchMap, withLatestFrom} from 'rxjs/operators';
 import {Observable, EMPTY, of} from 'rxjs';
 import * as ShiftActions from './shift.actions';
-import {selectOrgEventsState, selectUser, ShiftsBackendService} from "@frontend-lb-nx/shared/services";
+import {selectOrgEventsState, selectOwnUser, selectUser, ShiftsBackendService} from "@frontend-lb-nx/shared/services";
 import {addMonthsToDate, dateToUnix} from "../../../../../../../src/app/core/utils/date-functions";
 import {Store} from "@ngrx/store";
 
@@ -28,7 +28,7 @@ export class ShiftEffects {
             ofType(ShiftActions.loadOutstandingShifts),
             withLatestFrom(this.store.select(selectUser)),
             switchMap(([action, user]) =>
-                this.shiftsService.getOutstandingShifts(user?.id?? "00", dateToUnix(new Date()), dateToUnix(addMonthsToDate(new Date(), 3))).pipe(
+                this.shiftsService.getOutstandingShifts(user?.id?? "", dateToUnix(new Date()), dateToUnix(addMonthsToDate(new Date(), 3))).pipe(
                     map((shifts) => {
                         return ShiftActions.loadOutstandingShiftsSuccess({outstandingShifts: shifts})
                     }),
