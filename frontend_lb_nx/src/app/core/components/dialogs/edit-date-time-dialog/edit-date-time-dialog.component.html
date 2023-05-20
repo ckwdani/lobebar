@@ -1,0 +1,30 @@
+
+<h1 mat-dialog-title>{{data.displayString}} ändern</h1>
+<div mat-dialog-content class="!flex !justify-around !flex-col">
+    Aktueller Wert:
+    <p class="max-w-[300px] w-48 mb-3 border-2 rounded-md p-2 break-words">{{this.data.currentDate | date: 'dd. MMMM yyyy HH:mm':'de-DE'}}</p>
+    <p class="max-w-[300px] w-48 mb-3">Änderungen kannst du in dem Feld vornehmen</p>
+    <mat-form-field appearance="outline" class="mr-3">
+        <mat-label>Start</mat-label>
+        <input [readonly]="true" [formControl]="form" matInput [matDatetimepicker]="pickerStart"
+               [ngModel]="editableEndDate">
+        <!--                        <mat-hint>MM/DD/YYYY</mat-hint>-->
+        <mat-datetimepicker-toggle matIconSuffix [for]="pickerStart"></mat-datetimepicker-toggle>
+        <mat-datetimepicker #pickerStart type="datetime"
+                            (selectedChanged)="changeDate($event)"></mat-datetimepicker>
+
+        <input hidden="hidden" [value]="startDate.getTime()" [matDatetimepicker]="pickerStarttime"
+               [ngModel]="editableEndDate" [ngModelOptions]="{standalone: true}">
+        <!-- Only change the time                       -->
+        <mat-datetimepicker-toggle matIconSuffix [for]="pickerStarttime"
+                                   matTooltip="Nur Zeit ändern"></mat-datetimepicker-toggle>
+        <mat-datetimepicker #pickerStarttime type="time"
+                            (selectedChanged)="changeTime($event)"></mat-datetimepicker>
+        <mat-error *ngIf="form.hasError(dateBeforeStartErrorString)">Das neue Datum muss nach dem Startdatum liegen</mat-error>
+        <mat-error *ngIf="form.hasError(dateBeforeCurrentErrorString)">Das neue Datum muss nach dem aktuellen Datum liegen</mat-error>
+    </mat-form-field>
+</div>
+<div mat-dialog-actions class="mat-dialog-flexed" >
+    <button mat-button (click)="onNoClick()">Abbrechen</button>
+    <button mat-button [disabled]="!form.valid" [mat-dialog-close]="editableEndDate">Ok <mat-icon>send</mat-icon></button>
+</div>

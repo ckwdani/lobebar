@@ -16,3 +16,23 @@ export class DateValidator {
         };
     }
 }
+
+
+export class DateAfterConstantDateValidator{
+    static dateAfter(constantDate: Date, errorname: string) {
+
+        return (control: AbstractControl) => {
+            const date = control?.value;
+
+            if (date && new Date(date) < constantDate) {
+                const errorObj = {};
+                (errorObj as any)[errorname] = true;
+                return errorObj;
+                // return { errorname: true };
+            }
+
+            return null;
+        };
+    }
+
+}

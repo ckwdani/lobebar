@@ -48,8 +48,8 @@ class SnackController extends _Base_Controller
         return JsonResponse::fromJsonString($this->serializer->serialize($snackType, 'json'));
     }
 
-    #[Route("/api/snack/used/{snackId}/{userId?}", methods: ["POST"])]
-    public function snackUsed(string $snackId, ?string $userId){
+    #[Route("/api/snack/used/{snackId}/{amount}/{userId?}", methods: ["POST"])]
+    public function snackUsed(string $snackId, int $amount, ?string $userId){
         $userLoggedIn = $this->getUser();
         $snackingUser = $userLoggedIn;
         if(!empty($userId)){
@@ -64,10 +64,16 @@ class SnackController extends _Base_Controller
             throw new NotFoundHttpException("Snack Not Found");
         }
 
-        $usedSnack = (new SnackUsed())->setSnackType($snackType)->setUser($snackingUser);
-        $this->persistFlushConflict($usedSnack);
+        for($i = 0; $i < $amount; $i++){
+            $snackUsed = (new SnackUsed())->setSnackType($snackType);
+            $this->doctrine->getManager()->persist($snackUsed);
+            $snackingUser->addSnacksUsed($snackUsed);
+        }
 
-        return JsonResponse::fromJsonString($this->serializer->serialize($usedSnack, 'json'));
+//        $usedSnack = ->setUser($snackingUser);
+        $this->persistFlushConflict($snackingUser);
+
+        return JsonResponse::fromJsonString($this->serializer->serialize($snackingUser->getSnacksUsed(), 'json'));
     }
 
     #[Route("/api/snacks/own/{start?}/{end?}", methods: ["GET"])]

@@ -10,6 +10,9 @@ import {EditStringDialogComponent} from "../../core/components/dialogs/edit-stri
 import {EditName} from "../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
 import {DoneExtraWorkTypes, SnackType} from "@frontend-lb-nx/shared/entities";
 import {MatDialog} from "@angular/material/dialog";
+import {
+    EditDateTimeDialogComponent
+} from "../../core/components/dialogs/edit-date-time-dialog/edit-date-time-dialog.component";
 
 @Component({
   selector: 'frontend-lb-nx-single-event',
@@ -46,7 +49,7 @@ export class SingleEventComponent implements OnInit{
             map(next => next.event?.name),
             filter(next => next !== undefined)
         ).subscribe(next => {
-            const dialogRef = this.dialog.open(EditStringDialogComponent, {data: {name: next,displaySting: "Event Titel bearbeiten", errorcode: undefined}});
+            const dialogRef = this.dialog.open(EditStringDialogComponent, {data: {name: next,displayString: "Event Titel", errorcode: undefined}});
             dialogRef.afterClosed().subscribe(result => {
                 if (result) {
                     this.store.updateName(result);
@@ -56,6 +59,20 @@ export class SingleEventComponent implements OnInit{
 
     }
 
+    updateEndTime() {
+        this.store.vm$.pipe(
+            take(1),
+            filter(next => next !== undefined)
+        ).subscribe(next => {
+            const dialogRef = this.dialog.open(EditDateTimeDialogComponent, {data: {startDate: next.event?.start, currentDate: next.event?.end, displayString: "Enddatum", errorcode: undefined}});
+            dialogRef.afterClosed().subscribe(result => {
+                if (result) {
+                    this.store.updateEnd(result);
+                }
+            });
+        });
+
+    }
 
 
 

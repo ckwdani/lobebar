@@ -61,7 +61,8 @@ class SnackUsedRepository extends ServiceEntityRepository
                 ->andWhere('e.date >= :start')
                 ->andWhere('e.date <= :end')
                 ->setParameter('start', $startDateTime)
-                ->setParameter('end', $endDateTime);
+                ->setParameter('end', $endDateTime)
+                ->orderBy('e.date', 'DESC');
             return $qb->getQuery()->getResult();
         }else{
             return $qb->getQuery()->getResult();

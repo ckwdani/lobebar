@@ -8,7 +8,7 @@
                 {{(store.vm$ | async)?.event?.start | date: 'dd. MMMM yyyy \'um\' HH:mm':'de-DE'}}
             </h2>
             <h4 class="text-center text-xl text-orange-300 font-bold">
-                bis {{(store.vm$ | async)?.event?.end | date: 'dd. MMMM yyyy \'um\' HH:mm':'de-DE'}} <button mat-icon-button><mat-icon>edit</mat-icon></button>
+                bis {{(store.vm$ | async)?.event?.end | date: 'dd. MMMM yyyy \'um\' HH:mm':'de-DE'}} <button mat-icon-button (click)="updateEndTime()"><mat-icon>edit</mat-icon></button>
             </h4>
         </div>
     </div>
