@@ -15,7 +15,7 @@ import {
 } from "../../../core/components/dialogs/number-input-dialog/number-input-dialog.component";
 import {loadOwnUsedSnacks, selectOwnUser, useSnack} from "@frontend-lb-nx/shared/services";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {Observable} from "rxjs";
+import {groupBy, mergeMap, Observable, toArray} from "rxjs";
 import {map} from "rxjs/operators";
 
 
@@ -25,8 +25,8 @@ import {map} from "rxjs/operators";
   styleUrls: ['./snack-use-overview.component.scss']
 })
 export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
-  @ViewChild(MatPaginator) paginator?: MatPaginator;
-  @ViewChild(MatPaginator, {static: true}) sort: MatPaginator | undefined;
+  @ViewChild(MatPaginator,{static: false}) paginator?: MatPaginator;
+  @ViewChild(MatPaginator, {static: false}) sort: MatPaginator | undefined;
   @ViewChild('table3') table3: SimpleTableComponent<SnackType> = new SimpleTableComponent<SnackType>();
 
   @Input() usedSnacks?: Observable<Snack[]>
@@ -62,14 +62,14 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    this.displayData=this.groupSnacksForSameDate(this.usedSnacks)
     if(this.paginator!==undefined){
       this.sort = this.paginator
+      console.log('paginator index')
     }
-
     }
 
   ngOnInit(): void {
+    this.displayData=this.groupSnacksForSameDate(this.usedSnacks)
   }
 
   onPageChange($event: PageEvent) {
@@ -78,6 +78,30 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
     this.displayData = this.usedSnacks?.pipe(map(snacks => snacks.slice(startIndex, endIndex)));
   }
 
+  groupSnacksForSameDateRx(entities$: Observable<Snack[]> | undefined){
+    if(entities$!=undefined){
+      return entities$
+          .pipe(
+              mergeMap(entities => entities), // Flatten the array of entities
+              groupBy(entity => entity.date), // Group entities by date
+              mergeMap(group => group.pipe(toArray())), // Convert each group to an array
+              map(groupedEntities => {
+                const groupSize = groupedEntities.length;
+
+                if (groupSize > 1) {
+                  return groupedEntities.map((entity, index) => {
+                    entity.snackType.name = `${entity.snackType.name} ${index + 1}`;
+                    return entity;
+                  });
+                } else {
+                  return groupedEntities;
+                }
+              }),
+              mergeMap(snacks =>snacks) // Collect all groups into a single array
+          )
+    }
+    return entities$
+  }
   groupSnacksForSameDate(entities$: Observable<Snack[]> | undefined){
     if(entities$!=undefined) {
       entities$
@@ -106,6 +130,7 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
                 });
 
                 const reducedArray = Array.from(groupedEntities.values()).flat();
+                this.paginator?.firstPage()
                 return reducedArray;
               })
           )
