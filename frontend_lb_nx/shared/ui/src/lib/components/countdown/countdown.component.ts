@@ -13,7 +13,9 @@ export class CountdownComponent implements OnInit {
 
   countdown$: Observable<Countdown> = of({ days: 0, hours: 0, minutes: 0, seconds: 0 });
 
-  countDownSmallerThanOneDay$ = this.countdown$.pipe(map(next => next.days < 1));
+  countDownSmallerThanOneDay$ = this.countdown$.pipe(map(next => {
+    return next.days > 1;
+  }));
 
   ngOnInit() {
     if(!this.isPast()){
@@ -21,6 +23,9 @@ export class CountdownComponent implements OnInit {
       this.countdown$ = interval(1000).pipe(
           map(() => this.calculateCountdown())
       );
+      this.countDownSmallerThanOneDay$ = this.countdown$.pipe(map(next => {
+        return next.days < 1;
+      }));
     }
   }
 

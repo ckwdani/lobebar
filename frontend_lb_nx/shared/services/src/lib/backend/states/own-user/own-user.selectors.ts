@@ -15,6 +15,11 @@ export const selectAchievements = createSelector(
     (state: fromOwnUser.OwnUserState) => state.ownUser?.achievements
 );
 
+export const selectOwnUserLoading = createSelector(
+    selectOwnUserState,
+    (state: fromOwnUser.OwnUserState) => state.isLoading
+);
+
 export const selectSelectedAchievment = createSelector(
     selectOwnUserState,
     (state: fromOwnUser.OwnUserState) => state.ownUser?.selectedAchievement

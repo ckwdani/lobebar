@@ -58,6 +58,7 @@ class ShiftRepository extends ServiceEntityRepository
             $qb->andWhere($qb->expr()->in('su', ':user_id'))
                 ->setParameter('user_id', $user_id->toBinary());
         }
+        $qb->orderBy('e.start', 'ASC');
         return array_filter($qb->getQuery()->getResult(), function(Shift $shift){
             return $shift->getType() !== null;
         });

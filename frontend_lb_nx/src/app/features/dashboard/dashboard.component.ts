@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {
   selectLoggedIn,
   selectOutstandingShifts,
-  selectOwnShifts,
+  selectOwnShifts, selectShiftsLoading,
   selectUser,
   selectUserLoaded
 } from "@frontend-lb-nx/shared/services";
@@ -28,6 +28,9 @@ export class DashboardComponent implements OnInit, AfterViewInit{
   $outStandingShiftsObs = this.store.select(selectOutstandingShifts)
       //.pipe(tap(user => console.log(user)));
   $ownShiftsObs= this.store.select(selectOwnShifts).pipe()
+  $nearestShiftObs = this.store.select(selectOwnShifts).pipe(map(shifts => shifts[0]))
+
+  $shiftsLoaded = this.store.select(selectShiftsLoading)
   $displayOwnShifts = this.$ownShiftsObs
   $displayOutStandingShiftsObs = this.$outStandingShiftsObs
   tooltipOwnShift = "Gehe zum Event: "

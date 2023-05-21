@@ -1,10 +1,14 @@
 <p>Errungenschaften:</p>
-<div  *ngFor="let elem of achievements; let i =index">
-    <div *ngIf="i===0">
-        <button  mat-icon-button (click)="toggleAnimationState(myDiv)"><mat-icon>edit</mat-icon></button>
-        <p *ngIf="myDivState==='end'"> Wähle ein Badge aus.</p>
-    </div>
-    <div class="flex flex-row justify-center">
-        <frontend-lb-nx-single-achievement #myDiv [@divAnimation]="myDivState" [achievement]="elem" (click)="selectAchievement(elem)"></frontend-lb-nx-single-achievement>
+<div class="text-center">
+    <button  mat-icon-button (click)="toggleAnimationState()" matTooltip="Angezeigten Badge ändern" [disabled]="($loading | async)!" color="primary"><mat-icon>settings_suggest</mat-icon></button>
+    <p *ngIf="myDivState==='end'"> Wähle ein Badge aus.</p>
+</div>
+<div class="flex flex-wrap flex-row justify-around">
+    <div *ngFor="let elem of $achievements | async; let i =index" [class.fade-in-out]="$loading | async">
+        <div class="flex flex-row justify-center">
+            <frontend-lb-nx-single-achievement [@divAnimation]="myDivState" [achievement]="elem"
+                                               (click)="selectAchievement(elem)"></frontend-lb-nx-single-achievement>
+        </div>
     </div>
 </div>
+

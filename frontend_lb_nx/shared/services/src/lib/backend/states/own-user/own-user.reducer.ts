@@ -4,6 +4,7 @@ import * as OwnUserActions from "./own-user.actions";
 import * as AuthActions from "../auth/auth.actions";
 import {HttpErrorResponse} from "@angular/common/http";
 import {state} from "@angular/animations";
+import {updateSelectedAchievement} from "./own-user.actions";
 
 export const ownUserFeatureKey = 'ownUser';
 
@@ -20,6 +21,7 @@ export const initialOwnUserState: OwnUserState={
 
 export const reducer = createReducer(
     initialOwnUserState,
+    on(OwnUserActions.updateSelectedAchievement, (state) => ({...state, isLoading: true})),
     on(AuthActions.allLoaded, (state, {user}) => ({...state,ownUser: user, isLoading: false})),
     on(OwnUserActions.updateUser, (state, { user }) => {
         return { ...state, ownUser: user };
