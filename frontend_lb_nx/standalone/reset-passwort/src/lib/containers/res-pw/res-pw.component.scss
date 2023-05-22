@@ -1,0 +1,27 @@
+.password-reset {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-decoration-color: gray;
+}
+
+mat-card {
+  width: 400px;
+}
+
+.form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.success-message,
+.error-message {
+  margin-top: 16px;
+  color: #4caf50;
+  font-weight: bold;
+}
+
+.text-gray-white{
+  color: lightgray !important;
+}

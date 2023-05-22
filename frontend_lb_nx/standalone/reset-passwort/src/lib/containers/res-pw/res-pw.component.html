@@ -1,0 +1,24 @@
+<div class="password-reset">
+    <mat-card>
+        <mat-card-header>
+            <mat-card-title class="text-gray-white">Password Reset</mat-card-title>
+        </mat-card-header>
+        <mat-card-content>
+            <p class="text-gray-white">Enter your email address below to receive a password reset link.</p>
+
+            <form (ngSubmit)="submitForm()">
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Email</mat-label>
+                    <input matInput type="email" name="email" [(ngModel)]="email" required>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" type="submit" [disabled]="!email">
+                    Reset Password
+                </button>
+            </form>
+
+            <p *ngIf="successMessage" class="success-message">{{ successMessage }}</p>
+            <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+        </mat-card-content>
+    </mat-card>
+</div>

@@ -22,6 +22,7 @@ import {entityConfig} from "../../shared/entities/src/lib/entity-metadata";
 import {provideEntityDataConfig} from "@ngrx/data/src/provide-entity-data";
 import {GermanDateProvider} from "./core/utils/GermanDateAdapter";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import {resetPwRoutes, StandaloneResetPasswortModule} from "@lobebar/passwort-reset-email";
 
 @NgModule({
   declarations: [AppComponent],
@@ -29,6 +30,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     CoreModule,
     BrowserModule,
     RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
+    RouterModule.forRoot([{path: 'reset-password', children: resetPwRoutes}]),
     BrowserAnimationsModule,
     MatButtonModule,
     MatIconModule,
@@ -43,6 +45,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig),
     MatSnackBarModule,
+    StandaloneResetPasswortModule,
   ],
   providers: [
 

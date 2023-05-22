@@ -19,7 +19,10 @@
       "@frontend-lb-nx/shared/entities": ["shared/entities/src/index.ts"],
       "@frontend-lb-nx/shared/pipes": ["shared/pipes/src/index.ts"],
       "@frontend-lb-nx/shared/services": ["shared/services/src/index.ts"],
-      "@frontend-lb-nx/shared/ui": ["shared/ui/src/index.ts"]
+      "@frontend-lb-nx/shared/ui": ["shared/ui/src/index.ts"],
+      "@lobebar/passwort-reset-email": [
+        "standalone/reset-passwort/src/index.ts"
+      ]
     }
   },
   "exclude": ["node_modules", "tmp"]
