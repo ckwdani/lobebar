@@ -15,10 +15,14 @@ mat-card {
   margin-bottom: 16px;
 }
 
-.success-message,
-.error-message {
+.success-message{
   margin-top: 16px;
   color: #4caf50;
+  font-weight: bold;
+}
+.error-message {
+  margin-top: 16px;
+  color: red;
   font-weight: bold;
 }
 

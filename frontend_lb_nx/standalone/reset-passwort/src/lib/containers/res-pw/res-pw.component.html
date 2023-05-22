@@ -9,10 +9,11 @@
             <form (ngSubmit)="submitForm()">
                 <mat-form-field appearance="outline" class="form-field">
                     <mat-label>Email</mat-label>
-                    <input matInput type="email" name="email" [(ngModel)]="email" required>
+                    <input matInput type="email" name="email" [(ngModel)]="email" required [formControl]="fcemail">
+                    <mat-error>This is no valid email.</mat-error>
                 </mat-form-field>
 
-                <button mat-raised-button color="primary" type="submit" [disabled]="!email">
+                <button mat-raised-button color="primary" type="submit" [disabled]="fcemail.invalid">
                     Reset Password
                 </button>
             </form>
