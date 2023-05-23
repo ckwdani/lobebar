@@ -10,6 +10,7 @@ import {Observable} from "rxjs";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {map, shareReplay} from "rxjs/operators";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {BACKENDPATHS} from "../../../../../services/src/lib/backend/BACKENDPATHS";
 
 @Component({
   selector: 'frontend-lb-nx-register',
@@ -25,6 +26,10 @@ export class RegisterComponent {
       );
   registerState= new RegisterComponentState();
   $success = this.store.select(selectSuccess);
+
+  datenschutzLink = BACKENDPATHS.datenSchutz;
+
+  acceptTerms = false;
 
   //VALIDATORS
   fcusername = new FormControl(this.registerState.user.username, [Validators.required, Validators.minLength(3)])

@@ -18,14 +18,10 @@ export class ShiftEffects {
         ofType(ShiftActions.loadOwnShifts),
         switchMap((action) =>
             forkJoin([
-                this.shiftsService.getShiftsUser(dateToUnix(new Date()), dateToUnix(addMonthsToDate(new Date(), 120)), action.userId).pipe(tap(c => console.log(c))),
-                this.shiftsService.getShiftsUser(dateToUnix(addMonthsToDate(new Date(), -120)), dateToUnix(new Date()), action.userId).pipe(tap(c => console.log(c)))
+                this.shiftsService.getShiftsUser(dateToUnix(new Date()), dateToUnix(addMonthsToDate(new Date(), 120)), action.userId),
+                this.shiftsService.getShiftsUser(dateToUnix(addMonthsToDate(new Date(), -36)), dateToUnix(new Date()), action.userId)
             ]).pipe(
-                tap((shifts) => {
-                    console.log(shifts);
-                }),
                 map((shifts) => {
-                    console.log(shifts);
                   return ShiftActions.loadOwnShiftsSuccess({ownShifts: shifts[0], ownOldShifts: shifts[1]})
                 }),
                 catchError((error) => of(ShiftActions.loadOwnShiftsFailure({ error })))
@@ -112,5 +108,5 @@ export class ShiftEffects {
         )
     });
 
-  constructor(private actions$: Actions, private shiftsService: ShiftsBackendService, private store: Store) { actions$.subscribe((action)=>console.log(action));}
+  constructor(private actions$: Actions, private shiftsService: ShiftsBackendService, private store: Store) {}
 }

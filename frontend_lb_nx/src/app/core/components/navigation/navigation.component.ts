@@ -15,6 +15,7 @@ import {loadShiftTypes} from "../../../../../shared/services/src/lib/backend/sta
 import * as AuthActions from "../../../../../shared/services/src/lib/backend/states/auth/auth.actions";
 import {UserFunctions, UserRoles} from "@frontend-lb-nx/shared/entities";
 import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
+import {BACKENDPATHS} from "../../../../../shared/services/src/lib/backend/BACKENDPATHS";
 
 @Component({
   selector: 'frontend-lb-nx-navigation',
@@ -30,6 +31,7 @@ export class NavigationComponent implements AfterViewInit{
       shareReplay()
     );
 
+  datenschutzLink = BACKENDPATHS.datenSchutz;
 
   $isLoggedIn = this.store.select(selectLoggedIn).pipe(first());
   $isLoggedInAll = this.store.select(selectLoggedIn);
@@ -69,6 +71,8 @@ export class NavigationComponent implements AfterViewInit{
     console.log("login logout")
     this.store.dispatch(AuthActions.logout());
   }
+
+
 
   protected readonly UserRoles = UserRoles;
 }

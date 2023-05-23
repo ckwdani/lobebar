@@ -124,18 +124,19 @@ class UserController extends _Base_Controller
         return JsonResponse::fromJsonString($this->serializer->serialize($userFromDB, 'json'));
     }
 
-    #[Route("/user/updateRole", methods: ["PUT"])]
-    public function updateUserRole(Request $request): JsonResponse{
-        $id = Uuid::fromString(json_decode($request->getContent(), true)["id"]);
+    #[Route("/user/updateRole/{userId}/{role}", methods: ["PUT"])]
+    public function updateUserRole(string $userId, string $role): JsonResponse{
+
+
+        $id = Uuid::fromString($userId);
         $userFromDB = $this->userRepo->find($id);
 
-        $this->denyAccessUnlessGranted(AdminVoter::ADMIN_VOTER, $userFromDB);
+        $this->denyAccessUnlessGranted("ROLE_ADMIN");
         //get request body from user
-        /** @var User $user */
-        $user = $this->serializer->deserialize($request->getContent(), User::class, "json", DeserializationContext::create()->setGroups(["DeSer", "Default"]));
-
-        // update userrole
-        $userFromDB->setRoles($user->getRoles());
+        if(!in_array($role, ["ROLE_USER", "ROLE_ORGANIZER", "ROLE_MOD", "ROLE_ADMIN"])){
+            throw new NotFoundHttpException("Role not found");
+        }
+        $userFromDB->setRoles([$role]);
 
         // save user to db and return it as json
         $em = $this->doctrine->getManager();

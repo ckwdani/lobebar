@@ -33,8 +33,8 @@
     <ng-container matColumnDef="assign">
         <th mat-header-cell *matHeaderCellDef> Übernehmen </th>
         <td mat-cell *matCellDef="let element">
-            <button *ngIf="showUncheck(element)" (click)="assignShift(element, false)" mat-icon-button color="primary" matTooltip="Schicht freimachen"><mat-icon>cancel</mat-icon></button>
-            <button *ngIf="showCheck(element)" (click)="assignShift(element, true)" mat-icon-button color="primary" matTooltip="Schicht übernehmen"><mat-icon>check</mat-icon></button>
+            <button *ngIf="showUncheck(element) && showAssign" (click)="assignShift(element, false)" mat-icon-button color="primary" matTooltip="Schicht freimachen"><mat-icon>cancel</mat-icon></button>
+            <button *ngIf="showCheck(element) && showAssign" (click)="assignShift(element, true)" mat-icon-button color="primary" matTooltip="Schicht übernehmen"><mat-icon>check</mat-icon></button>
             <div *ngIf="showEditDelete">
                 <button  mat-icon-button color="primary" (click)="openEditShiftDialog(element)" matTooltip="Schichtname editieren"><mat-icon>edit</mat-icon></button>
                 <button mat-icon-button color="primary" (click)="openDeleteShiftDialog(element)" matTooltip="Schicht löschen"><mat-icon>delete</mat-icon></button>

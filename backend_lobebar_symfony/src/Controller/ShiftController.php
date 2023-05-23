@@ -157,7 +157,7 @@ class ShiftController extends _Base_Controller
     #[Route("/api/getUserShifts/{start}/{end}/{userId}", methods: ["GET"])]
     public function getUserShifts( int $start, int $end, ?string $userId){
 
-        $shifts = $this->doctrine->getManager()->getRepository(Shift::class)->getUserShiftsTimed($start, $end, Uuid::fromString($userId));
+        $shifts = (array) $this->doctrine->getManager()->getRepository(Shift::class)->getUserShiftsTimed($start, $end, Uuid::fromString($userId));
         return JsonResponse::fromJsonString($this->serializer->serialize($shifts, 'json'));
 
     }

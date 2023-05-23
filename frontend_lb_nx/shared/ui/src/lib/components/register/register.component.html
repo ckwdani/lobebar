@@ -65,8 +65,14 @@
                     </button>
                 </mat-form-field>
             </div>
+            <div class="flex flex-wrap flex-row w-full justify-between">
+                <div>
+                    <mat-checkbox [(ngModel)]="acceptTerms"></mat-checkbox>
+                    Ich habe die <a [href]="datenschutzLink" target="_blank" class="text-orange-500">datenschutzrechtlichen Bestimmungen</a> gelesen und akzeptiere diese.
+                </div>
+            </div>
             <p *ngIf="registerState.error && !registerState.isLoggingIn" style="color: red">{{registerState.error}}</p>
-            <button mat-button (click)="register()" [disabled]="registerState.isLoggingIn || registerState.user.password === '' || registerState.user.email === '' || !valid">Registrieren</button>
+            <button color="primary" mat-flat-button (click)="register()" [disabled]="!acceptTerms || registerState.isLoggingIn || registerState.user.password === '' || registerState.user.email === '' || !valid">Registrieren</button>
         </div>
     </mat-card-content>
 </mat-card>

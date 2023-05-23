@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {BaseCommunicatorService} from "../common/base-communicator.service";
 import {OrgEvent, Shift} from "@frontend-lb-nx/shared/entities";
-import {Observable} from "rxjs";
+import {Observable, tap} from "rxjs";
 import {BACKENDPATHS} from "../BACKENDPATHS";
 import {map} from "rxjs/operators";
 

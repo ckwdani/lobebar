@@ -44,7 +44,7 @@
         <div class="flex justify-center">
             <h2 *ngIf="($ownShiftsOldObs | async)!.length<0">Keine Schichten vorhanden!</h2>
             <div *ngIf="($ownShiftsOldObs | async)!.length>0">
-                <frontend-lb-nx-shift-table [log]="true" [shifts]="($ownShiftsOldObs | async)!"></frontend-lb-nx-shift-table>
+                <frontend-lb-nx-shift-table [showAssign]="false" [log]="true" [shifts]="($ownShiftsOldObs | async)!"></frontend-lb-nx-shift-table>
             </div>
         </div>
     </mat-tab>

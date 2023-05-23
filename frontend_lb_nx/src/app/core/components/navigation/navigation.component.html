@@ -3,10 +3,12 @@
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
       [opened]="(isHandset$ | async) === false">
-    <mat-toolbar>Menu <img class="p-2 h-14 w-14" src="assets/emilsecke_logo.png" alt="Image"></mat-toolbar>
-    <mat-toolbar *ngIf="$userLoaded | async">
-         Willkommen {{($loggedInUser | async)?.firstname}}
-    </mat-toolbar>
+    <div class="flex flex-col justify-between h-full">
+      <div>
+        <mat-toolbar>Menu <img class="p-2 h-14 w-14" src="assets/emilsecke_logo.png" alt="Image"></mat-toolbar>
+        <mat-toolbar *ngIf="$userLoaded | async">
+          Willkommen {{($loggedInUser | async)?.firstname}}
+        </mat-toolbar>
         <mat-nav-list [ngSwitch]="$roleUser|async">
           <mat-divider></mat-divider>
           <a *ngIf="!$isLoggedIn" mat-list-item routerLink="/login">Login</a>
@@ -15,7 +17,7 @@
           <a mat-list-item routerLink="/user_overview">Nutzer</a>
           <a *ngSwitchCase="UserRoles.ADMIN" mat-list-item routerLink="/users_overview">Alle Nutzer</a>
           <mat-divider></mat-divider>
-<!--          <a *ngSwitchCase="UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/shift_add">Schichten erstellen</a>-->
+          <!--          <a *ngSwitchCase="UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/shift_add">Schichten erstellen</a>-->
           <a mat-list-item routerLink="/event_overview">Veranstaltungen</a>
           <a mat-list-item routerLink="/calendar">Kalender</a>
           <a *ngSwitchCase="UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/shift_types">ShiftTypes</a>
@@ -24,6 +26,9 @@
           <a mat-list-item (click)="logout()">Logout</a>
           <mat-divider></mat-divider>
         </mat-nav-list>
+      </div>
+      <div><a target="_blank" class="text-orange-500" [href]="datenschutzLink">Datenschutzerklärung</a></div>
+    </div>
   </mat-sidenav>
   <mat-sidenav-content>
     <mat-toolbar color="primary">

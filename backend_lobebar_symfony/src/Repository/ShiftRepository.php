@@ -47,6 +47,10 @@ class ShiftRepository extends ServiceEntityRepository
         $qb = $this->createQueryBuilder('s');
         // join with event to get event start date
         $qb->join('s.orgevent', 'e');
+        // join with shift_type to filter all shifts that have null as shift type
+        $qb->join('s.type', 'st')
+            ->andWhere($qb->expr()->isNotNull('st'));
+
         if(!empty($start) && !empty($end)){
             $qb->andWhere($qb->expr()->between('e.start', ':start', ':end'))
                 ->setParameter('start', (new \DateTime())->setTimestamp($start))
@@ -59,9 +63,10 @@ class ShiftRepository extends ServiceEntityRepository
                 ->setParameter('user_id', $user_id->toBinary());
         }
         $qb->orderBy('e.start', 'ASC');
-        return array_filter($qb->getQuery()->getResult(), function(Shift $shift){
-            return $shift->getType() !== null;
-        });
+
+
+
+        return $qb->getQuery()->getResult();
     }
 
     // get outstanding shifts where the headcount is not met by the number of users related to the shift via the shift_user table and where the logged in user is not signed up for
