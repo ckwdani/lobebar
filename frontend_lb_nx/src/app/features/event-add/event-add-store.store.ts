@@ -11,6 +11,7 @@ import {
 import {addOrgEventSuccess, OrgEventBackendService} from "@frontend-lb-nx/shared/services";
 import {Router} from "@angular/router";
 import { Location } from '@angular/common';
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 export interface EventAddStoreState {
   eventDefined?: boolean;
@@ -24,7 +25,7 @@ const initialState: EventAddStoreState = {eventDefined: false, shifts: [], shift
 
 @Injectable()
 export class EventAddStore extends ComponentStore<EventAddStoreState> {
-  constructor(private store: Store, private orgEventService: OrgEventBackendService, private router: Router,private location: Location) {
+  constructor(private store: Store, private orgEventService: OrgEventBackendService, private router: Router,private location: Location, private snackBar: MatSnackBar) {
     super(initialState);
   }
 
@@ -58,6 +59,9 @@ export class EventAddStore extends ComponentStore<EventAddStoreState> {
                             setTimeout(() => {
                                 this.setLoading(false);
                                 this.location.back();
+                                this.snackBar.open('Event added', 'OK', {
+                                    duration: 2000,
+                                });
                             }, 1000);
 
                         },
