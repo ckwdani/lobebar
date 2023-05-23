@@ -6,6 +6,7 @@ export const shiftFeatureKey = 'shift';
 
 export interface ShiftState {
     ownShifts: Shift[];
+    ownOldShifts: Shift[];
     outstandingShifts: Shift[];
     isLoading: boolean;
     error?: number
@@ -14,6 +15,7 @@ export interface ShiftState {
 export const initialState: ShiftState = {
     isLoading: true,
     ownShifts: [],
+    ownOldShifts: [],
     outstandingShifts: [],
 };
 
@@ -21,7 +23,7 @@ export const reducer = createReducer(
   initialState,
 
     on(ShiftActions.loadOwnShifts, state => ({...state, isLoading: true})),
-    on(ShiftActions.loadOwnShiftsSuccess, (state, {ownShifts})=>{return {...state, ownShifts, isLoading: false}}),
+    on(ShiftActions.loadOwnShiftsSuccess, (state, {ownShifts, ownOldShifts})=>{return {...state, ownShifts, ownOldShifts, isLoading: false}}),
     on(ShiftActions.loadOwnShiftsFailure, (state, {error}) =>({...state, error, success: false})),
 
     on(ShiftActions.loadOutstandingShifts, state => state),

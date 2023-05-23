@@ -10,6 +10,11 @@ export const selectOwnShifts=createSelector(
     (state: fromShift.ShiftState)=>state.ownShifts
 )
 
+export const selectOwnOldShifts=createSelector(
+    selectShiftState,
+    (state: fromShift.ShiftState)=>state.ownOldShifts
+)
+
 export const selectOutstandingShifts=createSelector(
     selectShiftState,
     (state: fromShift.ShiftState)=>state.outstandingShifts

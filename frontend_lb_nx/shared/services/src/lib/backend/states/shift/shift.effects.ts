@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import {catchError, concatMap, map, switchMap, withLatestFrom} from 'rxjs/operators';
-import {Observable, EMPTY, of} from 'rxjs';
+import {catchError, concatMap, map, mergeMap, switchMap, withLatestFrom} from 'rxjs/operators';
+import {Observable, EMPTY, of, combineLatest, forkJoin, tap} from 'rxjs';
 import * as ShiftActions from './shift.actions';
 import {selectOrgEventsState, selectOwnUser, selectUser, ShiftsBackendService} from "@frontend-lb-nx/shared/services";
 import {addMonthsToDate, dateToUnix} from "../../../../../../../src/app/core/utils/date-functions";
@@ -17,9 +17,16 @@ export class ShiftEffects {
     return this.actions$.pipe(
         ofType(ShiftActions.loadOwnShifts),
         switchMap((action) =>
-            this.shiftsService.getShiftsUser(dateToUnix(new Date()), dateToUnix(addMonthsToDate(new Date(), 120)), action.userId).pipe(
+            forkJoin([
+                this.shiftsService.getShiftsUser(dateToUnix(new Date()), dateToUnix(addMonthsToDate(new Date(), 120)), action.userId).pipe(tap(c => console.log(c))),
+                this.shiftsService.getShiftsUser(dateToUnix(addMonthsToDate(new Date(), -120)), dateToUnix(new Date()), action.userId).pipe(tap(c => console.log(c)))
+            ]).pipe(
+                tap((shifts) => {
+                    console.log(shifts);
+                }),
                 map((shifts) => {
-                  return ShiftActions.loadOwnShiftsSuccess({ownShifts: shifts})
+                    console.log(shifts);
+                  return ShiftActions.loadOwnShiftsSuccess({ownShifts: shifts[0], ownOldShifts: shifts[1]})
                 }),
                 catchError((error) => of(ShiftActions.loadOwnShiftsFailure({ error })))
             )));
@@ -105,5 +112,5 @@ export class ShiftEffects {
         )
     });
 
-  constructor(private actions$: Actions, private shiftsService: ShiftsBackendService, private store: Store) {}
+  constructor(private actions$: Actions, private shiftsService: ShiftsBackendService, private store: Store) { actions$.subscribe((action)=>console.log(action));}
 }

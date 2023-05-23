@@ -9,7 +9,7 @@ export const loadOwnShifts = createAction(
 
 export const loadOwnShiftsSuccess = createAction(
     '[Shift] Load Own Shifts Success',
-    props<{ownShifts: Shift[]}>()
+    props<{ownShifts: Shift[], ownOldShifts: Shift[]}>()
 );
 
 export const loadOwnShiftsFailure = createAction(

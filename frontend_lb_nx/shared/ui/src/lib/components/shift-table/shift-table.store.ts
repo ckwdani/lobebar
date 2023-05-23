@@ -8,7 +8,7 @@ import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ErrorBarData, ErrorSnackBarComponent} from "../error-snack-bar/error-snack-bar.component";
 import {createEffect, ofType} from "@ngrx/effects";
-import * as ShiftActions from "../../../../../services/src/lib/backend/states/shift/shift.actions";
+
 import {catchError, map} from "rxjs/operators";
 
 export interface ShiftTableState {

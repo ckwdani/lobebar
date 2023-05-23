@@ -9,7 +9,7 @@ import {
   loadOrgEvents, selectCommingOrgEvents,
   selectOrgEvents, selectOrgEventsLoading,
   selectOrgEventsState,
-  selectOutstandingShifts,
+  selectOutstandingShifts, selectOwnOldShifts,
   selectOwnShifts, selectPreviousOrgEvents, selectUser, selectUserRole
 } from "@frontend-lb-nx/shared/services";
 import {map, switchMap} from "rxjs/operators";
@@ -32,6 +32,7 @@ export class EventsOverviewComponent {
   $roleUser = this.store.select(selectUser).pipe(map(next=> (next??0 !== 0) ? UserFunctions.getRole(next!) : next))
 
   $ownShiftsObs= this.store.select(selectOwnShifts)
+  $ownShiftsOldObs= this.store.select(selectOwnOldShifts)
   //$outStandingShiftsObs = this.store.select(selectOutstandingShifts)
 
   $orgEventsPrevious = this.store.select(selectPreviousOrgEvents)

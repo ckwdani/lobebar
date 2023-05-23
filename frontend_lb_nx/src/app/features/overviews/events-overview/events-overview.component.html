@@ -1,4 +1,4 @@
-<mat-tab-group *ngIf="!initialLoad" [@sequentialFadeIn]>
+<mat-tab-group *ngIf="!initialLoad">
     <mat-tab label="Bevorstehende Veranstaltungen" >
         <br>
         <div [ngSwitch]="$roleUser|async" class="flex justify-center">
@@ -40,7 +40,13 @@
         </div>
     </mat-tab>
     <mat-tab label="Vergangene Schichten">
-
+        <br>
+        <div class="flex justify-center">
+            <h2 *ngIf="($ownShiftsOldObs | async)!.length<0">Keine Schichten vorhanden!</h2>
+            <div *ngIf="($ownShiftsOldObs | async)!.length>0">
+                <frontend-lb-nx-shift-table [log]="true" [shifts]="($ownShiftsOldObs | async)!"></frontend-lb-nx-shift-table>
+            </div>
+        </div>
     </mat-tab>
 </mat-tab-group>
 <app-loading-overlay [externInput]="true" [pulsing]="false" *ngIf="initialLoad" @inOutAnimation>
