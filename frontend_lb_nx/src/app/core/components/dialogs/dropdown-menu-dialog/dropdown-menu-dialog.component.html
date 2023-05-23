@@ -1,0 +1,16 @@
+<h1 mat-dialog-title>{{displayString}}</h1>
+<div mat-dialog-content class="!flex !justify-around !flex-col">
+    <mat-form-field appearance="outline" class="max-w-[300px] w-48 mb-3">
+        <br>
+        <mat-label>Rollen</mat-label>
+        <mat-select [(value)]="selected">
+            <mat-option *ngFor="let elem of data.choices" [disabled]="data.currentRole===elem" [value]="elem">{{getMinusesCount(data.choices.indexOf(elem))}}{{elem}}</mat-option>
+        </mat-select>
+    </mat-form-field>
+</div>
+<div *ngIf="data.errorcode !== undefined" class="text-red-600 w-full flex justify-center"><p>{{getErrorMessage(data.errorcode!)}}</p></div>
+<div mat-dialog-actions class="mat-dialog-flexed" >
+    <button mat-button (click)="onNoClick()">Abbrechen</button>
+    <button mat-button [disabled]="data.currentRole===selected" (click)="onSubmit()">Ok <mat-icon>send</mat-icon></button>
+</div>
+

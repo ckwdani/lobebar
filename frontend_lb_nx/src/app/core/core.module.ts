@@ -19,6 +19,8 @@ import { EditDateTimeDialogComponent } from './components/dialogs/edit-date-time
 import {MatDatetimepickerModule} from "@mat-datetimepicker/core";
 import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatTooltipModule} from "@angular/material/tooltip";
+import { DropdownMenuDialogComponent } from './components/dialogs/dropdown-menu-dialog/dropdown-menu-dialog.component';
+import {MatSelectModule} from "@angular/material/select";
 
 @NgModule({
   declarations: [
@@ -27,31 +29,33 @@ import {MatTooltipModule} from "@angular/material/tooltip";
     ImportantDeleteDialogComponent,
     NumberInputDialogComponent,
     EditDateTimeDialogComponent,
+    DropdownMenuDialogComponent,
   ],
   exports: [
     NavigationComponent,
     EditStringDialogComponent,
     ImportantDeleteDialogComponent,
   ],
-  imports: [
-    BrowserAnimationsModule,
-    MatInputModule,
-    FormsModule,
-    CommonModule,
-    MatSidenavModule,
-    MatToolbarModule,
-    MatListModule,
-    MatIconModule,
-    RouterLink,
-    MatDialogModule,
-    MatButtonModule,
-    FormsModule,
-    ReactiveFormsModule,
-    MatDatepickerModule,
-    MatDatetimepickerModule,
-    MatTooltipModule,
+    imports: [
+        BrowserAnimationsModule,
+        MatInputModule,
+        FormsModule,
+        CommonModule,
+        MatSidenavModule,
+        MatToolbarModule,
+        MatListModule,
+        MatIconModule,
+        RouterLink,
+        MatDialogModule,
+        MatButtonModule,
+        FormsModule,
+        ReactiveFormsModule,
+        MatDatepickerModule,
+        MatDatetimepickerModule,
+        MatTooltipModule,
+        MatSelectModule,
 
-  ],
+    ],
   providers: [Router, Store],
 })
 export class CoreModule {}

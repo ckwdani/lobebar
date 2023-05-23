@@ -3,7 +3,7 @@ import {Achievement, AchievementBackend} from "./achievement";
 export interface User{
     id?: string,
     username: string,
-    roles: [],
+    roles: string[],
     password: string,
     email: string,
     firstname: string,

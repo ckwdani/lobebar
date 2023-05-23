@@ -56,6 +56,18 @@
         </td>
     </ng-container>
 
+    <ng-container matColumnDef="role">
+        <th mat-header-cell *matHeaderCellDef> Rolle </th>
+        <td mat-cell *matCellDef="let element">
+            <div class="flex items-center">
+                <span>{{genHighestRole(UserFunctions.getRole(element))!}}</span>
+                <button matTooltip="Rolle von {{element.username}} ändern." mat-icon-button color="primary" (click)="openDialog(genHighestRole(UserFunctions.getRole(element))!, element)" ><mat-icon>edit</mat-icon></button>
+
+            </div>
+        </td>
+
+    </ng-container>
+
     <ng-container matColumnDef="delete">
         <th mat-header-cell *matHeaderCellDef> Löschen </th>
         <td mat-cell *matCellDef="let element">
