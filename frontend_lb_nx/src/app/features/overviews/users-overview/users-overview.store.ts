@@ -1,22 +1,25 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import {Observable, of, switchMap, tap} from "rxjs";
-import {User} from "@frontend-lb-nx/shared/entities";
+import { User} from "@frontend-lb-nx/shared/entities";
 import {UserBackendService} from "../../../../../shared/services/src/lib/backend/entity-backend-services/user-backend.service";
 import {catchError} from "rxjs/operators";
 import {createAction, props, select, Store} from '@ngrx/store';
-import {selectUser, updateUser} from "@frontend-lb-nx/shared/services";
+import {changeShiftAssignmentSuccess, selectUser, updateUser} from "@frontend-lb-nx/shared/services";
+import {HttpErrorResponse} from "@angular/common/http";
+import {MatSnackBar} from "@angular/material/snack-bar";
 
 export interface UsersOverviewState {
     users: User[];
     loading: boolean
+    error?: HttpErrorResponse
 }
 
-const initialState: UsersOverviewState = {users: [], loading: true}
+const initialState: UsersOverviewState = {users: [], loading: true, error: undefined}
 
 @Injectable()
 export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
-    constructor(private userService: UserBackendService, private store: Store) {
+    constructor(private userService: UserBackendService, private store: Store, private snackBar: MatSnackBar) {
         super(initialState);
     }
 
@@ -26,6 +29,21 @@ export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
 
     readonly setLoading = this.updater((state, loading: boolean)=> {return {...state, loading: loading}})
 
+    // change error
+    readonly $updateError = this.updater((state, error: HttpErrorResponse) => {
+        return {
+            ...state,
+            error
+        };
+    });
+
+
+    readonly $updateSomeUserRole = this.updater((state, user: User) => {
+        return {
+            ...state,
+            users: state.users.map(u => u.id !==user.id ? u: user)
+        };
+    });
     readonly loadUsers = this.effect<void>((trigger$: Observable<void>) =>
         trigger$.pipe(
             tap(() => {
@@ -35,30 +53,94 @@ export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
             })
         )
     );
+    // readonly loadUsers = this.effect<void>((trigger$: Observable<void>) =>
+    //     trigger$.pipe(
+    //         switchMap(()=> this.userService.getAll().pipe(
+    //             tap(
+    //                 {
+    //                     next: (users) =>{
+    //                         return this.patchState({ users: users , loading: false});
+    //                     },
+    //                     error: (err) =>{
+    //                         this.$updateError(err)
+    //                     }
+    //                 }
+    //             )
+    //         )
+    //     )
+    //     )
+    // );
 
-    readonly deleteUser = this.effect<User>((user$: Observable<User>) =>
+    readonly deleteUser = this.effect((user$: Observable<{user: User}>) =>
         user$.pipe(
-            tap((user) => {
-                this.userService.deleteUser(user.id??"").subscribe(() => {
-                    this.patchState((state) => ({
-                        users: state.users.filter((u) => u.id !== user.id),
-                    }));
-                });
-            })
+            switchMap(({user})=>
+                this.userService.deleteUser(user.id??"").pipe(
+                    tap(
+                        {
+                            next: (user) => {
+                                return this.patchState((state) => ({
+                                                           users: state.users.filter((u) => u.id !== user.id),
+                                                         }));
+                            },
+                            error: (err)=>{
+                                this.$updateError(err)
+                            }
+                        }
+
+                    )
+                )
+            )
+
         )
     );
+    //            tap((user) => {
+    //                 this.userService.deleteUser(user.id??"").subscribe(() => {
+    //                     this.patchState((state) => ({
+    //                         users: state.users.filter((u) => u.id !== user.id),
+    //                     }));
+    //                 });
+    //             })
 
-    readonly updateUser = this.effect<User>((user$: Observable<User>)=>
+    readonly updateUser = this.effect((user$: Observable<{user: User}>)=>
         user$.pipe(
-            tap((user)=>{
-                this.userService.updateUser(user).subscribe(()=>{
-                    this.store.dispatch(updateUser({user}))
-                })
-            })
+            switchMap(({user})=>
+                this.userService.updateUser(user).pipe(
+                    tap(
+                        {
+                            next: (newUser)=>{
+                                this.store.dispatch(updateUser({user}))
+                            },
+                            error: (err) =>{
+                                this.$updateError(err);
+                            }
+                        }
+                    )
+                )
+            )
+
         )
     )
 
-    readonly updateUserRole = this.effect<User>((user$: Observable<User>)=>
+
+    readonly updateUserRole = this.effect<User>((user$: Observable<User>)=> {
+        return user$.pipe(
+            switchMap((user) =>
+                this.userService.updateUserRole(user).pipe(
+                    tap(
+                        {
+                            next: (newUser) => {
+                                return this.$updateSomeUserRole(newUser)
+                            },
+                            error: (err) => {
+                                this.$updateError(err);
+                            }})
+                )
+            )
+        )
+        }
+    );
+
+/*    readonly updateUserRole = this.effect<User>((user$: Observable<User>)=>
         user$.pipe(
             tap((user)=>{
                 this.userService.updateUserRole(user).subscribe(()=>{
@@ -66,21 +148,38 @@ export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
                 })
             })
         )
-    )
+    )*/
 
 /*    this.patchState((state) => ({
     users: state.users.filter((u) => u.id !== user.id),
 }));*/
-    readonly approveUser = this.effect<User>((user$: Observable<User>)=>
+    readonly approveUser = this.effect((user$: Observable<{user: User}>)=>
         user$.pipe(
-            tap((user) => {
-                this.userService.approveUser(user).subscribe((userApproved) => {
-                    this.patchState((state) => ({
-                        // state.shiftTypes.map(item=>item.id===shiftType.id?shiftType:item)
-                        users: state.users.map(u=>u.id===userApproved.id?userApproved:u)
-                    }));
-                });
-            })
+            switchMap(({user})=>
+                this.userService.approveUser(user).pipe(
+                    tap(
+                        {
+                            next: (userApproved)=>{
+                                return this.patchState((state) => ({
+                                users: state.users.map(u=>u.id===userApproved.id?userApproved:u)
+                                }))
+                            },
+                            error: (err) =>{
+                                this.$updateError(err);
+                            }
+                        }
+                    )
+                )
+            )
         )
     )
 }
+
+//tap((user) => {
+//                 this.userService.approveUser(user).subscribe((userApproved) => {
+//                     this.patchState((state) => ({
+//                         // state.shiftTypes.map(item=>item.id===shiftType.id?shiftType:item)
+//                         users: state.users.map(u=>u.id===userApproved.id?userApproved:u)
+//                     }));
+//                 });
+//             })

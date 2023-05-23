@@ -43,7 +43,7 @@ export class UsersOverviewComponent {
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // type.name = result;
-        this.usersOverviewStore.deleteUser(user)
+        this.usersOverviewStore.deleteUser({user: user})
         //TODO update state and show erros
         //this.$deletingError.pipe(map((loading,) => loading.adding)).subscribe({next: (value) => this.loadingEWT = value})
       }
@@ -53,7 +53,7 @@ export class UsersOverviewComponent {
   }
 
   approveUser(user: User) {
-    this.usersOverviewStore.approveUser(user)
+    this.usersOverviewStore.approveUser({user: user})
   }
 
   genHighestRole(valueUserRole: number) {
@@ -71,6 +71,7 @@ export class UsersOverviewComponent {
       if(result){
         const uppercaseRole = "ROLE_"+result.toUpperCase()
         const userCopy = Object.assign({}, user)
+        userCopy.roles = []
         userCopy.roles=userCopy.roles.concat([uppercaseRole])
         this.usersOverviewStore.updateUserRole(userCopy)
 

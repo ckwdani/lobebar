@@ -47,11 +47,11 @@ export class DetailsWithEditComponent {
       if(result!=undefined){
         console.log(result)
         console.log('The dialog was closed');
-        let newUser = Object.assign({}, this.user);
+        const newUser = Object.assign({}, this.user);
         if(this.user != undefined){
           (newUser as any)[input] = result;
           newUser.roles=[]
-          this.usersOverviewStore.updateUser(newUser)
+          this.usersOverviewStore.updateUser({user: newUser})
         }
 
       }

@@ -21,7 +21,7 @@ export class UserBackendService extends BaseCommunicatorService<User>{
     }
 
     updateUserRole(user: User): Observable<User> {
-    return super.put(BACKENDPATHS.updateUserRole, user)
+    return super.put(BACKENDPATHS.updateUserRole+'/' + user.id+ '/' + user.roles[0], user)
     }
 
     approveUser(user: User): Observable<User> {
