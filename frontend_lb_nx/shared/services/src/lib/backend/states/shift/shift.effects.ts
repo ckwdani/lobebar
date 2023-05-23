@@ -6,6 +6,8 @@ import * as ShiftActions from './shift.actions';
 import {selectOrgEventsState, selectOwnUser, selectUser, ShiftsBackendService} from "@frontend-lb-nx/shared/services";
 import {addMonthsToDate, dateToUnix} from "../../../../../../../src/app/core/utils/date-functions";
 import {Store} from "@ngrx/store";
+import * as ShiftTypeActions from "../shift-types/shift-type.actions";
+import {HttpErrorResponse} from "@angular/common/http";
 
 @Injectable()
 export class ShiftEffects {
@@ -49,6 +51,20 @@ export class ShiftEffects {
                 ))
         );
     })
+
+   // editName$ = createEffect(()=>{
+   //     return this.actions$.pipe(
+   //         ofType(ShiftActions.EditDesc),
+   //         switchMap((action)=>{
+   //             return this.shiftsService.update(action.shift).pipe(
+   //                 map(()=>{
+   //                     return ShiftActions.EditDescSuccess({shift: action.shift});
+   //             }),
+   //                 catchError((error: HttpErrorResponse)=> of(ShiftActions.EditDescFailure({error: error.status})))
+   //             );
+   //         })
+   //     )
+   // })
 
     // assignShift$ = createEffect(()=>{
     //     return this.actions$.pipe(

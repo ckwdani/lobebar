@@ -1,12 +1,15 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import {Shift} from "@frontend-lb-nx/shared/entities";
-import {changeShiftAssignmentSuccess, ShiftsBackendService} from "@frontend-lb-nx/shared/services";
-import {Observable, switchMap, tap} from "rxjs";
+import {changeShiftAssignmentSuccess, EditDescSuccess, ShiftsBackendService} from "@frontend-lb-nx/shared/services";
+import {Observable, of, switchMap, tap} from "rxjs";
 import {Store} from "@ngrx/store";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {ErrorBarData, ErrorSnackBarComponent} from "../error-snack-bar/error-snack-bar.component";
+import {createEffect, ofType} from "@ngrx/effects";
+import * as ShiftActions from "../../../../../services/src/lib/backend/states/shift/shift.actions";
+import {catchError, map} from "rxjs/operators";
 
 export interface ShiftTableState {
   shifts: Shift[];
@@ -71,6 +74,27 @@ export class ShiftTableStore extends ComponentStore<ShiftTableState> {
           )
       )
     });
+
+    readonly $editName= this.effect((data$: Observable<{shift: Shift}>)=>{
+        return data$.pipe(
+            switchMap(({shift})=>
+                this.backend.update(shift).pipe(
+                    tap(
+                        {
+                            next: (newShift) => {
+                                this.store.dispatch(EditDescSuccess({shift: newShift}));
+                                return this.$updateShift(newShift);
+                            },
+                            error: (err) => {
+                                if(err.status === 423){
+                                    this.showPastError();
+                                }
+                                this.$updateError(err);
+                            }})
+                )
+            )
+        )
+    })
 
 
     // readonly $changeDescription = this.effect((data$: Observable<{shift: Shift, description: string }>) => {

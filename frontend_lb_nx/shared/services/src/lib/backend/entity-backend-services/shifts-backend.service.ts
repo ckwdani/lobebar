@@ -28,6 +28,10 @@ export class ShiftsBackendService extends BaseCommunicatorService<Shift>{
     return super.delete(BACKENDPATHS.shift_event_delete + '/' + shift.id)
   }
 
+  public update(shift: Shift): Observable<Shift>{
+    return super.put(BACKENDPATHS.shift_edit_desc + '/' + shift.id +'/' + shift.description, shift)
+  }
+
   private mapShift(shift: Shift): Shift {
     return { ...shift};
   }

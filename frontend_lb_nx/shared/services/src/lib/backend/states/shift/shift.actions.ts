@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import {OrgEvent, Shift} from "@frontend-lb-nx/shared/entities";
+import {DoneExtraWorkTypes, OrgEvent, Shift, ShiftType, SnackType} from "@frontend-lb-nx/shared/entities";
 import {HttpErrorResponse} from "@angular/common/http";
 
 export const loadOwnShifts = createAction(
@@ -78,6 +78,21 @@ export const deleteShiftFromEventFailure = createAction(
     '[Shift] Delete Shift From Event Failure',
     props<{error: HttpErrorResponse}>()
 );
+
+export const EditDesc = createAction(
+    '[Shift] Edit Description',
+    props<{shift: Shift}>()
+);
+
+export const EditDescSuccess = createAction(
+    '[Shift] Edit Description Success',
+    props<{shift: Shift}>()
+);
+
+export const EditDescFailure = createAction(
+    '[Shift] Edit Description Failure',
+    props<{error: number}>()
+)
 
 
 

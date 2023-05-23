@@ -9,9 +9,15 @@ import {
   SimpleChanges,
   ViewChild
 } from '@angular/core';
-import {OrgEvent, Shift, ShiftType, User} from "@frontend-lb-nx/shared/entities";
+import {DoneExtraWorkTypes, OrgEvent, Shift, ShiftType, SnackType, User} from "@frontend-lb-nx/shared/entities";
 import {on, Store} from "@ngrx/store";
-import {changeShiftAssignment, selectUser, ShiftEffects} from "@frontend-lb-nx/shared/services";
+import {
+  changeShiftAssignment,
+  EditDesc,
+  selectShiftsError,
+  selectUser,
+  ShiftEffects
+} from "@frontend-lb-nx/shared/services";
 import {MatPaginator} from "@angular/material/paginator";
 import {MatTableDataSource} from "@angular/material/table";
 import { ShiftTableStore } from './shift-table.store';
@@ -19,6 +25,12 @@ import {MatSnackBar} from "@angular/material/snack-bar";
 import {
   EditStringDialogComponent
 } from "../../../../../../src/app/core/components/dialogs/edit-string-dialog/edit-string-dialog.component";
+import {
+  ImportantDeleteDialogComponent
+} from "../../../../../../src/app/core/components/dialogs/important-delete-dialog/important-delete-dialog.component";
+import {map} from "rxjs/operators";
+import {MatDialog} from "@angular/material/dialog";
+import {filter, take} from "rxjs";
 
 @Component({
   selector: 'frontend-lb-nx-shift-table',
@@ -47,9 +59,11 @@ export class ShiftTableComponent implements AfterViewInit, OnInit, OnChanges {
   displayedColumns: string[] = ['datetime', 'description', 'num_persons', 'persons', 'assign'];
   user: User|undefined = undefined
 
+  $deletingError = this.store.select(selectShiftsError);
 
+  loadingShift = false;
 
-  constructor(private store: Store, public shiftTableStore: ShiftTableStore, private snackBar: MatSnackBar) {
+  constructor(private store: Store, public shiftTableStore: ShiftTableStore, private snackBar: MatSnackBar, public dialog: MatDialog) {
     this.$shiftsFromStore.subscribe(next => this.setTableData(next));
     this.store.select(selectUser).subscribe(next => this.user=next)
   }
@@ -136,8 +150,27 @@ export class ShiftTableComponent implements AfterViewInit, OnInit, OnChanges {
     this.shiftTableStore.$changeAssignment({shift, deassign})
   }
 
-  deleteShift(rowData: Shift){
-    this.deleteShiftEvent.emit(rowData);
+  openEditShiftDialog(type: Shift, error?: number) {
+    const dialogRef = this.dialog.open(EditStringDialogComponent, {data: {name: type.description, displayString: 'Beschreibung', errorcode: error}});
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        const shiftUpdated = {...type, description: result};
+        this.shiftTableStore.$editName({shift: shiftUpdated})
+      }
+    });
+  }
+
+  openDeleteShiftDialog(shift: Shift, isError = false) {
+    const dialogRef = this.dialog.open(ImportantDeleteDialogComponent, {data: {name: shift.type.name, shift: shift, isError: isError}});
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        // type.name = result;
+        this.deleteShiftEvent.emit(shift);
+        //this.store.dispatch(deleteShiftType({shiftType: type}));
+        //this.$deletingError.pipe(map((loading,) => loading)).subscribe({next: (value) => this.loadingShifts = value})
+      }
+    });
   }
 
   mapToName(arr: User[]){

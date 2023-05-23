@@ -1,6 +1,7 @@
 import {Component, Inject} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {FormControl, Validators} from "@angular/forms";
+import {Shift} from "@frontend-lb-nx/shared/entities";
 
 @Component({
   selector: 'frontend-lb-nx-important-delete-dialog',
@@ -11,7 +12,7 @@ export class ImportantDeleteDialogComponent {
 
   name = "";
 
-  constructor(public dialogRef: MatDialogRef<ImportantDeleteDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: {name: string, isError?: boolean}, ) {
+  constructor(public dialogRef: MatDialogRef<ImportantDeleteDialogComponent>, @Inject(MAT_DIALOG_DATA) public data: {name: string, shift?: Shift, isError?: boolean}, ) {
   }
 
 

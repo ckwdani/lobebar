@@ -2,6 +2,12 @@
 <div mat-dialog-content class="border-2 border-red-600">
     <p>Achtung, die Löschung könnte <br> weitreichende Konsequenzen haben!</p>
     <br>
+    <div *ngIf="data.shift">
+        <p> Willst du wirklich die Schicht <br> mit Beschreibung: "{{data.shift.description}}"<br>
+            von {{data.shift.starttime | date: 'dd.MM.yyyy, HH:mm'}}{{" - "}}{{data.shift.endtime | date: 'HH:mm'}} löschen?
+        </p>
+        <br>
+    </div>
     <p>Bitte bestätige die Löschung, <br> in dem du in das Feld</p>
     <b class="text-red-600 border-red-400"> {{data.name}} </b>
     <span> eintippst.</span> <br> <br>

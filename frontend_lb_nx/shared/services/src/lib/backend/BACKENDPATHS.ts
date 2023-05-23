@@ -28,6 +28,7 @@ export class BACKENDPATHS{
     static readonly shift_event_add = this.baseApiUrl + "/mod_api/shift/add" ///{eventId}
     static readonly shift_event_delete = this.baseApiUrl + "/mod_api/shift/delete" ///{shiftId}
     static readonly shift_outstanding_shifts = this.baseApiUrl + "/api/getOutstandingShifts" // /{start}/{end}/{user_id}
+    static readonly shift_edit_desc = this.baseApiUrl + "/mod_api/shift/updateShiftDesc" ///{shiftId}/{newDesc}
     //ASSIGN
     static readonly shift_assign = this.baseApiUrl + "/api/assignShift" // /shift id
     // CRUD EW_Types
