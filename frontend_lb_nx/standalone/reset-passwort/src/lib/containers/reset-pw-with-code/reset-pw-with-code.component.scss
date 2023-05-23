@@ -1,0 +1,47 @@
+.password-reset {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  text-decoration-color: gray;
+}
+
+mat-card {
+  width: 400px;
+}
+
+.form-field {
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.success-message{
+  margin-top: 16px;
+  color: #4caf50;
+  font-weight: bold;
+}
+.error-message {
+  margin-top: 16px;
+  color: red;
+  font-weight: bold;
+}
+
+.text-gray-white{
+  color: lightgray !important;
+}
+
+.fade-in-out{
+  animation: fadeInOut 1s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: initial;
+  }
+  45% {
+    opacity: 0;
+  }
+  100% {
+    opacity: initial;
+  }
+}

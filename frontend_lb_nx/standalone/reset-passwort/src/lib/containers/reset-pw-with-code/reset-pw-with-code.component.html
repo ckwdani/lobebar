@@ -1,0 +1,43 @@
+<div class="password-reset" [class.fade-in-out]="loading">
+    <mat-card >
+        <mat-card-header>
+            <mat-card-title class="text-gray-white">Password Reset</mat-card-title>
+        </mat-card-header>
+        <mat-card-content *ngIf="!(success) && !hideAll">
+            <p class="text-gray-white">Enter your email address below to receive a password reset link.</p>
+
+            <form (ngSubmit)="submitForm()">
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Passwort</mat-label>
+                    <input matInput [type]="showPassword? 'text' : 'password'" name="passwort" [(ngModel)]="passwort" required [disabled]="loading">
+                    <button mat-icon-button matSuffix (click)="showPassword = !showPassword" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="showPassword">
+                        <mat-icon>{{showPassword ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <p class="text-red-600" *ngIf="!passwordMatch()"></p>
+                </mat-form-field>
+                <mat-form-field appearance="outline" class="form-field">
+                    <mat-label>Passwort repeat</mat-label>
+                    <input matInput [type]="showPasswordRepeat? 'text' : 'password'" name="passwortRepeat" [(ngModel)]="passwordRepeat" required [disabled]="loading">
+                    <button mat-icon-button matSuffix (click)="showPasswordRepeat = !showPasswordRepeat" [attr.aria-label]="'Hide password'" [attr.aria-pressed]="showPassword">
+                        <mat-icon>{{showPasswordRepeat ? 'visibility_off' : 'visibility'}}</mat-icon>
+                    </button>
+                    <p class="text-red-600" *ngIf="!passwordMatch()"></p>
+                </mat-form-field>
+
+                <button mat-raised-button color="primary" type="submit" [disabled]="!passwordMatch()">
+                    Passwort zurücksetzen
+                </button>
+            </form>
+
+            <p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+        </mat-card-content>
+        <mat-card-content *ngIf="(success)" @inOutAnimation>
+            <frontend-lb-nx-success-check></frontend-lb-nx-success-check>
+            <p class="text-gray-white">Passwort Erforlgreich zurückgesetzt!</p>
+        </mat-card-content>
+        <mat-card-content *ngIf="hideAll">
+            <mat-progress-bar *ngIf="loading" color="accent" mode="buffer"></mat-progress-bar>
+            <p class="text-red-600" *ngIf="!loading">Link ungültig oder abgelaufen</p>
+        </mat-card-content>
+    </mat-card>
+</div>
