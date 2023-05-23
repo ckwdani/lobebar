@@ -9,3 +9,5 @@ export * from './lib/components/event-overview/event-overview.component';
 export * from './lib/components/register/register.component';
 
 export * from './lib/animations/InSiteAnimations';
+
+export * from './lib/components/error-snack-bar/error-snack-bar.component'

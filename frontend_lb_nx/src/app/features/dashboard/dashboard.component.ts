@@ -44,9 +44,11 @@ export class DashboardComponent implements OnInit, AfterViewInit{
     if(this.paginator!==undefined){
       this.sort = this.paginator
     }
+    this.onPageChange({pageIndex: 0, pageSize: this.paginator?.pageSize??5, length: 0})
     if(this.paginator2!==undefined){
       this.sort2 = this.paginator2
     }
+    this.onPageChange2({pageIndex: 0, pageSize: this.paginator2?.pageSize??5, length: 0})
   }
 
   ngOnInit(): void {

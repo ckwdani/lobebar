@@ -7,7 +7,7 @@ import {AuthState} from "../states/auth/auth.reducer";
 import {loginRequired, logout} from "../states/auth/auth.actions";
 import {of} from "rxjs";
 import {MatDialog} from "@angular/material/dialog";
-import {ErrorSnackBarComponent} from "/home/thb/Programming/lobebar/frontend_lb_nx/shared/ui/src/lib/components/error-snack-bar/error-snack-bar.component"
+import {ErrorSnackBarComponent} from "@frontend-lb-nx/shared/ui";
 
 @Injectable({
   providedIn: 'root'

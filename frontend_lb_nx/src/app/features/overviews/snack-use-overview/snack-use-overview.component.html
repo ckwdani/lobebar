@@ -1,14 +1,17 @@
-<div class="flex flex-row justify-center items-center">
-    <div *ngIf="usedSnacks" class="list">
+<div class="flex flex-row justify-center items-center" >
+    <div class="list">
         <p class="text-center">Snackhistorie:</p>
-        <mat-list matSort class="item p-0!" *ngFor="let elem of (displayData | async)" role="list">
-            <mat-list-item  role="listitem">
-                <span matListItemTitle>{{elem.snackType.name}}  </span>
-                <span matListItemLine>{{elem.date |date: 'dd. MMMM yyyy \'um\' HH:mm':'de-DE'}}</span>
-            </mat-list-item>
-        </mat-list>
-        <mat-paginator #paginator [pageSizeOptions]="[5, 10, 20]"
-                       [length]="(usedSnacks | async)?.length??0"
+        <mat-progress-bar *ngIf="$ownUsedSnacksLoading | async" mode="buffer" color="primary"></mat-progress-bar>
+        <div *ngIf="($ownUsedSnacksLoading | async) === false" @inOutAnimation @sequentialFadeIn>
+            <mat-list matSort class="item p-0!" *ngFor="let elem of ($ownUsedSnacksGrouped | async)" role="list">
+                <mat-list-item role="listitem" class="fadeInElement">
+                    <span matListItemTitle>{{elem.snackType.name}} <span class="text-green-700">x {{elem.count}} </span></span>
+                    <span matListItemLine>{{elem.date |date: 'dd. MMMM yyyy \'gegen\' HH \' Uhr \'  ':'de-DE'}}</span>
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <mat-paginator *ngIf="($ownUsedSnacksLoading | async) === false" #paginator [pageSizeOptions]="[5, 10, 20]"
+                       [length]="($ownUsedSnacks | async)?.length??0"
                        [pageSize]="5"
                        showFirstLastButtons
                        (page)="onPageChange($event)"
@@ -16,10 +19,10 @@
         </mat-paginator>
     </div>
 
-    <app-simple-table [loading]="loadingSnackTypes"
+    <app-simple-table [loading]="($snackTypesLoading | async)??false" @inOutAnimation
                       [showAddEditDelete]="false"
                       (use)="openDialog($event)"
                       [additionalColumns]="[{displayedString: 'value', getter: value}]"
-                      *ngIf="($shiftTypesLoading |async) === false"  [data]="($snackTypes | async)??[]" [convert]="nameFromSnackType"  caption="Snackarten" #tableSnack></app-simple-table>
+                       [data]="($snackTypes | async)??[]" [convert]="nameFromSnackType"  caption="Snackarten" #tableSnack></app-simple-table>
 
 </div>

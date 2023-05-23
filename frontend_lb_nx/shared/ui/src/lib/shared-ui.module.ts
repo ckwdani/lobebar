@@ -37,7 +37,7 @@ import { MatSortModule } from '@angular/material/sort';
 import { UserBadgeComponent } from './components/achievements-overview/user-badge/user-badge.component';
 import { StartEndDateInputComponent } from './components/start-end-date-input/start-end-date-input.component';
 import { ShiftTableStore } from './components/shift-table/shift-table.store';
-import { ErrorSnackBarComponent } from './components/error-snack-bar/error-snack-bar.component';
+import {ErrorBarData, ErrorSnackBarComponent} from './components/error-snack-bar/error-snack-bar.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 
 @NgModule({
@@ -99,7 +99,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     AchievementsOverviewComponent,
     SingleAchievementComponent,
     UserBadgeComponent,
-    ErrorSnackBarComponent
+    ErrorSnackBarComponent,
   ],
   providers: [ShiftTableStore],
 })

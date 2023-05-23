@@ -40,6 +40,7 @@ import { SnackUseOverviewComponent } from './overviews/snack-use-overview/snack-
 import {MatListModule} from "@angular/material/list";
 import {MatPaginatorModule} from "@angular/material/paginator";
 import {MatSortModule} from "@angular/material/sort";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
 
 // Register the German locale data
 
@@ -86,6 +87,7 @@ import {MatSortModule} from "@angular/material/sort";
         MatListModule,
         MatPaginatorModule,
         MatSortModule,
+        MatProgressBarModule,
     ],
   providers: [
     EventsOverviewStore,

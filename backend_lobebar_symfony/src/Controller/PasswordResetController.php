@@ -107,7 +107,7 @@ class PasswordResetController extends _Base_Controller
         $email = (new TemplatedEmail())
             //->from(self::standardSenderEmail)
             ->to($user->getEmail())
-            ->subject('Neue Zugangsdaten')
+            ->subject('Passwort zurücksetzen')
             ->htmlTemplate("Emails/user_newAccess.html.twig")
             ->context(["username" => $user->getUserName(), "resetCode" => $resetCode, "ttl"=>$ttl, "url" => $url]);
         $mailer->send($email);

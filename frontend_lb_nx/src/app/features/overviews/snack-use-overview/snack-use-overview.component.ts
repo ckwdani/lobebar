@@ -13,28 +13,50 @@ import {MatDialog} from "@angular/material/dialog";
 import {
   NumberInputDialogComponent
 } from "../../../core/components/dialogs/number-input-dialog/number-input-dialog.component";
-import {loadOwnUsedSnacks, selectOwnUser, useSnack} from "@frontend-lb-nx/shared/services";
+import {
+  loadOwnUsedSnacks,
+  selectLoggedIn,
+  selectOwnUser, selectSnackState, selectUsedSnacks,
+  selectUserLoaded,
+  useSnack
+} from "@frontend-lb-nx/shared/services";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {groupBy, mergeMap, Observable, of, toArray} from "rxjs";
+import {combineLatest, filter, first, groupBy, mergeMap, Observable, of, toArray} from "rxjs";
 import {map} from "rxjs/operators";
+import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
 
+interface GroupedSnack {
+  snackType: SnackType;
+  count: number;
+  date: Date;
+  dateKey: string;
+}
 
 @Component({
   selector: 'frontend-lb-nx-snack-use-overview',
   templateUrl: './snack-use-overview.component.html',
-  styleUrls: ['./snack-use-overview.component.scss']
+  styleUrls: ['./snack-use-overview.component.scss'],
+  animations: [InSiteAnimations.inOutAnimation, InSiteAnimations.sequentialFadeIn]
 })
 export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatPaginator, {static: true}) sort: MatPaginator | undefined;
   @ViewChild('table3') table3: SimpleTableComponent<SnackType> = new SimpleTableComponent<SnackType>();
 
-  @Input() usedSnacks?: Observable<Snack[]>
-  displayData = this.groupSnacksForSameDateRx(this.usedSnacks)
+  // $ownUsedSnacks = this.store.select(selectUsedSnacks).pipe(map(snacks => snacks??[]));
+  $ownUsedSnacksGrouped = this.store.select(selectSnackState).pipe(filter(state => !state.isLoading),
+      map(snacks => this.groupSnacks(snacks.usedSnacks??[])));
 
+  $ownUsedSnacksLoading = this.store.select(selectSnackState).pipe(map(state => state.isLoading));
+
+  $ownUsedSnacks = this.$ownUsedSnacksGrouped;
+  displayData = this.$ownUsedSnacksGrouped;
+
+  $isLoggedIn = this.store.select(selectLoggedIn).pipe();
+  $userLoaded = this.store.select(selectUserLoaded).pipe();
   $snackTypes = this.store.select(selectSnackTypes).pipe();
   loadingSnackTypes = false
-  $shiftTypesLoading = this.store.select(selectShiftTypesLoading).pipe();
+  $snackTypesLoading = this.store.select(selectShiftTypesLoading).pipe();
 
   value(snackType: SnackType): string  {
     return <string>snackType.value?.toString();
@@ -43,6 +65,8 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
   nameFromSnackType(snackType: SnackType): string {
     return <string>snackType.name;
   }
+
+
 
   openDialog(snackType: SnackType): void {
     const dialogRef = this.dialog.open(NumberInputDialogComponent, {data: {displayString: snackType.name}});
@@ -57,12 +81,19 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
     });
   }
 
+
+
   constructor(private store: Store, public dialog: MatDialog) {
-    this.store.dispatch(loadOwnUsedSnacks())
+    combineLatest([this.$userLoaded, this.$isLoggedIn]).subscribe(([userLoaded, isLoggedIn]) => {
+      if (userLoaded && isLoggedIn) {
+        this.store.dispatch(loadOwnUsedSnacks())
+      }
+    });
+    // this.store.dispatch(loadOwnUsedSnacks())
   }
 
   ngAfterViewInit(): void {
-    this.displayData=this.groupSnacksForSameDateRx(this.usedSnacks)
+    this.displayData=this.$ownUsedSnacks
     if(this.paginator!==undefined){
       this.sort = this.paginator
     }
@@ -71,104 +102,51 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
     }
 
   ngOnInit(): void {
-    this.displayData=this.groupSnacksForSameDateRx(this.usedSnacks);
+    this.displayData=this.$ownUsedSnacks;
   }
 
   onPageChange($event: PageEvent) {
     const startIndex = $event.pageIndex * $event.pageSize;
     const endIndex = startIndex + $event.pageSize;
-    this.displayData = this.usedSnacks?.pipe(map(snacks => snacks.slice(startIndex, endIndex)))?? this.displayData;
+    this.displayData = this.$ownUsedSnacks?.pipe(map(snacks => snacks.slice(startIndex, endIndex)))?? this.displayData;
   }
 
-  groupSnacksForSameDateRx(entities$: Observable<Snack[]> | undefined): Observable<Snack[]> {
-    if (entities$ !== undefined) {
-      return entities$.pipe(
-          mergeMap(entities => entities), // Flatten the array of entities
-          groupBy(entity => entity.date), // Group entities by date
-          mergeMap(group => group.pipe(toArray())), // Convert each group to an array
-          map(groupedEntities => {
-            const groupSize = groupedEntities.length;
 
-            if (groupSize > 1) {
-              return groupedEntities.map((entity, index) => ({
-                ...entity,
-                snackType: { ...entity.snackType, name: `${entity.snackType.name} ${index + 1}` }
-              }));
-            } else {
-              return groupedEntities;
-            }
-          }),
-          toArray(), // Collect all groups into a single array
-          mergeMap(groups => groups) // Flatten the array of groups
-      );
-    }
 
-    return of([]); // Return an empty array as default when entities$ is undefined
+
+
+  groupSnacks(snacks: Snack[]): GroupedSnack[]{
+    const groupedSnacks: GroupedSnack[] = snacks.reduce((groups: GroupedSnack[], snack: Snack) => {
+      const snackDate = new Date(snack.date);
+      const groupKey = `${snackDate.toDateString()} ${snackDate.getHours()}`;
+
+      // Find the group with the same key
+      const group = groups.find((g) => g.dateKey === groupKey);
+
+      if (group) {
+        // Group already exists, update the count and date if needed
+        group.count++;
+        if (snackDate > group.date) {
+          group.date = snackDate;
+        }
+      } else {
+        // Group does not exist, create a new group
+        groups.push({
+          snackType: snack.snackType,
+          count: 1,
+          date: snackDate,
+          dateKey: groupKey,
+        });
+      }
+
+      return groups;
+    }, []);
+    return groupedSnacks;
   }
 
-  // groupSnacksForSameDateRx(entities$: Observable<Snack[]> | undefined){
-  //   if(entities$!=undefined){
-  //     return entities$
-  //         .pipe(
-  //             mergeMap(entities => entities), // Flatten the array of entities
-  //             groupBy(entity => entity.date), // Group entities by date
-  //             mergeMap(group => group.pipe(toArray())), // Convert each group to an array
-  //             map(groupedEntities => {
-  //               const groupSize = groupedEntities.length;
-  //
-  //               if (groupSize > 1) {
-  //                 return groupedEntities.map((entity, index) => {
-  //                   entity.snackType.name = `${entity.snackType.name} ${index + 1}`;
-  //                   return entity;
-  //                 });
-  //               } else {
-  //                 return groupedEntities;
-  //               }
-  //             }),
-  //             mergeMap(snacks =>snacks) // Collect all groups into a single array
-  //         )
-  //   }
-  //   return entities$
-  // }
-  groupSnacksForSameDate(entities$: Observable<Snack[]> | undefined){
-    if(entities$!=undefined) {
-      entities$
-          .pipe(
-              map(entities => {
-                const groupedEntities = entities.reduce((groups: Map<Date, Snack[]>, entity) => {
-                  const date = entity.date;
 
-                  if (groups.has(date)) {
-                    groups.get(date)?.push(entity);
-                  } else {
-                    groups.set(date, [entity]);
-                  }
 
-                  return groups;
-                }, new Map<Date, Snack[]>());
 
-                groupedEntities.forEach((group: Snack[]) => {
-                  const groupSize = group.length;
-                  const newName = `name ${groupSize}`;
-
-                  // Change the name of the first entity with the shared date
-                  if (groupSize >= 2) {
-                    group[0].snackType.name = newName;
-                  }
-                });
-
-                const reducedArray = Array.from(groupedEntities.values()).flat();
-                this.paginator?.firstPage()
-                return reducedArray;
-              })
-          )
-          .subscribe(reducedEntities => {
-            console.log(reducedEntities);
-          });
-
-    }
-    return this.usedSnacks
-  }
 
 }
 
