@@ -93,7 +93,7 @@ class EventController extends _Base_Controller
         return JsonResponse::fromJsonString($this->serializer->serialize($event, 'json', self::createSerializationContextWithGroups(["Default", WITH_DETAILED_SHIFTS])));
     }
 
-    #[Route("/mod_api/event/getTimed/{start?}/{end?}", methods: ["GET"])]
+    #[Route("/api/event/getTimed/{start?}/{end?}", methods: ["GET"])]
     public function getEventsInTime(?int $start, ?int $end){
         $events = $this->doctrine->getManager()->getRepository(Orgevent::class)->getEventsTimed($start, $end);
         return JsonResponse::fromJsonString($this->serializer->serialize($events, 'json', $this->createSerializationContextWithGroups(["Default", WITH_DETAILED_SHIFTS])));

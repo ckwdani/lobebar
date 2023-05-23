@@ -1,3 +1,7 @@
-<h3>Sie haben neue Zugangsdaten erhalten!</h3>
-<p>Nutzername: <b>{{ username }}</b></p>
-<p>Passwort: <b>{{ password }}</b></p>
+<h3>Passwort zurücksetzen</h3>
+Hallo {{ username }},
+<p>Du hast angefordert, dass dein Passwort zurückgesetzt werden soll.</p>
+<p>Bitte klicke auf den folgenden Link, um ein neues Passwort zu vergeben:</p>
+<a href="{{url}}/reset-password/{{ resetCode }}">Passwort zurücksetzen</a>
+<p>Der Link ist {{ ttl / 60 / 60 }} Stunden gültig.</p>
+<p>Wenn du dein Passwort nicht zurücksetzen möchtest, ignoriere diese E-Mail einfach.</p>

@@ -8,12 +8,13 @@ import {ActivatedRoute, Router} from "@angular/router";
 })
 export class AppComponent {
   title = 'frontend-lb-nx';
-  isLogin = false;
+  isLogin = true;
 
   constructor(protected router: Router, private route: ActivatedRoute){
     router.events.subscribe(
         event => {
-          if (router.url === '/login' || router.url === '/register') {
+            ;
+          if (router.url === '/login' || router.url === '/register' || router.url === '/reset-password' || RegExp(/\/reset-password/).test(router.url) ) {
             this.isLogin = true;
           }
           else {

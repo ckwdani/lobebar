@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\ResetCode;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Security\Voters\AdminOrOwnerVoter;
@@ -15,6 +16,7 @@ use Symfony\Bridge\Twig\Mime\TemplatedEmail;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
@@ -140,47 +142,6 @@ class UserController extends _Base_Controller
 
 
 
-    #[Route("/user/reset/{email}", methods: ["PUT"])]
-    public function resetPassword(string $email, UserPasswordEncoderInterface $encoder, MailerInterface $mailer){
-        $em = $this->getDoctrine()->getManager();
-        /** @var User $userFromDB */
-        $userFromDB = $em->getRepository(User::class)->findBy(["email" => $email]);
-        if($userFromDB == null){
-            throw new NotFoundHttpException();
-        }
-
-        $password = $this->randomPassword();
-        $userFromDB->setPassword($encoder->encodePassword($userFromDB, $password));
-
-        $em->persist($userFromDB);
-        $em->flush();
-
-        $this->neueZugangsDaten($userFromDB, $password, $mailer);
-
-        return JsonResponse::fromJsonString($this->serializer->serialize($userFromDB, 'json'));
-    }
-
-
-    function randomPassword(int $length = 8) {
-        $alphabet = "abcdefghijklmnopqrstuwxyzABCDEFGHIJKLMNOPQRSTUWXYZ0123456789!@#$%^&*()-_=+";
-        $pass = array(); //remember to declare $pass as an array
-        $alphaLength = strlen($alphabet) - 1; //put the length -1 in cache
-        for ($i = 0; $i < $length; $i++) {
-            $n = rand(0, $alphaLength);
-            $pass[] = $alphabet[$n];
-        }
-        return implode($pass); //turn the array into a string
-    }
-
-    private function newAccess($user, $password, MailerInterface $mailer){
-        $email = (new TemplatedEmail())
-            //->from(self::standardSenderEmail)
-            ->to($user->getEmail())
-            ->subject('Neue Zugangsdaten')
-            ->htmlTemplate("Emails/user_newAccess.html.twig")
-            ->context(["username" => $user->getUserName(), "password" => $password]);
-        $mailer->send($email);
-    }
 
     #[Route("/achievement", methods: ["PUT"])]
     public function putAchievement(Request $request){

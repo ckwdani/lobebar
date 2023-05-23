@@ -37,6 +37,7 @@ security:
 
     access_control:
         - { path: ^/login, roles: PUBLIC_ACCESS }
+        - { path: ^/user/reset, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: PUBLIC_ACCESS }
         - { path: ^/mod_api, roles: ROLE_ORGANIZER }
         - { path: ^/admin_api, roles: ROLE_ADMIN }

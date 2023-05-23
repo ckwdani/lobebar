@@ -23,14 +23,15 @@ import {provideEntityDataConfig} from "@ngrx/data/src/provide-entity-data";
 import {GermanDateProvider} from "./core/utils/GermanDateAdapter";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {resetPwRoutes, StandaloneResetPasswortModule} from "@lobebar/passwort-reset-email";
+import {BACKENDPATHS} from "../../shared/services/src/lib/backend/BACKENDPATHS";
 
 @NgModule({
   declarations: [AppComponent],
   imports: [
     CoreModule,
     BrowserModule,
-    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     RouterModule.forRoot([{path: 'reset-password', children: resetPwRoutes}]),
+    RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
     BrowserAnimationsModule,
     MatButtonModule,
     MatIconModule,
@@ -45,7 +46,12 @@ import {resetPwRoutes, StandaloneResetPasswortModule} from "@lobebar/passwort-re
     EffectsModule.forRoot([]),
     EntityDataModule.forRoot(entityConfig),
     MatSnackBarModule,
-    StandaloneResetPasswortModule,
+    StandaloneResetPasswortModule.forRoot({
+      backendBasePath: BACKENDPATHS.baseApiUrl,
+      backendEmailPath: BACKENDPATHS.resetPassword,
+      backendResetPath: BACKENDPATHS.resetPasswordConfirm,
+      routeSuccess: "/login",
+      backendCheckPath: BACKENDPATHS.resetPasswordCodeCheck}),
   ],
   providers: [
 

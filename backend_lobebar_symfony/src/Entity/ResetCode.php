@@ -21,6 +21,8 @@ class ResetCode extends _Base_Entity
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $creationDate = null;
 
+
+
     public function __construct()
     {
         parent::__construct();
@@ -63,4 +65,5 @@ class ResetCode extends _Base_Entity
 
         return $this;
     }
+
 }

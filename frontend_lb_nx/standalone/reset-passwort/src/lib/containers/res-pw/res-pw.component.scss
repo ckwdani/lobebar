@@ -29,3 +29,19 @@ mat-card {
 .text-gray-white{
   color: lightgray !important;
 }
+
+.fade-in-out{
+  animation: fadeInOut 1s ease-in-out infinite;
+}
+
+@keyframes fadeInOut {
+  0% {
+    opacity: initial;
+  }
+  45% {
+    opacity: 0;
+  }
+  100% {
+    opacity: initial;
+  }
+}

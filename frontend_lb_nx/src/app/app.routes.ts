@@ -16,6 +16,7 @@ import {Store} from "@ngrx/store";
 import {inject} from "@angular/core";
 
 export const appRoutes: Route[] = [
+    {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
     {path: 'login', component: LoginComponent},
     {path: 'register', component: RegisterComponent},
     {path: 'dashboard', component: DashboardComponent},

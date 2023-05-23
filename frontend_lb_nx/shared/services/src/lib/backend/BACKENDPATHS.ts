@@ -14,7 +14,7 @@ export class BACKENDPATHS{
     static readonly deleteOrgEvent= this.baseApiUrl + '/mod_api/event/deleteEvent'; // /eventId
     static readonly updateOrgEvent= this.baseApiUrl + '/mod_api/event/updateEvent'; // /eventId
     static readonly getSingleOrgEvent= this.baseApiUrl + '/mod_api/event/getSingle'; // /eventId
-    static readonly getOrgEventTimed= this.baseApiUrl + '/mod_api/event/getTimed'; // /start/end
+    static readonly getOrgEventTimed= this.baseApiUrl + '/api/event/getTimed'; // /start/end
 
 
     // CRUD SHIFFTTYPE
@@ -51,5 +51,11 @@ export class BACKENDPATHS{
     static readonly getOwnSnacks = this.baseApiUrl + '/api/snacks/own' //{start?}/{end?}
     static readonly getUsedSnacks = this.baseApiUrl + '/api/snacks' //{start?}/{end?}/{userId?}
     static readonly countUsedSnacks = this.baseApiUrl + '/mod_api/snacks/count' //{start?}/{end?}/{userId?}
+
+
+    // Email reset paths
+    static readonly resetPassword = this.baseApiUrl + '/user/reset' // {email}
+    static readonly resetPasswordConfirm = this.baseApiUrl + '/user/reset/confirm' // {token}
+    static readonly resetPasswordCodeCheck = this.baseApiUrl + "/user/reset/check" // {code}
 }
 
