@@ -73,6 +73,11 @@ export const reducer = createReducer(
         return {...state, pastEvents: pastEvents, comingEvents: upcomingEvents}}
     ),
 
+    on(ShiftActions.EditDescSuccess, (state, {shift})=>{
+        const [pastEvents, upcomingEvents] = editShiftFromEvent(shift, state.pastEvents, state.comingEvents);
+        return {...state, pastEvents: pastEvents, comingEvents: upcomingEvents}
+    }),
+
     on(ShiftActions.deleteShiftFromEventSuccess, (state, {shift})=>{
         const [pastEvents, upcomingEvents] = deleteShiftFromEvent(shift, state.pastEvents, state.comingEvents);
         return {...state, pastEvents: pastEvents, comingEvents: upcomingEvents}}
@@ -160,6 +165,26 @@ export function deleteShiftFromEvent(shift: Shift, pastEvents: OrgEvent[], upcom
         upcomingEvents.map(event => {
             if(event.id === shift.orgEvent?.id){
                 return {...event, shifts: event.shifts?.filter(s => s.id !== shift.id)};
+            }
+            return event;
+        })
+    ];
+}
+
+/**
+ * edit shift from event that is either in past or future
+ */
+export function editShiftFromEvent(shift: Shift, pastEvents: OrgEvent[], upcomingEvents: OrgEvent[]): [OrgEvent[], OrgEvent[]]{
+    return [
+        pastEvents.map(event => {
+            if(event.id === shift.orgEvent?.id){
+                return {...event, shifts: event.shifts?.map(s => s.id !==shift.id ? s: shift)};
+            }
+            return event;
+        }),
+        upcomingEvents.map(event => {
+            if(event.id === shift.orgEvent?.id){
+                return {...event, shifts: event.shifts?.map(s => s.id !==shift.id ? s: shift)};
             }
             return event;
         })
