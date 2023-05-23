@@ -47,10 +47,11 @@ export class DashboardComponent implements OnInit, AfterViewInit{
     if(this.paginator2!==undefined){
       this.sort2 = this.paginator2
     }
-
   }
 
   ngOnInit(): void {
+    this.$displayOwnShifts=this.$ownShiftsObs
+    this.$displayOutStandingShiftsObs=this.$outStandingShiftsObs
   }
 
   onPageChange($event: PageEvent) {
@@ -62,7 +63,7 @@ export class DashboardComponent implements OnInit, AfterViewInit{
   onPageChange2($event: PageEvent) {
     const startIndex = $event.pageIndex * $event.pageSize;
     const endIndex = startIndex + $event.pageSize;
-    this.$displayOwnShifts = this.$ownShiftsObs?.pipe(map(shifts => shifts.slice(startIndex, endIndex)));
+    this.$displayOutStandingShiftsObs = this.$outStandingShiftsObs?.pipe(map(shifts => shifts.slice(startIndex, endIndex)));
   }
 
 }

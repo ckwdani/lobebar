@@ -6,31 +6,38 @@ import {Store} from "@ngrx/store";
 import {AuthState} from "../states/auth/auth.reducer";
 import {loginRequired, logout} from "../states/auth/auth.actions";
 import {of} from "rxjs";
+import {MatDialog} from "@angular/material/dialog";
+import {ErrorSnackBarComponent} from "/home/thb/Programming/lobebar/frontend_lb_nx/shared/ui/src/lib/components/error-snack-bar/error-snack-bar.component"
 
 @Injectable({
   providedIn: 'root'
 })
 export class HttpErrorHandlerService {
 
-  constructor( private router: Router, private store: Store) { }
+  constructor( private router: Router,public snackBar: MatSnackBar, private store: Store) { }
 
-  handleHttpError(error: HttpErrorResponse, routeToLogin: boolean = true): HttpErrorResponse{
-    return error;
+  handleHttpError(error: HttpErrorResponse,  routeToLogin: boolean = true): HttpErrorResponse{
+    //return error;
+    switch (error.status) {
+      case 0: this.snackBar.openFromComponent(ErrorSnackBarComponent, {data:  new ErrorBarData('' +
+            '<h3>Oh Oh! Es sieht so aus als ob keine Verbindung zum Internet besteht.</h3>' +
+            'Stellen Sie sicher dass sie mit dem Internet verbunden sind und versuchen sie es noch einmal.', 'Ok')}); return error;break;
+      case 200: return error;
+      case 403: this.router.navigate(['']); return error; break;
+      case 401: this.store.dispatch(logout());
+        return error; // delete the localstorage and route to login
+      default: this.snackBar.openFromComponent(ErrorSnackBarComponent, {data:  new ErrorBarData('' +
+            '<h3>Oh Oh! Ein Serverfehler ist Aufgetreten.</h3>' +
+            'Laden sie die Seite neu. Falls das Problem bestehen bleibt, wenden Sie sich bitte an den Administrator.', 'Ok')}); return error;
+    }
   }
-  //   switch (error.status) {
-  //     case 0: this.snackBar.openFromComponent(ErrorBarComponent, {data:  new ErrorBarData('' +
-  //           '<h3>Oh Oh! Es sieht so aus als ob keine Verbindung zum Internet besteht.</h3>' +
-  //           'Stellen Sie sicher dass sie mit dem Internet verbunden sind und versuchen sie es noch einmal.', 'Ok')}); return error;break;
-  //     case 200: return error;
-  //     case 403: this.router.navigate(['']); return error; break;
-  //     case 401: this.store.dispatch(logout());
-  //       return error; // delete the localstorage and route to login
-  //     default: this.snackBar.openFromComponent(ErrorBarComponent, {data:  new ErrorBarData('' +
-  //           '<h3>Oh Oh! Ein Serverfehler ist Aufgetreten.</h3>' +
-  //           'Laden sie die Seite neu. Falls das Problem bestehen bleibt, wenden Sie sich bitte an den Administrator.', 'Ok')}); return error;
-  //   }
-  // }
 }
+
+export class ErrorBarData{
+  constructor(public message: string, public actionString: string) {
+  }
+}
+
 
 
 // @Component({
@@ -41,15 +48,15 @@ export class HttpErrorHandlerService {
 //       '  <button (click)="click()" mat-button color="warn" id="actionButton">{{data.actionString}}</button>\n' +
 //       '</div>\n' +
 //       '\n',
-//   // styleUrls: ['.mainFlex{\n' +
-//   // '  display: flex;\n' +
-//   // '  justify-content: space-between;\n' +
-//   // '}\n' +
-//   // '\n' +
-//   // '#actionButton {\n' +
-//   // '  min-width: 20%;\n' +
-//   // '  padding-left: 20px;\n' +
-//   // '}\n']
+//   styleUrls: ['.mainFlex{\n' +
+//   '  display: flex;\n' +
+//   '  justify-content: space-between;\n' +
+//   '}\n' +
+//   '\n' +
+//   '#actionButton {\n' +
+//   '  min-width: 20%;\n' +
+//   '  padding-left: 20px;\n' +
+//   '}\n']
 // })
 // export class ErrorBarComponent  {
 //
@@ -62,7 +69,3 @@ export class HttpErrorHandlerService {
 //   }
 // }
 //
-// export class ErrorBarData{
-//   constructor(public message: string, public actionString: string) {
-//   }
-// }
