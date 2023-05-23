@@ -6,6 +6,7 @@ export class BACKENDPATHS{
     static readonly deleteUser = this.baseApiUrl+ '/admin_api/user' // userId
     static readonly updateUser = this.baseApiUrl + '/user/update'
     static readonly approveUser = this.baseApiUrl+ '/approve' //userId
+    static readonly updateUserRole = this.baseApiUrl + '/user/updateRole'
 
     static readonly getAllUser = this.baseApiUrl + '/users';
 

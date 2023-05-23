@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use AdminVoter;
 use App\Entity\ResetCode;
 use App\Entity\User;
 use App\Repository\UserRepository;
@@ -115,6 +116,26 @@ class UserController extends _Base_Controller
         $userFromDB->setTitel($user->getTitel());
         $userFromDB->setTelephone($user->getTelephone());
         $userFromDB->setHygienepass($user->isHygienepass());
+
+        // save user to db and return it as json
+        $em = $this->doctrine->getManager();
+        $em->persist($userFromDB);
+        $em->flush();
+        return JsonResponse::fromJsonString($this->serializer->serialize($userFromDB, 'json'));
+    }
+
+    #[Route("/user/updateRole", methods: ["PUT"])]
+    public function updateUserRole(Request $request): JsonResponse{
+        $id = Uuid::fromString(json_decode($request->getContent(), true)["id"]);
+        $userFromDB = $this->userRepo->find($id);
+
+        $this->denyAccessUnlessGranted(AdminVoter::ADMIN_VOTER, $userFromDB);
+        //get request body from user
+        /** @var User $user */
+        $user = $this->serializer->deserialize($request->getContent(), User::class, "json", DeserializationContext::create()->setGroups(["DeSer", "Default"]));
+
+        // update userrole
+        $userFromDB->setRoles($user->getRoles());
 
         // save user to db and return it as json
         $em = $this->doctrine->getManager();

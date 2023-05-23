@@ -58,6 +58,16 @@ export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
         )
     )
 
+    readonly updateUserRole = this.effect<User>((user$: Observable<User>)=>
+        user$.pipe(
+            tap((user)=>{
+                this.userService.updateUserRole(user).subscribe(()=>{
+                    this.store.dispatch(updateUser({user}))
+                })
+            })
+        )
+    )
+
 /*    this.patchState((state) => ({
     users: state.users.filter((u) => u.id !== user.id),
 }));*/

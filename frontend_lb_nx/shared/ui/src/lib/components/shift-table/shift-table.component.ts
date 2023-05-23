@@ -162,13 +162,12 @@ export class ShiftTableComponent implements AfterViewInit, OnInit, OnChanges {
   }
 
   openDeleteShiftDialog(shift: Shift, isError = false) {
+
     const dialogRef = this.dialog.open(ImportantDeleteDialogComponent, {data: {name: shift.type.name, shift: shift, isError: isError}});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
-        // type.name = result;
         this.deleteShiftEvent.emit(shift);
-        //this.store.dispatch(deleteShiftType({shiftType: type}));
-        //this.$deletingError.pipe(map((loading,) => loading)).subscribe({next: (value) => this.loadingShifts = value})
+
       }
     });
   }
@@ -176,16 +175,6 @@ export class ShiftTableComponent implements AfterViewInit, OnInit, OnChanges {
   mapToName(arr: User[]){
     return arr.map( (u)=> " "+u.username)
   }
-
-  // editShiftDescription(rowData: Shift){
-  //   const dialogRef = this.dialog.open(EditStringDialogComponent, {data: {name: type.name, errorcode: error}});
-  //
-  //   dialogRef.afterClosed().subscribe(result => {
-  //     if (result) {
-  //       this.store.dispatch(editShiftDescription({shift: rowData, description: result}))
-  //     });
-  // }
-
 
   /**
    * convert the array to the table data
