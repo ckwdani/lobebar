@@ -72,7 +72,7 @@ export class UsersOverviewComponent {
         const uppercaseRole = "ROLE_"+result.toUpperCase()
         const userCopy = Object.assign({}, user)
         userCopy.roles=userCopy.roles.concat([uppercaseRole])
-        this.usersOverviewStore.updateUser(userCopy)
+        this.usersOverviewStore.updateUserRole(userCopy)
 
       }
       console.log('The dialog was closed');

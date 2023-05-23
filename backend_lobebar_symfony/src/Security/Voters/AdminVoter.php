@@ -1,5 +1,8 @@
 <?php
 
+namespace App\Security\Voters;
+
+
 use App\Entity\User;
 use Symfony\Bundle\SecurityBundle\Security;
 use Symfony\Component\Security\Core\Authentication\Token\TokenInterface;
@@ -20,7 +23,6 @@ class AdminVoter extends Voter
 
     protected function voteOnAttribute(string $attribute, $subject, TokenInterface $token): bool
     {
-        $user = $token->getUser();
         if ($this->security->isGranted("ROLE_ADMIN")) {
             return true;
         }

@@ -2,11 +2,11 @@
 
 namespace App\Controller;
 
-use AdminVoter;
 use App\Entity\ResetCode;
 use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Security\Voters\AdminOrOwnerVoter;
+use App\Security\Voters\AdminVoter;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\DBAL\Exception\UniqueConstraintViolationException;
 use Doctrine\Persistence\ManagerRegistry;
