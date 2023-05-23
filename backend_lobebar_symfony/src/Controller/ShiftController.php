@@ -217,6 +217,14 @@ class ShiftController extends _Base_Controller
         $this->doctrine->getManager()->flush();
         return JsonResponse::fromJsonString($this->serializer->serialize($shift, 'json'));
     }
+    #[Route("/mod_api/shift/updateShiftDesc/{shiftId}/{newDesc}", methods: ["PUT"])]
+    public function editShift(string $shiftId, string $newDesc){
+        /** @var Shift $shift */
+        $shift = $this->doctrine->getManager()->getRepository(Shift::class)->find(Uuid::fromString($shiftId));
+        $shift->setDescription($newDesc);
+        $this->doctrine->getManager()->flush();
+        return JsonResponse::fromJsonString($this->serializer->serialize($shift, 'json'));
+    }
 
 
 
