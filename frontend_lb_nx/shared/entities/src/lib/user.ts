@@ -26,7 +26,7 @@ export enum UserRoles {
     UNCONFIREMD = -1,
 }
 
-export const userRolesMap: Map<UserRoles, string> = new Map<UserRoles, string>([[UserRoles.USER, "User"], [UserRoles.ORGANIZER, "Organizer"], [UserRoles.MODERATOR, "Moderator"], [UserRoles.ADMIN, "Admin"]]);
+export const userRolesMap: Map<UserRoles, string> = new Map<UserRoles, string>([[UserRoles.ADMIN, "Admin"], [UserRoles.MODERATOR, "Moderator"], [UserRoles.ORGANIZER, "Organizer"], [UserRoles.USER, "User"]]);
 
 export abstract class UserFunctions {
 

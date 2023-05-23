@@ -1,5 +1,12 @@
 import { Component } from '@angular/core';
-import {DoneExtraWorkTypes, ShiftType, User, UserFunctions, UserRoles} from "@frontend-lb-nx/shared/entities";
+import {
+  DoneExtraWorkTypes,
+  ShiftType,
+  User,
+  UserFunctions,
+  UserRoles,
+  userRolesMap
+} from "@frontend-lb-nx/shared/entities";
 import {UsersOverviewStore} from "./users-overview.store";
 import {loadUser} from "@frontend-lb-nx/shared/services";
 import {Observable} from "rxjs";
@@ -37,6 +44,7 @@ export class UsersOverviewComponent {
       if (result) {
         // type.name = result;
         this.usersOverviewStore.deleteUser(user)
+        //TODO update state and show erros
         //this.$deletingError.pipe(map((loading,) => loading.adding)).subscribe({next: (value) => this.loadingEWT = value})
       }
     });
@@ -49,26 +57,22 @@ export class UsersOverviewComponent {
   }
 
   genHighestRole(valueUserRole: number) {
-    for(const key in UserRoles){
-      if(UserRoles[key as keyof typeof UserRoles]===valueUserRole){
-        return key
-      }
-      return key
-    }
-    return undefined
+    return userRolesMap.get(valueUserRole)
   }
 
   openDialog(currentRole: string, user: User): void {
     const dialogRef = this.dialog.open(DropdownMenuDialogComponent, {data: {
       displayString: "Rolle von "+user.username+" ändern.",
-        currentRole: UserFunctions.getRole(user),
-        choices: [UserRoles]}});
+        currentRole: userRolesMap.get(UserFunctions.getRole(user)),
+        choices: [...userRolesMap.values()],
+      }});
 
     dialogRef.afterClosed().subscribe(result => {
       if(result){
         const uppercaseRole = "ROLE_"+result.toUpperCase()
-        user.roles.concat(uppercaseRole)
-        this.usersOverviewStore.updateUser(user)
+        const userCopy = Object.assign({}, user)
+        userCopy.roles=userCopy.roles.concat([uppercaseRole])
+        this.usersOverviewStore.updateUser(userCopy)
 
       }
       console.log('The dialog was closed');

@@ -4,6 +4,7 @@ import {Store} from "@ngrx/store";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {updateUser} from "@frontend-lb-nx/shared/services";
 import {UsersOverviewStore} from "../../../../features/overviews/users-overview/users-overview.store";
+import {UserRoles, userRolesMap} from "@frontend-lb-nx/shared/entities";
 
 @Component({
   selector: 'frontend-lb-nx-dropdown-menu-dialog',
@@ -14,7 +15,7 @@ export class DropdownMenuDialogComponent {
   displayString = this.data.displayString??"Name";
   selected= '';
 
-  constructor(private usersOverviewStore: UsersOverviewStore, @Inject(MAT_DIALOG_DATA) public data: {name: string, choices: [], currentRole: string, displayString?: string, validators?: [], errorcode?: number},  public dialogRef: MatDialogRef<DropdownMenuDialogComponent>,) {
+  constructor(private usersOverviewStore: UsersOverviewStore, @Inject(MAT_DIALOG_DATA) public data: {name: string, choices: string[], currentRole: string, displayString?: string, validators?: [], errorcode?: number},  public dialogRef: MatDialogRef<DropdownMenuDialogComponent>,) {
   this.selected=data.currentRole
   }
 
@@ -33,7 +34,12 @@ export class DropdownMenuDialogComponent {
     this.dialogRef.close();
   }
 
-  getMinusesCount(number: number): string{
-    return '-'.repeat(number)
+  getMinusesCount(elem: string): string{
+    const mapRoles = userRolesMap
+    const num = UserRoles.ADMIN- <number>Array.from(mapRoles.keys()).find(key => mapRoles.get(key) === elem);
+    return '-'.repeat(num)
   }
+
+  protected readonly userRolesMap = userRolesMap;
+  protected readonly Array = Array;
 }

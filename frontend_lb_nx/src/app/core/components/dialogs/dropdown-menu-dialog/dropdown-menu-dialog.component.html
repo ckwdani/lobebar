@@ -4,7 +4,7 @@
         <br>
         <mat-label>Rollen</mat-label>
         <mat-select [(value)]="selected">
-            <mat-option *ngFor="let elem of data.choices" [disabled]="data.currentRole===elem" [value]="elem">{{getMinusesCount(data.choices.indexOf(elem))}}{{elem}}</mat-option>
+            <mat-option *ngFor="let elem of data.choices" [disabled]="data.currentRole===elem" [value]="elem">{{getMinusesCount(elem)}}{{elem}}</mat-option>
         </mat-select>
     </mat-form-field>
 </div>
