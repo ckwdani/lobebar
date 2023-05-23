@@ -9,6 +9,8 @@ import {
     selectShiftTypesLoading
 } from "../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
 import {addOrgEventSuccess, OrgEventBackendService} from "@frontend-lb-nx/shared/services";
+import {Router} from "@angular/router";
+import { Location } from '@angular/common';
 
 export interface EventAddStoreState {
   eventDefined?: boolean;
@@ -22,7 +24,7 @@ const initialState: EventAddStoreState = {eventDefined: false, shifts: [], shift
 
 @Injectable()
 export class EventAddStore extends ComponentStore<EventAddStoreState> {
-  constructor(private store: Store, private orgEventService: OrgEventBackendService) {
+  constructor(private store: Store, private orgEventService: OrgEventBackendService, private router: Router,private location: Location) {
     super(initialState);
   }
 
@@ -44,16 +46,20 @@ export class EventAddStore extends ComponentStore<EventAddStoreState> {
 
     // add the shifts to the event and send it to the backend
     readonly sendEvent = this.effect((event$: Observable<OrgEvent>) => {
-        this.setLoading(true);
         return event$.pipe(
             switchMap((event) => {
+                this.setLoading(true);
                 event.shifts = this.get().shifts;
                 return this.orgEventService.add(event).pipe(
                     tap({
                         next: (next) => {
-                            this.setLoading(false);
                             // TODO: routing
                             this.store.dispatch(addOrgEventSuccess({orgEvent: next}));
+                            setTimeout(() => {
+                                this.setLoading(false);
+                                this.location.back();
+                            }, 1000);
+
                         },
                     }),
                     // TODO : error handling

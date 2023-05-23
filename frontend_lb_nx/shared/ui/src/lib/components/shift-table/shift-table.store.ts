@@ -53,6 +53,11 @@ export class ShiftTableStore extends ComponentStore<ShiftTableState> {
     });
 
 
+
+
+
+
+
     selectShifts = this.select(state => state.shifts);
 
     readonly $changeAssignment = this.effect((data$: Observable<{shift: Shift, deassign: boolean }>) => {

@@ -37,6 +37,7 @@ export class EventAddComponent {
 
   $shiftTypesLoading = this.componentStore.$shiftTypesLoading;
   eventDefined$ = this.componentStore.eventDefined$;
+  eventLoading$ = this.componentStore.loading$;
 
   model : OrgEventClass = new OrgEventClass();
   $passedEvent: Observable<OrgEvent> = this.componentStore.event$.pipe(filter(event => event !== undefined)) as Observable<OrgEvent>;
@@ -113,10 +114,6 @@ export class EventAddComponent {
 
   startEndValid(start: Date, end: Date){
     return start.getTime() < end.getTime();
-  }
-
-  testChange(event: any) {
-    console.log(event)
   }
 
   protected readonly of = of;
