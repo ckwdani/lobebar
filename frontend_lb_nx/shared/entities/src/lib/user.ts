@@ -26,7 +26,10 @@ export enum UserRoles {
     UNCONFIREMD = -1,
 }
 
+export const userRolesMap: Map<UserRoles, string> = new Map<UserRoles, string>([[UserRoles.USER, "User"], [UserRoles.ORGANIZER, "Organizer"], [UserRoles.MODERATOR, "Moderator"], [UserRoles.ADMIN, "Admin"]]);
+
 export abstract class UserFunctions {
+
     static getRole(user: User): UserRoles {
         if ((user.roles as string[]).includes("ROLE_ADMIN")) {
             return UserRoles.ADMIN;
