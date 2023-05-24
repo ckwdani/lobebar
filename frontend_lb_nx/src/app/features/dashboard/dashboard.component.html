@@ -60,7 +60,8 @@
                 <div *ngIf="($outStandingShiftsObs|async)!.length>0">
                     <mat-list matSort2 class="item p-0!" *ngFor="let elem of ($displayOutStandingShiftsObs | async)"
                               role="list">
-                        <mat-list-item class="clickable-element" routerLink="/singleevent/{{elem.orgEvent?.id}}"
+<!--                        *ngIf="elem.headcount<elem.users!.length ? elem.users!.length!: 1"-->
+                        <mat-list-item *ngIf="elem.users!.length ? elem.headcount - elem.users!.length : elem.headcount>0"  class="clickable-element" routerLink="/singleevent/{{elem.orgEvent?.id}}"
                                        [matTooltip]="tooltipOwnShift+elem.orgEvent?.name+' .'" role="listitem">
                             <span matListItemTitle>{{elem.orgEvent?.name}} [{{elem.type.name}}]  </span>
                             <span matListItemLine class="text-red-600"><span class="text-red-600">{{elem.users!.length ? elem.headcount - elem.users!.length : elem.headcount}}</span>

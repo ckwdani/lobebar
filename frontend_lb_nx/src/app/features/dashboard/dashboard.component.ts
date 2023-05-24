@@ -8,7 +8,7 @@ import {
 } from "@frontend-lb-nx/shared/services";
 import {BreakpointObserver} from "@angular/cdk/layout";
 import {Store} from "@ngrx/store";
-import {tap} from "rxjs";
+import {filter, tap} from "rxjs";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {map} from "rxjs/operators";
 
@@ -30,6 +30,9 @@ export class DashboardComponent implements OnInit, AfterViewInit{
   $ownShiftsObs= this.store.select(selectOwnShifts).pipe()
   $nearestShiftObs = this.store.select(selectOwnShifts).pipe(map(shifts => shifts[0]))
 
+  //.pipe(
+  //       filter(shifts => shifts.every(shift=> shift.headcount > shift.users!.length ? shift.users!.length :2))
+  //   );
   $shiftsLoaded = this.store.select(selectShiftsLoading)
   $displayOwnShifts = this.$ownShiftsObs
   $displayOutStandingShiftsObs = this.$outStandingShiftsObs

@@ -27,7 +27,15 @@
     <!-- Symbol Column -->
     <ng-container matColumnDef="persons">
         <th mat-header-cell *matHeaderCellDef>Personen </th>
-        <td mat-cell *matCellDef="let element"> {{element.users !== undefined ? mapToName(element.users): "empty atm"}} </td>
+<!--        <frontend-lb-nx-user-badge class="flex justify-center" *ngIf="($userNameObs|async)!==undefined"-->
+<!--                                   [user]="($userNameObs|async)!"></frontend-lb-nx-user-badge>-->
+<!--        <td mat-cell *matCellDef="let element"> {{element.users !== undefined ? mapToName(element.users): "empty atm"}} </td>-->
+        <td mat-cell *matCellDef="let element">
+            <div *ngFor="let userElem of element.users">
+                <frontend-lb-nx-user-badge class="flex justify-center" *ngIf="userElem!==undefined"
+                                       [user]="userElem"></frontend-lb-nx-user-badge>
+        </div>
+        </td>
     </ng-container>
 
     <ng-container matColumnDef="assign">

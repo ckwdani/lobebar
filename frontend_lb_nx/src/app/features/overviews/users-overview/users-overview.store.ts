@@ -44,6 +44,7 @@ export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
             users: state.users.map(u => u.id !==user.id ? u: user)
         };
     });
+
     readonly loadUsers = this.effect<void>((trigger$: Observable<void>) =>
         trigger$.pipe(
             tap(() => {
@@ -173,6 +174,11 @@ export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
             )
         )
     )
+
+    selectSelectedAchievementUser(userFind? :User){
+        return this.select((state)=> state.users.find(user=> user ===userFind)?.selectedAchievement);
+    };
+
 }
 
 //tap((user) => {
