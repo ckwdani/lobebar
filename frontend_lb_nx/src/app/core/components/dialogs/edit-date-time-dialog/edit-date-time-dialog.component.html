@@ -5,7 +5,7 @@
     <p class="max-w-[300px] w-48 mb-3 border-2 rounded-md p-2 break-words">{{this.data.currentDate | date: 'dd. MMMM yyyy HH:mm':'de-DE'}}</p>
     <p class="max-w-[300px] w-48 mb-3">Änderungen kannst du in dem Feld vornehmen</p>
     <mat-form-field appearance="outline" class="mr-3">
-        <mat-label>Start</mat-label>
+        <mat-label>End</mat-label>
         <input [readonly]="true" [formControl]="form" matInput [matDatetimepicker]="pickerStart"
                [ngModel]="editableEndDate">
         <!--                        <mat-hint>MM/DD/YYYY</mat-hint>-->

@@ -1,6 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as ShiftActions from './shift.actions';
-import {Shift} from "@frontend-lb-nx/shared/entities";
+import {insertShiftWithDate, Shift} from "@frontend-lb-nx/shared/entities";
 
 export const shiftFeatureKey = 'shift';
 
@@ -34,7 +34,8 @@ export const reducer = createReducer(
     on(ShiftActions.changeShiftAssignmentSuccess, (state, {shift, deassign})=>{
         return {...state,
             outstandingShifts: state.outstandingShifts.map(s => s.id !==shift.id ? s: shift),
-            ownShifts: deassign ? state.ownShifts.filter(s => s.id !==shift.id) : [...state.ownShifts, shift],
+            //check the insertion index for countdown
+            ownShifts: deassign ? state.ownShifts.filter(s => s.id !==shift.id) : insertShiftWithDate(state.ownShifts, shift),
             //ownShifts: state.ownShifts.map(s => s.id !==shift.id ? s: shift),
 
         isLoading: false}

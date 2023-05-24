@@ -23,6 +23,20 @@ export class OwnUserEffects {
         )
     })
 
+    updateOwnUser$ = createEffect(()=> {
+        return this.actions$.pipe(
+            ofType(OwnUserActions.updateUser),
+            switchMap((action)=>
+                this.userService.updateUser(action.user).pipe(
+                    map((newUser)=>{
+                        return OwnUserActions.updateUserSuccessful({user: newUser})
+                    }),
+                    catchError((error) => of(OwnUserActions.updateUserFailure({error})))
+                )
+            )
+        )
+    })
+
     constructor(private actions$: Actions, private userService: UserBackendService, private store: Store) {}
 
 }

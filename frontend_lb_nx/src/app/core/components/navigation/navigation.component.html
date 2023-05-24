@@ -20,7 +20,7 @@
           <!--          <a *ngSwitchCase="UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/shift_add">Schichten erstellen</a>-->
           <a mat-list-item routerLink="/event_overview">Veranstaltungen</a>
           <a mat-list-item routerLink="/calendar">Kalender</a>
-          <a *ngSwitchCase="UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/shift_types">ShiftTypes</a>
+          <a *ngIf="($roleUser|async) ===UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/shift_types">ShiftTypes</a>
           <mat-divider></mat-divider>
           <a mat-list-item routerLink="/points">Punkte</a>
           <a mat-list-item (click)="logout()">Logout</a>

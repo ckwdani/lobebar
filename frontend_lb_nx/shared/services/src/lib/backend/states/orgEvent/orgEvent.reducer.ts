@@ -87,9 +87,6 @@ export const reducer = createReducer(
         const [pastEvents, upcomingEvents] = assignShift(shift, state.pastEvents, state.comingEvents);
         return {...state, pastEvents: pastEvents, comingEvents: upcomingEvents}}
     ),
-
-
-
 );
 
 /**

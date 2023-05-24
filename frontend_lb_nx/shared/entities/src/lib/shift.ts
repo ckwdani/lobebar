@@ -13,6 +13,21 @@ export interface Shift{
     type: ShiftType
 }
 
+export function insertShiftWithDate(shifts: Shift[],shift: Shift): Shift[] {
+    const cloneShifts = [...shifts]
+    const index = cloneShifts.findIndex(item => item.starttime > shift.starttime);
+
+    if (index === -1 ||index >= cloneShifts.length) {
+        // If the entity's start date is the latest, add it at the end
+        cloneShifts.push(shift);
+    } else {
+        // Insert the entity at the appropriate index
+        cloneShifts.splice(index, 0, shift);
+    }
+
+    return cloneShifts;
+}
+
 /*export class Shift{
     id?: string="";
     description?: string="";

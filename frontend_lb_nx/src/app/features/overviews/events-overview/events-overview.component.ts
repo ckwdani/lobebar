@@ -99,4 +99,5 @@ export class EventsOverviewComponent {
       return eventsMut.reverse().slice(0, this.currentUpComingIndex).reverse()
     }))
   }
+
 }

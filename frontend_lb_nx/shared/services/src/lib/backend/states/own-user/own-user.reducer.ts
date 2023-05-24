@@ -23,8 +23,8 @@ export const reducer = createReducer(
     initialOwnUserState,
     on(OwnUserActions.updateSelectedAchievement, (state) => ({...state, isLoading: true})),
     on(AuthActions.allLoaded, (state, {user}) => ({...state,ownUser: user, isLoading: false})),
-    on(OwnUserActions.updateUser, (state, { user }) => {
-        return { ...state, ownUser: user };
+    on(OwnUserActions.updateUser, (state) => {
+        return { ...state, isLoading: true};
     }),
     on(OwnUserActions.updateUserSuccessful, (state,{user}) => {
         return {...state, ownUser: user, isLoading: false}

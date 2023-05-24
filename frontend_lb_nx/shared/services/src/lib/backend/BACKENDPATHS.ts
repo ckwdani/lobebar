@@ -4,17 +4,17 @@ export class BACKENDPATHS{
     static readonly register = this.baseApiUrl + '/register';
     static readonly getUser = this.baseApiUrl + '/user';
     static readonly deleteUser = this.baseApiUrl+ '/admin_api/user' // userId
-    static readonly updateUser = this.baseApiUrl + '/user/update'
-    static readonly approveUser = this.baseApiUrl+ '/approve' //userId
-    static readonly updateUserRole = this.baseApiUrl + '/user/updateRole' // /{userId}/{ROLE}
+    static readonly updateUser = this.baseApiUrl + '/api/user/update'
+    static readonly approveUser = this.baseApiUrl+ '/mod_api/approve' //userId
+    static readonly updateUserRole = this.baseApiUrl + '/admin_api/user/updateRole' // /{userId}/{ROLE}
 
-    static readonly getAllUser = this.baseApiUrl + '/users';
+    static readonly getAllUser = this.baseApiUrl + '/admin_api/users';
 
     // CRUD ORGEVENT
-    static readonly addOrgEvent= this.baseApiUrl + '/mod_api/event/add';
+    static readonly addOrgEvent= this.baseApiUrl + '/org_api/event/add';
     static readonly deleteOrgEvent= this.baseApiUrl + '/mod_api/event/deleteEvent'; // /eventId
-    static readonly updateOrgEvent= this.baseApiUrl + '/mod_api/event/updateEvent'; // /eventId
-    static readonly getSingleOrgEvent= this.baseApiUrl + '/mod_api/event/getSingle'; // /eventId
+    static readonly updateOrgEvent= this.baseApiUrl + '/org_api/event/updateEvent'; // /eventId
+    static readonly getSingleOrgEvent= this.baseApiUrl + '/api/event/getSingle'; // /eventId
     static readonly getOrgEventTimed= this.baseApiUrl + '/api/event/getTimed'; // /start/end
 
 
@@ -26,10 +26,10 @@ export class BACKENDPATHS{
 
     //SHIFT
     static readonly shift_user_shifts = this.baseApiUrl + "/api/getUserShifts" ///{userId}/{start}/{end}
-    static readonly shift_event_add = this.baseApiUrl + "/mod_api/shift/add" ///{eventId}
-    static readonly shift_event_delete = this.baseApiUrl + "/mod_api/shift/delete" ///{shiftId}
+    static readonly shift_event_add = this.baseApiUrl + "/org_api/shift/add" ///{eventId}
+    static readonly shift_event_delete = this.baseApiUrl + "/org_api/shift/delete" ///{shiftId}
     static readonly shift_outstanding_shifts = this.baseApiUrl + "/api/getOutstandingShifts" // /{start}/{end}/{user_id}
-    static readonly shift_edit_desc = this.baseApiUrl + "/mod_api/shift/updateShiftDesc" ///{shiftId}/{newDesc}
+    static readonly shift_edit_desc = this.baseApiUrl + "/org_api/shift/updateShiftDesc" ///{shiftId}/{newDesc}
     //ASSIGN
     static readonly shift_assign = this.baseApiUrl + "/api/assignShift" // /shift id
     // CRUD EW_Types
@@ -40,10 +40,10 @@ export class BACKENDPATHS{
 
 
     // Achievement
-    static readonly putAchievement = this.baseApiUrl+ "/achievement"
+    static readonly putAchievement = this.baseApiUrl+ "/api/achievement"
 
     // SnackType
-    static readonly getSnackTypes = this.baseApiUrl+ '/mod_api/snack/types'
+    static readonly getSnackTypes = this.baseApiUrl+ '/api/snack/types'
     static readonly addSnackType  = this.baseApiUrl + '/mod_api/snack/addtype'
     static readonly deleteSnackType  = this.baseApiUrl + '/mod_api/snack/deleteType' // snackTypeId
     static readonly updateSnackType = this.baseApiUrl + '/mod_api/snack/updateSnackTypeName' ///{snackTypeId}/{newName}
@@ -52,7 +52,7 @@ export class BACKENDPATHS{
     static readonly snackUsed = this.baseApiUrl + '/api/snack/used' //{snackId}/{amount}/{userId?}
     static readonly getOwnSnacks = this.baseApiUrl + '/api/snacks/own' //{start?}/{end?}
     static readonly getUsedSnacks = this.baseApiUrl + '/api/snacks' //{start?}/{end?}/{userId?}
-    static readonly countUsedSnacks = this.baseApiUrl + '/mod_api/snacks/count' //{start?}/{end?}/{userId?}
+    static readonly countUsedSnacks = this.baseApiUrl + '/api/snacks/count' //{start?}/{end?}/{userId?}
 
 
     // Email reset paths

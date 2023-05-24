@@ -1,8 +1,8 @@
 <mat-tab-group *ngIf="!initialLoad">
     <mat-tab label="Bevorstehende Veranstaltungen" >
         <br>
-        <div [ngSwitch]="$roleUser|async" class="flex justify-center">
-            <button *ngSwitchCase="UserRoles.ADMIN||UserRoles.MODERATOR" routerLink="/event_add" mat-icon-button color="primary"><mat-icon>add</mat-icon></button>
+        <div *ngIf="($roleUser|async)===UserRoles.ORGANIZER||UserRoles.MODERATOR||UserRoles.ADMIN" class="flex justify-center">
+            <button routerLink="/event_add" mat-icon-button color="primary"><mat-icon>add</mat-icon></button>
         </div>
         <br>
         <button mat-flat-button class="w-full" color="accent" (click)="showPrevoius = !showPrevoius">
