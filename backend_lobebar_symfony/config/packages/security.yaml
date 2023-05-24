@@ -39,7 +39,8 @@ security:
         - { path: ^/login, roles: PUBLIC_ACCESS }
         - { path: ^/user/reset, roles: PUBLIC_ACCESS }
         - { path: ^/register, roles: PUBLIC_ACCESS }
-        - { path: ^/mod_api, roles: ROLE_ORGANIZER }
+        - { path: ^/mod_org, roles: ROLE_ORGANIZER }
+        - { path: ^/mod_api, roles: ROLE_MOD }
         - { path: ^/admin_api, roles: ROLE_ADMIN }
         - { path: ^/, roles: ROLE_USER }
             # activate different ways to authenticate

@@ -1,23 +1,48 @@
-import {EnvironmentInjector, inject, Injectable, Injector} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree} from '@angular/router';
-import {first, Observable} from 'rxjs';
-import {selectUserRole} from "@frontend-lb-nx/shared/services";
+import {filter, first, Observable} from 'rxjs';
+import {selectOwnUser} from "@frontend-lb-nx/shared/services";
 import {Store} from "@ngrx/store";
 import {environment} from "../../../environments/environment";
+import {UserFunctions, UserRoles} from "@frontend-lb-nx/shared/entities";
 
 @Injectable({providedIn: 'root'})
 export class AuthGuard implements CanActivate{
   constructor(private store: Store, private router: Router) {
   }
-  $roleUser = this.store.select(selectUserRole).pipe(first())
+  $user = this.store.select(selectOwnUser).pipe(first())
   canActivate(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    let role: Array<string>|undefined
-    this.$roleUser.subscribe(next=>{
-      role=next
-      if(role?.includes("ROLE_ADMIN")){
+    let userRoleEnum: UserRoles
+    this.$user.pipe(filter(user=> user!=undefined)).subscribe(user=>{
+      userRoleEnum=UserFunctions.getRole(user!)
+
+      //ADMIN CAN ROUTE ANYWHERE
+      if(userRoleEnum ==UserRoles.ADMIN){
         return true;
       }
-      console.log(route.routeConfig?.path)
+
+      //MODERATOR CAN ROUTE ANYWHERE EXCEPT THE USERS OVERVIEW
+      if(userRoleEnum == UserRoles.MODERATOR){
+        if(route.routeConfig?.path=="users_overview"){
+          this.router.navigate(['user_overview'])
+          return false
+        }
+        return true;
+      }
+
+      //ORGANIZER CANT ROUTE TO USERS OVERVIEW AND ALSO CANT ADD SHIFTTYPES/EXTRAWORK/SNACKS
+      if(userRoleEnum==UserRoles.ORGANIZER){
+        if(route.routeConfig?.path=="users_overview"){
+          this.router.navigate(['user_overview'])
+          return false
+        }
+        if(route.routeConfig?.path=="shift_types"){
+          this.router.navigate(['event_overview']);
+          return false;
+        }
+        return true;
+      }
+
       if(!environment.production){
         return new Observable();
       }

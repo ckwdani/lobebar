@@ -195,7 +195,7 @@ class ShiftController extends _Base_Controller
 
 
     // function for adding a shift to an event
-    #[Route("/mod_api/shift/add/{eventId}", methods: ["POST"])]
+    #[Route("/org_api/shift/add/{eventId}", methods: ["POST"])]
     public function addShift(Request $request, string $eventId){
         $shift = $this->serializer->deserialize($request->getContent(), Shift::class, "json");
         /** @var Orgevent $event */
@@ -207,7 +207,7 @@ class ShiftController extends _Base_Controller
     }
 
     // function for deleting a shift from an event
-    #[Route("/mod_api/shift/delete/{shiftId}", methods: ["DELETE"])]
+    #[Route("/org_api/shift/delete/{shiftId}", methods: ["DELETE"])]
     public function deleteShift(string $shiftId){
         $shift = $this->doctrine->getManager()->getRepository(Shift::class)->find(Uuid::fromString($shiftId));
         if(empty($shift)){
@@ -217,7 +217,7 @@ class ShiftController extends _Base_Controller
         $this->doctrine->getManager()->flush();
         return JsonResponse::fromJsonString($this->serializer->serialize($shift, 'json'));
     }
-    #[Route("/mod_api/shift/updateShiftDesc/{shiftId}/{newDesc}", methods: ["PUT"])]
+    #[Route("/org_api/shift/updateShiftDesc/{shiftId}/{newDesc}", methods: ["PUT"])]
     public function editShift(string $shiftId, string $newDesc){
         /** @var Shift $shift */
         $shift = $this->doctrine->getManager()->getRepository(Shift::class)->find(Uuid::fromString($shiftId));

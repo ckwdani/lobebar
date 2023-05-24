@@ -16,7 +16,7 @@ use const App\Entity\WITH_DETAILED_SHIFTS;
 
 class EventController extends _Base_Controller
 {
-    #[Route("/mod_api/event/add", methods: ["POST"])]
+    #[Route("/org_api/event/add", methods: ["POST"])]
 //    #[Route("/orgevent/", methods: ["POST"])]
     public function addEvent(Request $request){
 
@@ -50,7 +50,7 @@ class EventController extends _Base_Controller
      * @param string $eventId
      * @return JsonResponse
      */
-    #[Route("/mod_api/event/updateEvent/{eventId}", methods: ["PUT"])]
+    #[Route("/org_api/event/updateEvent/{eventId}", methods: ["PUT"])]
     public function updateEvent(Request $request, string $eventId){
         $eventChanges = $this->serializer->deserialize($request->getContent(), Orgevent::class, "json");
         /** @var Orgevent $event */
@@ -82,7 +82,7 @@ class EventController extends _Base_Controller
 
 
 
-    #[Route("/mod_api/event/getSingle/{eventId}", methods: ["GET"])]
+    #[Route("/api/event/getSingle/{eventId}", methods: ["GET"])]
     public function getSingleEvent(Request $request, string $eventId): JsonResponse
     {
         /** @var Orgevent $event */

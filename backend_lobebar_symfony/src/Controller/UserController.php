@@ -64,7 +64,7 @@ class UserController extends _Base_Controller
 
 
 
-    #[Route("/approve/{id}", methods: ["PUT"])]
+    #[Route("/mod_api/approve/{id}", methods: ["PUT"])]
     public function approveUser($id){
         $this->denyAccessUnlessGranted("ROLE_MOD");
 
@@ -76,7 +76,7 @@ class UserController extends _Base_Controller
         return JsonResponse::fromJsonString($this->serializer->serialize($user, 'json'));
     }
 
-    #[Route("/users", methods: ["GET"])]
+    #[Route("/admin_api/users", methods: ["GET"])]
     public function getAllUsers(){
 
         $this->denyAccessUnlessGranted('ROLE_ADMIN', null, "User tried to access a page without having ROLE_ADMIN");
@@ -96,7 +96,7 @@ class UserController extends _Base_Controller
     }
 
     // update own user
-    #[Route("/user/update", methods: ["PUT"])]
+    #[Route("/api/user/update", methods: ["PUT"])]
     public function updateUser(Request $request): JsonResponse{
         $id = Uuid::fromString(json_decode($request->getContent(), true)["id"]);
         $userFromDB = $this->userRepo->find($id);
@@ -124,7 +124,7 @@ class UserController extends _Base_Controller
         return JsonResponse::fromJsonString($this->serializer->serialize($userFromDB, 'json'));
     }
 
-    #[Route("/user/updateRole/{userId}/{role}", methods: ["PUT"])]
+    #[Route("/admin_api/user/updateRole/{userId}/{role}", methods: ["PUT"])]
     public function updateUserRole(string $userId, string $role): JsonResponse{
 
 
@@ -165,7 +165,7 @@ class UserController extends _Base_Controller
 
 
 
-    #[Route("/achievement", methods: ["PUT"])]
+    #[Route("/api/achievement", methods: ["PUT"])]
     public function putAchievement(Request $request){
         $user = $this->getUser();
 
