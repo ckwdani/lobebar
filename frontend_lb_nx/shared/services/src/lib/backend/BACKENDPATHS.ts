@@ -60,9 +60,15 @@ export class BACKENDPATHS{
     static readonly resetPasswordConfirm = this.baseApiUrl + '/user/reset/confirm' // {token}
     static readonly resetPasswordCodeCheck = this.baseApiUrl + "/user/reset/check" // {code}
 
+    // snacks booker
+    static readonly getCountSnacks = this.baseApiUrl + '/admin_api/snack/booked' //
+    static readonly setSnacksBookedDay = this.baseApiUrl + '/admin_api/snack/book/day' // {date}
 
 
     // external Links
     static readonly datenSchutz = "https://emils-ecke.org/datenschutzerklaerung/"
+
+
+
 }
 

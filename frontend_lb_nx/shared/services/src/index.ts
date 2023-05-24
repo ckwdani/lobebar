@@ -4,6 +4,8 @@ export * from './lib/backend/entity-backend-services/org-event-backend.service';
 
 export * from './lib/backend/entity-backend-services/shifts-backend.service';
 
+export * from './lib/backend/entity-backend-services/snacks-booker.service';
+
 
 export * from './lib/backend/states/auth/auth.actions';
 

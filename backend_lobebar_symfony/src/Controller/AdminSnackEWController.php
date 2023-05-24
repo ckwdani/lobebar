@@ -2,8 +2,11 @@
 
 namespace App\Controller;
 
+use App\Entity\SnackTypes;
 use App\Entity\SnackUsed;
+use Doctrine\Common\Collections\Criteria;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Uid\Uuid;
 
 /** This is for the admin functions like adding a snack to a user or an extrawork, furthermore to book used snacks for finances */
@@ -20,5 +23,43 @@ class AdminSnackEWController extends  _Base_Controller
         return JsonResponse::fromJsonString($this->serializer->serialize($snackUsed, 'json'));
     }
 
-    // get
+    // book all snackUsed from a certain day
+
+    /**
+     * @throws \Exception
+     */
+    #[Route('/admin_api/snack/book/day/{date}', name: 'api_admin_snack_book_day', methods: ['POST'])]
+    public function bookSnackUsedDay(string $date)
+    {
+        $em = $this->doctrine->getManager();
+
+        $dtNext = new \DateTime($date);
+        $dtNext = new \DateTime($dtNext->format('Y-m-d'));
+        $dt = new \DateTime($dtNext->format('Y-m-d'));
+        $dtNext->modify('+1 day');
+
+        // criteria to find all snackUsed between two dates
+        $criteria = Criteria::create()
+            ->where(Criteria::expr()->gte('date', $dt))
+            ->andWhere(Criteria::expr()->lt('date', $dtNext));
+
+
+        $snackUsed = $em->getRepository(SnackUsed::class)->matching($criteria)->toArray();
+        foreach($snackUsed as $snack){
+            $snack->setBooked(true);
+            $em->persist($snack);
+        }
+        $em->flush();
+        return JsonResponse::fromJsonString($this->serializer->serialize($snackUsed, 'json'));
+    }
+
+    // get booking view of used snacks
+    #[Route('/admin_api/snack/booked', name: 'api_admin_snack_booked', methods: ['GET'])]
+    public function getBookedSnacks()
+    {
+        $snackUsed = $this->doctrine->getManager()->getRepository(SnackTypes::class)->getGroupedbookingView();
+        return JsonResponse::fromJsonString($this->serializer->serialize($snackUsed, 'json'));
+    }
+
+
 }

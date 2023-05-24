@@ -28,7 +28,7 @@ class SnackUsed extends _Base_Entity
     private ?\DateTimeInterface $date = null;
 
     #[ORM\Column(nullable: true)]
-    private ?bool $booked = null;
+    private ?bool $booked = false;
 
 
 

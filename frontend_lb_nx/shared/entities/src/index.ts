@@ -8,3 +8,4 @@ export * from './lib/doneExtraWorkTypes';
 export * from './lib/achievement';
 export * from './lib/snack';
 export * from './lib/snackType';
+export * from './lib/count-snacks';

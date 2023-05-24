@@ -7,6 +7,7 @@ use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use JMS\Serializer\Expression\Expression;
+use Proxies\__CG__\App\Entity\SnackTypes;
 use Symfony\Component\Uid\Uuid;
 
 /**
@@ -67,6 +68,42 @@ class SnackUsedRepository extends ServiceEntityRepository
         }else{
             return $qb->getQuery()->getResult();
         }
+
+    }
+
+
+    public function getGroupedbookingView(){
+        $snackTypes = $this->getEntityManager()->getRepository(SnackTypes::class)->findBy(["showInBooking" => true]);
+        $countExpressions = '';
+        $arraySTNames = [];
+        $a = 0;
+        foreach ($snackTypes as $snackType) {
+            $qn = "s_{$a}";
+            $arraySTNames = array_merge($arraySTNames, [$qn => $snackType->getName()]);
+            $countExpressions .= "COUNT(CASE WHEN st.id = '{$snackType->getId()}' THEN 1 ELSE 0 END) AS {$qn},";
+            $a += 1;
+        }
+        $countExpressions = rtrim($countExpressions, ',');
+
+        $qb = $this->createQueryBuilder('s');
+
+        $qb->select("DATE(s.date) AS date, $countExpressions")
+            ->addSelect()
+            ->join('s.snackType', 'st')
+            ->groupBy('date')
+            ->orderBy('date', 'DESC');
+
+        $res =  $qb->getQuery()->getResult();
+        // map the corect names to the generated names
+        return array_map(function($item) use ($arraySTNames){
+            foreach ($item as $key => $value) {
+                if($key !== "date"){
+                    $item[$arraySTNames[$key]] = $value;
+                    unset($item[$key]);
+                }
+            }
+            return $item;
+        }, $res);
 
     }
 

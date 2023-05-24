@@ -122,7 +122,7 @@ class SnackController extends _Base_Controller
         return JsonResponse::fromJsonString($this->serializer->serialize($snackTypes, "json"));
     }
 
-    #[Route("/api/snacks/count/{start?}/{end?}/{userId?}")]
+    #[Route("/api/count/snacks/{start?}/{end?}/{userId?}", methods: ["GET"])]
     public function countUsedSnacks(?int $start, ?int $end, ?string $userId){
         $snackTypesRepo = $this->doctrine->getManager()->getRepository(SnackTypes::class);
         $userLoggedIn = $this->getUser();

@@ -3,6 +3,7 @@
 namespace App\Repository;
 
 use App\Entity\SnackTypes;
+use App\Entity\SnackUsed;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
@@ -68,6 +69,57 @@ class SnackTypesRepository extends ServiceEntityRepository
         }, $result);
         return $result;
     }
+
+    public function getGroupedbookingView(){
+//        $countExpressions = '';
+//        $arraySTNames = [];
+//        $a = 0;
+//        foreach ($snackTypes as $snackType) {
+//            $qn = "s_{$a}";
+//            $arraySTNames = array_merge($arraySTNames, [$qn => $snackType->getName()]);
+//            $countExpressions .= "COUNT(CASE WHEN st.id = '{$snackType->getId()}' THEN 1 ELSE 0 END) AS {$qn},";
+//            $a += 1;
+//        }
+//        $countExpressions = rtrim($countExpressions, ',');
+
+        $qb = $this->createQueryBuilder('s');
+
+        $qb->select("DATE(su.date) AS date, COUNT(su.id) as count, s.name AS name, s.id AS id, su.booked")
+            ->addSelect()
+            ->join(SnackUsed::class, 'su', 'WITH', 'su.snackType = s')
+            ->groupBy('date', 'id')
+            ->andWhere($qb->expr()->eq("s.showInBooking", ":showInBooking"))
+//            ->andWhere($qb->expr()->orX($qb->expr()->neq("su.booked", ":booked"), $qb->expr()->isNull("su.booked")))
+            ->setParameter("showInBooking", true)
+//            ->setParameter("booked", true)
+            ->orderBy('date', 'DESC');
+
+        $res =  $qb->getQuery()->getResult();
+
+        $newRes = [];
+        // map all entities to one date
+        foreach ($res as $key => $value) {
+
+            $date = $value["date"];
+            // remove the date from the array
+            unset($value["date"]);
+            $newRes[$date][] = $value;
+        }
+        $newNewRes = [];
+        foreach ($newRes as $key => $value) {
+            $newNewRes[] = [
+                "date" => $key,
+                "snacks" => $value
+            ];
+        }
+
+        return $newNewRes;
+        // map the corect names to the generated names
+
+    }
+
+
+
 
 //    /**
 //     * @return SnackTypes[] Returns an array of SnackTypes objects
