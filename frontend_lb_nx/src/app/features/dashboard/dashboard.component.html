@@ -1,24 +1,31 @@
 <div *ngIf="($shiftsLoaded | async) === false">
-    <div class="w-full flex justify-center">
-        <div class="flex flex-col">
-            <p class="text-center">Nächste Schicht:</p>
-            <frontend-lb-nx-countdown *ngIf="($nearestShiftObs | async)" [targetDate]="($nearestShiftObs | async)?.starttime!"></frontend-lb-nx-countdown>
+    <div class="flex flex-col justify-center">
+        <div class="w-full flex justify-center ">
+            <div class="flex flex-col">
+                <p class="text-center">Nächste Schicht:</p>
+                <frontend-lb-nx-countdown *ngIf="($nearestShiftObs | async)"
+                                          [targetDate]="($nearestShiftObs | async)?.starttime!"></frontend-lb-nx-countdown>
+            </div>
+        </div>
+        <div class="w-full flex flex-row justify-center">
+            <div class="text-center w-cont">
+                <p>Herzlich Willkommen, lieber Barmensch</p>
+                <frontend-lb-nx-user-badge class="flex justify-center" *ngIf="($userNameObs|async)!==undefined"
+                                           [user]="($userNameObs|async)!"></frontend-lb-nx-user-badge>
+                <p>Danke für dein Engagement!</p>
+                <div class="flex flex-row justify-center border-orange-500 border-2">
+                    <p class="m-6">Punkte: {{($userNameObs | async)?.xPScore}}</p>
+
+                    <p class="m-6">Gönnpunkte: {{($userNameObs | async)?.balance}}</p>
+                </div>
+            </div>
         </div>
     </div>
-    <div class="w-full h-full">
-        <div class="text-center">
-            <p>Herzlich Willkommen, lieber Barmensch</p>
-            <frontend-lb-nx-user-badge class="flex justify-center" *ngIf="($userNameObs|async)!==undefined"
-                                       [user]="($userNameObs|async)!"></frontend-lb-nx-user-badge>
-            <p>Danke für dein Engagement!</p>
-            <br>
-            <p>Punkte: {{($userNameObs | async)?.xPScore}}</p>
-            <br>
-            <p>Gönnpunkte: {{($userNameObs | async)?.balance}}</p>
-        </div>
+    <div class="w-full h-full ">
+
         <br>
-        <div class="flex flex-row justify-between">
-            <div class="w-1/3">
+        <div class="flex flex-row justify-around flex-wrap">
+            <div class="w-1/3 min-w-[250px]">
                 <div *ngIf="$ownShiftsObs" class="list">
                     <p>Anstehende Schichten:</p>
                     <p *ngIf="($ownShiftsObs|async)!.length<1">Keine Schichten vorhanden.</p>
@@ -45,9 +52,9 @@
                     </div>
                 </div>
             </div>
-            <frontend-lb-nx-achievements-overview></frontend-lb-nx-achievements-overview>
-            <div class="w-1/3">
-                <p class="accent-red-500">Achtung! Es werden noch <br>
+            <!--<frontend-lb-nx-achievements-overview></frontend-lb-nx-achievements-overview>-->
+            <div class="w-1/3 min-w-[250px]">
+                <p class="text-red-500">Achtung! Es werden noch <br>
                     Personen für folgende Schicht(en) benötigt:</p>
                 <p *ngIf="($outStandingShiftsObs|async)!.length<1">Keine Schichten vorhanden.</p>
                 <div *ngIf="($outStandingShiftsObs|async)!.length>0">
@@ -56,7 +63,7 @@
                         <mat-list-item class="clickable-element" routerLink="/singleevent/{{elem.orgEvent?.id}}"
                                        [matTooltip]="tooltipOwnShift+elem.orgEvent?.name+' .'" role="listitem">
                             <span matListItemTitle>{{elem.orgEvent?.name}} [{{elem.type.name}}]  </span>
-                            <span matListItemLine>{{elem.users!.length ? elem.headcount - elem.users!.length : elem.headcount}}
+                            <span matListItemLine class="text-red-600"><span class="text-red-600">{{elem.users!.length ? elem.headcount - elem.users!.length : elem.headcount}}</span>
                                 benötigt</span>
                             <span class="orange-text"
                                   matListItemLine>{{elem.starttime|date: 'dd. MMMM yyyy \'um\' HH:mm':'de-DE'}}

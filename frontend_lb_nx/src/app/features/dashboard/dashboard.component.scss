@@ -18,3 +18,7 @@ $primary : map-get($lobebar-theme, $my-primary);
 .orange-text{
   color: chocolate !important;
 }
+
+.w-cont{
+  width: max-content;
+}

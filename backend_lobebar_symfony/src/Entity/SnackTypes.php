@@ -30,6 +30,9 @@ class SnackTypes extends _Base_Entity
     #[Groups(groups: [WITH_USED_COUNT])]
     public int $usedCount = 0;
 
+    #[ORM\Column]
+    private ?bool $showInBooking = null;
+
     public function __construct()
     {
         parent::__construct();
@@ -87,6 +90,18 @@ class SnackTypes extends _Base_Entity
                 $snacksUsed->setSnackType(null);
             }
         }
+
+        return $this;
+    }
+
+    public function isShowInBooking(): ?bool
+    {
+        return $this->showInBooking;
+    }
+
+    public function setShowInBooking(bool $showInBooking): self
+    {
+        $this->showInBooking = $showInBooking;
 
         return $this;
     }

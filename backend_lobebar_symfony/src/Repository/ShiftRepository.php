@@ -71,7 +71,7 @@ class ShiftRepository extends ServiceEntityRepository
 
     // get outstanding shifts where the headcount is not met by the number of users related to the shift via the shift_user table and where the logged in user is not signed up for
     // with pagination based on start and end unix timestamps which are related to the event start and in an ascending event start date order
-    public function getOutstandingShifts(?int $start = null, ?int $end = null, ?Uuid $user_id = null){
+    public function     getOutstandingShifts(?int $start = null, ?int $end = null, ?Uuid $user_id = null){
         $start += 7200;
         $end += 7200;
         $qb = $this->createQueryBuilder('s');

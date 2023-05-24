@@ -27,6 +27,9 @@ class SnackUsed extends _Base_Entity
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date = null;
 
+    #[ORM\Column(nullable: true)]
+    private ?bool $booked = null;
+
 
 
     public function __construct()
@@ -69,5 +72,17 @@ class SnackUsed extends _Base_Entity
     private function setDate(): void
     {
         $this->date = new \DateTime("now");
+    }
+
+    public function isBooked(): ?bool
+    {
+        return $this->booked;
+    }
+
+    public function setBooked(?bool $booked): self
+    {
+        $this->booked = $booked;
+
+        return $this;
     }
 }
