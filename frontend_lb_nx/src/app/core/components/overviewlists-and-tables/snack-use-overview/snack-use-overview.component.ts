@@ -40,7 +40,7 @@ interface GroupedSnack {
   styleUrls: ['./snack-use-overview.component.scss'],
   animations: [InSiteAnimations.inOutAnimation, InSiteAnimations.sequentialFadeIn]
 })
-export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
+export class SnackUseOverviewComponent implements AfterViewInit{
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatPaginator, {static: true}) sort: MatPaginator | undefined;
   @ViewChild('table3') table3: SimpleTableComponent<SnackType> = new SimpleTableComponent<SnackType>();
@@ -51,11 +51,13 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
   (filter(state => !state.isLoading), map(snacks => this.groupSnacks(snacks.usedSnacks??[])));
   //this.snackUserStore.state$.pipe(filter(state => !state.loading), map(state => this.groupSnacks(state.snacks??[])));
 
+  $ownUsedSnacksGroupedDisplay = this.$ownUsedSnacksGrouped;
+
+
   $ownUsedSnacksLoading = this.store.select(selectSnackState).pipe(map(state => state.isLoading));
   //this.snackUserStore.loading$;
 
   $ownUsedSnacks = this.$ownUsedSnacksGrouped;
-  displayData = this.$ownUsedSnacksGrouped;
 
   $isLoggedIn = this.store.select(selectLoggedIn).pipe();
   $userLoaded = this.store.select(selectUserLoaded).pipe();
@@ -103,7 +105,6 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
   }
 
   ngAfterViewInit(): void {
-    this.displayData=this.$ownUsedSnacks
     if(this.paginator!==undefined){
       this.sort = this.paginator
     }
@@ -111,14 +112,12 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
 
     }
 
-  ngOnInit(): void {
-    this.displayData=this.$ownUsedSnacks;
-  }
+
 
   onPageChange($event: PageEvent) {
     const startIndex = $event.pageIndex * $event.pageSize;
     const endIndex = startIndex + $event.pageSize;
-    this.displayData = this.$ownUsedSnacks?.pipe(map(snacks => snacks.slice(startIndex, endIndex)))?? this.displayData;
+    this.$ownUsedSnacksGroupedDisplay = this.$ownUsedSnacksGrouped.pipe(map(snacks => snacks.slice(startIndex, endIndex)));
   }
 
 

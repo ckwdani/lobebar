@@ -3,7 +3,7 @@
         <p class="text-center">Snackhistorie:</p>
         <mat-progress-bar *ngIf="$ownUsedSnacksLoading | async" mode="buffer" color="primary"></mat-progress-bar>
         <div *ngIf="($ownUsedSnacksLoading | async) === false" @inOutAnimation @sequentialFadeIn>
-            <mat-list matSort class="item p-0!" *ngFor="let elem of ($ownUsedSnacksGrouped | async)" role="list">
+            <mat-list matSort class="item p-0!" *ngFor="let elem of ($ownUsedSnacksGroupedDisplay | async)" role="list">
                 <mat-list-item role="listitem" class="fadeInElement">
                     <span matListItemTitle>{{elem.snackType.name}} <span class="text-green-700">x {{elem.count}} </span></span>
                     <span matListItemLine>{{elem.date |date: 'dd. MMMM yyyy \'gegen\' HH \' Uhr \'  ':'de-DE'}}</span>

@@ -1,4 +1,4 @@
-import {Component, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {SimpleTableComponent} from "../../../../../../shared/ui/src/lib/components/simpleTable/simple-table.component";
 import {DoneExtraWork, DoneExtraWorkTypes, Snack, SnackType} from "@frontend-lb-nx/shared/entities";
@@ -38,13 +38,15 @@ interface GroupedEw {
   styleUrls: ['./done-ex-overview.component.scss'],
   animations: [InSiteAnimations.inOutAnimation, InSiteAnimations.sequentialFadeIn]
 })
-export class DoneExOverviewComponent {
+export class DoneExOverviewComponent implements AfterViewInit, OnInit{
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatPaginator, {static: true}) sort: MatPaginator | undefined;
   @ViewChild('table3') table3: SimpleTableComponent<DoneExtraWorkTypes> = new SimpleTableComponent<DoneExtraWorkTypes>();
 
   $ownDoneEws = this.store.select(selectUsedEws).pipe(tap(console.log));
   $ownDonwEwsGrouped = this.store.select(selectEwState).pipe(filter(state => !state.isLoading));
+
+  $doneEwsDisplay = this.$ownDoneEws;
 
   $ownDoneEwsLoading = this.store.select(selectEwState).pipe(map(state => state.isLoading));
 
@@ -103,6 +105,7 @@ export class DoneExOverviewComponent {
   onPageChange($event: PageEvent) {
     const startIndex = $event.pageIndex * $event.pageSize;
     const endIndex = startIndex + $event.pageSize;
+    this.$doneEwsDisplay = this.$ownDoneEws.pipe(map(ews => ews.slice(startIndex, endIndex)));
   }
 
 

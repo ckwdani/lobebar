@@ -3,7 +3,7 @@
         <p class="text-center">Erledigt aufgaben:</p>
         <mat-progress-bar *ngIf="$ownDoneEwsLoading | async" mode="buffer" color="primary"></mat-progress-bar>
         <div *ngIf="($ownDoneEwsLoading | async) === false">
-            <mat-list matSort class="item p-0!" *ngFor="let elem of ($ownDoneEws | async)" role="list">
+            <mat-list matSort class="item p-0!" *ngFor="let elem of ($doneEwsDisplay | async)" role="list">
                 <mat-list-item role="listitem" class="fadeInElement">
                     <span matListItemTitle>{{elem.extraWorkType.name}}</span>
                     <span matListItemLine>{{elem.date |date: 'dd. MMMM yyyy \'gegen\' HH \' Uhr \'  ':'de-DE'}}</span>
