@@ -20,9 +20,10 @@ export class EditStringDialogComponent {
 
 
 
+
   fcname = new FormControl(this.data.name, this.data.validators??[Validators.required, Validators.minLength(3)])
 
-  constructor(private  shiftTypeService: ShiftTypeBackendService, private store: Store, @Inject(MAT_DIALOG_DATA) public data: {name: string, displayString?: string, validators?: [], errorcode?: number},  public dialogRef: MatDialogRef<EditStringDialogComponent>,) {
+  constructor(private  shiftTypeService: ShiftTypeBackendService, private store: Store, @Inject(MAT_DIALOG_DATA) public data: {name: string, displayString?: string, validators?: [], checkBoxState?:boolean, errorcode?: number},  public dialogRef: MatDialogRef<EditStringDialogComponent>,) {
     console.log(data)
   }
 
@@ -35,7 +36,11 @@ export class EditStringDialogComponent {
 
   onSubmit() {
     if (this.fcname.valid) {
-      this.dialogRef.close(this.data.name);
+      if(this.data.checkBoxState !== undefined) {
+        this.dialogRef.close({name: this.fcname.value, checkBoxState: this.data.checkBoxState});
+      } else {
+        this.dialogRef.close(this.data.name);
+      }
     }
   }
 

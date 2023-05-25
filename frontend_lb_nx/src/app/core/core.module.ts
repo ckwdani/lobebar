@@ -21,6 +21,7 @@ import {MatDatepickerModule} from "@angular/material/datepicker";
 import {MatTooltipModule} from "@angular/material/tooltip";
 import { DropdownMenuDialogComponent } from './components/dialogs/dropdown-menu-dialog/dropdown-menu-dialog.component';
 import {MatSelectModule} from "@angular/material/select";
+import {MatCheckboxModule} from "@angular/material/checkbox";
 
 @NgModule({
   declarations: [
@@ -54,6 +55,7 @@ import {MatSelectModule} from "@angular/material/select";
         MatDatetimepickerModule,
         MatTooltipModule,
         MatSelectModule,
+        MatCheckboxModule,
 
     ],
   providers: [Router, Store],

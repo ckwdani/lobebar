@@ -57,6 +57,10 @@ export class ShiftTypesOverviewComponent {
     return <string>doneEw.value?.toString();
   }
 
+  showInBooking(doneEw: DoneExtraWorkTypes|SnackType): string {
+    return doneEw.showInBooking ? "Ja" : "Nein";
+  }
+
 
   openDialog(isShiftType: boolean = true, isEwType: boolean= false): void {
     const dialogRef = this.dialog.open(ShiftType_DoneEW_AddComponentDialog, {data: {isShiftType: isShiftType, isEwType: isEwType}});
@@ -67,11 +71,11 @@ export class ShiftTypesOverviewComponent {
   }
 
   editName(type: ShiftType | DoneExtraWorkTypes | SnackType, isShiftType: boolean = true, isEwtType: boolean=true, error?: number) {
-    const dialogRef = this.dialog.open(EditStringDialogComponent, {data: {name: type.name, errorcode: error}});
+    const dialogRef = this.dialog.open(EditStringDialogComponent, {data: {name: type.name, errorcode: error, checkBoxState: !(isEwtType || isShiftType)? (type as SnackType).showInBooking : undefined}});
 
     dialogRef.afterClosed().subscribe(result => {
         if (result) {
-          const interType = {...type, name: result};
+          let interType = {...type, name: result};
             // type.name = result;
             if (isShiftType) {
               this.store.dispatch(EditName({shiftType: interType}));
@@ -81,6 +85,7 @@ export class ShiftTypesOverviewComponent {
                 this.store.dispatch(EditName({ew_type: interType as DoneExtraWorkTypes}));
                 this.$addingError.pipe(map((loading,) => loading.adding)).subscribe({next: (value) => this.loadingEWT = value})
               }else{
+                interType = {...type, name: result.name, showInBooking: result.checkBoxState} ;
                 this.store.dispatch(EditName({snackType: interType as SnackType}))
                 this.$addingError.pipe(map((loading,) => loading.adding)).subscribe({next: (value) => this.loadingSnackTypes = value})
               }

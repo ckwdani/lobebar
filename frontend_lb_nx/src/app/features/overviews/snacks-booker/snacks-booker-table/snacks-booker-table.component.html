@@ -1,0 +1,51 @@
+<div class="tableFlexContainer test" [@sequentialFadeIn] >
+    <div class="tableFlexElement fadeInElement">
+        <div id="tableContainer">
+            <mat-progress-bar   class="w-full" [mode]="loading || updating ? 'buffer': 'determinate'" [value]="loading || updating ? undefined:  100"></mat-progress-bar>
+            <table *ngIf="!loading" mat-table  matSort frontendLbNxMatTableResponsiveDirective [dataSource]="elementsDatasource" class="mat-elevation-z8 demo-table">
+
+                <!--- Note that these columns can be defined in any order.
+                      The actual rendered columns are set as a property on the row definition" -->
+
+                <!-- Position Column -->
+                <ng-container matColumnDef="{{elementString}}" >
+                    <th mat-header-cell *matHeaderCellDef> Datum </th>
+                    <td mat-cell *matCellDef="let element"  > {{element.date}}  </td>
+                    <td mat-footer-cell *matFooterCellDef> Gesammt </td>
+                </ng-container>
+
+                <!--        all the aditional columns displayed -->
+                <ng-container *ngFor="let snackType of snackTypes; let i = index" matColumnDef="{{snackType.name}}">
+                    <th mat-header-cell *matHeaderCellDef> {{snackType.name}}</th>
+                    <td id mat-cell *matCellDef="let element" ><span [class.text-green-500]="getSnackTypeCount(snackType, element) !== 0">{{getSnackTypeCount(snackType, element)}}</span> </td>
+                    <td mat-footer-cell *matFooterCellDef> {{getUsedCount(snackType)}} </td>
+                </ng-container>
+
+
+                <!-- Symbol Column -->
+                <ng-container matColumnDef="{{actionsString}}">
+                    <th mat-header-cell *matHeaderCellDef> Aktionen </th>
+                    <td mat-cell *matCellDef="let element" >
+                        <button mat-flat-button color="accent" (click)="bookDate.emit({date: element.date, unbook: false})" *ngIf="!getBooked(element)">Erledigt<mat-icon>check</mat-icon></button>
+                        <button mat-flat-button color="warn"   (click)="bookDate.emit({date: element.date, unbook: true})" *ngIf="getBooked(element)">Doch nicht Erledigt<mat-icon>clear</mat-icon></button>
+
+                    </td>
+                    <td mat-footer-cell *matFooterCellDef>
+                        <button mat-flat-button color="primary" (click)="bookAll.emit()">Alles Erledigt<mat-icon>check_circle_outline</mat-icon></button>
+                    </td>
+                </ng-container>
+
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr [class]="getBooked(row) ? 'booked' : 'unBooked'" mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                <tr class="footer" mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+
+            </table>
+            <mat-paginator [pageSizeOptions]="[10, 20]"
+                           showFirstLastButtons
+                           aria-label="Select page of periodic elements">
+            </mat-paginator>
+        </div>
+    </div>
+
+</div>
+

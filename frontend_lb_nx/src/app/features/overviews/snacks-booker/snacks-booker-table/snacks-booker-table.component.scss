@@ -1,0 +1,94 @@
+@use 'sass:color';
+@import '/src/app/core/styles/lobebar-theme.scss';
+@import "@angular/material/theming";
+
+
+$dark-foreground-palette: map-get($lobebar-theme, background);
+$lighnedup: color.adjust(mat-color($dark-foreground-palette, background), $lightness: 20%);
+$lighnedupMore: color.adjust($lighnedup, $lightness: 5%);
+$width: 100%;
+#elementNameContainer{
+  width: 80%;
+}
+
+#elemSmall{
+  width: 30%;
+}
+
+
+.mat-column-datum {
+  width: 100px !important;
+  border-right: 1px solid currentColor;
+  padding-right: 24px;
+  text-align: center;
+}
+
+
+
+
+#elementActions{
+  display: flex;
+  justify-content: space-around;
+}
+
+body{
+  width: 100vw;
+  height: 100vw;
+}
+
+.demo-table {
+  width: $width;
+}
+
+.mat-column-actions{
+  text-align: center;
+}
+
+#tableContainer{
+  //width: 100%;
+  //overflow-x: auto;
+  max-width: 100%;
+  min-width: 40vw;
+
+}
+
+
+.tableFlexContainer{
+  display: flex;
+  padding-left: 10px;
+  margin-top: 30px;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.tableFlexElement{
+  min-width: 200px;
+  background-color: $lighnedup;
+  border-radius: 30px;
+  box-shadow: $lighnedupMore;
+  padding: 20px;
+  margin-bottom: 30px;
+}
+
+$unbookedColor: rgba(201, 170, 61, 0.23);
+.booked{
+  background-color: rgba(130, 227, 135, 0.16);
+}
+
+.unBooked{
+  background-color: $unbookedColor;
+}
+.booked:hover{
+  background-color: color.adjust(rgba(130, 227, 135, 0.16), $lightness: 20%) !important;
+}
+
+.unBooked:hover{
+  background-color: color.adjust($unbookedColor, $lightness: 20%) !important;
+}
+
+
+
+.footer {
+  border-top: 1px solid currentColor;
+  padding-top: 5px;
+  font-weight: bold;
+}

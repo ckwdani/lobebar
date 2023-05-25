@@ -17,7 +17,12 @@ export class SnacksBookerService extends BaseCommunicatorService<CountSnacks[]>{
   }
 
 
-  setBookedDay(date: Date): Observable<any>{
-    return this.post(BACKENDPATHS.setSnacksBookedDay + "/" + date.getFullYear() + "-" + (date.getMonth()) + "-" + date.getDate(), null);
+  setBookedDay(date: Date, unbook: boolean): Observable<any>{
+    return this.post(BACKENDPATHS.setSnacksBookedDay + "/" + date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + (date.getDate() + "/" + (unbook ? "1" : "0")), null);
+  }
+
+
+  setBookAll(): Observable<any>{
+    return this.post(BACKENDPATHS.setAllSnachsBooked, null);
   }
 }

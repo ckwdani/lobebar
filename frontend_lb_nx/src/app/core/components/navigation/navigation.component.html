@@ -2,7 +2,9 @@
   <mat-sidenav  #drawer class="sidenav" fixedInViewport
       [attr.role]="(isHandset$ | async) ? 'dialog' : 'navigation'"
       [mode]="(isHandset$ | async) ? 'over' : 'side'"
-      [opened]="(isHandset$ | async) === false">
+      [opened]="(isHandset$ | async) === false"
+                [disableClose]="(isHandset$ | async) ? false : true"
+  >
     <div class="flex flex-col justify-between h-full">
       <div>
         <mat-toolbar>Menu <img class="p-2 h-14 w-14" src="assets/emilsecke_logo.png" alt="Image"></mat-toolbar>
@@ -21,6 +23,8 @@
           <a mat-list-item routerLink="/event_overview">Veranstaltungen</a>
           <a mat-list-item routerLink="/calendar">Kalender</a>
           <a *ngIf="($roleUser|async) ===UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/shift_types">ShiftTypes</a>
+          <mat-divider></mat-divider>
+          <a mat-list-item routerLink="/book">Nachschub</a>
           <mat-divider></mat-divider>
           <a mat-list-item routerLink="/points">Punkte</a>
           <a mat-list-item (click)="logout()">Logout</a>

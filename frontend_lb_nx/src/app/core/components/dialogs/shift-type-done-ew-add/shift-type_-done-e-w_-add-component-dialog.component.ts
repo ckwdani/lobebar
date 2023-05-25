@@ -42,6 +42,7 @@ export class ShiftType_DoneEW_AddComponentDialog {
     id: "",
     name: "",
     value: 0,
+    showInBooking: false,
   }
 
 

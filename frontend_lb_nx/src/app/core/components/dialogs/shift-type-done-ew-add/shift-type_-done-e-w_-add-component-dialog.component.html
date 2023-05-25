@@ -1,7 +1,7 @@
 <div class="p-4">
     <p>{{typeHeading}}</p>
     <form>
-        <div class="flex justify-around {{isShiftType ? 'h-32' : 'h-48'}}   {{isShiftType ? 'min-h-[100px]' : 'min-h-[250px]'}} {{isShiftType ? 'max-h-[250px]' : 'max-h-[350px]'}} flex-col">
+        <div class="flex justify-around {{isShiftType ? 'h-32' : 'h-56'}}   {{isShiftType ? 'min-h-[100px]' : 'min-h-[300px]'}} {{isShiftType ? 'max-h-[250px]' : 'max-h-[400px]'}} flex-col">
             <mat-form-field appearance="outline" [class.mb-10]="!fcname.valid">
                 <mat-label>{{typeLabel}}</mat-label>
                 <input matInput [(ngModel)]="model.name" [formControl]="fcname">
@@ -14,8 +14,10 @@
                 <mat-error>Die minimalzahl ist 1</mat-error>
                 <!--            <div *ngIf="fcname.errors?.['minLength']">Der Name muss mindestens 3 Zeichen lang sein.</div>-->
             </mat-form-field>
+            <mat-checkbox [(ngModel)]="model.showInBooking" *ngIf="!(isShiftType || isEwType)" [ngModelOptions]="{standalone: true}">Bei Nachschub anzeigen</mat-checkbox>
+
         </div>
-        <div class="w-full flex justify-center">
+        <div class="w-full flex justify-center mt-8">
             <button [disabled]="!fcname.valid || (!value.valid && !isShiftType)" mat-flat-button color="primary"
                     (click)="sendShiftType()">
                 Hinzufügen

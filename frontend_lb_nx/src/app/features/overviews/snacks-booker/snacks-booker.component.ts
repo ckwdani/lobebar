@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { SnacksBookerStore } from './snacks-booker.store';
+import {Component} from '@angular/core';
+import {SnacksBookerStore} from './snacks-booker.store';
 import {Store} from "@ngrx/store";
 import {
   selectShiftTypesLoading,
@@ -7,7 +7,7 @@ import {
 } from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
 import {map} from "rxjs/operators";
 import {CountSnacks, SnackType} from "@frontend-lb-nx/shared/entities";
-import {selectLoggedIn, selectSnacksLoading} from "@frontend-lb-nx/shared/services";
+import {selectLoggedIn} from "@frontend-lb-nx/shared/services";
 import {tap} from "rxjs";
 
 @Component({
@@ -19,9 +19,11 @@ import {tap} from "rxjs";
 export class SnacksBookerComponent {
 
 
-  snackTypesDisplay =this.store.select(selectSnackTypes).pipe(map(snackTypes => this.generateSnackTypesDisplayArray(snackTypes)));
+  // snackTypesDisplay =this.store.select(selectSnackTypes).pipe(map(snackTypes => this.generateSnackTypesDisplayArray(snackTypes)));
+  snackTypesDisplayOrig =this.store.select(selectSnackTypes).pipe(map(snackTypes => snackTypes.filter(snackType => snackType.showInBooking)), tap(console.log));
   countSnacks$ = this.snacksBookerStore.countSnacks$;
   loading$ = this.snacksBookerStore.selectLoading$;
+  updating$ = this.snacksBookerStore.selectUpdating$;
   loadingSnackTypes$ = this.store.select(selectShiftTypesLoading)
   constructor(private snacksBookerStore: SnacksBookerStore, private store: Store) {
     this.store.select(selectLoggedIn).subscribe(loggedIn => {
@@ -46,14 +48,26 @@ export class SnacksBookerComponent {
             return firstOrDefault?.count.toString() ?? "";
           }
           else {
-            return "";
+            return "0";
           }
         }
       };
     });
   }
 
+
+  bookDate(countSnacks: { date: Date, unbook: boolean }){
+    countSnacks.date = new Date(countSnacks.date as unknown as string);
+      this.snacksBookerStore.bookDate(countSnacks);
+  }
+
+  bookAll(){
+    this.snacksBookerStore.setAllBooked();
+  }
+
   getDate(snackCount: CountSnacks){
     return snackCount.date as unknown as string;
   }
+
+  protected readonly selectSnackTypes = selectSnackTypes;
 }

@@ -2,6 +2,7 @@
 module.exports = {
   content: [
     "./src/**/*.{html,ts}",
+    "./src/**/**/*.{html,ts}",
     "./standalone/**/*.{html,ts}",
     "./shared/**/*.{html,ts}"
   ],

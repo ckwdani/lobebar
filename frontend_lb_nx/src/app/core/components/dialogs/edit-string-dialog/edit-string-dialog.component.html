@@ -7,11 +7,12 @@
         <input matInput [(ngModel)]="data.name" [formControl]="fcname" (keydown.enter)="onSubmit()">
         <mat-error *ngIf="!fcname.valid">{{displayString}} muss mindestens 3 Zeichen lang sein.</mat-error>
     </mat-form-field>
+    <mat-checkbox [(ngModel)]="data.checkBoxState" *ngIf="data.checkBoxState !== undefined" [ngModelOptions]="{standalone: true}">Bei Nachschub anzeigen</mat-checkbox>
 </div>
 <div *ngIf="data.errorcode !== undefined" class="text-red-600 w-full flex justify-center"><p>{{getErrorMessage(data.errorcode!)}}</p></div>
 <div mat-dialog-actions class="mat-dialog-flexed" >
     <button mat-button (click)="onNoClick()">Abbrechen</button>
-    <button mat-button [disabled]="!fcname.valid" [mat-dialog-close]="data.name">Ok <mat-icon>send</mat-icon></button>
+    <button mat-button [disabled]="!fcname.valid" (click)="onSubmit()">Ok <mat-icon>send</mat-icon></button>
 </div>
 
 

@@ -63,6 +63,7 @@ export class BACKENDPATHS{
     // snacks booker
     static readonly getCountSnacks = this.baseApiUrl + '/admin_api/snack/booked' //
     static readonly setSnacksBookedDay = this.baseApiUrl + '/admin_api/snack/book/day' // {date}
+    static readonly setAllSnachsBooked = this.baseApiUrl + '/admin_api/snack/book_all' //
 
 
     // external Links

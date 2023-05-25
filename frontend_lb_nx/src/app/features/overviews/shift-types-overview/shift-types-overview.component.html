@@ -12,7 +12,7 @@
                   *ngIf="($shiftTypesLoading |async) === false"  [data]="($ew_types | async)??[]" [convert]="nameFromShiftType" caption="Extra Arbeiten" #table2></app-simple-table>
 
 <app-simple-table [loading]="loadingSnackTypes" (add)="openDialog(false, false)"
-                  (delete)="deleteSnT($event)" [additionalColumns]="[{displayedString: 'value', getter: value}]"
+                  (delete)="deleteSnT($event)" [additionalColumns]="[{displayedString: 'value', getter: value}, {displayedString: 'Nachschub anzeige', getter: showInBooking}]"
                   (edit)="editName($event, false, false)"
                   *ngIf="($shiftTypesLoading |async) === false"  [data]="($snackTypes | async)??[]" [convert]="nameFromShiftType"  caption="Snackarten" #table3></app-simple-table>
 

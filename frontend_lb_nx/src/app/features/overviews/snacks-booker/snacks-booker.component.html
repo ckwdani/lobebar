@@ -1,3 +1,7 @@
 
-<app-simple-table caption="Datum" [convert]="getDate" *ngIf="(loading$ | async) === false && (loadingSnackTypes$ | async) === false" [showAddEditDelete]="false"  [additionalColumns]="(snackTypesDisplay | async)!" [data]="(countSnacks$ | async)!"></app-simple-table>
-
+<!--<app-simple-table caption="Datum" [mainColSmaller]="true" [convert]="getDate" *ngIf="(loading$ | async) === false && (loadingSnackTypes$ | async) === false" [showAddEditDelete]="false"  [additionalColumns]="(snackTypesDisplay | async)!" [data]="(countSnacks$ | async)!"></app-simple-table>-->
+<frontend-lb-nx-snacks-booker-table
+        [updating]="(updating$ | async)!"
+        (bookAll)="bookAll()"
+        (bookDate)="bookDate($event)"
+        [snackTypes]="(snackTypesDisplayOrig | async)!" [data]="(countSnacks$ | async)!" [loading]="(loading$ | async)! || (loadingSnackTypes$ | async)! "></frontend-lb-nx-snacks-booker-table>
