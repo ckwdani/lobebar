@@ -35,6 +35,9 @@ export class SimpleTableComponent<E> implements OnInit, OnChanges, AfterViewInit
    */
   @Input() caption = '';
 
+
+  @Input() mainColSmaller = false;
+
   /**
    * the component defines the editelement event, it gives back an specific element when some button to edit was clicked
    */
@@ -96,6 +99,9 @@ export class SimpleTableComponent<E> implements OnInit, OnChanges, AfterViewInit
   ngOnChanges(changes: SimpleChanges): void{
     if (changes['data'] !== undefined) {
       this.setTableData(changes['data'].currentValue);
+    }
+    if(changes["additionalColumns"] !== undefined){
+      this.additionalColumns = changes["additionalColumns"].currentValue;
     }
   }
 

@@ -5,7 +5,7 @@
     </div>
     <div id="tableContainer">
       <mat-progress-bar *ngIf="loading" class="w-full" mode="buffer"></mat-progress-bar>
-      <table mat-table  matSort frontendLbNxMatTableResponsiveDirective [dataSource]="state.elementsDatasource" class="mat-elevation-z8 demo-table">
+      <table mat-table  matSort frontendLbNxMatTableResponsiveDirective [dataSource]="state.elementsDatasource" class="mat-elevation-z8 demo-table" [class.smaller]="mainColSmaller">
 
         <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
@@ -13,13 +13,13 @@
         <!-- Position Column -->
         <ng-container matColumnDef="{{elementString}}" >
           <th mat-header-cell *matHeaderCellDef> {{caption}}</th>
-          <td mat-cell *matCellDef="let element" id="elementNameContainer"> {{convert ? convert(element) : ''}} </td>
+          <td mat-cell *matCellDef="let element"  [id]="mainColSmaller ? 'elementNameContainer' : 'elemSmal'" > {{convert ? convert(element) : ''}} </td>
         </ng-container>
 
       <!--        all the aditional columns displayed -->
         <ng-container *ngFor="let column of additionalColumns; let i = index" matColumnDef="{{column.displayedString}}">
           <th mat-header-cell *matHeaderCellDef> {{column.displayedString}}</th>
-          <td mat-cell *matCellDef="let element" > {{column.getter ? column.getter(element) : ''}} </td>
+            <td id mat-cell *matCellDef="let element" > {{column.getter ? column.getter(element) : ''}} </td>
         </ng-container>
 
 

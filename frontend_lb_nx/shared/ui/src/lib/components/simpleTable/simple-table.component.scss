@@ -36,6 +36,21 @@ $lighnedupMore: color.adjust($lighnedup, $lightness: 5%);
   width: 80%;
 }
 
+#elemSmall{
+  width: 30%;
+}
+
+
+.smaller > .mat-column-element {
+    width: 100px !important;
+    border-right: 1px solid currentColor;
+    padding-right: 24px;
+    text-align: center;
+  }
+
+
+
+
 #elementActions{
   display: flex;
   justify-content: space-around;

@@ -45,7 +45,7 @@ import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { SnacksBookerComponent } from './overviews/snacks-booker/snacks-booker/snacks-booker.component';
+import { SnacksBookerComponent } from './overviews/snacks-booker/snacks-booker.component';
 import { SnacksBookerStore } from './overviews/snacks-booker/snacks-booker.store';
 
 // Register the German locale data
@@ -100,7 +100,7 @@ import { SnacksBookerStore } from './overviews/snacks-booker/snacks-booker.store
     EventsOverviewStore,
     UsersOverviewStore,
     SingleEventStore,
-    { provide: MAT_DATE_LOCALE, useValue: 'de-DE', providers: [SnacksBookerStore] },
+    { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
     //
     // // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing
     // // `MatMomentDateModule` in your applications root module. We provide it at the component level

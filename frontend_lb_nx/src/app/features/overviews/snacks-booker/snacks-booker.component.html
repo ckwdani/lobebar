@@ -1,2 +1,3 @@
 
-<app-simple-table [additionalColumns]="snackTypesDisplay | async" ></app-simple-table>
+<app-simple-table caption="Datum" [convert]="getDate" *ngIf="(loading$ | async) === false && (loadingSnackTypes$ | async) === false" [showAddEditDelete]="false"  [additionalColumns]="(snackTypesDisplay | async)!" [data]="(countSnacks$ | async)!"></app-simple-table>
+
