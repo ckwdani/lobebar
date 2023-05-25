@@ -1,13 +1,14 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
-import {Observable, of, switchMap, tap} from "rxjs";
+import {combineLatest, Observable, of, switchMap, tap} from "rxjs";
 import { User} from "@frontend-lb-nx/shared/entities";
 import {UserBackendService} from "../../../../../shared/services/src/lib/backend/entity-backend-services/user-backend.service";
-import {catchError} from "rxjs/operators";
-import {createAction, props, select, Store} from '@ngrx/store';
+import {catchError, map} from "rxjs/operators";
+import {createAction, createSelector, props, select, Store} from '@ngrx/store';
 import {changeShiftAssignmentSuccess, selectUser, updateUser} from "@frontend-lb-nx/shared/services";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
+import {getAnalyticsUserId} from "@angular/cli/src/analytics/analytics";
 
 export interface UsersOverviewState {
     users: User[];
@@ -175,8 +176,10 @@ export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
         )
     )
 
-    selectSelectedAchievementUser(userFind? :User){
-        return this.select((state)=> state.users.find(user=> user ===userFind)?.selectedAchievement);
+    selectSelectedAchievementUser$(userFind? :User){
+        return this.selectUsers$.pipe(
+            map(users => users.find(user=>user===userFind)?.selectedAchievement)
+        )
     };
 
 }
