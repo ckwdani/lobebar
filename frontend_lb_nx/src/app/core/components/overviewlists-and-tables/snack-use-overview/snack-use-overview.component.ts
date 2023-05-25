@@ -1,18 +1,11 @@
 import {AfterViewInit, Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
-import {
-  selectShiftTypesLoading,
-  selectSnackTypes
-} from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
-import {
-  SimpleTableComponent,
-} from "../../../../../shared/ui/src/lib/components/simpleTable/simple-table.component";
+
+
 import {Snack, SnackType, User} from "@frontend-lb-nx/shared/entities";
 import {Store} from "@ngrx/store";
 
 import {MatDialog} from "@angular/material/dialog";
-import {
-  NumberInputDialogComponent
-} from "../../../core/components/dialogs/number-input-dialog/number-input-dialog.component";
+
 import {
   loadOwnUsedSnacks,
   selectLoggedIn,
@@ -21,11 +14,17 @@ import {
   useSnack
 } from "@frontend-lb-nx/shared/services";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {async, combineLatest, filter, first, groupBy, mergeMap, Observable, of, toArray} from "rxjs";
+import { combineLatest, filter, first, groupBy, mergeMap, Observable, of, toArray} from "rxjs";
 import {map} from "rxjs/operators";
 import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
-import {AdminBookWorkSnacksComponent} from "../../admin-book-work-snacks/admin-book-work-snacks.component";
-import {SnacksUserStore} from "../../admin-book-work-snacks/admin-book-work-snacks-store.store";
+import {SimpleTableComponent} from "../../../../../../shared/ui/src/lib/components/simpleTable/simple-table.component";
+import {
+  selectShiftTypesLoading,
+  selectSnackTypes
+} from "../../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
+import {NumberInputDialogComponent} from "../../dialogs/number-input-dialog/number-input-dialog.component";
+import {SnacksUserStore} from "../../../../features/admin-book-work-snacks/admin-book-work-snacks-store.store";
+
 
 interface GroupedSnack {
   snackType: SnackType;
