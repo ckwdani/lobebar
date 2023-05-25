@@ -23,6 +23,10 @@ import * as fromOwnUser from './backend/states/own-user/own-user.reducer';
 import {OwnUserEffects} from "./backend/states/own-user/own-user.effects";
 import {SnackEffects} from "./backend/states/snack/snack.effects";
 import * as fromSnack from './backend/states/snack/snack.reducer'
+import * as fromEw from './backend/states/extraWork/ew.reducer'
+import {from} from "rxjs";
+import {ewFeatureKey} from "./backend/states/extraWork/ew.reducer";
+import {EwEffects} from "./backend/states/extraWork/ew.effects";
 
 
 
@@ -32,13 +36,14 @@ import * as fromSnack from './backend/states/snack/snack.reducer'
       CommonModule,
     HttpClientModule,
     StoreModule.forFeature(fromAuth.authFeatureKey, fromAuth.reducer),
-      EffectsModule.forFeature([AuthEffects, RegisterEffects, ShiftTypeEffects, OrgEventEffects, ShiftEffects, OwnUserEffects, SnackEffects]),
+      EffectsModule.forFeature([AuthEffects, RegisterEffects, ShiftTypeEffects, OrgEventEffects, ShiftEffects, OwnUserEffects, SnackEffects, EwEffects]),
       StoreModule.forFeature(fromRegister.registerFeatureKey, fromRegister.registerReducer),
       StoreModule.forFeature(fromShiftType.shiftTypeFeatureKey, fromShiftType.reducer),
     StoreModule.forFeature(fromOrgEvent.orgEventFeatureKey, fromOrgEvent.reducer),
       StoreModule.forFeature(fromShift.shiftFeatureKey, fromShift.reducer),
       StoreModule.forFeature(fromOwnUser.ownUserFeatureKey, fromOwnUser.reducer),
       StoreModule.forFeature(fromSnack.snackFeatureKey, fromSnack.reducer),
+      StoreModule.forFeature(fromEw.ewFeatureKey, fromEw.reducer),
   ],
   providers: [BaseCommunicatorService, AuthService, AuthEffects, DatePipe],
 })

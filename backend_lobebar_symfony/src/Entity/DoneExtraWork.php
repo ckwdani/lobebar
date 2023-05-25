@@ -2,18 +2,20 @@
 
 namespace App\Entity;
 
-use App\Repository\ExtraWorkTypesUserRepository;
+use App\Repository\DoneExtraWorkRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use JMS\Serializer\Annotation\PostDeserialize;
 
-#[ORM\Entity(repositoryClass: ExtraWorkTypesUserRepository::class)]
+const WITH_USER_GROUP_EW = "withUserEW";
+#[ORM\Entity(repositoryClass: DoneExtraWorkRepository::class)]
 class DoneExtraWork extends _Base_Entity
 {
 
 
     #[ORM\ManyToOne(cascade: ["remove"], inversedBy: 'doneExtrawork')]
     #[ORM\JoinColumn(nullable: false)]
+    #[Groups(groups: [WITH_USER_GROUP_EW])]
     private ?User $user = null;
 
     #[ORM\ManyToOne(inversedBy: 'usersDoneWork')]

@@ -40,7 +40,7 @@ import { SingleEventComponent } from './single-event/single-event.component';
 import { SingleEventStore } from './single-event/single-event.store';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { SnackUseOverviewComponent } from './overviews/snack-use-overview/snack-use-overview.component';
+import { SnackUseOverviewComponent } from '../core/components/overviewlists-and-tables/snack-use-overview/snack-use-overview.component';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -50,6 +50,7 @@ import { SnacksBookerStore } from './overviews/snacks-booker/snacks-booker.store
 import { SnacksBookerTableComponent } from './overviews/snacks-booker/snacks-booker-table/snacks-booker-table.component';
 import {SharedDirectivesModule} from "@frontend-lb-nx/shared/directives";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import {CoreModule} from "../core/core.module";
 
 // Register the German locale data
 
@@ -102,6 +103,7 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatProgressBarModule,
         SharedDirectivesModule,
         MatCheckboxModule,
+        CoreModule,
     ],
   providers: [
     EventsOverviewStore,

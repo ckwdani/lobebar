@@ -19,7 +19,7 @@ export class SnackService extends BaseCommunicatorService<Snack>{
   }
 
   public getUsedSnacks(unixstart?: number, unixend?: number, userId?: string){
-    return super.getList(BACKENDPATHS.getUsedSnacks+'/'+unixstart+'/'+unixend+'/'+userId).pipe(map(snacks=> snacks.map(snack=>this.mapSnack(snack))))
+    return super.getList(BACKENDPATHS.getUsedSnacks+'/'+unixstart+'/'+unixend+ (userId !== undefined ? ("/" + userId) : "")).pipe(map(snacks=> snacks.map(snack=>this.mapSnack(snack))))
   }
 
   public countUsedSnacks(unixstart?: number, unixend?: number, userId?: string){

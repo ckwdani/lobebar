@@ -1,0 +1,5 @@
+<h1 mat-dialog-title>{{data.displayString}} bestätigen</h1>
+<div mat-dialog-actions class="mat-dialog-flexed" >
+    <button mat-button (click)="onNoClick()">Abbrechen</button>
+    <button mat-button [mat-dialog-close]="true">Bestätigen <mat-icon>send</mat-icon></button>
+</div>

@@ -28,8 +28,8 @@ class AdminSnackEWController extends  _Base_Controller
     /**
      * @throws \Exception
      */
-    #[Route('/admin_api/snack/book/day/{date}', name: 'api_admin_snack_book_day', methods: ['POST'])]
-    public function bookSnackUsedDay(string $date)
+    #[Route('/admin_api/snack/book/day/{date}/{unbook}', name: 'api_admin_snack_book_day', methods: ['POST'])]
+    public function bookSnackUsedDay(string $date, bool $unbook = false)
     {
         $em = $this->doctrine->getManager();
 
@@ -45,6 +45,21 @@ class AdminSnackEWController extends  _Base_Controller
 
 
         $snackUsed = $em->getRepository(SnackUsed::class)->matching($criteria)->toArray();
+        foreach($snackUsed as $snack){
+            $snack->setBooked(!$unbook);
+            $em->persist($snack);
+        }
+        $em->flush();
+        return JsonResponse::fromJsonString($this->serializer->serialize($snackUsed, 'json'));
+    }
+
+
+    // set all snacks to booked
+    #[Route('/admin_api/snack/book_all', name: 'api_admin_snack_book_all', methods: ['POST'])]
+    public function bookAllSnackUsed()
+    {
+        $em = $this->doctrine->getManager();
+        $snackUsed = $em->getRepository(SnackUsed::class)->findAll();
         foreach($snackUsed as $snack){
             $snack->setBooked(true);
             $em->persist($snack);

@@ -43,3 +43,8 @@ export * from './lib/backend/states/own-user/own-user.selectors';
 export * from './lib/backend/states/snack/snack.actions';
 export * from './lib/backend/states/snack/snack.effects';
 export * from './lib/backend/states/snack/snack.selectors';
+
+//EW
+export * from './lib/backend/states/extraWork/ew.actions';
+export * from './lib/backend/states/extraWork/ew.effects';
+export * from './lib/backend/states/extraWork/ew.selectors';

@@ -35,15 +35,19 @@ class SnackController extends _Base_Controller
 
         $snackType = $this->doctrine->getManager()->getRepository(SnackTypes::class)->find(Uuid::fromString($snackTypeId));
         $this->doctrine->getManager()->remove($snackType);
+        $this->doctrine->getManager()->flush();
 
         return JsonResponse::fromJsonString($this->serializer->serialize($snackType, 'json'));
     }
 
     #[Route("/mod_api/snack/updateSnackTypeName/{snackTypeId}/{newName}", methods: ["PUT"])]
-    public function updateSnackTypeName(string $snackTypeId, string $newName){
+    public function updateSnackTypeName(Request $request, string $snackTypeId, string $newName){
         /** @var SnackTypes $snackType */
         $snackType = $this->doctrine->getManager()->getRepository(SnackTypes::class)->find(Uuid::fromString($snackTypeId));
         $snackType->setName($newName);
+        if(array_key_exists("showInBooking", json_decode($request->getContent(), true))){
+            $snackType->setShowInBooking(json_decode($request->getContent(), true)['showInBooking']);
+        }
         $this->doctrine->getManager()->flush();
         return JsonResponse::fromJsonString($this->serializer->serialize($snackType, 'json'));
     }

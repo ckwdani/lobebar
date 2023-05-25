@@ -16,7 +16,7 @@ export class SnackEffects {
       ofType(SnackActions.loadOwnUsedSnacks),
         switchMap(()=>
             //TODO: use real id
-        this.snackService.getUsedSnacks(dateToUnix(addMonthsToDate(new Date(), -12)), dateToUnix(new Date()), "3d66860a-76d5-4019-a258-967e64856aab").pipe(
+        this.snackService.getUsedSnacks(dateToUnix(addMonthsToDate(new Date(), -12)), dateToUnix(new Date())).pipe(
             map((snacks)=>{
                 return SnackActions.loadOwnUsedSnacksSuccesfully({ownUsedSnacks: snacks})
             }),

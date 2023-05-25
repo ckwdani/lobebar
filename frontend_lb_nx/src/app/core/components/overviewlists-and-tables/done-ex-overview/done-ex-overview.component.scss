@@ -1,6 +1,6 @@
 @use 'sass:color';
-@use '@material/data-table' as mdc-data-table-theme;
-@import '/src/app/core/styles/lobebar-theme.scss';
+@use '@material/data-table/index' as mdc-data-table-theme;
+@import '/src/app/core/styles/lobebar-theme';
 @import "@angular/material/theming";
 
 $dark-foreground-palette: map-get($lobebar-theme, background);
@@ -11,16 +11,16 @@ $lighnedupDark: color.adjust(mat-color($dark-foreground-palette, background), $l
 $lighnedup: color.adjust(mat-color($dark-foreground-palette, background), $lightness: 6%);
 $lighnedupMore: color.adjust($lighnedup, $lightness: 5%);
 .list{
-    font-size: 14px;
-    min-width: 200px;
-    background-color: $lighnedupDark;
-    border-radius: 30px;
-    box-shadow: $lighnedupMore;
-    padding: 20px;
-    margin-bottom: 20px;
+  font-size: 14px;
+  min-width: 200px;
+  background-color: $lighnedupDark;
+  border-radius: 30px;
+  box-shadow: $lighnedupMore;
+  padding: 20px;
+  margin-bottom: 20px;
 }
 
 .item{
-    background-color: $lighnedup;
-    font-size: 14px!important;
+  background-color: $lighnedup;
+  font-size: 14px!important;
 }

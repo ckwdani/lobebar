@@ -2,17 +2,17 @@ import {AfterViewInit, Component, Input, OnChanges, OnInit, ViewChild} from '@an
 import {
   selectShiftTypesLoading,
   selectSnackTypes
-} from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
+} from "../../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
 import {
   SimpleTableComponent,
-} from "../../../../../shared/ui/src/lib/components/simpleTable/simple-table.component";
-import {Snack, SnackType} from "@frontend-lb-nx/shared/entities";
+} from "../../../../../../shared/ui/src/lib/components/simpleTable/simple-table.component";
+import {Snack, SnackType, User} from "@frontend-lb-nx/shared/entities";
 import {Store} from "@ngrx/store";
 
 import {MatDialog} from "@angular/material/dialog";
 import {
   NumberInputDialogComponent
-} from "../../../core/components/dialogs/number-input-dialog/number-input-dialog.component";
+} from "../../dialogs/number-input-dialog/number-input-dialog.component";
 import {
   loadOwnUsedSnacks,
   selectLoggedIn,
@@ -42,6 +42,7 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatPaginator, {static: true}) sort: MatPaginator | undefined;
   @ViewChild('table3') table3: SimpleTableComponent<SnackType> = new SimpleTableComponent<SnackType>();
+  @Input() user?: User;
 
   // $ownUsedSnacks = this.store.select(selectUsedSnacks).pipe(map(snacks => snacks??[]));
   $ownUsedSnacksGrouped = this.store.select(selectSnackState).pipe(filter(state => !state.isLoading),

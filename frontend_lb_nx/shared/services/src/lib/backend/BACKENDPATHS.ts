@@ -66,6 +66,11 @@ export class BACKENDPATHS{
     static readonly setAllSnachsBooked = this.baseApiUrl + '/admin_api/snack/book_all' //
 
 
+    // Done EW
+    static readonly getDoneEW = this.baseApiUrl + '/admin_api/doneEW' // /{start}/{end}/{userId}
+    static readonly getOwnDone = this.baseApiUrl + '/api/doneEW/own' // /{start}/{end}
+    static readonly doEw = this.baseApiUrl + '/api/ew_done/used' // /{start}/{end}
+
     // external Links
     static readonly datenSchutz = "https://emils-ecke.org/datenschutzerklaerung/"
 

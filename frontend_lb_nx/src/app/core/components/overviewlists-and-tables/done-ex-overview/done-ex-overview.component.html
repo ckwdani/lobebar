@@ -1,0 +1,28 @@
+<div class="flex flex-row justify-center items-center" >
+    <div class="list">
+        <p class="text-center">Erledigt aufgaben:</p>
+        <mat-progress-bar *ngIf="$ownDoneEwsLoading | async" mode="buffer" color="primary"></mat-progress-bar>
+        <div *ngIf="($ownDoneEwsLoading | async) === false">
+            <mat-list matSort class="item p-0!" *ngFor="let elem of ($ownDoneEws | async)" role="list">
+                <mat-list-item role="listitem" class="fadeInElement">
+                    <span matListItemTitle>{{elem.extraWorkType.name}}</span>
+                    <span matListItemLine>{{elem.date |date: 'dd. MMMM yyyy \'gegen\' HH \' Uhr \'  ':'de-DE'}}</span>
+                </mat-list-item>
+            </mat-list>
+        </div>
+        <mat-paginator *ngIf="($ownDoneEwsLoading | async) === false" #paginator [pageSizeOptions]="[5, 10, 20]"
+                       [length]="($ownDoneEws | async)?.length??0"
+                       [pageSize]="5"
+                       showFirstLastButtons
+                       (page)="onPageChange($event)"
+                       aria-label="Select page of periodic elements">
+        </mat-paginator>
+    </div>
+
+    <app-simple-table [loading]="($ewTypesLoading | async)??false" @inOutAnimation
+                      [showAddEditDelete]="false"
+                      (use)="openDialog($event)"
+                      [additionalColumns]="[{displayedString: 'value', getter: value}]"
+                      [data]="($ewTypes | async)??[]" [convert]="nameFromEwType"  caption="ExtraAufgaben" #tableSnack></app-simple-table>
+
+</div>

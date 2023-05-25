@@ -3,8 +3,11 @@
 namespace App\Repository;
 
 use App\Entity\DoneExtraWork;
+use App\Entity\SnackUsed;
+use DateTime;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
+use Symfony\Component\Uid\Uuid;
 
 /**
  * @extends ServiceEntityRepository<DoneExtraWork>
@@ -14,7 +17,7 @@ use Doctrine\Persistence\ManagerRegistry;
  * @method DoneExtraWork[]    findAll()
  * @method DoneExtraWork[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class ExtraWorkTypesUserRepository extends ServiceEntityRepository
+class DoneExtraWorkRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
@@ -37,6 +40,34 @@ class ExtraWorkTypesUserRepository extends ServiceEntityRepository
         if ($flush) {
             $this->getEntityManager()->flush();
         }
+    }
+
+    /**
+     * @return DoneExtraWork[] Returns an array of SnackUsed objects
+     */
+    public function findInTimeOrFull(?int $start=null, ?int $end=null, ?Uuid $userId = null): array
+    {
+        $start += 7200;
+        $end += 7200;
+        $qb = $this->createQueryBuilder('e');
+        if(!empty($userId)){
+            $qb->andWhere($qb->expr()->eq("e.user", ":userId"))
+                ->setParameter("userId", $userId->toBinary());
+        }
+        if(!empty($start) && !empty($end)) {
+            $startDateTime = DateTime::createFromFormat('U', $start);
+            $endDateTime = DateTime::createFromFormat('U', $end);
+            $qb
+                ->andWhere('e.date >= :start')
+                ->andWhere('e.date <= :end')
+                ->setParameter('start', $startDateTime)
+                ->setParameter('end', $endDateTime)
+                ->orderBy('e.date', 'DESC');
+            return $qb->getQuery()->getResult();
+        }else{
+            return $qb->getQuery()->getResult();
+        }
+
     }
 
 //    /**

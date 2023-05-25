@@ -22,6 +22,12 @@ import {MatTooltipModule} from "@angular/material/tooltip";
 import { DropdownMenuDialogComponent } from './components/dialogs/dropdown-menu-dialog/dropdown-menu-dialog.component';
 import {MatSelectModule} from "@angular/material/select";
 import {MatCheckboxModule} from "@angular/material/checkbox";
+import { DoneExOverviewComponent } from './components/overviewlists-and-tables/done-ex-overview/done-ex-overview.component';
+import {MatPaginatorModule} from "@angular/material/paginator";
+import {MatProgressBarModule} from "@angular/material/progress-bar";
+import {MatSortModule} from "@angular/material/sort";
+import {SharedUiModule} from "@frontend-lb-nx/shared/ui";
+import { ConfirmDialogComponent } from './components/dialogs/confirm-dialog/confirm-dialog.component';
 
 @NgModule({
   declarations: [
@@ -31,12 +37,15 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
     NumberInputDialogComponent,
     EditDateTimeDialogComponent,
     DropdownMenuDialogComponent,
+    DoneExOverviewComponent,
+    ConfirmDialogComponent,
   ],
-  exports: [
-    NavigationComponent,
-    EditStringDialogComponent,
-    ImportantDeleteDialogComponent,
-  ],
+    exports: [
+        NavigationComponent,
+        EditStringDialogComponent,
+        ImportantDeleteDialogComponent,
+        DoneExOverviewComponent,
+    ],
     imports: [
         BrowserAnimationsModule,
         MatInputModule,
@@ -56,6 +65,10 @@ import {MatCheckboxModule} from "@angular/material/checkbox";
         MatTooltipModule,
         MatSelectModule,
         MatCheckboxModule,
+        MatPaginatorModule,
+        MatProgressBarModule,
+        MatSortModule,
+        SharedUiModule,
 
     ],
   providers: [Router, Store],
