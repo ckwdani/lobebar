@@ -16,7 +16,7 @@ export class UserBadgeComponent{
   $selectAchievementSomeUser = this.usersStore.selectSelectedAchievementUser$(this.user)
 
   constructor(private store: Store, private usersStore: UsersOverviewStore) {
-    this.usersStore.loadUsers();
+    //this.usersStore.loadUsers();
     console.log(this.user)
     console.log(this.$selectAchievementSomeUser)
   }

@@ -1,0 +1,23 @@
+<div *ngIf="($users|async)"  class="w-full h-full"  >
+    <div class="text-center">
+        <mat-form-field>
+            <input (input)="onKey($event)" (keydown.enter)=" clickIfOneUser()" matInput>
+        </mat-form-field>
+        <div *ngIf="$clickedUser|async">ausgewählter User: {{($clickedUser|async)?.username}}</div>
+    </div>
+    <div class="flex flex-col text-center" >
+        <mat-list *ngFor="let user of $filteredUsers|async" role="list"  >
+            <div class="flex flex-row">
+                <mat-list-item role="listitem" class="clickable-element"(click)="clickUser(user)">
+                    <div matListItemTitle>{{user.username}}</div>
+                    <div matListItemLine class="flex flex-row">{{getStringAttributes(user)}}</div>
+                </mat-list-item>
+            </div>
+        </mat-list>
+    </div>
+    <div  *ngIf="$clickedUser|async">
+        <frontend-lb-nx-snack-use-overview [user]="$clickedUser"></frontend-lb-nx-snack-use-overview>
+    </div>
+
+</div>
+

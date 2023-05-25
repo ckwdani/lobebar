@@ -40,7 +40,7 @@ import { SingleEventComponent } from './single-event/single-event.component';
 import { SingleEventStore } from './single-event/single-event.store';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatTooltipModule } from '@angular/material/tooltip';
-import { SnackUseOverviewComponent } from '../core/components/overviewlists-and-tables/snack-use-overview/snack-use-overview.component';
+import { SnackUseOverviewComponent } from './overviews/snack-use-overview/snack-use-overview.component';
 import { MatListModule } from '@angular/material/list';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatSortModule } from '@angular/material/sort';
@@ -70,8 +70,7 @@ import {CoreModule} from "../core/core.module";
     SingleEventComponent,
     SnackUseOverviewComponent,
     SnacksBookerComponent,
-    SnacksBookerTableComponent,
-    SnacksBookerTableComponent,
+    AdminBookWorkSnacksComponent,
   ],
   exports: [DashboardComponent, OwnUserOverviewComponent],
     imports: [
@@ -109,6 +108,7 @@ import {CoreModule} from "../core/core.module";
     EventsOverviewStore,
     UsersOverviewStore,
     SingleEventStore,
+      SnacksUserStore,
     { provide: MAT_DATE_LOCALE, useValue: 'de-DE' },
     //
     // // `MomentDateAdapter` and `MAT_MOMENT_DATE_FORMATS` can be automatically provided by importing

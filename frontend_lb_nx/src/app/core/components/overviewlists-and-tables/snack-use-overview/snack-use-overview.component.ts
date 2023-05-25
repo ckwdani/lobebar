@@ -2,17 +2,17 @@ import {AfterViewInit, Component, Input, OnChanges, OnInit, ViewChild} from '@an
 import {
   selectShiftTypesLoading,
   selectSnackTypes
-} from "../../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
+} from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
 import {
   SimpleTableComponent,
-} from "../../../../../../shared/ui/src/lib/components/simpleTable/simple-table.component";
+} from "../../../../../shared/ui/src/lib/components/simpleTable/simple-table.component";
 import {Snack, SnackType, User} from "@frontend-lb-nx/shared/entities";
 import {Store} from "@ngrx/store";
 
 import {MatDialog} from "@angular/material/dialog";
 import {
   NumberInputDialogComponent
-} from "../../dialogs/number-input-dialog/number-input-dialog.component";
+} from "../../../core/components/dialogs/number-input-dialog/number-input-dialog.component";
 import {
   loadOwnUsedSnacks,
   selectLoggedIn,
@@ -21,9 +21,11 @@ import {
   useSnack
 } from "@frontend-lb-nx/shared/services";
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
-import {combineLatest, filter, first, groupBy, mergeMap, Observable, of, toArray} from "rxjs";
+import {async, combineLatest, filter, first, groupBy, mergeMap, Observable, of, toArray} from "rxjs";
 import {map} from "rxjs/operators";
 import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
+import {AdminBookWorkSnacksComponent} from "../../admin-book-work-snacks/admin-book-work-snacks.component";
+import {SnacksUserStore} from "../../admin-book-work-snacks/admin-book-work-snacks-store.store";
 
 interface GroupedSnack {
   snackType: SnackType;
@@ -42,13 +44,15 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatPaginator, {static: true}) sort: MatPaginator | undefined;
   @ViewChild('table3') table3: SimpleTableComponent<SnackType> = new SimpleTableComponent<SnackType>();
-  @Input() user?: User;
-
+  @Input() user? : Observable<User>
   // $ownUsedSnacks = this.store.select(selectUsedSnacks).pipe(map(snacks => snacks??[]));
-  $ownUsedSnacksGrouped = this.store.select(selectSnackState).pipe(filter(state => !state.isLoading),
-      map(snacks => this.groupSnacks(snacks.usedSnacks??[])));
+  $ownUsedSnacksGrouped =
+       this.store.select(selectSnackState).pipe
+  (filter(state => !state.isLoading), map(snacks => this.groupSnacks(snacks.usedSnacks??[])));
+  //this.snackUserStore.state$.pipe(filter(state => !state.loading), map(state => this.groupSnacks(state.snacks??[])));
 
   $ownUsedSnacksLoading = this.store.select(selectSnackState).pipe(map(state => state.isLoading));
+  //this.snackUserStore.loading$;
 
   $ownUsedSnacks = this.$ownUsedSnacksGrouped;
   displayData = this.$ownUsedSnacksGrouped;
@@ -84,11 +88,16 @@ export class SnackUseOverviewComponent implements OnInit, AfterViewInit{
 
 
 
-  constructor(private store: Store, public dialog: MatDialog) {
+  constructor(private store: Store, private snackUserStore: SnacksUserStore ,public dialog: MatDialog) {
     combineLatest([this.$userLoaded, this.$isLoggedIn]).subscribe(([userLoaded, isLoggedIn]) => {
+      const x = this.user
+        if(this.user){
+          this.user.subscribe(next=> this.snackUserStore.loadUsedUserSnacks({user: next}))
+      }else
       if (userLoaded && isLoggedIn) {
         this.store.dispatch(loadOwnUsedSnacks())
       }
+
     });
     // this.store.dispatch(loadOwnUsedSnacks())
   }

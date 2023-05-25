@@ -32,9 +32,9 @@
 <!--        <td mat-cell *matCellDef="let element"> {{element.users !== undefined ? mapToName(element.users): "empty atm"}} </td>-->
         <td mat-cell *matCellDef="let element">
             <div *ngFor="let userElem of element.users">
-                <div *ngIf="userElem!==undefined">
+                <div *ngIf="userElem">
                     <frontend-lb-nx-user-badge class="flex justify-center"
-                                               [user]="userElem!"></frontend-lb-nx-user-badge>
+                                               [user]="userElem"></frontend-lb-nx-user-badge>
                 </div>
 
         </div>

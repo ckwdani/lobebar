@@ -15,6 +15,7 @@ import {AuthGuard} from "./core/utils/role-guard.guard";
 import {Store} from "@ngrx/store";
 import {inject} from "@angular/core";
 import {SnacksBookerComponent} from "./features/overviews/snacks-booker/snacks-booker.component";
+import {AdminBookWorkSnacksComponent} from "./features/admin-book-work-snacks/admin-book-work-snacks.component";
 
 export const appRoutes: Route[] = [
     {path: '', redirectTo: 'dashboard', pathMatch: 'full'},
@@ -30,6 +31,7 @@ export const appRoutes: Route[] = [
     {path: 'book', component: SnacksBookerComponent, canActivate: [AuthGuard]},
     // {path: 'shift_add', component: ShiftType_DoneEW_AddComponentDialog, canActivate: [AuthGuard]},
     {path: 'shift_types', component: ShiftTypesOverviewComponent, canActivate: [AuthGuard]},
+    {path: 'book_snacks_work', component: AdminBookWorkSnacksComponent},
     // reoute to singleEventComponent with id
     {path: 'singleevent/:id', component: SingleEventComponent},
 ];

@@ -23,6 +23,7 @@
           <a mat-list-item routerLink="/event_overview">Veranstaltungen</a>
           <a mat-list-item routerLink="/calendar">Kalender</a>
           <a *ngIf="($roleUser|async) ===UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/shift_types">ShiftTypes</a>
+          <a *ngIf="($roleUser|async) ===UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/book_snacks_work">Snacks/Arbeit buchen</a>
           <mat-divider></mat-divider>
           <a mat-list-item routerLink="/book">Nachschub</a>
           <mat-divider></mat-divider>
