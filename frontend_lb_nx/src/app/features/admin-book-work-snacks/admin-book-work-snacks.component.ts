@@ -68,12 +68,26 @@ export class AdminBookWorkSnacksComponent {
 
 
   clickUser(user: User) {
-    this.$clickedUser=of(user)
+    if(this.$clickedUser!=undefined){
+      this.$clickedUser=undefined
+      setTimeout(() => {
+        this.$clickedUser=of(user);
+      }, 500);
+    }else{
+      this.$clickedUser=of(user)
+    }
   }
 
   clickIfOneUser() {
     if(this.$filteredUsers.pipe(map($users => $users.length==1))){
-      this.$clickedUser = this.$filteredUsers.pipe(map($users=>$users[0]))
+      if(this.$clickedUser!=undefined){
+        this.$clickedUser=undefined
+        setTimeout(() => {
+          this.$clickedUser=this.$filteredUsers.pipe(map($users=>$users[0]))
+        }, 500);
+      }else{
+        this.$clickedUser=this.$filteredUsers.pipe(map($users=>$users[0]))
+      }
     }
   }
 

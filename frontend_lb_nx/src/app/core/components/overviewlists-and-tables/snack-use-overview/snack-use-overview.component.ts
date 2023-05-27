@@ -1,4 +1,10 @@
-import {AfterViewInit, Component, Input, OnChanges, OnInit, ViewChild} from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  Input,
+  OnInit,
+  ViewChild
+} from '@angular/core';
 
 
 import {Snack, SnackType, User} from "@frontend-lb-nx/shared/entities";
@@ -70,6 +76,7 @@ export class SnackUseOverviewComponent implements AfterViewInit, OnInit{
 
     // this.store.dispatch(loadOwnUsedSnacks())
   }
+
   value(snackType: SnackType): string  {
     return <string>snackType.value?.toString();
   }
