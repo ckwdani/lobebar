@@ -47,7 +47,7 @@ export class AchievementStreak implements Achievement{
     constructor(selected: boolean,b: boolean, s?: string) {
         this.achieved = b
         if(s!=undefined){
-            this.description= "Du hast in "+ s +" hintereinander folgenden Monaten, Schichten übernommen."
+            this.description= "In "+s +" hintereinander folgenden Monaten, Schichten übernommen."
         }else{
             this.description= "Absolviere eine Schicht pro Monat um eine Streak aufzubauen."
         }
@@ -67,7 +67,7 @@ export class AchievementSchichtenAnzahl implements Achievement{
     constructor(selected:boolean ,b: boolean, s?: string) {
         this.achieved = b
         if(s!=undefined){
-            this.description= "Du hast "+ s +" Schichten übernommen."
+            this.description= s +" Schichten übernommen."
         }else{
             this.description= "Absolviere deine erste Schicht um dieses Achievement zu erhalten."
         }

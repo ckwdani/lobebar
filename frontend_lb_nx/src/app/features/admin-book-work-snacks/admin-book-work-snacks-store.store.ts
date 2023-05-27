@@ -1,4 +1,4 @@
-import {OrgEvent, Shift, ShiftType, Snack, User} from "@frontend-lb-nx/shared/entities";
+import {OrgEvent, Shift, ShiftType, Snack, SnackType, User} from "@frontend-lb-nx/shared/entities";
 import {Injectable} from "@angular/core";
 import {ComponentStore} from "@ngrx/component-store";
 import {Store} from "@ngrx/store";
@@ -6,7 +6,7 @@ import {SnackService} from "../../../../shared/services/src/lib/backend/entity-b
 import {HttpErrorResponse} from "@angular/common/http";
 import {filter, Observable, switchMap, tap} from "rxjs";
 import {addMonthsToDate, dateToUnix} from "../../core/utils/date-functions";
-import {selectSnackState} from "@frontend-lb-nx/shared/services";
+import {selectSnacksLoading, selectSnackState, useSnack} from "@frontend-lb-nx/shared/services";
 import {map} from "rxjs/operators";
 
 
@@ -28,13 +28,14 @@ export class SnacksUserStore extends ComponentStore<SnacksUserStoreState>{
     }
 
     readonly user$ = this.select(state => state.user);
-    readonly loading$ = this.select(state => state.loading);
+    readonly loading$ =  this.select(state => state.isOwn ? this.store.select(selectSnackState).pipe(map(state => state.isLoading)): state.loading);
     readonly snacks$ = this.select(state => state.snacks);
 
     $ownUsedSnacks = this.store.select(selectSnackState).pipe(filter(state => !state.isLoading), tap((state) => {
         this.$updateOwnUsedSnacks(state.usedSnacks);
     }));
 
+    //selectLoading
 
     // update snacks for own user
     readonly $updateOwnUsedSnacks = this.updater((state, ownUsedSnacks: Snack[]) => {
@@ -51,7 +52,6 @@ export class SnacksUserStore extends ComponentStore<SnacksUserStoreState>{
             snacks
         };
     });
-
 
     readonly setLoading = this.updater((state, loading: boolean) => { return {...state, loading: loading}; });
 
@@ -82,4 +82,28 @@ export class SnacksUserStore extends ComponentStore<SnacksUserStoreState>{
         )
     )
     )
+
+    readonly useSnack = this.effect((snackType$: Observable<{snackType: SnackType, amount: number, userId: string}>)=>{
+        return snackType$.pipe(
+            switchMap(({
+                           snackType,
+                           amount,
+                           userId
+                       }) => this.snacksService.snackUsed(snackType.id ?? '', amount, userId).pipe(
+                    tap(
+                        {
+                            next: (snack) => {
+                                return this.patchState((state) => ({
+                                    ...state, loading: false
+                                }));
+                            },
+                            error: (err)=>{
+                                this.$updateError(err)
+                            }
+                        }
+                    )
+                )
+            )
+        );
+    })
 }

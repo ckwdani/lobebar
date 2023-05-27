@@ -51,7 +51,6 @@ export class SnackUseOverviewComponent implements AfterViewInit, OnInit{
 
   $ownUsedSnacksGroupedDisplay = this.$ownUsedSnacksGrouped;
 
-
   $ownUsedSnacksLoading = this.store.select(selectSnackState).pipe(map(state => state.isLoading));
   //this.snackUserStore.loading$;
 
@@ -83,10 +82,15 @@ export class SnackUseOverviewComponent implements AfterViewInit, OnInit{
     const dialogRef = this.dialog.open(NumberInputDialogComponent, {data: {displayString: snackType.name}});
     dialogRef.afterClosed().subscribe(result => {
       if(result){
-        console.log(result)
-        this.store.select(selectOwnUser).pipe().subscribe(
-            next=> this.store.dispatch(useSnack({snackType, amount: result, userId: next?.id}))
-        )
+        if(this.user){
+          this.user.pipe().subscribe(
+              next => this.snackUserStore.useSnack({snackType, amount: result, userId: next.id??""})
+          )
+        }else{
+          this.store.select(selectOwnUser).pipe().subscribe(
+              next=> this.store.dispatch(useSnack({snackType, amount: result, userId: next?.id}))
+          )
+        }
       }
       console.log('The dialog was closed');
     });

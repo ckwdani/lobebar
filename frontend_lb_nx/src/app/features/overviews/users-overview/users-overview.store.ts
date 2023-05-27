@@ -176,12 +176,6 @@ export class UsersOverviewStore extends ComponentStore<UsersOverviewState> {
         )
     )
 
-    selectSelectedAchievementUser$(userFind? :User){
-        return this.selectUsers$.pipe(
-            map(users => users.find(user=>user===userFind)?.selectedAchievement)
-        )
-    };
-
 }
 
 //tap((user) => {

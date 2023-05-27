@@ -28,7 +28,7 @@ export class AdminBookWorkSnacksComponent {
 
 
   $isLoggedIn = this.store.select(selectLoggedIn).pipe();
-  $clickedUser: Observable<User>|undefined
+  $clickedUser?: Observable<User>
 
   constructor(private store: Store, private usersStore: UsersOverviewStore) {
     this.$isLoggedIn.subscribe(isLoggedIn => {

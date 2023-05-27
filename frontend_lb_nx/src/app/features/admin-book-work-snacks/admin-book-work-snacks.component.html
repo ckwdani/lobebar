@@ -16,7 +16,7 @@
         </mat-list>
     </div>
     <div  *ngIf="$clickedUser|async">
-        <frontend-lb-nx-snack-use-overview [user]="$clickedUser"></frontend-lb-nx-snack-use-overview>
+        <frontend-lb-nx-snack-use-overview [user]="$clickedUser!"></frontend-lb-nx-snack-use-overview>
     </div>
 
 </div>

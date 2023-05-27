@@ -12,13 +12,9 @@ import {UsersOverviewStore} from "../../../../../../../src/app/features/overview
 })
 export class UserBadgeComponent{
   @Input() user?: User
-  $selAchievement = this.store.select(selectSelectedAchievment)
-  $selectAchievementSomeUser = this.usersStore.selectSelectedAchievementUser$(this.user)
+  //$selAchievement = this.store.select(selectSelectedAchievment)
 
   constructor(private store: Store, private usersStore: UsersOverviewStore) {
-    //this.usersStore.loadUsers();
-    console.log(this.user)
-    console.log(this.$selectAchievementSomeUser)
   }
 
   protected readonly of = of;

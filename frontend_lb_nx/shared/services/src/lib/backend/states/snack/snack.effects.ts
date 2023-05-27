@@ -6,6 +6,9 @@ import {Observable, EMPTY, of} from 'rxjs';
 import * as SnackActions from './snack.actions';
 import {SnackService} from "../../entity-backend-services/snack.service";
 import {addMonthsToDate, dateToUnix} from "../../../../../../../src/app/core/utils/date-functions";
+import {
+    SnacksUserStore
+} from "../../../../../../../src/app/features/admin-book-work-snacks/admin-book-work-snacks-store.store";
 
 @Injectable()
 export class SnackEffects {
@@ -32,12 +35,13 @@ export class SnackEffects {
         switchMap((action) =>
             this.snackService.snackUsed(action.snackType.id??"",action.amount??1, action.userId).pipe(
                 map((snackType)=>{
-                  return SnackActions.useSnackSuccesfully({snackType})
+                        return SnackActions.useSnackSuccesfully({snackType})
+
                 }),
                 catchError((error)=> of(SnackActions.useSnackFailure({error})))
             )
     ))
   })
 
-  constructor(private actions$: Actions, private snackService: SnackService) {}
+  constructor(private actions$: Actions, private snackService: SnackService, private snackUserStore: SnacksUserStore) {}
 }

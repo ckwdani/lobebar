@@ -1,5 +1,5 @@
 <span class="flex flex-row items-center">
     <p class="p-1">{{user?.username}} </p>
-    <frontend-lb-nx-single-achievement *ngIf="$selectAchievementSomeUser|async"  [widthAndHeight]="'w-8 h-8'"  [displayTitle]="false" [achievement]="genSelectedAchievement(($selectAchievementSomeUser|async)?.achievementCode,($selectAchievementSomeUser|async)?.extraString)!"></frontend-lb-nx-single-achievement>
+    <frontend-lb-nx-single-achievement [widthAndHeight]="'w-8 h-8'"  [displayTitle]="false" [achievement]="genSelectedAchievement(user?.selectedAchievement?.achievementCode,user?.selectedAchievement?.extraString)!"></frontend-lb-nx-single-achievement>
 </span>
 
