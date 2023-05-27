@@ -157,7 +157,14 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     //#[Serializer\Groups(groups: ["list", "details"])]
     public function getAchievements(): array
     {
-        $shiftsScore = $this->shifts->count();
+        $shiftsBefore = array_filter($this->shifts, function ($shift){
+            $begin = $shift->getStarttime();
+            $now = new \DateTime();
+
+            return $begin < $now;
+        });
+        $shiftsScore =$shiftsBefore->count();
+            //->count();
         $negativeBalance =$this->getNegativeBalance();
         //shifts count für zeitraum fetchen oder immer 1 pro monat shiftstreak
         $shiftStreak = $this->getShiftStreak();
@@ -412,7 +419,12 @@ public function removeResetCode(ResetCode $resetCode): self
     }
     public function getShiftStreak(): int
     {
-        $shifts = $this->shifts->toArray();
+        $shifts = array_filter($this->shifts, function ($shift){
+            $begin = $shift->getStarttime();
+            $now = new \DateTime();
+
+            return $begin < $now;
+        });
 
         // Sort shifts by date in ascending order
         usort($shifts, function ($a, $b) {
