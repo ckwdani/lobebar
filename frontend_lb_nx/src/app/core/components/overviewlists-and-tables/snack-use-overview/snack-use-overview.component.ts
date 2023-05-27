@@ -37,6 +37,7 @@ interface GroupedSnack {
   selector: 'frontend-lb-nx-snack-use-overview',
   templateUrl: './snack-use-overview.component.html',
   styleUrls: ['./snack-use-overview.component.scss'],
+  providers: [SnacksUserStore],
   animations: [InSiteAnimations.inOutAnimation, InSiteAnimations.sequentialFadeIn]
 })
 export class SnackUseOverviewComponent implements AfterViewInit, OnInit{
@@ -51,7 +52,8 @@ export class SnackUseOverviewComponent implements AfterViewInit, OnInit{
 
   $ownUsedSnacksGroupedDisplay = this.$ownUsedSnacksGrouped;
 
-  $ownUsedSnacksLoading = this.store.select(selectSnackState).pipe(map(state => state.isLoading));
+
+  $ownUsedSnacksLoading = this.snackUserStore.loading$;
   //this.snackUserStore.loading$;
 
   $ownUsedSnacks = this.$ownUsedSnacksGrouped;

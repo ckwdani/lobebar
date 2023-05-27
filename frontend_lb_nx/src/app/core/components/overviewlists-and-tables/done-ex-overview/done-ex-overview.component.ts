@@ -1,7 +1,7 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
 import {MatPaginator, PageEvent} from "@angular/material/paginator";
 import {SimpleTableComponent} from "../../../../../../shared/ui/src/lib/components/simpleTable/simple-table.component";
-import {DoneExtraWork, DoneExtraWorkTypes, Snack, SnackType} from "@frontend-lb-nx/shared/entities";
+import {DoneExtraWork, DoneExtraWorkTypes, Snack, SnackType, User} from "@frontend-lb-nx/shared/entities";
 import {
   doEW, loadOwnEW,
   loadOwnUsedSnacks, selectEwState,
@@ -42,6 +42,8 @@ export class DoneExOverviewComponent implements AfterViewInit, OnInit{
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatPaginator, {static: true}) sort: MatPaginator | undefined;
   @ViewChild('table3') table3: SimpleTableComponent<DoneExtraWorkTypes> = new SimpleTableComponent<DoneExtraWorkTypes>();
+
+  @Input() user?: User;
 
   $ownDoneEws = this.store.select(selectUsedEws).pipe(tap(console.log));
   $ownDonwEwsGrouped = this.store.select(selectEwState).pipe(filter(state => !state.isLoading));

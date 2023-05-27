@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
+use Doctrine\Common\Collections\Criteria;
 use Doctrine\DBAL\Types\Types;
 use JMS\Serializer\Annotation as Serializer;
 use JMS\Serializer\Annotation\Exclude;
@@ -157,7 +158,8 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     //#[Serializer\Groups(groups: ["list", "details"])]
     public function getAchievements(): array
     {
-        $shiftsBefore = array_filter($this->shifts, function ($shift){
+
+        $shiftsBefore = $this->shifts->filter(function ($shift){
             $begin = $shift->getStarttime();
             $now = new \DateTime();
 
@@ -179,12 +181,74 @@ class User extends _Base_Entity implements UserInterface, PasswordAuthenticatedU
     }
 
 
+
+
     #[Serializer\VirtualProperty(name: "xp")]
     //#[Serializer\Groups(groups: ["list", "details"])]
     public function getXPScore(): int
     {
         $positive = $this->getPositiveBalance();
         return $positive * 14;
+    }
+
+
+    private function hasShiftsInMonth(string $month, ArrayCollection $shifts): bool
+    {
+        $hasShifts = false;
+
+        foreach ($shifts as $shift) {
+            if ($shift->getStarttime()->format('Y-m') === $month) {
+                $hasShifts = true;
+                break;
+            }
+        }
+
+        return $hasShifts;
+    }
+    public function getShiftStreak(): int
+    {
+        $shifts = $this->shifts->filter( function ($shift){
+            $begin = $shift->getStarttime();
+            $now = new \DateTime();
+
+            return $begin < $now;
+        });
+
+//        // Sort shifts by date in ascending order
+//        usort($shifts, function ($a, $b) {
+//            return $a->getStarttime() <=> $b->getStarttime();
+//        });
+
+        // sorting criteria for doctrine collection
+        $criteria = Criteria::create()
+            ->orderBy(['starttime' => Criteria::ASC]);
+        $shifts->matching($criteria);
+
+        $currentMonth = null;
+        $previousMonth = null;
+        $streakCount = 0;
+
+        foreach ($shifts as $shift) {
+            $currentMonth = $shift->getStarttime()->format('Y-m');
+
+            // Check if the current shift belongs to a new month
+            if ($currentMonth !== $previousMonth) {
+                // Check if there was at least one shift in the previous month
+                if ($previousMonth !== null && !$this->hasShiftsInMonth($previousMonth, $shifts)) {
+                    break;
+                }
+                $streakCount++;
+            }
+
+            $previousMonth = $currentMonth;
+        }
+
+        // Check if there was at least one shift in the last month
+        if ($previousMonth !== null && !$this->hasShiftsInMonth($previousMonth, $shifts)) {
+            $streakCount--;
+        }
+
+        return ($streakCount > 0) ? $streakCount : 0;
     }
 
 
@@ -404,59 +468,7 @@ public function removeResetCode(ResetCode $resetCode): self
 }
 
 //---------------------------------------------------shift streak------------------------------------------------------------------
-    private function hasShiftsInMonth(string $month, array $shifts): bool
-    {
-        $hasShifts = false;
 
-        foreach ($shifts as $shift) {
-            if ($shift->getStarttime()->format('Y-m') === $month) {
-                $hasShifts = true;
-                break;
-            }
-        }
-
-        return $hasShifts;
-    }
-    public function getShiftStreak(): int
-    {
-        $shifts = array_filter($this->shifts, function ($shift){
-            $begin = $shift->getStarttime();
-            $now = new \DateTime();
-
-            return $begin < $now;
-        });
-
-        // Sort shifts by date in ascending order
-        usort($shifts, function ($a, $b) {
-            return $a->getStarttime() <=> $b->getStarttime();
-        });
-
-        $currentMonth = null;
-        $previousMonth = null;
-        $streakCount = 0;
-
-        foreach ($shifts as $shift) {
-            $currentMonth = $shift->getStarttime()->format('Y-m');
-
-            // Check if the current shift belongs to a new month
-            if ($currentMonth !== $previousMonth) {
-                // Check if there was at least one shift in the previous month
-                if ($previousMonth !== null && !$this->hasShiftsInMonth($previousMonth, $shifts)) {
-                    break;
-                }
-                $streakCount++;
-            }
-
-            $previousMonth = $currentMonth;
-        }
-
-        // Check if there was at least one shift in the last month
-        if ($previousMonth !== null && !$this->hasShiftsInMonth($previousMonth, $shifts)) {
-            $streakCount--;
-        }
-
-        return ($streakCount > 0) ? $streakCount : 0;
-    }
 
     public function getSelectedAchievement(): ?int
     {

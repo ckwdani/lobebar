@@ -1,4 +1,4 @@
-import {OrgEvent, Shift, ShiftType, Snack, SnackType, User} from "@frontend-lb-nx/shared/entities";
+import {OrgEvent, Shift, ShiftType, Snack, User} from "@frontend-lb-nx/shared/entities";
 import {Injectable} from "@angular/core";
 import {ComponentStore} from "@ngrx/component-store";
 import {Store} from "@ngrx/store";
@@ -6,7 +6,7 @@ import {SnackService} from "../../../../shared/services/src/lib/backend/entity-b
 import {HttpErrorResponse} from "@angular/common/http";
 import {filter, Observable, switchMap, tap} from "rxjs";
 import {addMonthsToDate, dateToUnix} from "../../core/utils/date-functions";
-import {selectSnacksLoading, selectSnackState, useSnack} from "@frontend-lb-nx/shared/services";
+import {selectSnackState} from "@frontend-lb-nx/shared/services";
 import {map} from "rxjs/operators";
 
 
@@ -18,7 +18,7 @@ export interface SnacksUserStoreState {
     error?: HttpErrorResponse
 }
 
-const initialState: SnacksUserStoreState = {snacks: [], loading: false, error: undefined, isOwn: true}
+const initialState: SnacksUserStoreState = {snacks: [], loading: true, error: undefined, isOwn: true}
 
 @Injectable()
 export class SnacksUserStore extends ComponentStore<SnacksUserStoreState>{
@@ -28,14 +28,26 @@ export class SnacksUserStore extends ComponentStore<SnacksUserStoreState>{
     }
 
     readonly user$ = this.select(state => state.user);
-    readonly loading$ =  this.select(state => state.isOwn ? this.store.select(selectSnackState).pipe(map(state => state.isLoading)): state.loading);
+    readonly loading$ = this.select(state => state.loading);
     readonly snacks$ = this.select(state => state.snacks);
 
-    $ownUsedSnacks = this.store.select(selectSnackState).pipe(filter(state => !state.isLoading), tap((state) => {
-        this.$updateOwnUsedSnacks(state.usedSnacks);
-    }));
 
-    //selectLoading
+    readonly $updateOwnLoading = this.updater((state, loading: boolean) => {
+        return {
+            ...state,
+            loading: state.isOwn ? loading : state.loading
+        };
+    });
+
+
+
+    private $ownUsedSnacks = this.store.select(selectSnackState).subscribe((state) => {
+        this.$updateOwnLoading(state.isLoading);
+        console.log("state.isLoading", state.isLoading)
+        if(!state.isLoading){
+            this.$updateOwnUsedSnacks(state.usedSnacks);
+        }
+    });
 
     // update snacks for own user
     readonly $updateOwnUsedSnacks = this.updater((state, ownUsedSnacks: Snack[]) => {
@@ -45,13 +57,19 @@ export class SnacksUserStore extends ComponentStore<SnacksUserStoreState>{
         };
     });
 
+
+
     // update snacks
     readonly $updateSnacks = this.updater((state, snacks: Snack[]) => {
         return {
             ...state,
+            loading: false,
             snacks
         };
     });
+
+
+
 
     readonly setLoading = this.updater((state, loading: boolean) => { return {...state, loading: loading}; });
 
@@ -64,22 +82,23 @@ export class SnacksUserStore extends ComponentStore<SnacksUserStoreState>{
 
     readonly loadUsedUserSnacks = this.effect((user$: Observable<{user: User}>)=>
         user$.pipe(
-            switchMap(({user})=>
-                this.snacksService.getUsedSnacks(dateToUnix(addMonthsToDate(new Date(), -12)), dateToUnix(new Date()), user.id).pipe(
-                    tap(
-                        {
-                            next: (snacks)=>{
-                                return this.patchState((state)=>({
-                                    snacks, loading: false
-                                }))
-                            },
-                            error: (err)=>{
-                                this.$updateError(err)
+            switchMap(({user})=> {
+                this.setLoading(true);
+                    return this.snacksService.getUsedSnacks(dateToUnix(addMonthsToDate(new Date(), -12)), dateToUnix(new Date()), user.id).pipe(
+                        tap(
+                            {
+                                next: (snacks) => {
+                                    console.log("snacks", snacks)
+                                    return this.$updateSnacks(snacks)
+                                },
+                                error: (err) => {
+                                    this.$updateError(err)
+                                }
                             }
-                        }
-                    )
-                )
-        )
+                        )
+                    );
+                }
+            )
     )
     )
 

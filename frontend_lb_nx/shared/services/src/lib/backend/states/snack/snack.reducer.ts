@@ -19,7 +19,7 @@ export const initialState: SnackState = {
 export const reducer = createReducer(
   initialState,
 
-  on(SnackActions.loadOwnUsedSnacks, (state) => state),
+  on(SnackActions.loadOwnUsedSnacks, (state) => ({...state, isLoading: true})),
     on(SnackActions.loadOwnUsedSnacksSuccesfully,(state, {ownUsedSnacks})=>{
         return{...state, usedSnacks: ownUsedSnacks, isLoading: false}
     }),
