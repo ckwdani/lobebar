@@ -4,18 +4,21 @@ import {ComponentStore} from "@ngrx/component-store";
 import {Store} from "@ngrx/store";
 import {SnackService} from "../../../../shared/services/src/lib/backend/entity-backend-services/snack.service";
 import {HttpErrorResponse} from "@angular/common/http";
-import {Observable, switchMap, tap} from "rxjs";
+import {filter, Observable, switchMap, tap} from "rxjs";
 import {addMonthsToDate, dateToUnix} from "../../core/utils/date-functions";
+import {selectSnackState} from "@frontend-lb-nx/shared/services";
+import {map} from "rxjs/operators";
 
 
 export interface SnacksUserStoreState {
     snacks: Snack[];
     user?: User;
     loading: boolean
+    isOwn: boolean
     error?: HttpErrorResponse
 }
 
-const initialState: SnacksUserStoreState = {snacks: [], loading: false, error: undefined}
+const initialState: SnacksUserStoreState = {snacks: [], loading: false, error: undefined, isOwn: true}
 
 @Injectable()
 export class SnacksUserStore extends ComponentStore<SnacksUserStoreState>{
@@ -27,6 +30,28 @@ export class SnacksUserStore extends ComponentStore<SnacksUserStoreState>{
     readonly user$ = this.select(state => state.user);
     readonly loading$ = this.select(state => state.loading);
     readonly snacks$ = this.select(state => state.snacks);
+
+    $ownUsedSnacks = this.store.select(selectSnackState).pipe(filter(state => !state.isLoading), tap((state) => {
+        this.$updateOwnUsedSnacks(state.usedSnacks);
+    }));
+
+
+    // update snacks for own user
+    readonly $updateOwnUsedSnacks = this.updater((state, ownUsedSnacks: Snack[]) => {
+        return {
+            ...state,
+            snacks: state.isOwn ? ownUsedSnacks : state.snacks
+        };
+    });
+
+    // update snacks
+    readonly $updateSnacks = this.updater((state, snacks: Snack[]) => {
+        return {
+            ...state,
+            snacks
+        };
+    });
+
 
     readonly setLoading = this.updater((state, loading: boolean) => { return {...state, loading: loading}; });
 

@@ -10,6 +10,7 @@ import {User} from "@frontend-lb-nx/shared/entities";
 import {map} from "rxjs/operators";
 import {MatSelect} from "@angular/material/select";
 import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
+import {selectLoggedIn} from "@frontend-lb-nx/shared/services";
 
 @Component({
   selector: 'frontend-lb-nx-admin-book-work-snacks',
@@ -25,10 +26,16 @@ export class AdminBookWorkSnacksComponent {
 
   $filteredUsers = this.$users
 
+
+  $isLoggedIn = this.store.select(selectLoggedIn).pipe();
   $clickedUser: Observable<User>|undefined
 
   constructor(private store: Store, private usersStore: UsersOverviewStore) {
-    this.usersStore.loadUsers()
+    this.$isLoggedIn.subscribe(isLoggedIn => {
+        if (isLoggedIn) {
+            this.usersStore.loadUsers()
+        }
+    })
   }
 
   onKey(event: Event) {

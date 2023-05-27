@@ -39,15 +39,14 @@ interface GroupedSnack {
   styleUrls: ['./snack-use-overview.component.scss'],
   animations: [InSiteAnimations.inOutAnimation, InSiteAnimations.sequentialFadeIn]
 })
-export class SnackUseOverviewComponent implements AfterViewInit{
+export class SnackUseOverviewComponent implements AfterViewInit, OnInit{
   @ViewChild(MatPaginator) paginator?: MatPaginator;
   @ViewChild(MatPaginator, {static: true}) sort: MatPaginator | undefined;
   @ViewChild('table3') table3: SimpleTableComponent<SnackType> = new SimpleTableComponent<SnackType>();
   @Input() user? : Observable<User>
   // $ownUsedSnacks = this.store.select(selectUsedSnacks).pipe(map(snacks => snacks??[]));
   $ownUsedSnacksGrouped =
-       this.store.select(selectSnackState).pipe
-  (filter(state => !state.isLoading), map(snacks => this.groupSnacks(snacks.usedSnacks??[])));
+       this.snackUserStore.snacks$.pipe(map(snacks => this.groupSnacks(snacks??[])));
   //this.snackUserStore.state$.pipe(filter(state => !state.loading), map(state => this.groupSnacks(state.snacks??[])));
 
   $ownUsedSnacksGroupedDisplay = this.$ownUsedSnacksGrouped;
@@ -64,6 +63,12 @@ export class SnackUseOverviewComponent implements AfterViewInit{
   loadingSnackTypes = false
   $snackTypesLoading = this.store.select(selectShiftTypesLoading).pipe();
 
+
+
+  constructor(private store: Store, private snackUserStore: SnacksUserStore ,public dialog: MatDialog) {
+
+    // this.store.dispatch(loadOwnUsedSnacks())
+  }
   value(snackType: SnackType): string  {
     return <string>snackType.value?.toString();
   }
@@ -89,18 +94,18 @@ export class SnackUseOverviewComponent implements AfterViewInit{
 
 
 
-  constructor(private store: Store, private snackUserStore: SnacksUserStore ,public dialog: MatDialog) {
+
+
+  ngOnInit(): void {
     combineLatest([this.$userLoaded, this.$isLoggedIn]).subscribe(([userLoaded, isLoggedIn]) => {
-      const x = this.user
-        if(this.user){
-          this.user.subscribe(next=> this.snackUserStore.loadUsedUserSnacks({user: next}))
+      if(this.user){
+        this.user.subscribe(next=> this.snackUserStore.loadUsedUserSnacks({user: next}))
       }else
       if (userLoaded && isLoggedIn) {
         this.store.dispatch(loadOwnUsedSnacks())
       }
 
     });
-    // this.store.dispatch(loadOwnUsedSnacks())
   }
 
   ngAfterViewInit(): void {
