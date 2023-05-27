@@ -47,8 +47,12 @@ export class DoneExOverviewComponent implements AfterViewInit, OnInit{
 
   @Input() user?: Observable<User>;
 
-  $ownDoneEws = this.doneEwOverviewStore.doneEw$;
-  $doneEwsDisplay = this.doneEwOverviewStore.doneEw$;
+  $ownDoneEws = this.doneEwOverviewStore.doneEw$.pipe(map(ews => {
+
+    const ewsCopy = [...ews];
+    return ewsCopy.sort((a, b) => (new Date(b.date)).getTime() - (new Date(a.date)).getTime());
+  }));
+  $doneEwsDisplay = this.$ownDoneEws;
 
   $ownDoneEwsLoading = this.doneEwOverviewStore.loading$;
 
