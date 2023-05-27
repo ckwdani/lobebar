@@ -109,11 +109,11 @@ class SnackController extends _Base_Controller
             if($this->isGranted("ROLE_MOD")){
                 $snacks = $snackUsedRepo->findInTimeOrFull($start, $end);
 
-                return JsonResponse::fromJsonString($this->serializer->serialize($snacks, "json", self::createSerializationContextWithGroups(["Default", WITH_USER_GROUP])));
+                return JsonResponse::fromJsonString($this->serializer->serialize($snacks, "json", self::createSerializationContextWithGroups(["Default"/*, WITH_USER_GROUP*/])));
             }else{
                 $snacks = $snackUsedRepo->findInTimeOrFull($start, $end, $userLoggedIn->getId());
 
-                return JsonResponse::fromJsonString($this->serializer->serialize($snacks, "json", self::createSerializationContextWithGroups(["Default", WITH_USER_GROUP])));
+                return JsonResponse::fromJsonString($this->serializer->serialize($snacks, "json", self::createSerializationContextWithGroups(["Default"/*, WITH_USER_GROUP*/])));
             }
         }
     }

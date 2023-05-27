@@ -39,6 +39,7 @@ import { StartEndDateInputComponent } from './components/start-end-date-input/st
 import { ShiftTableStore } from './components/shift-table/shift-table.store';
 import {ErrorBarData, ErrorSnackBarComponent} from './components/error-snack-bar/error-snack-bar.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
+import { LoadTilesComponent} from "./animations/components/load-tiles/load-tracks.component";
 
 @NgModule({
   imports: [
@@ -83,6 +84,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     UserBadgeComponent,
     StartEndDateInputComponent,
     ErrorSnackBarComponent,
+    LoadTilesComponent
   ],
   exports: [
       StartEndDateInputComponent,
@@ -99,7 +101,7 @@ import {MatSnackBarModule} from "@angular/material/snack-bar";
     AchievementsOverviewComponent,
     SingleAchievementComponent,
     UserBadgeComponent,
-    ErrorSnackBarComponent,
+    ErrorSnackBarComponent,LoadTilesComponent
   ],
   providers: [ShiftTableStore],
 })

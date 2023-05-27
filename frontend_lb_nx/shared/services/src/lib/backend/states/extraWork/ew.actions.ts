@@ -23,7 +23,7 @@ export const doEW = createAction(
 
 export const doEWSuccesfully = createAction(
     '[EW] Use Snack Successfully',
-    props<{ewType: DoneExtraWorkTypes}>()
+    props<{ewType: DoneExtraWork[]}>()
 );
 
 export const doEWFailure = createAction(

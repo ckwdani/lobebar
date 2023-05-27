@@ -46,11 +46,11 @@ class DoneExtraWorkController extends _Base_Controller
             if($this->isGranted("ROLE_MOD")){
                 $snacks = $doneEWREpo->findInTimeOrFull($start, $end);
 
-                return JsonResponse::fromJsonString($this->serializer->serialize($snacks, "json", self::createSerializationContextWithGroups(["Default", WITH_USER_GROUP_EW])));
+                return JsonResponse::fromJsonString($this->serializer->serialize($snacks, "json", self::createSerializationContextWithGroups(["Default"/*, WITH_USER_GROUP_EW*/])));
             }else{
                 $snacks = $doneEWREpo->findInTimeOrFull($start, $end, $userLoggedIn->getId());
 
-                return JsonResponse::fromJsonString($this->serializer->serialize($snacks, "json", self::createSerializationContextWithGroups(["Default", WITH_USER_GROUP_EW])));
+                return JsonResponse::fromJsonString($this->serializer->serialize($snacks, "json", self::createSerializationContextWithGroups(["Default"/*, WITH_USER_GROUP_EW*/])));
             }
         }
     }

@@ -23,7 +23,7 @@ import {
   selectSnackTypes
 } from "../../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
 import {NumberInputDialogComponent} from "../../dialogs/number-input-dialog/number-input-dialog.component";
-import {SnacksUserStore} from "../../../../features/admin-book-work-snacks/admin-book-work-snacks-store.store";
+import {SnacksUserStore} from "./admin-book-work-snacks-store.store";
 
 
 interface GroupedSnack {

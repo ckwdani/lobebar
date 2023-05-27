@@ -1,35 +1,45 @@
-import {OrgEvent, Shift, ShiftType, Snack, SnackType, User} from "@frontend-lb-nx/shared/entities";
+import {
+    DoneExtraWork,
+    DoneExtraWorkTypes,
+    OrgEvent,
+    Shift,
+    ShiftType,
+    Snack,
+    SnackType,
+    User
+} from "@frontend-lb-nx/shared/entities";
 import {Injectable} from "@angular/core";
 import {ComponentStore} from "@ngrx/component-store";
 import {Store} from "@ngrx/store";
-import {SnackService} from "../../../../shared/services/src/lib/backend/entity-backend-services/snack.service";
+import {SnackService} from "../../../../../../shared/services/src/lib/backend/entity-backend-services/snack.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {filter, Observable, switchMap, tap} from "rxjs";
-import {addMonthsToDate, dateToUnix} from "../../core/utils/date-functions";
-import {selectSnackState} from "@frontend-lb-nx/shared/services";
+import {addMonthsToDate, dateToUnix} from "../../../utils/date-functions";
+import {selectEwState, selectSnackState} from "@frontend-lb-nx/shared/services";
 import {map} from "rxjs/operators";
+import {EWService} from "../../../../../../shared/services/src/lib/backend/entity-backend-services/ew.service";
 
 
 export interface SnacksUserStoreState {
-    snacks: Snack[];
+    doneEw: DoneExtraWork[];
     user?: User;
     loading: boolean
     isOwn: boolean
     error?: HttpErrorResponse
 }
 
-const initialState: SnacksUserStoreState = {snacks: [], loading: true, error: undefined, isOwn: true}
+const initialState: SnacksUserStoreState = {doneEw: [], loading: true, error: undefined, isOwn: true}
 
 @Injectable()
-export class SnacksUserStore extends ComponentStore<SnacksUserStoreState>{
+export class DoneEwOverviewStore extends ComponentStore<SnacksUserStoreState>{
 
-    constructor(private store: Store, private snacksService: SnackService) {
+    constructor(private store: Store, private ewService: EWService) {
         super(initialState);
     }
 
     readonly user$ = this.select(state => state.user);
     readonly loading$ = this.select(state => state.loading);
-    readonly snacks$ = this.select(state => state.snacks);
+    readonly doneEw$ = this.select(state => state.doneEw);
 
 
     readonly $updateOwnLoading = this.updater((state, loading: boolean) => {
@@ -41,30 +51,29 @@ export class SnacksUserStore extends ComponentStore<SnacksUserStoreState>{
 
 
 
-    private $ownUsedSnacks = this.store.select(selectSnackState).subscribe((state) => {
+    private $ownDoneEw = this.store.select(selectEwState).subscribe((state) => {
         this.$updateOwnLoading(state.isLoading);
-        console.log("state.isLoading", state.isLoading)
         if(!state.isLoading){
-            this.$updateOwnUsedSnacks(state.usedSnacks);
+            this.$updateOwnEw(state.doneEW);
         }
     });
 
     // update snacks for own user
-    readonly $updateOwnUsedSnacks = this.updater((state, ownUsedSnacks: Snack[]) => {
+    readonly $updateOwnEw = this.updater((state, ownUsedSnacks: DoneExtraWork[]) => {
         return {
             ...state,
-            snacks: state.isOwn ? ownUsedSnacks : state.snacks
+            doneEw: state.isOwn ? ownUsedSnacks : state.doneEw
         };
     });
 
 
 
     // update snacks
-    readonly $updateSnacks = this.updater((state, snacks: Snack[]) => {
+    readonly $updateEw = this.updater((state, snacks: DoneExtraWork[]) => {
         return {
             ...state,
             loading: false,
-            snacks
+            doneEw: snacks
         };
     });
 
@@ -80,16 +89,16 @@ export class SnacksUserStore extends ComponentStore<SnacksUserStoreState>{
         };
     });
 
-    readonly loadUsedUserSnacks = this.effect((user$: Observable<{user: User}>)=>
+    readonly loadEws = this.effect((user$: Observable<{user: User}>)=>
         user$.pipe(
             switchMap(({user})=> {
                 this.setLoading(true);
-                    return this.snacksService.getUsedSnacks(dateToUnix(addMonthsToDate(new Date(), -12)), dateToUnix(new Date()), user.id).pipe(
+                    return this.ewService.getUserews(dateToUnix(addMonthsToDate(new Date(), -12)), dateToUnix(new Date()), user.id).pipe(
                         tap(
                             {
                                 next: (snacks) => {
                                     console.log("snacks", snacks)
-                                    return this.$updateSnacks(snacks)
+                                    return this.$updateEw(snacks)
                                 },
                                 error: (err) => {
                                     this.$updateError(err)
@@ -102,14 +111,14 @@ export class SnacksUserStore extends ComponentStore<SnacksUserStoreState>{
     )
     )
 
-    readonly useSnack = this.effect((snackType$: Observable<{snackType: SnackType, amount: number, userId: string}>)=>{
-        return snackType$.pipe(
-            switchMap(({snackType, amount, userId}) => this.snacksService.snackUsed(snackType.id ?? '', amount, userId).pipe(
+    readonly doWork = this.effect((workType$: Observable<{ewType: DoneExtraWorkTypes, userId: string}>)=>{
+        return workType$.pipe(
+            switchMap(({ewType, userId}) => this.ewService.doneEw(ewType.id ?? '', 1, userId).pipe(
                     tap(
                         {
-                            next: (snack) => {
+                            next: (doneEw) => {
                                 return this.patchState((state) => ({
-                                    ...state, loading: false, snacks: snack
+                                    ...state, loading: false, doneEw: doneEw
                                 }));
                             },
                             error: (err)=>{

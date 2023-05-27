@@ -1,0 +1,43 @@
+.outerTileContainer {
+  border: 2px solid #d7d7d7;
+  border-radius: 10px;
+
+
+
+  /*justify-content: space-between;*/
+  width: max(100px, 20%);
+  margin: 20px;
+  margin-left: auto;
+  margin-right: auto;
+
+  opacity: 0;
+  height: 60px;
+  overflow: hidden;
+
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity:0;
+  }
+  50% {
+    opacity:0.8;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+#fade1 {
+  animation: fadeIn ease 1.5s infinite;
+
+}
+#fade2 {
+  animation: fadeIn ease 1.5s infinite;
+  animation-delay: 0.1s;
+}
+#fade3 {
+
+  animation: fadeIn ease 1.5s infinite;
+  animation-delay: 0.2s;
+}

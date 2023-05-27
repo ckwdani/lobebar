@@ -17,7 +17,11 @@
     </div>
     <div  *ngIf="$clickedUser|async">
         <frontend-lb-nx-snack-use-overview [user]="$clickedUser!"></frontend-lb-nx-snack-use-overview>
+        <frontend-lb-nx-done-ex-overview [user]="$clickedUser!"></frontend-lb-nx-done-ex-overview>
     </div>
 
+    <frontend-lb-nx-load-tracks  *ngIf="$loading | async" class="w-full" ></frontend-lb-nx-load-tracks>
+
+<!--    <app-loading-overlay *ngIf="$loading | async"></app-loading-overlay>-->
 </div>
 

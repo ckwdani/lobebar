@@ -8,7 +8,7 @@ import {SnackService} from "../../entity-backend-services/snack.service";
 import {addMonthsToDate, dateToUnix} from "../../../../../../../src/app/core/utils/date-functions";
 import {
     SnacksUserStore
-} from "../../../../../../../src/app/features/admin-book-work-snacks/admin-book-work-snacks-store.store";
+} from "../../../../../../../src/app/core/components/overviewlists-and-tables/snack-use-overview/admin-book-work-snacks-store.store";
 
 @Injectable()
 export class SnackEffects {

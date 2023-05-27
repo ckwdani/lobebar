@@ -30,7 +30,7 @@ export const reducer = createReducer(
         return{...state, isLoading: true}
     }),
     on(SnackActions.doEWSuccesfully, (state, {ewType})=>{
-        return{...state,  isLoading: false, doneEW: [...state.doneEW, {date: Date.now(), extraWorkType: ewType}] as DoneExtraWork[],}
+        return{...state,  isLoading: false, doneEW: ewType}
     }),
     on(SnackActions.doEWFailure, (state, {error})=>({...state, error, isLoading: false}))
 );

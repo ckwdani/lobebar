@@ -10,8 +10,8 @@ import {map} from "rxjs/operators";
 })
 export class EWService extends BaseCommunicatorService<DoneExtraWork>{
 
-  public doneEw(ew_typeId: string, amount?: number, userId? : string): Observable<DoneExtraWorkTypes>{
-    return super.post(BACKENDPATHS.doEw + '/' + ew_typeId + '/' + amount +'/' + userId, {}) as any as Observable<DoneExtraWorkTypes>;
+  public doneEw(ew_typeId: string, amount?: number, userId? : string): Observable<DoneExtraWork[]>{
+    return super.post(BACKENDPATHS.doEw + '/' + ew_typeId + '/' + amount +'/' + userId, {}) as any as Observable<DoneExtraWork[]>;
   }
 
   public getOwnews(unixstart?: number, unixend?: number): Observable<DoneExtraWork[]>{

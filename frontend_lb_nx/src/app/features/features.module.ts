@@ -107,7 +107,7 @@ import {MatProgressBarModule} from "@angular/material/progress-bar";
 import {EventsOverviewStore} from "./overviews/events-overview/events-overview.store";
 import {UsersOverviewStore} from "./overviews/users-overview/users-overview.store";
 import {SingleEventStore} from "./single-event/single-event.store";
-import {SnacksUserStore} from "./admin-book-work-snacks/admin-book-work-snacks-store.store";
+import {SnacksUserStore} from "../core/components/overviewlists-and-tables/snack-use-overview/admin-book-work-snacks-store.store";
 import {MAT_DATE_LOCALE} from "@angular/material/core";
 import {NgModule} from "@angular/core";
 import {SnacksBookerTableComponent} from "./overviews/snacks-booker/snacks-booker-table/snacks-booker-table.component";

@@ -11,7 +11,7 @@ import {
   selectUserLoaded,
   useSnack
 } from "@frontend-lb-nx/shared/services";
-import {combineLatest, filter, tap} from "rxjs";
+import {combineLatest, filter, Observable, tap} from "rxjs";
 import {map} from "rxjs/operators";
 import {
   selectEWTypes,
@@ -23,6 +23,7 @@ import {Store} from "@ngrx/store";
 import {MatDialog} from "@angular/material/dialog";
 import {ConfirmDialogComponent} from "../../dialogs/confirm-dialog/confirm-dialog.component";
 import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
+import {DoneEwOverviewStore} from "./done-ex-overview.store";
 
 
 interface GroupedEw {
@@ -36,6 +37,7 @@ interface GroupedEw {
   selector: 'frontend-lb-nx-done-ex-overview',
   templateUrl: './done-ex-overview.component.html',
   styleUrls: ['./done-ex-overview.component.scss'],
+  providers: [DoneEwOverviewStore],
   animations: [InSiteAnimations.inOutAnimation, InSiteAnimations.sequentialFadeIn]
 })
 export class DoneExOverviewComponent implements AfterViewInit, OnInit{
@@ -43,14 +45,12 @@ export class DoneExOverviewComponent implements AfterViewInit, OnInit{
   @ViewChild(MatPaginator, {static: true}) sort: MatPaginator | undefined;
   @ViewChild('table3') table3: SimpleTableComponent<DoneExtraWorkTypes> = new SimpleTableComponent<DoneExtraWorkTypes>();
 
-  @Input() user?: User;
+  @Input() user?: Observable<User>;
 
-  $ownDoneEws = this.store.select(selectUsedEws).pipe(tap(console.log));
-  $ownDonwEwsGrouped = this.store.select(selectEwState).pipe(filter(state => !state.isLoading));
+  $ownDoneEws = this.doneEwOverviewStore.doneEw$;
+  $doneEwsDisplay = this.doneEwOverviewStore.doneEw$;
 
-  $doneEwsDisplay = this.$ownDoneEws;
-
-  $ownDoneEwsLoading = this.store.select(selectEwState).pipe(map(state => state.isLoading));
+  $ownDoneEwsLoading = this.doneEwOverviewStore.loading$;
 
   // $ownUsedEws = this.$ownDonwEwsGrouped;
 
@@ -60,6 +60,25 @@ export class DoneExOverviewComponent implements AfterViewInit, OnInit{
   loadingEwTypes = false
   $ewTypesLoading = this.store.select(selectShiftTypesLoading).pipe();
 
+
+  constructor(private store: Store, public dialog: MatDialog, private doneEwOverviewStore: DoneEwOverviewStore) {
+
+    // this.store.dispatch(loadOwnUsedEws())
+  }
+
+  ngOnInit(): void {
+
+    combineLatest([this.$userLoaded, this.$isLoggedIn]).subscribe(([userLoaded, isLoggedIn]) => {
+
+        if (userLoaded && isLoggedIn) {
+          if(this.user){
+            this.user.subscribe(next=> this.doneEwOverviewStore.loadEws({user: next}))
+          }else{
+            this.store.dispatch(loadOwnEW())
+        }
+      }
+    });
+  }
   value(ewType: DoneExtraWorkTypes): string  {
     return <string>ewType.value?.toString();
   }
@@ -73,10 +92,17 @@ export class DoneExOverviewComponent implements AfterViewInit, OnInit{
   openDialog(ewType: DoneExtraWorkTypes): void {
     const dialogRef = this.dialog.open(ConfirmDialogComponent, {data: {displayString: "Bestätige dass du " + ewType.name + " gemacht hast."}});
     dialogRef.afterClosed().subscribe(result => {
+
       if(result){
-        this.store.select(selectOwnUser).pipe().subscribe(
-            next=> this.store.dispatch(doEW({ewType, amount: 1, userId: next?.id}))
-        )
+        if(this.user){
+          this.user.pipe().subscribe(
+              next => this.doneEwOverviewStore.doWork({ewType, userId: next.id??""})
+          )
+        }else{
+          this.store.select(selectOwnUser).pipe().subscribe(
+              next=> this.store.dispatch(doEW({ewType, amount: 1, userId: next?.id}))
+          )
+        }
       }
       console.log('The dialog was closed');
     });
@@ -84,14 +110,7 @@ export class DoneExOverviewComponent implements AfterViewInit, OnInit{
 
 
 
-  constructor(private store: Store, public dialog: MatDialog) {
-    combineLatest([this.$userLoaded, this.$isLoggedIn]).subscribe(([userLoaded, isLoggedIn]) => {
-      if (userLoaded && isLoggedIn) {
-        this.store.dispatch(loadOwnEW())
-      }
-    });
-    // this.store.dispatch(loadOwnUsedEws())
-  }
+
 
   ngAfterViewInit(): void {
     if(this.paginator!==undefined){
@@ -101,8 +120,7 @@ export class DoneExOverviewComponent implements AfterViewInit, OnInit{
 
   }
 
-  ngOnInit(): void {
-  }
+
 
   onPageChange($event: PageEvent) {
     const startIndex = $event.pageIndex * $event.pageSize;

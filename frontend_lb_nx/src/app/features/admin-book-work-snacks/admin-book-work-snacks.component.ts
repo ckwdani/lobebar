@@ -21,6 +21,7 @@ import {selectLoggedIn} from "@frontend-lb-nx/shared/services";
 export class AdminBookWorkSnacksComponent {
 
   $users = this.usersStore.selectUsers$
+  $loading = this.usersStore.selectLoading$;
   $snackTypes = this.store.select(selectSnackTypes)
   $extraWorkTypes = this.store.select(selectEWTypes)
 
