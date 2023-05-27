@@ -137,7 +137,7 @@ export class SnackUseOverviewComponent implements AfterViewInit, OnInit{
   groupSnacks(snacks: Snack[]): GroupedSnack[]{
     const groupedSnacks: GroupedSnack[] = snacks.reduce((groups: GroupedSnack[], snack: Snack) => {
       const snackDate = new Date(snack.date);
-      const groupKey = `${snackDate.toDateString()} ${snackDate.getHours()}`;
+      const groupKey = `${snackDate.toDateString()} ${snackDate.getHours()} ${snack.snackType.id}`;
 
       // Find the group with the same key
       const group = groups.find((g) => g.dateKey === groupKey);
@@ -160,6 +160,7 @@ export class SnackUseOverviewComponent implements AfterViewInit, OnInit{
 
       return groups;
     }, []);
+    groupedSnacks.sort((a, b) => b.date.getTime() - a.date.getTime());
     return groupedSnacks;
   }
 

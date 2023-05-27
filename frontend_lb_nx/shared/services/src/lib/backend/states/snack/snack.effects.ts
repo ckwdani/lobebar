@@ -35,7 +35,7 @@ export class SnackEffects {
         switchMap((action) =>
             this.snackService.snackUsed(action.snackType.id??"",action.amount??1, action.userId).pipe(
                 map((snackType)=>{
-                        return SnackActions.useSnackSuccesfully({snackType})
+                        return SnackActions.useSnackSuccesfully({snacks: snackType})
 
                 }),
                 catchError((error)=> of(SnackActions.useSnackFailure({error})))

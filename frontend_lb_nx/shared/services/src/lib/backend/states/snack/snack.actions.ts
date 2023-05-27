@@ -36,7 +36,7 @@ export const useSnack = createAction(
 
 export const useSnackSuccesfully = createAction(
     '[Snack] Use Snack Successfully',
-    props<{snackType: SnackType}>()
+    props<{snacks: Snack[]}>()
 );
 
 export const useSnackFailure = createAction(

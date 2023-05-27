@@ -1,4 +1,4 @@
-import {OrgEvent, Shift, ShiftType, Snack, User} from "@frontend-lb-nx/shared/entities";
+import {OrgEvent, Shift, ShiftType, Snack, SnackType, User} from "@frontend-lb-nx/shared/entities";
 import {Injectable} from "@angular/core";
 import {ComponentStore} from "@ngrx/component-store";
 import {Store} from "@ngrx/store";
@@ -104,16 +104,12 @@ export class SnacksUserStore extends ComponentStore<SnacksUserStoreState>{
 
     readonly useSnack = this.effect((snackType$: Observable<{snackType: SnackType, amount: number, userId: string}>)=>{
         return snackType$.pipe(
-            switchMap(({
-                           snackType,
-                           amount,
-                           userId
-                       }) => this.snacksService.snackUsed(snackType.id ?? '', amount, userId).pipe(
+            switchMap(({snackType, amount, userId}) => this.snacksService.snackUsed(snackType.id ?? '', amount, userId).pipe(
                     tap(
                         {
                             next: (snack) => {
                                 return this.patchState((state) => ({
-                                    ...state, loading: false
+                                    ...state, loading: false, snacks: snack
                                 }));
                             },
                             error: (err)=>{

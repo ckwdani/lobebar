@@ -29,8 +29,8 @@ export const reducer = createReducer(
     on(SnackActions.useSnack, (state,{snackType})=>{
         return{...state, isLoading: true}
     }),
-    on(SnackActions.useSnackSuccesfully, (state,{snackType})=>{
-        return{...state, isLoading: false}
+    on(SnackActions.useSnackSuccesfully, (state,{snacks})=>{
+        return{...state, isLoading: false, usedSnacks: snacks}
     }),
     on(SnackActions.useSnackFailure, (state,{error})=>({...state, error, isLoading: false}))
 );
