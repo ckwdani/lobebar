@@ -1,7 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as ShiftTypeActions from './shift-type.actions';
 import {DoneExtraWorkTypes, ShiftType, SnackType} from "@frontend-lb-nx/shared/entities";
-import {error} from "ng-packagr/lib/utils/log";
 
 export const shiftTypeFeatureKey = 'shiftType';
 

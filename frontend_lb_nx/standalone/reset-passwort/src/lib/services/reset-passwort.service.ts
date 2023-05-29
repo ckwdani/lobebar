@@ -1,8 +1,14 @@
 import {Inject, Injectable} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {catchError, map, Observable, of, throwError} from "rxjs";
-import {PasswordResetExtra} from "@lobebar/passwort-reset-email";
 
+export interface PasswordResetExtra {
+  backendBasePath: string;
+  backendEmailPath: string;
+  backendResetPath: string;
+  routeSuccess: string;
+  backendCheckPath?: string;
+}
 @Injectable({
   providedIn: 'root'
 })

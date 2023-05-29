@@ -6,8 +6,9 @@ import * as OrgEventActions from './orgEvent.actions';
 import {ShiftTypeBackendService} from "../../entity-backend-services/shifts-type-backend.service";
 import {ShiftType} from "@frontend-lb-nx/shared/entities";
 import {addOrgEvent} from "./orgEvent.actions";
-import {OrgEventBackendService, selectOrgEventsState} from "@frontend-lb-nx/shared/services";
 import {State, Store} from "@ngrx/store";
+import {selectOrgEventsState} from "./orgEvent.selectors";
+import {OrgEventBackendService} from "../../entity-backend-services/org-event-backend.service";
 
 
 @Injectable()

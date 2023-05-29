@@ -48,3 +48,5 @@ export * from './lib/backend/states/snack/snack.selectors';
 export * from './lib/backend/states/extraWork/ew.actions';
 export * from './lib/backend/states/extraWork/ew.effects';
 export * from './lib/backend/states/extraWork/ew.selectors';
+
+export * from './lib/backend/common/error-snack-bar/error-snack-bar.component'

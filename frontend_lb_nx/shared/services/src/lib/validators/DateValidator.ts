@@ -17,7 +17,6 @@ export class DateValidator {
     }
 }
 
-
 export class DateAfterConstantDateValidator{
     static dateAfter(constantDate: Date, errorname: string) {
 

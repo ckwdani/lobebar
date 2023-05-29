@@ -1,5 +1,5 @@
-import {OrgEvent, ShiftType, User} from "@frontend-lb-nx/shared/entities";
 import {SnackType} from "./snackType";
+import {User} from "./user";
 
 export interface Snack{
     id?: string,

@@ -3,7 +3,6 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {catchError, map, concatMap, switchMap} from 'rxjs/operators';
 import { Observable, EMPTY, of } from 'rxjs';
 import * as RegisterActions from './register.actions';
-import * as AuthActions from "../auth/auth.actions";
 import {AuthService} from "../../entity-backend-services/auth.service";
 
 

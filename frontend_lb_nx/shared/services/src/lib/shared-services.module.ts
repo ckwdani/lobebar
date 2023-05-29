@@ -12,8 +12,6 @@ import * as fromRegister from './backend/states/register/register.reducer';
 import { RegisterEffects } from './backend/states/register/register.effects';
 import * as fromOrgEvent from './backend/states/orgEvent/orgEvent.reducer';
 
-import {DefaultDataServiceConfig} from "@ngrx/data";
-import {BACKENDPATHS} from "./backend/BACKENDPATHS";
 import * as fromShift from './backend/states/shift/shift.reducer';
 import * as fromShiftType from './backend/states/shift-types/shift-type.reducer';
 import { ShiftTypeEffects } from './backend/states/shift-types/shift-type.effects';
@@ -24,14 +22,16 @@ import {OwnUserEffects} from "./backend/states/own-user/own-user.effects";
 import {SnackEffects} from "./backend/states/snack/snack.effects";
 import * as fromSnack from './backend/states/snack/snack.reducer'
 import * as fromEw from './backend/states/extraWork/ew.reducer'
-import {from} from "rxjs";
-import {ewFeatureKey} from "./backend/states/extraWork/ew.reducer";
 import {EwEffects} from "./backend/states/extraWork/ew.effects";
+import {ErrorSnackBarComponent} from "./backend/common/error-snack-bar/error-snack-bar.component";
+
 
 
 
 
 @NgModule({
+  declarations: [ErrorSnackBarComponent],
+  exports: [ErrorSnackBarComponent],
   imports: [
       CommonModule,
     HttpClientModule,

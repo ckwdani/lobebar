@@ -3,11 +3,8 @@ import {MAT_SNACK_BAR_DATA, MatSnackBar, MatSnackBarRef} from "@angular/material
 import {HttpErrorResponse} from "@angular/common/http";
 import {Router} from "@angular/router";
 import {Store} from "@ngrx/store";
-import {AuthState} from "../states/auth/auth.reducer";
 import {loginRequired, logout} from "../states/auth/auth.actions";
-import {of} from "rxjs";
-import {MatDialog} from "@angular/material/dialog";
-import {ErrorSnackBarComponent} from "@frontend-lb-nx/shared/ui";
+import {ErrorSnackBarComponent} from "./error-snack-bar/error-snack-bar.component";
 
 @Injectable({
   providedIn: 'root'

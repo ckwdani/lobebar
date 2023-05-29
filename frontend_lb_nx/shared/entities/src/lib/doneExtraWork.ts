@@ -1,6 +1,7 @@
-import {DoneExtraWorkTypes, SnackType, User} from "@frontend-lb-nx/shared/entities";
+import {User} from "./user";
+import {DoneExtraWorkTypes} from "./doneExtraWorkTypes";
 
-    export interface DoneExtraWork{
+export interface DoneExtraWork{
     id?: string,
     user?: User,
     extraWorkType: DoneExtraWorkTypes,

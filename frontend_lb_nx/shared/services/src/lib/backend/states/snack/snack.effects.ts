@@ -6,9 +6,7 @@ import {Observable, EMPTY, of} from 'rxjs';
 import * as SnackActions from './snack.actions';
 import {SnackService} from "../../entity-backend-services/snack.service";
 import {addMonthsToDate, dateToUnix} from "../../../../../../../src/app/core/utils/date-functions";
-import {
-    SnacksUserStore
-} from "../../../../../../../src/app/core/components/overviewlists-and-tables/snack-use-overview/admin-book-work-snacks-store.store";
+
 
 @Injectable()
 export class SnackEffects {
@@ -43,5 +41,5 @@ export class SnackEffects {
     ))
   })
 
-  constructor(private actions$: Actions, private snackService: SnackService, private snackUserStore: SnacksUserStore) {}
+  constructor(private actions$: Actions, private snackService: SnackService) {}
 }

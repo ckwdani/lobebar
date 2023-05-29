@@ -37,7 +37,6 @@ import { MatSortModule } from '@angular/material/sort';
 import { UserBadgeComponent } from './components/achievements-overview/user-badge/user-badge.component';
 import { StartEndDateInputComponent } from './components/start-end-date-input/start-end-date-input.component';
 import { ShiftTableStore } from './components/shift-table/shift-table.store';
-import {ErrorBarData, ErrorSnackBarComponent} from './components/error-snack-bar/error-snack-bar.component';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { LoadTilesComponent} from "./animations/components/load-tiles/load-tracks.component";
 import {MatDividerModule} from "@angular/material/divider";
@@ -85,7 +84,6 @@ import {MatDividerModule} from "@angular/material/divider";
     SingleAchievementComponent,
     UserBadgeComponent,
     StartEndDateInputComponent,
-    ErrorSnackBarComponent,
     LoadTilesComponent
   ],
   exports: [
@@ -103,7 +101,7 @@ import {MatDividerModule} from "@angular/material/divider";
     AchievementsOverviewComponent,
     SingleAchievementComponent,
     UserBadgeComponent,
-    ErrorSnackBarComponent,LoadTilesComponent
+    LoadTilesComponent
   ],
   providers: [ShiftTableStore],
 })

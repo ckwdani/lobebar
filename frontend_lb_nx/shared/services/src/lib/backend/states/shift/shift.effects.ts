@@ -3,11 +3,10 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {catchError, concatMap, map, mergeMap, switchMap, withLatestFrom} from 'rxjs/operators';
 import {Observable, EMPTY, of, combineLatest, forkJoin, tap} from 'rxjs';
 import * as ShiftActions from './shift.actions';
-import {selectOrgEventsState, selectOwnUser, selectUser, ShiftsBackendService} from "@frontend-lb-nx/shared/services";
-import {addMonthsToDate, dateToUnix} from "../../../../../../../src/app/core/utils/date-functions";
 import {Store} from "@ngrx/store";
-import * as ShiftTypeActions from "../shift-types/shift-type.actions";
-import {HttpErrorResponse} from "@angular/common/http";
+import {selectUser} from "../auth/auth.selectors";
+import {ShiftsBackendService} from "../../entity-backend-services/shifts-backend.service";
+import {addMonthsToDate, dateToUnix} from "../../../../../../../src/app/core/utils/date-functions";
 
 @Injectable()
 export class ShiftEffects {

@@ -1,12 +1,16 @@
 import { Injectable } from '@angular/core';
 import { ComponentStore } from '@ngrx/component-store';
 import {Shift} from "@frontend-lb-nx/shared/entities";
-import {changeShiftAssignmentSuccess, EditDescSuccess, ShiftsBackendService} from "@frontend-lb-nx/shared/services";
+import {
+    changeShiftAssignmentSuccess,
+    EditDescSuccess, ErrorBarData,
+    ErrorSnackBarComponent,
+    ShiftsBackendService
+} from "@frontend-lb-nx/shared/services";
 import {Observable, of, switchMap, tap} from "rxjs";
 import {Store} from "@ngrx/store";
 import {HttpErrorResponse} from "@angular/common/http";
 import {MatSnackBar} from "@angular/material/snack-bar";
-import {ErrorBarData, ErrorSnackBarComponent} from "../error-snack-bar/error-snack-bar.component";
 import {createEffect, ofType} from "@ngrx/effects";
 
 import {catchError, map} from "rxjs/operators";

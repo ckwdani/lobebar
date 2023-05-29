@@ -3,5 +3,12 @@
   "compilerOptions": {
     "declarationMap": false
   },
-  "angularCompilerOptions": {}
+  "angularCompilerOptions": {},
+  "exclude": [
+    "src/**/*.spec.ts",
+    "src/test-setup.ts",
+    "jest.config.ts",
+    "src/**/*.test.ts"
+  ],
+  "include": ["src/**/*.ts"]
 }
