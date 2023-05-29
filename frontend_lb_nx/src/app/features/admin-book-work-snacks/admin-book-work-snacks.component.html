@@ -1,7 +1,7 @@
 <div *ngIf="($users|async)"  class="w-full h-full"  >
     <div class="text-center">
-        <mat-form-field>
-            <input (input)="onKey($event)" (keydown.enter)=" clickIfOneUser()" matInput>
+        <mat-form-field appearance="outline">
+            <input (input)="onKey($event)" (keydown.enter)=" clickIfOneUser()" matInput [disabled]="$loading | async">
         </mat-form-field>
         <div *ngIf="$clickedUser|async">ausgewählter User: {{($clickedUser|async)?.username}}</div>
     </div>
