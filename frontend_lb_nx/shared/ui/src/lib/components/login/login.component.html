@@ -17,8 +17,10 @@
       <p *ngIf="loginstate.error && ($loading  | async) === false" style="color: red">{{loginstate.error}}</p>
       <div><mat-icon matTooltip="Authentication status">{{($loggedIn | async)? 'check_circle_outline' : 'all_out'}}</mat-icon>
         <mat-icon matTooltip="Authorization status">{{($userLoaded | async)? 'fingerprint' : 'all_out'}}</mat-icon></div>
-      <p routerLink="/reset-password">Forgot password? Reset it with your email.</p>
-      <button mat-button (click)="authenticate()" [disabled]="($loggedIn | async) || loginstate.user.password === '' || loginstate.user.email === ''">Login</button>
+      <button mat-button (click)="authenticate()" [disabled]="($loggedIn | async) || loginstate.user.password === '' || loginstate.user.email === ''">Login</button><br><br>
+      <mat-divider></mat-divider> <br>
+      <button mat-flat-button routerLink="/reset-password">Passwort vergessen? Setze es mit deiner Email zurück!</button><br><br>
+      <button mat-flat-button color="accent" routerLink="/register">Noch kein account? Hier registrieren!</button><br>
     </div>
   </mat-card-content>
 </mat-card>
