@@ -110,9 +110,6 @@ $lobebar-theme: mat.define-dark-theme((
     primary: $my-primary,
     accent: $my-accent,
   ),
-  typography: mat.define-typography-config(
-    $font-family: FrutigerLTCom
-  ),
   density: 0,
 ));
 
