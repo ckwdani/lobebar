@@ -16,7 +16,7 @@ import {
 import {animate, state, style, transition, trigger} from "@angular/animations";
 import {of} from "rxjs";
 import {map} from "rxjs/operators";
-import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
+import {InSiteAnimations} from "../../animations/InSiteAnimations";
 
 @Component({
   selector: 'frontend-lb-nx-achievements-overview',

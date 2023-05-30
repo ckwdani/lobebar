@@ -6,7 +6,7 @@ import {Store} from "@ngrx/store";
 import {selectUser} from "@frontend-lb-nx/shared/services";
 import {
   EditStringDialogComponent
-} from "../../../../core/components/dialogs/edit-string-dialog/edit-string-dialog.component";
+} from "../../../../../../shared/ui/src/lib/components/dialogs/edit-string-dialog/edit-string-dialog.component";
 import {MatDialog} from "@angular/material/dialog";
 import {Validators} from "@angular/forms";
 import {UsersOverviewStore} from "../../users-overview/users-overview.store";

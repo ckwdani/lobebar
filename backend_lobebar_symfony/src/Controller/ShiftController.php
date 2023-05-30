@@ -134,7 +134,8 @@ class ShiftController extends _Base_Controller
     public function getShiftTypes(){
         $shiftTypes = $this->doctrine->getManager()->getRepository(Shiftype::class)->findAll();
         if(empty($shiftTypes)){
-            throw new NotFoundHttpException();
+            return new JsonResponse("[]", 200);
+//            throw new NotFoundHttpException();
         }
         return JsonResponse::fromJsonString($this->serializer->serialize($shiftTypes, 'json'));
     }

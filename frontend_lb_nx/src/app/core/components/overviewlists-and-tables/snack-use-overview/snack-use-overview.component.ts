@@ -28,7 +28,7 @@ import {
   selectShiftTypesLoading,
   selectSnackTypes
 } from "../../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
-import {NumberInputDialogComponent} from "../../dialogs/number-input-dialog/number-input-dialog.component";
+import {NumberInputDialogComponent} from "../../../../../../shared/ui/src/lib/components/dialogs/number-input-dialog/number-input-dialog.component";
 import {SnacksUserStore} from "./admin-book-work-snacks-store.store";
 
 

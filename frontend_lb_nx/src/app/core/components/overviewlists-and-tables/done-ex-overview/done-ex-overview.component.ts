@@ -18,10 +18,10 @@ import {
   selectShiftTypesLoading,
   selectSnackTypes
 } from "../../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
-import {NumberInputDialogComponent} from "../../dialogs/number-input-dialog/number-input-dialog.component";
+import {NumberInputDialogComponent} from "../../../../../../shared/ui/src/lib/components/dialogs/number-input-dialog/number-input-dialog.component";
 import {Store} from "@ngrx/store";
 import {MatDialog} from "@angular/material/dialog";
-import {ConfirmDialogComponent} from "../../dialogs/confirm-dialog/confirm-dialog.component";
+import {ConfirmDialogComponent} from "../../../../../../shared/ui/src/lib/components/dialogs/confirm-dialog/confirm-dialog.component";
 import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
 import {DoneEwOverviewStore} from "./done-ex-overview.store";
 

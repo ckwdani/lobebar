@@ -4,7 +4,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import {catchError, concatMap, map, switchMap} from 'rxjs/operators';
 import {of} from 'rxjs';
 import * as EWActions from './ew.actions';
-import {addMonthsToDate, dateToUnix} from "../../../../../../../src/app/core/utils/date-functions";
+import {addMonthsToDate, dateToUnix} from "../../../utils/date-functions";
 import {EWService} from "../../entity-backend-services/ew.service";
 
 @Injectable()

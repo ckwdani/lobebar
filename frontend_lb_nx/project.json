@@ -23,6 +23,11 @@
           "./src/favicon.ico",
           "./src/assets"
         ],
+        "stylePreprocessorOptions": {
+          "includePaths": [
+            "./src/app/core/styles/lobebar-theme"
+          ]
+        },
         "styles": [
           "./src/app/core/styles/lobebar-theme.scss",
           "./src/styles.scss"
@@ -35,12 +40,12 @@
             {
               "type": "initial",
               "maximumWarning": "500kb",
-              "maximumError": "1mb"
+              "maximumError": "5mb"
             },
             {
               "type": "anyComponentStyle",
-              "maximumWarning": "2kb",
-              "maximumError": "4kb"
+              "maximumWarning": "100kb",
+              "maximumError": "300kb"
             }
           ],
           "outputHashing": "all"

@@ -6,7 +6,7 @@ import * as ShiftActions from './shift.actions';
 import {Store} from "@ngrx/store";
 import {selectUser} from "../auth/auth.selectors";
 import {ShiftsBackendService} from "../../entity-backend-services/shifts-backend.service";
-import {addMonthsToDate, dateToUnix} from "../../../../../../../src/app/core/utils/date-functions";
+import {addMonthsToDate, dateToUnix} from "../../../utils/date-functions";
 
 @Injectable()
 export class ShiftEffects {

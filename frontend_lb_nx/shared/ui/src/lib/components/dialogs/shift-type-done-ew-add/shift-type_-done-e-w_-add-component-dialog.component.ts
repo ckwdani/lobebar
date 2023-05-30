@@ -1,25 +1,21 @@
 import {Component, Inject, Input, OnInit} from '@angular/core';
 import {ShiftType, SnackType} from "@frontend-lb-nx/shared/entities";
-import {
-  ShiftTypeBackendService
-} from "../../../../../../shared/services/src/lib/backend/entity-backend-services/shifts-type-backend.service";
 import {Store} from "@ngrx/store";
 import {
   selectShiftTypes, selectShiftTypesAdding, selectShiftTypesError,
-  selectShiftTypesLoading, selectShiftTypeState
-} from "../../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.selectors";
+} from "@frontend-lb-nx/shared/services";
 import {combineLatest, combineLatestAll, distinctUntilChanged, filter, find, pairwise, tap} from "rxjs";
 import {
   addExtraWorkType,
   addShiftType, addSnackType,
   deleteShiftType
-} from "../../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
+} from "@frontend-lb-nx/shared/services";
 import {FormControl, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DialogData} from "@frontend-lb-nx/shared/ui";
 import {map} from "rxjs/operators";
 import {fi} from "date-fns/locale";
-import {DoneExtraWorkTypes} from "../../../../../../shared/entities/src/lib/doneExtraWorkTypes";
+import {DoneExtraWorkTypes} from "@frontend-lb-nx/shared/entities";
 
 export interface DialogDataST {
   isShiftType: boolean;
@@ -60,7 +56,7 @@ export class ShiftType_DoneEW_AddComponentDialog {
   typeValueLabel = ''
 
 
-  constructor(private  shiftTypeService: ShiftTypeBackendService, private store: Store, @Inject(MAT_DIALOG_DATA) public data: DialogDataST,  public dialogRef: MatDialogRef<ShiftType_DoneEW_AddComponentDialog>,) {
+  constructor(private store: Store, @Inject(MAT_DIALOG_DATA) public data: DialogDataST,  public dialogRef: MatDialogRef<ShiftType_DoneEW_AddComponentDialog>,) {
 
     this.isShiftType = data.isShiftType;
     this.isEwType = data.isEwType

@@ -1,8 +1,5 @@
 import {Component, Inject} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
-import {
-  ShiftTypeBackendService
-} from "../../../../../../shared/services/src/lib/backend/entity-backend-services/shifts-type-backend.service";
 import {Store} from "@ngrx/store";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 

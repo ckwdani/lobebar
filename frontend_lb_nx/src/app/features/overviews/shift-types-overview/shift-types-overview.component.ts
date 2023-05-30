@@ -9,18 +9,18 @@ import {
 import {DoneExtraWorkTypes, ShiftType, SnackType} from "@frontend-lb-nx/shared/entities";
 import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
 import {MatDialog} from "@angular/material/dialog";
-import {ShiftType_DoneEW_AddComponentDialog} from "../../../core/components/dialogs/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component";
+import {ShiftType_DoneEW_AddComponentDialog} from "../../../../../shared/ui/src/lib/components/dialogs/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component";
 import {
   deleteEWT,
   deleteShiftType, deleteSnT, EditName
 } from "../../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
 import {SimpleTableComponent} from "../../../../../shared/ui/src/lib/components/simpleTable/simple-table.component";
-import {EditStringDialogComponent} from "../../../core/components/dialogs/edit-string-dialog/edit-string-dialog.component";
+import {EditStringDialogComponent} from "../../../../../shared/ui/src/lib/components/dialogs/edit-string-dialog/edit-string-dialog.component";
 import {combineLatest, filter, take, tap} from "rxjs";
 import {map} from "rxjs/operators";
 import {
   ImportantDeleteDialogComponent
-} from "../../../core/components/dialogs/important-delete-dialog/important-delete-dialog.component";
+} from "../../../../../shared/ui/src/lib/components/dialogs/important-delete-dialog/important-delete-dialog.component";
 
 @Component({
   selector: 'frontend-lb-nx-shift-types-overview',
@@ -96,19 +96,20 @@ export class ShiftTypesOverviewComponent {
     });
   }
 
-  deleteSt(type: ShiftType, isError = false) {
+  deleteSt(type: ShiftType | DoneExtraWorkTypes | SnackType, isError = false) {
+    const typeNew = type as ShiftType;
     const dialogRef = this.dialog.open(ImportantDeleteDialogComponent, {data: {name: type.name, isError: isError}});
     dialogRef.afterClosed().subscribe(result => {
       if (result) {
         // type.name = result;
-        this.store.dispatch(deleteShiftType({shiftType: type}));
+        this.store.dispatch(deleteShiftType({shiftType: typeNew}));
         this.$deletingError.pipe(map((loading,) => loading.adding)).subscribe({next: (value) => this.loadingShifts = value})
       }
     });
 
 
   }
-  deleteEwt(type: DoneExtraWorkTypes | ShiftType, isError = false) {
+  deleteEwt(type: DoneExtraWorkTypes | ShiftType | SnackType, isError = false) {
 
     const dialogRef = this.dialog.open(ImportantDeleteDialogComponent, {data: {name: type.name, isError: isError}});
     dialogRef.afterClosed().subscribe(result => {

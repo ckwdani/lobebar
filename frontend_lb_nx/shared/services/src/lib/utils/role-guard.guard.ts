@@ -3,7 +3,7 @@ import {ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTre
 import {filter, first, Observable} from 'rxjs';
 import {selectOwnUser} from "@frontend-lb-nx/shared/services";
 import {Store} from "@ngrx/store";
-import {environment} from "../../../environments/environment";
+import {environment} from "../../../../../src/environments/environment";
 import {UserFunctions, UserRoles} from "@frontend-lb-nx/shared/entities";
 
 @Injectable({providedIn: 'root'})

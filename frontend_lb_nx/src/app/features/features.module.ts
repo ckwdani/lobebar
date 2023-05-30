@@ -69,7 +69,7 @@ import {PointsComponent} from "./points/points.component";
 import {EventAddComponent} from "./event-add/event-add.component";
 import {
     ShiftType_DoneEW_AddComponentDialog
-} from "../core/components/dialogs/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component";
+} from "../../../shared/ui/src/lib/components/dialogs/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component";
 import {ShiftTypesOverviewComponent} from "./overviews/shift-types-overview/shift-types-overview.component";
 import {SingleEventComponent} from "./single-event/single-event.component";
 import {
@@ -129,7 +129,8 @@ import {SnacksBookerTableComponent} from "./overviews/snacks-booker/snacks-booke
     SnackUseOverviewComponent,
     SnacksBookerComponent,
     AdminBookWorkSnacksComponent,
-      SnacksBookerTableComponent
+      SnacksBookerTableComponent,
+
   ],
   exports: [DashboardComponent, OwnUserOverviewComponent],
     imports: [

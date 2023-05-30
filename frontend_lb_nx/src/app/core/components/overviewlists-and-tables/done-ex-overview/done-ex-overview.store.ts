@@ -14,7 +14,7 @@ import {Store} from "@ngrx/store";
 import {SnackService} from "../../../../../../shared/services/src/lib/backend/entity-backend-services/snack.service";
 import {HttpErrorResponse} from "@angular/common/http";
 import {filter, Observable, switchMap, tap} from "rxjs";
-import {addMonthsToDate, dateToUnix} from "../../../utils/date-functions";
+import {addMonthsToDate, dateToUnix} from "../../../../../../shared/services/src/lib/utils/date-functions";
 import {selectEwState, selectSnackState} from "@frontend-lb-nx/shared/services";
 import {map} from "rxjs/operators";
 import {EWService} from "../../../../../../shared/services/src/lib/backend/entity-backend-services/ew.service";

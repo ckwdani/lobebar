@@ -5,7 +5,7 @@ import {catchError, concatMap, map, switchMap} from 'rxjs/operators';
 import {Observable, EMPTY, of} from 'rxjs';
 import * as SnackActions from './snack.actions';
 import {SnackService} from "../../entity-backend-services/snack.service";
-import {addMonthsToDate, dateToUnix} from "../../../../../../../src/app/core/utils/date-functions";
+import {addMonthsToDate, dateToUnix} from "../../../utils/date-functions";
 
 
 @Injectable()

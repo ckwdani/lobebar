@@ -2,8 +2,7 @@ import {Component, Inject} from '@angular/core';
 import {FormControl, Validators} from "@angular/forms";
 import {Store} from "@ngrx/store";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {updateUser} from "@frontend-lb-nx/shared/services";
-import {UsersOverviewStore} from "../../../../features/overviews/users-overview/users-overview.store";
+
 import {UserRoles, userRolesMap} from "@frontend-lb-nx/shared/entities";
 
 @Component({
@@ -15,7 +14,7 @@ export class DropdownMenuDialogComponent {
   displayString = this.data.displayString??"Name";
   selected= '';
 
-  constructor(private usersOverviewStore: UsersOverviewStore, @Inject(MAT_DIALOG_DATA) public data: {name: string, choices: string[], currentRole: string, displayString?: string, validators?: [], errorcode?: number},  public dialogRef: MatDialogRef<DropdownMenuDialogComponent>,) {
+  constructor( @Inject(MAT_DIALOG_DATA) public data: {name: string, choices: string[], currentRole: string, displayString?: string, validators?: [], errorcode?: number},  public dialogRef: MatDialogRef<DropdownMenuDialogComponent>,) {
   this.selected=data.currentRole
   }
 

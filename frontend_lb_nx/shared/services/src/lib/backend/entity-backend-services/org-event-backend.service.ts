@@ -3,7 +3,8 @@ import {Observable} from "rxjs";
 import {map} from "rxjs/operators";
 import {BaseCommunicatorService} from "../common/base-communicator.service";
 import {BACKENDPATHS} from "../BACKENDPATHS";
-import { OrgEvent } from 'shared/entities/src/lib/orgEvent';
+import {OrgEvent} from "@frontend-lb-nx/shared/entities";
+
 
 @Injectable({
   providedIn: 'root'

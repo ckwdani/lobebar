@@ -1,4 +1,11 @@
-@import "/src/app/core/constants/COLORS";
+//@import "/src/app/core/constants/COLORS";
+
+$darky-green: #4CAF50;
+$darky-red: #A93226;
+$lighthy-blue: #3498DB;
+
+
+
 .green { background-color: $darky-green !important;}
 .green:hover{
   background-color: $darky-green !important;

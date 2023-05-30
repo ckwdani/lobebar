@@ -45,7 +45,7 @@ export class AddShiftComponent implements OnInit{
       starttime: this.startDate ?? new Date(),
       // add two hours to the start date
       endtime: this.startDate !== undefined ? new Date(Math.min(this.startDate?.getTime() + 1000 * 60 *60 *2, this.orgEvent?.end.getTime()??1000000000000)) : new Date(),
-      type: this.model?.type ?? {id: '', name: '', value: 0},
+      type: this.model?.type ?? {id: '', name: ''},
     };
   }
 

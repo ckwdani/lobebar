@@ -1,5 +1,5 @@
 @use 'sass:color';
-@import '/src/app/core/styles/lobebar-theme.scss';
+@import '../../theme/lobebar-theme.scss';
 @import "@angular/material/theming";
 
 //@mixin color($config-or-theme) {

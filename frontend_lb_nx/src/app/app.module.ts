@@ -20,7 +20,7 @@ import {EffectsModule} from "@ngrx/effects";
 import {EntityDataModule} from "@ngrx/data";
 import {entityConfig} from "../../shared/entities/src/lib/entity-metadata";
 import {provideEntityDataConfig} from "@ngrx/data/src/provide-entity-data";
-import {GermanDateProvider} from "./core/utils/GermanDateAdapter";
+import {GermanDateProvider} from "../../shared/services/src/lib/utils/GermanDateAdapter";
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import {resetPwRoutes, StandaloneResetPasswortModule} from "@lobebar/passwort-reset-email";
 import {BACKENDPATHS} from "../../shared/services/src/lib/backend/BACKENDPATHS";

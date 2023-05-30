@@ -1,8 +1,8 @@
 import {AfterViewInit, Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges, ViewChild} from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import {MatPaginator} from '@angular/material/paginator';
-import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
 import {MatSort} from "@angular/material/sort";
+import {InSiteAnimations} from "../../animations/InSiteAnimations";
 
 @Component({
   selector: 'app-simple-table',

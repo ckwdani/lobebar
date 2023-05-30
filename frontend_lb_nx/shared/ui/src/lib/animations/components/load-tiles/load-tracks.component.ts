@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
+import {InSiteAnimations} from "../../InSiteAnimations";
 
 
 @Component({

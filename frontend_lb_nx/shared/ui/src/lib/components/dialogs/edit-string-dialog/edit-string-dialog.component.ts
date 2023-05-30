@@ -1,8 +1,6 @@
 import {Component, Inject, Input} from '@angular/core';
 import {FormControl, ValidationErrors, ValidatorFn, Validators} from "@angular/forms";
-import {
-  ShiftTypeBackendService
-} from "../../../../../../shared/services/src/lib/backend/entity-backend-services/shifts-type-backend.service";
+
 import {Store} from "@ngrx/store";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 
@@ -23,7 +21,7 @@ export class EditStringDialogComponent {
 
   fcname = new FormControl(this.data.name, this.data.validators??[Validators.required, Validators.minLength(3)])
 
-  constructor(private  shiftTypeService: ShiftTypeBackendService, private store: Store, @Inject(MAT_DIALOG_DATA) public data: {name: string, displayString?: string, validators?: [], checkBoxState?:boolean, errorcode?: number},  public dialogRef: MatDialogRef<EditStringDialogComponent>,) {
+  constructor(private store: Store, @Inject(MAT_DIALOG_DATA) public data: {name: string, displayString?: string, validators?: [], checkBoxState?:boolean, errorcode?: number},  public dialogRef: MatDialogRef<EditStringDialogComponent>,) {
     console.log(data)
   }
 

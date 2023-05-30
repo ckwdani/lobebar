@@ -40,6 +40,15 @@ import { ShiftTableStore } from './components/shift-table/shift-table.store';
 import {MatSnackBarModule} from "@angular/material/snack-bar";
 import { LoadTilesComponent} from "./animations/components/load-tiles/load-tracks.component";
 import {MatDividerModule} from "@angular/material/divider";
+import {MatFormFieldModule} from "@angular/material/form-field";
+import {EditStringDialogComponent} from "./components/dialogs/edit-string-dialog/edit-string-dialog.component";
+import {
+    ImportantDeleteDialogComponent
+} from "./components/dialogs/important-delete-dialog/important-delete-dialog.component";
+import {NumberInputDialogComponent} from "./components/dialogs/number-input-dialog/number-input-dialog.component";
+import {EditDateTimeDialogComponent} from "./components/dialogs/edit-date-time-dialog/edit-date-time-dialog.component";
+import {DropdownMenuDialogComponent} from "./components/dialogs/dropdown-menu-dialog/dropdown-menu-dialog.component";
+import {ConfirmDialogComponent} from "./components/dialogs/confirm-dialog/confirm-dialog.component";
 
 @NgModule({
     imports: [
@@ -67,6 +76,7 @@ import {MatDividerModule} from "@angular/material/divider";
         MatSortModule,
         MatSnackBarModule,
         MatDividerModule,
+        MatFormFieldModule,
     ],
   declarations: [
     SingleFormDialogComponent,
@@ -84,7 +94,13 @@ import {MatDividerModule} from "@angular/material/divider";
     SingleAchievementComponent,
     UserBadgeComponent,
     StartEndDateInputComponent,
-    LoadTilesComponent
+    LoadTilesComponent,
+      EditStringDialogComponent,
+      ImportantDeleteDialogComponent,
+      NumberInputDialogComponent,
+      EditDateTimeDialogComponent,
+      DropdownMenuDialogComponent,
+      ConfirmDialogComponent,
   ],
   exports: [
       StartEndDateInputComponent,
@@ -101,7 +117,9 @@ import {MatDividerModule} from "@angular/material/divider";
     AchievementsOverviewComponent,
     SingleAchievementComponent,
     UserBadgeComponent,
-    LoadTilesComponent
+    LoadTilesComponent,
+      EditStringDialogComponent,
+      ImportantDeleteDialogComponent,
   ],
   providers: [ShiftTableStore],
 })

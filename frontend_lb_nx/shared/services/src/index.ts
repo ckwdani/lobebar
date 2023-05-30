@@ -44,9 +44,15 @@ export * from './lib/backend/states/snack/snack.actions';
 export * from './lib/backend/states/snack/snack.effects';
 export * from './lib/backend/states/snack/snack.selectors';
 
+export * from './lib/backend/states/shift-types/shift-type.actions';
+export * from './lib/backend/states/shift-types/shift-type.effects';
+export * from './lib/backend/states/shift-types/shift-type.selectors';
+
 //EW
 export * from './lib/backend/states/extraWork/ew.actions';
 export * from './lib/backend/states/extraWork/ew.effects';
 export * from './lib/backend/states/extraWork/ew.selectors';
 
 export * from './lib/backend/common/error-snack-bar/error-snack-bar.component'
+
+export * from './lib/backend/BACKENDPATHS'

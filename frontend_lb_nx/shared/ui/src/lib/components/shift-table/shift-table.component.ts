@@ -24,10 +24,10 @@ import { ShiftTableStore } from './shift-table.store';
 import {MatSnackBar} from "@angular/material/snack-bar";
 import {
   EditStringDialogComponent
-} from "../../../../../../src/app/core/components/dialogs/edit-string-dialog/edit-string-dialog.component";
+} from "../dialogs/edit-string-dialog/edit-string-dialog.component";
 import {
   ImportantDeleteDialogComponent
-} from "../../../../../../src/app/core/components/dialogs/important-delete-dialog/important-delete-dialog.component";
+} from "../dialogs/important-delete-dialog/important-delete-dialog.component";
 import {map} from "rxjs/operators";
 import {MatDialog} from "@angular/material/dialog";
 import {filter, take} from "rxjs";

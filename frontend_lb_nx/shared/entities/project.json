@@ -2,6 +2,7 @@
   "name": "shared-entities",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "sourceRoot": "shared/entities/src",
+  "rootDir": "./src/lib",
   "prefix": "frontend-lb-nx",
   "tags": [],
   "projectType": "library",

@@ -1,0 +1,116 @@
+@use '@angular/material' as mat;
+@include mat.core();
+
+$lobebebar-palette:  (
+
+        50: #FBE9E7,
+        100: #FFCCBC,
+        200: #FFAB91,
+        300: #FF8A65,
+        400: #FF7043,
+        500: #FF5722,
+        600: #F4511E,
+        700: #E64A19,
+        800: #D84315,
+        900: #BF360C,
+        A100: #FF9E80,
+        A200: #FF6E40,
+        A400: #FF3D00,
+        A700: #DD2C00,
+
+  //      50 : #f0fafb,
+  //100 : #daf2f5,
+  //200 : #c2eaef,
+  //300 : #aae1e9,
+  //400 : #97dae4,
+  //500 : #85d4df,
+  //600 : #7dcfdb,
+  //700 : #72c9d7,
+  //800 : #68c3d2,
+  //900 : #55b9ca,
+  //A100 : #ffffff,
+  //A200 : #fafeff,
+  //A400 : #c7f7ff,
+  //A700 : #adf3ff,
+  contrast: (
+    50 : #FFFFFF,
+    100 : #FFFFFF,
+    200 : #FFFFFF,
+    300 : #FFFFFF,
+    400 : #FFFFFF,
+    500 : #FFFFFF,
+    600 : #FFFFFF,
+    700 : #FFFFFF,
+    800 : #FFFFFF,
+    900 : #FFFFFF,
+    A100 : #FFFFFF,
+    A200 : #FFFFFF,
+    A400 : #FFFFFF,
+    A700 : #FFFFFF,
+  )
+);
+
+
+
+$iof-palette-accent: (
+        50: #E0F2F1,
+        100: #B2DFDB,
+        200: #80CBC4,
+        300: #4DB6AC,
+        400: #26A69A,
+        500: #009688,
+        600: #00897B,
+        700: #00796B,
+        800: #00695C,
+        900: #004D40,
+        A100: #A7FFEB,
+        A200: #64FFDA,
+        A400: #1DE9B6,
+        A700: #00BFA5,
+
+
+  //      50 : #fff1e8,
+  //100 : #ffddc6,
+  //200 : #ffc6a0,
+  //300 : #ffaf79,
+  //400 : #ff9d5d,
+  //500 : #ff8c40,
+  //600 : #ff843a,
+  //700 : #ff7932,
+  //800 : #ff6f2a,
+  //900 : #ff5c1c,
+  //A100 : #ffffff,
+  //A200 : #ffffff,
+  //A400 : #ffd9cd,
+  //A700 : #ffc6b3,
+  contrast: (
+    50 : #FFFFFF,
+    100 : #FFFFFF,
+    200 : #FFFFFF,
+    300 : #FFFFFF,
+    400 : #FFFFFF,
+    500 : #FFFFFF,
+    600 : #FFFFFF,
+    700 : #FFFFFF,
+    800 : #FFFFFF,
+    900 : #FFFFFF,
+    A100 : #FFFFFF,
+    A200 : #FFFFFF,
+    A400 : #FFFFFF,
+    A700 : #FFFFFF,
+  )
+);
+
+
+$my-primary: mat.define-palette($lobebebar-palette, 500);
+$my-accent: mat.define-palette($iof-palette-accent);
+
+$lobebar-theme: mat.define-dark-theme((
+  color: (
+    primary: $my-primary,
+    accent: $my-accent,
+  ),
+  density: 0,
+));
+
+@include mat.all-component-themes($lobebar-theme);

@@ -1,6 +1,6 @@
 import {ChangeDetectorRef, Component, EventEmitter, Input, OnChanges, Output, SimpleChanges} from '@angular/core';
-import {InSiteAnimations} from "@frontend-lb-nx/shared/ui";
 import {FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
+import {InSiteAnimations} from "../../animations/InSiteAnimations";
 
 @Component({
   selector: 'frontend-lb-nx-start-end-date-input',

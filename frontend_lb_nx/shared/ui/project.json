@@ -7,10 +7,15 @@
   "projectType": "library",
   "targets": {
     "build": {
+      "stylePreprocessorOptions": {
+        "includePaths": [
+          "../../src/app/core/styles/lobebar-theme"
+        ]
+      },
       "executor": "@nrwl/angular:ng-packagr-lite",
       "outputs": ["{workspaceRoot}/dist/{projectRoot}"],
       "options": {
-        "project": "shared/ui/ng-package.json"
+        "project": "shared/ui/ng-package.json",
       },
       "configurations": {
         "production": {

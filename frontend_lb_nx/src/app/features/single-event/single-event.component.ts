@@ -6,13 +6,13 @@ import {registerLocaleData} from "@angular/common";
 import localeDe from '@angular/common/locales/de';
 import {filter, of, take} from "rxjs";
 import {map} from "rxjs/operators";
-import {EditStringDialogComponent} from "../../core/components/dialogs/edit-string-dialog/edit-string-dialog.component";
+import {EditStringDialogComponent} from "../../../../shared/ui/src/lib/components/dialogs/edit-string-dialog/edit-string-dialog.component";
 import {EditName} from "../../../../shared/services/src/lib/backend/states/shift-types/shift-type.actions";
 import {DoneExtraWorkTypes, SnackType} from "@frontend-lb-nx/shared/entities";
 import {MatDialog} from "@angular/material/dialog";
 import {
     EditDateTimeDialogComponent
-} from "../../core/components/dialogs/edit-date-time-dialog/edit-date-time-dialog.component";
+} from "../../../../shared/ui/src/lib/components/dialogs/edit-date-time-dialog/edit-date-time-dialog.component";
 
 @Component({
   selector: 'frontend-lb-nx-single-event',

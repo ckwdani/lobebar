@@ -10,7 +10,7 @@ import {Observable} from "rxjs";
 import {BreakpointObserver, Breakpoints} from "@angular/cdk/layout";
 import {map, shareReplay} from "rxjs/operators";
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from "@angular/forms";
-import {BACKENDPATHS} from "../../../../../services/src/lib/backend/BACKENDPATHS";
+import {BACKENDPATHS} from "@frontend-lb-nx/shared/services";
 
 @Component({
   selector: 'frontend-lb-nx-register',

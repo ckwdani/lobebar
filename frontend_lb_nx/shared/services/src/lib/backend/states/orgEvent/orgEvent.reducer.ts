@@ -1,9 +1,9 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import * as OrgEventActions from './orgEvent.actions';
-import {OrgEvent, OrgEventClass, Shift} from "@frontend-lb-nx/shared/entities";
 import * as ShiftTypeActions from "../shift-types/shift-type.actions";
 import * as ShiftActions from "../shift/shift.actions";
 import {changeShiftAssignmentSuccess} from "../shift/shift.actions";
+import {OrgEvent, OrgEventClass, Shift} from "@frontend-lb-nx/shared/entities";
 
 export const orgEventFeatureKey = 'orgEvent';
 

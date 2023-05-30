@@ -12,15 +12,15 @@ import {loadUser} from "@frontend-lb-nx/shared/services";
 import {Observable} from "rxjs";
 import {
   ImportantDeleteDialogComponent
-} from "../../../core/components/dialogs/important-delete-dialog/important-delete-dialog.component";
+} from "../../../../../shared/ui/src/lib/components/dialogs/important-delete-dialog/important-delete-dialog.component";
 import {map} from "rxjs/operators";
 import {MatDialog} from "@angular/material/dialog";
 import {
   ShiftType_DoneEW_AddComponentDialog
-} from "../../../core/components/dialogs/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component";
+} from "../../../../../shared/ui/src/lib/components/dialogs/shift-type-done-ew-add/shift-type_-done-e-w_-add-component-dialog.component";
 import {
   DropdownMenuDialogComponent
-} from "../../../core/components/dialogs/dropdown-menu-dialog/dropdown-menu-dialog.component";
+} from "../../../../../shared/ui/src/lib/components/dialogs/dropdown-menu-dialog/dropdown-menu-dialog.component";
 
 @Component({
   selector: 'frontend-lb-nx-users-overview',
