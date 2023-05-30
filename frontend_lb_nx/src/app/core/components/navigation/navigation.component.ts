@@ -1,6 +1,6 @@
 import {AfterViewInit, Component} from '@angular/core';
 import { BreakpointObserver, Breakpoints } from '@angular/cdk/layout';
-import {asapScheduler, combineLatest, filter, first, Observable, observeOn} from 'rxjs';
+import {asapScheduler, combineLatest, filter, first, Observable, observeOn, tap} from 'rxjs';
 import { map, shareReplay } from 'rxjs/operators';
 import {Store} from "@ngrx/store";
 import {
@@ -38,7 +38,7 @@ export class NavigationComponent implements AfterViewInit{
   $userLoaded = this.store.select(selectUserLoaded).pipe(first());
   $shiftTypesLoaded = this.store.select(selectSuccess).pipe(first());
   $loggedInUser = this.store.select(selectUser);
-  $roleUser = this.store.select(selectUser).pipe(map(next=> (next??0 !== 0) ? UserFunctions.getRole(next!) : next));
+  $roleUser = this.store.select(selectUser).pipe( map(next=> (next??0 !== 0) ? UserFunctions.getRole(next!) : next));
 
   constructor(private breakpointObserver: BreakpointObserver, private store:Store) {
     this.$roleUser.subscribe(next=>{

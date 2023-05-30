@@ -2,10 +2,11 @@
 
 
 #loginForm{
-  max-width: 30vw;
+  max-width: max(300px,30vw);
   margin: 0 auto;
   text-align: center;
-  top: 30%;
+  min-height: 400px;
+  top: max(30px, 120px);
 }
 mat-form-field {
   display: block;
@@ -31,4 +32,10 @@ mat-form-field {
   100% {
     opacity: 1;
   }
+}
+
+.contentHeight {
+  min-height: 50px;
+  padding-top: 5px;
+  padding-bottom: 5px;
 }

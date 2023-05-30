@@ -23,9 +23,11 @@
           <a mat-list-item routerLink="/event_overview">Veranstaltungen</a>
           <a mat-list-item routerLink="/calendar">Kalender</a>
           <mat-divider></mat-divider>
-          <a *ngIf="($roleUser|async) ===UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/shift_types" class="text-xs">Shicht-/Arbeits-/Snacktypen</a>
-          <a *ngIf="($roleUser|async) ===UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/book_snacks_work">Snacks/Arbeit buchen</a>
-          <a mat-list-item routerLink="/book">Nachschub</a>
+<!--          <a *ngIf="($roleUser|async) ===UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/shift_types" class="text-xs">Shicht-/Arbeits-/Snacktypen</a>-->
+<!--          <a *ngIf="($roleUser|async) ===UserRoles.ADMIN||UserRoles.MODERATOR" mat-list-item routerLink="/book_snacks_work">Snacks/Arbeit buchen</a>-->
+          <a *ngIf="($roleUser|async) >= UserRoles.MODERATOR" mat-list-item routerLink="/shift_types" class="text-xs">Shicht-/Arbeits-/Snacktypen</a>
+          <a *ngIf="($roleUser|async) >= UserRoles.MODERATOR" mat-list-item routerLink="/book_snacks_work">Snacks/Arbeit buchen</a>
+          <a mat-list-item routerLink="/book" *ngIf="($roleUser|async) > UserRoles.MODERATOR">Nachschub</a>
           <mat-divider></mat-divider>
           <a mat-list-item routerLink="/points">Punkte</a>
           <a mat-list-item (click)="logout()">Logout</a>
