@@ -1,5 +1,9 @@
 # lobebar
-This is a system designed to enable small volunteering cultural places to distribute bar and other shifts
+The system in question has been meticulously crafted to cater to the unique needs of smaller cultural venues that rely heavily on volunteer efforts. These venues, often brimming with rich cultural significance, require a streamlined process to manage and allocate various responsibilities, especially when it comes to bar duties and other similar shifts. By implementing this system, such establishments can efficiently distribute shifts among volunteers, ensuring that operations run smoothly. This not only optimizes the manpower available but also ensures that these cultural hubs remain vibrant and active, offering visitors and patrons a seamless experience.
+
+One of the standout features of this system is its gamification aspect. Volunteers can track their progress, noting milestones such as how many bar shifts they've completed in a row. This not only adds a fun, competitive edge to the volunteering process but also encourages consistent participation. As volunteers accumulate shifts and reach certain milestones, they earn "snacks" within the system. These "snacks" are essentially perks that can be redeemed at the venue. Whether it's a complimentary drink, a discount on an event ticket, or exclusive access to certain areas, these rewards serve as a token of appreciation for the volunteers' dedication and hard work.
+
+
 
 ## TODOS
 The order of the todos is not the order they should be executed in!
@@ -12,42 +16,42 @@ The order of the todos is not the order they should be executed in!
     - [X] add suply controller
     - [X] add events controller
     - [X] add shifts controller
-- [ ] add email functions
-    - [ ] reset password function
-- [ ] rework controllers so recurring patterns are in base controllers
+- [X] add email functions
+    - [X] reset password function
+- [X] rework controllers so recurring patterns are in base controllers
 
 ### Frontend
 - [X] add login
-- [ ] mobile friendly
+- [X] mobile friendly
     - [ ] pwa compatabilities
 - [X] add navigation
-    - [ ] role based rendering
-- [ ] add forms
+    - [X] role based rendering
+- [X] add forms
     - [X] add event form
     - [X] add user login form
     - [X] add user edit form (same for self and admin edit)
     - [X] add supply form
-- [ ] add overviews
+- [X] add overviews
     - [X] (ADMIN) add user overviews
-    - [ ] add own shifts overview
-        - [ ] add upcoming shifts  overview
-        - [ ] add recent shifts overview
+    - [X] add own shifts overview
+        - [X] add upcoming shifts  overview
+        - [X] add recent shifts overview
     - [X] add own used supply overview
     - [X] add events overview
         - [X] list with open shifts
         - [X] callendar
-    - [ ] (ADMIN) add used supplies overview
-    - [ ] (ADMIN) add booked supplies overview
-    - [ ] (ADMIN) add supplietypes overview
+    - [X] (ADMIN) add used supplies overview
+    - [X] (ADMIN) add booked supplies overview
+    - [X] (ADMIN) add supplietypes overview
     - [X] add points and balance overwiew
-    - [ ] add user-scoreboard overview
+    - [X] add user-scoreboard overview
 - [X] add actions
     - [X] add sign up for shift action
     - [X] add use suply action (maybee balance overview)
 - [X] add ngrx state management
     - [X] add state for logged in user
 - [X] add services for backend
-- [ ] add error handling with snackbars
+- [X] add error handling with snackbars
 - [X] add achievements and badge and selecting achievements etc. 
 
 
