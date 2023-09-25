@@ -1,6 +1,7 @@
 # lobebar
 The system in question has been meticulously crafted to cater to the unique needs of smaller cultural venues that rely heavily on volunteer efforts. These venues, often brimming with rich cultural significance, require a streamlined process to manage and allocate various responsibilities, especially when it comes to bar duties and other similar shifts. By implementing this system, such establishments can efficiently distribute shifts among volunteers, ensuring that operations run smoothly. This not only optimizes the manpower available but also ensures that these cultural hubs remain vibrant and active, offering visitors and patrons a seamless experience.
-![Dashboard](screenshots/lobebar_dash.png)
+<img src="screenshots/lobebar_dash.png" alt="Dashboard" width="200"/>
+
 Its possible to add events and to add shifts to those events. Whether this shifts are awareness shifts, bar shifts or cooking shifts is up to the user.
 ![Add Event](screenshots/Event_add_1.png)
 ![Add Shifts To Event](screenshots/Event_add_2.png)
